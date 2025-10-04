@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum ClothesSizes {
+enum Sizes {
   XXS
   XS
   S
@@ -18,16 +18,9 @@ enum ClothesSizes {
   XXXL
 }
 
-enum AccessorySizes {
-  S
-  M
-  L
-}
-
 enum Genders {
   male
   female
-  unisex
 }
 
 model User {
@@ -40,6 +33,7 @@ model User {
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
+  Cart      Cart[]
 
   @@map("users")
 }
@@ -83,13 +77,14 @@ model Product {
   discount    Float?
   available   Boolean
 
-  clothesSizes   ClothesSizes[]   @map("clothes_sizes")
-  accessorySizes AccessorySizes[] @map("accessory_sizes")
-  review         Review[]
-  category       Category         @relation(fields: [categoryId], references: [id])
+  sizes    Sizes[]
+  review   Review[]
+  category Category @relation(fields: [categoryId], references: [id])
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+  Cart      Cart[]
+  CartItem  CartItem[]
 
   @@index([available])
   @@index([price])
@@ -113,4 +108,36 @@ model Review {
   @@unique([userId, productId])
   @@index([productId])
   @@map("reviews")
+}
+
+model Cart {
+  id     String     @id @default(uuid()) @db.Uuid
+  userId String     @map("user_id") @db.Uuid
+  items  CartItem[]
+
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId String?  @db.Uuid
+
+  @@map("cart")
+}
+
+model CartItem {
+  id        String @id @default(uuid()) @db.Uuid
+  cartId    String @map("cart_id") @db.Uuid
+  productId String @map("product_id") @db.Uuid
+  quantity  Int
+  size      Sizes
+
+  product Product @relation(fields: [productId], references: [id])
+  cart    Cart    @relation(fields: [cartId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([cartId])
+  @@map("cart_items")
 }
