@@ -34,8 +34,10 @@ model User {
   cart          Cart[]
   passwordReset PasswordReset[]
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+  Wishlist  Wishlist[]
+  Order     Order[]
 
   @@map("users")
 }
@@ -85,8 +87,10 @@ model Product {
   productImage ProductImage[]
   category     Category       @relation(fields: [categoryId], references: [id])
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  Wishlist  Wishlist[]
+  OrderItem OrderItem[]
 
   @@index([available])
   @@index([price])
@@ -170,4 +174,54 @@ model PasswordReset {
 
   @@index([userId])
   @@map("password_resets")
+}
+
+model Wishlist {
+  id        String @id @default(uuid()) @db.Uuid
+  userId    String @map("user_id") @db.Uuid
+  productId String @map("product_id") @db.Uuid
+
+  user    User    @relation(fields: [userId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([userId, productId])
+  @@map("wishlists")
+}
+
+model Order {
+  id              String @id @default(uuid()) @db.Uuid
+  userId          String @map("user_id") @db.Uuid
+  orderNumber     Int    @default(autoincrement()) @map("order_number")
+  shippingAddress String @map("shipping_address")
+  trackingNumber  String @map("tracking_number")
+  shippingMethod  String @map("shipping_method")
+  paymentMethod   String @map("payment_method")
+  status          String @default("Shipped")
+
+  user  User        @relation(fields: [userId], references: [id])
+  items OrderItem[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String @id @default(uuid()) @db.Uuid
+  productId String @map("product_id") @db.Uuid
+  orderId   String @map("order_id") @db.Uuid
+  quantity  Int
+  price     Float
+  discount  Float?
+  size      Sizes
+
+  product Product @relation(fields: [productId], references: [id])
+  order   Order   @relation(fields: [orderId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@unique([orderId, productId, size])
+  @@map("order_items")
 }
