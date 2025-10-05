@@ -28,12 +28,13 @@ model User {
   email        String @unique
   passwordHash String @map("password_hash")
 
-  session Session[]
-  review  Review[]
+  session       Session[]
+  review        Review[]
+  cart          Cart[]
+  passwordReset PasswordReset[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  Cart      Cart[]
 
   @@map("users")
 }
@@ -77,15 +78,15 @@ model Product {
   discount    Float?
   available   Boolean
 
-  sizes    Sizes[]
-  review   Review[]
-  category Category @relation(fields: [categoryId], references: [id])
+  sizes        Sizes[]
+  review       Review[]
+  cart         Cart[]
+  cartItem     CartItem[]
+  productImage ProductImage[]
+  category     Category       @relation(fields: [categoryId], references: [id])
 
-  createdAt    DateTime       @default(now()) @map("created_at")
-  updatedAt    DateTime       @updatedAt @map("updated_at")
-  Cart         Cart[]
-  CartItem     CartItem[]
-  ProductImage ProductImage[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@index([available])
   @@index([price])
@@ -125,13 +126,13 @@ model Review {
 }
 
 model Cart {
-  id        String     @id @default(uuid()) @db.Uuid
-  userId    String     @map("user_id") @db.Uuid
-  productId String?    @db.Uuid
-  items     CartItem[]
+  id        String  @id @default(uuid()) @db.Uuid
+  userId    String  @map("user_id") @db.Uuid
+  productId String? @db.Uuid
 
-  user    User     @relation(fields: [userId], references: [id])
-  product Product? @relation(fields: [productId], references: [id])
+  user    User       @relation(fields: [userId], references: [id])
+  product Product?   @relation(fields: [productId], references: [id])
+  items   CartItem[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -154,4 +155,20 @@ model CartItem {
 
   @@unique([cartId])
   @@map("cart_items")
+}
+
+model PasswordReset {
+  id     String  @id @default(uuid()) @db.Uuid
+  userId String  @map("user_id") @db.Uuid
+  otp    String
+  used   Boolean @default(false)
+
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  expiresAt DateTime @map("expires_at")
+
+  @@index([userId])
+  @@map("password_resets")
 }
