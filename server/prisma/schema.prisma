@@ -24,9 +24,10 @@ enum Genders {
 }
 
 model User {
-  id           String @id @default(uuid()) @db.Uuid
-  email        String @unique
-  passwordHash String @map("password_hash")
+  id           String  @id @default(uuid()) @db.Uuid
+  email        String  @unique
+  sex          Genders
+  passwordHash String  @map("password_hash")
 
   session       Session[]
   review        Review[]
@@ -80,7 +81,6 @@ model Product {
 
   sizes        Sizes[]
   review       Review[]
-  cart         Cart[]
   cartItem     CartItem[]
   productImage ProductImage[]
   category     Category       @relation(fields: [categoryId], references: [id])
@@ -126,17 +126,16 @@ model Review {
 }
 
 model Cart {
-  id        String  @id @default(uuid()) @db.Uuid
-  userId    String  @map("user_id") @db.Uuid
-  productId String? @db.Uuid
+  id     String     @id @default(uuid()) @db.Uuid
+  userId String     @map("user_id") @db.Uuid
+  items  CartItem[]
 
-  user    User       @relation(fields: [userId], references: [id])
-  product Product?   @relation(fields: [productId], references: [id])
-  items   CartItem[]
+  user User @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  @@unique([userId])
   @@map("cart")
 }
 
@@ -153,7 +152,7 @@ model CartItem {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@unique([cartId])
+  @@unique([cartId, productId, size])
   @@map("cart_items")
 }
 
