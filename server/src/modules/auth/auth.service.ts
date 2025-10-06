@@ -6,6 +6,9 @@ import bcrypt from 'bcrypt';
 // services
 import { PrismaService } from 'src/prisma/prisma.service';
 
+// dto
+import { CreateSessionDto } from './dto/create-session.dto';
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -38,5 +41,9 @@ export class AuthService {
     });
 
     return { accessToken, refreshToken };
+  }
+
+  async createSession(data: CreateSessionDto) {
+    await this.prisma.session.create({ data });
   }
 }
