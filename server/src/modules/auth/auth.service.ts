@@ -1,4 +1,9 @@
-import { ConflictException, Injectable, Logger } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  Logger,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import bcrypt from 'bcrypt';
@@ -10,6 +15,7 @@ import { LogService } from 'src/common/logging/log.service';
 // dto
 import { CreateSessionDto } from './dto/create-session.dto';
 import { RegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
@@ -92,5 +98,36 @@ export class AuthService {
     });
 
     return { id: user.id, email: user.email };
+  }
+
+  async login({ email, password }: LoginDto) {
+    this.logger.log(`Login attempt: ${email}`);
+
+    const user = await this.validateUser(email, password);
+    if (!user) {
+      this.logger.warn(`Login failed: ${email}`);
+
+      await this.logService.write({
+        level: 'SECURITY',
+        action: 'auth.login',
+        status: 'fail',
+        message: 'Invalid credentials',
+        metadata: { email },
+      });
+
+      throw new UnauthorizedException('Invalid email or password');
+    }
+
+    const tokens = await this.generateTokens(user.id);
+    this.logger.log(`Login success: ${user.id}`);
+
+    await this.logService.write({
+      level: 'INFO',
+      action: 'auth.login',
+      userId: user.id,
+      status: 'success',
+    });
+
+    return { ...tokens, userId: user.id };
   }
 }
