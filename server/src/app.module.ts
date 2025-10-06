@@ -1,10 +1,19 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { APP_FILTER } from '@nestjs/core';
+
+// modules
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
 
+// services
+import { LogService } from './common/logging/log.service';
+
+// filters
+import { AllExceptionsFilter } from './common/filters/all-exception.filter';
+
 @Module({
-  imports: [ 
+  imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: [
@@ -14,9 +23,15 @@ import { AuthModule } from './modules/auth/auth.module';
       ],
     }),
     PrismaModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    LogService,
+    {
+      provide: APP_FILTER,
+      useClass: AllExceptionsFilter,
+    },
+  ],
 })
 export class AppModule {}
