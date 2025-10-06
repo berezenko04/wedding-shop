@@ -41,6 +41,9 @@ importers:
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
+      request-ip:
+        specifier: ^3.3.0
+        version: 3.3.0
       rxjs:
         specifier: ^7.8.1
         version: 7.8.2
@@ -81,6 +84,9 @@ importers:
       '@types/node':
         specifier: ^22.10.7
         version: 22.18.8
+      '@types/request-ip':
+        specifier: ^0.0.41
+        version: 0.0.41
       '@types/supertest':
         specifier: ^6.0.2
         version: 6.0.3
@@ -1079,6 +1085,9 @@ packages:
 
   '@types/range-parser@1.2.7':
     resolution: {integrity: sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ==}
+
+  '@types/request-ip@0.0.41':
+    resolution: {integrity: sha512-Qzz0PM2nSZej4lsLzzNfADIORZhhxO7PED0fXpg4FjXiHuJ/lMyUg+YFF5q8x9HPZH3Gl6N+NOM8QZjItNgGKg==}
 
   '@types/send@0.17.5':
     resolution: {integrity: sha512-z6F2D3cOStZvuk2SaP6YrwkNO65iTZcwA2ZkSABegdkAh/lf+Aa/YQndZVfmEXT5vgAp6zv06VQ3ejSVjAny4w==}
@@ -2864,6 +2873,9 @@ packages:
   reflect-metadata@0.2.2:
     resolution: {integrity: sha512-urBwgfrvVP/eAyXx4hluJivBKzuEbSQs9rKWCrCkbSxNv8mxPcUZKeuoF3Uy4mJl3Lwprp6yy5/39VWigZ4K6Q==}
 
+  request-ip@3.3.0:
+    resolution: {integrity: sha512-cA6Xh6e0fDBBBwH77SLJaJPBmD3nWVAcF9/XAcsrIHdjhFzFiB5aNQFytdjCGPezU3ROwrR11IddKAM08vohxA==}
+
   require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
     engines: {node: '>=0.10.0'}
@@ -4531,6 +4543,10 @@ snapshots:
   '@types/qs@6.14.0': {}
 
   '@types/range-parser@1.2.7': {}
+
+  '@types/request-ip@0.0.41':
+    dependencies:
+      '@types/node': 22.18.8
 
   '@types/send@0.17.5':
     dependencies:
@@ -6577,6 +6593,8 @@ snapshots:
   readdirp@4.1.2: {}
 
   reflect-metadata@0.2.2: {}
+
+  request-ip@3.3.0: {}
 
   require-directory@2.1.1: {}
 
