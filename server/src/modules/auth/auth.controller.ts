@@ -23,6 +23,7 @@ import { JwtRefreshGuard } from './guards/refresh.guard';
 
 // decorators
 import { IpAddress } from './decorators/ip.decorator';
+import { User } from 'src/common/decorators/user.decorator';
 
 // utils
 import { getDeviceInfo } from 'src/utils/getDeviceInfo';
