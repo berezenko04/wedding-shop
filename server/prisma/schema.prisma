@@ -63,6 +63,7 @@ model Session {
   deviceType   String?  @map("device_type")
   os           String?
   browser      String?
+  country      String?
   expiresAt    DateTime @map("expires_at")
 
   user User @relation(fields: [userId], references: [id])
