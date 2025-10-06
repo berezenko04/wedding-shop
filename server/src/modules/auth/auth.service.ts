@@ -1,20 +1,25 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import bcrypt from 'bcrypt';
 
 // services
 import { PrismaService } from 'src/prisma/prisma.service';
+import { LogService } from 'src/common/logging/log.service';
 
 // dto
 import { CreateSessionDto } from './dto/create-session.dto';
+import { RegisterDto } from './dto/register.dto';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private readonly logService: LogService,
   ) {}
 
   async validateUser(email: string, password: string) {
@@ -45,5 +50,47 @@ export class AuthService {
 
   async createSession(data: CreateSessionDto) {
     await this.prisma.session.create({ data });
+  }
+
+  async register(dto: RegisterDto) {
+    const { email, password } = dto;
+    this.logger.log(`Register attempt with email: ${email}`);
+
+    const existingUser = await this.prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (existingUser) {
+      this.logger.error('User with this email already exists');
+
+      await this.logService.write({
+        level: 'ERROR',
+        action: 'auth.register',
+        status: 'fail',
+        message: 'User already exists',
+        metadata: { dto },
+      });
+
+      throw new ConflictException('User with this email already exists');
+    }
+
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    const user = await this.prisma.user.create({
+      data: {
+        email,
+        passwordHash,
+      },
+    });
+    this.logger.log(`Registration successful with email: ${user.email}`);
+
+    await this.logService.write({
+      level: 'INFO',
+      action: 'auth.register',
+      userId: user.id,
+      status: 'success',
+    });
+
+    return { id: user.id, email: user.email };
   }
 }
