@@ -130,4 +130,29 @@ export class AuthService {
 
     return { ...tokens, userId: user.id };
   }
+
+  async refreshTokens(userId: string, oldRefreshToken: string) {
+    const session = await this.prisma.session.findUnique({
+      where: { refreshToken: oldRefreshToken },
+    });
+
+    if (!session || session.userId !== userId) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+
+    const { accessToken, refreshToken } = await this.generateTokens(userId);
+
+    await this.prisma.session.update({
+      where: { id: session.id },
+      data: {
+        refreshToken,
+        expiresAt: new Date(
+          Date.now() +
+            parseInt(this.configService.get<string>('JWT_REFRESH_EXPIRY')!),
+        ),
+      },
+    });
+
+    return { accessToken, refreshToken };
+  }
 }
