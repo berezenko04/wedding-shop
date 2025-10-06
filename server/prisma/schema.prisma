@@ -7,8 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum LogLevel {
+  INFO     @map("Info")
+  WARN     @map("Warn")
+  ERROR    @map("Error")
+  SECURITY @map("Security")
+}
+
 enum ShipmentStatuses {
-  DELIVERED
+  DELIVERED @map("Delivered")
 }
 
 enum Sizes {
@@ -23,16 +30,16 @@ enum Sizes {
 }
 
 enum Genders {
-  male
-  female
+  male   @map("Male")
+  female @map("Female")
 }
 
 enum Rating {
-  ONE
-  TWO
-  THREE
-  FOUR
-  FIVE
+  ONE   @map("1")
+  TWO   @map("2")
+  THREE @map("3")
+  FOUR  @map("4")
+  FIVE  @map("5")
 }
 
 model User {
@@ -240,4 +247,22 @@ model OrderItem {
   @@unique([orderId, productId, size])
   @@index([productId])
   @@map("order_items")
+}
+
+model Log {
+  id        String   @id @default(uuid()) @db.Uuid
+  timestamp DateTime @default(now())
+  level     LogLevel
+  action    String
+  userId    String?  @map("user_id") @db.Uuid
+  ip        String?
+  userAgent String?  @map("user_agent")
+  status    String?
+  message   String?
+  metadata  Json?
+
+  @@index([timestamp])
+  @@index([level])
+  @@index([userId])
+  @@map("logs")
 }
