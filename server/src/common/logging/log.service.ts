@@ -22,7 +22,7 @@ export class LogService {
 
   async write(payload: LogPayload) {
     const { userId, ...rest } = payload;
-    await this.prisma.logs.create({
+    await this.prisma.log.create({
       data: {
         ...rest,
         userId: userId ?? null,
