@@ -315,6 +315,20 @@ export class AuthService {
     }
   }
 
+  async logoutFromAnotherSession(userId: string, sessionId: string) {
+    this.logger.log(`Logout attempt session with id: ${sessionId}`);
+    await this.prisma.session.delete({
+      where: { id: sessionId, userId },
+    });
+    this.logger.log(`Logout session with id successful: ${sessionId}`);
+    await this.logService.write({
+      level: 'INFO',
+      action: 'auth.logoutId',
+      userId,
+      message: 'success',
+    });
+  }
+
   async logoutAll(userId: string, refreshToken: string) {
     this.logger.log(`Logout all sessions attempt user: ${userId}`);
     await this.prisma.session.deleteMany({

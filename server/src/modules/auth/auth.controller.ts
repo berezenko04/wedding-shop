@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Param,
   Post,
   Req,
   Res,
@@ -174,6 +175,16 @@ export class AuthController {
     await this.authService.logout(refreshToken);
 
     return { message: 'Successfully logged out' };
+  }
+
+  @Post('logout/:id')
+  @Auth()
+  async logoutAnother(
+    @Param('id') sessionId: string,
+    @User('id') userId: string,
+  ) {
+    await this.authService.logoutFromAnotherSession(userId, sessionId);
+    return { message: 'Session has been successfully logged out' };
   }
 
   @Post('logout-all')
