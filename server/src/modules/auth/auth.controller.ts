@@ -60,7 +60,7 @@ export class AuthController {
     await this.authService.createSession({
       userId,
       refreshToken,
-      ipAddress: ip === '::1' ? '127.0.0.1' : String(ip),
+      ip: ip === '::1' ? '127.0.0.1' : String(ip),
       userAgent,
       os,
       deviceType,
