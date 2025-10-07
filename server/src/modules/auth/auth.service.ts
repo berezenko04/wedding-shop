@@ -314,4 +314,18 @@ export class AuthService {
       });
     }
   }
+
+  async logoutAll(userId: string, refreshToken: string) {
+    this.logger.log(`Logout all sessions attempt user: ${userId}`);
+    await this.prisma.session.deleteMany({
+      where: { userId, NOT: { refreshToken } },
+    });
+    this.logger.log(`Logout all sessions is successful user: ${userId}`);
+    await this.logService.write({
+      level: 'INFO',
+      action: 'auth.logoutAll',
+      userId,
+      message: 'success',
+    });
+  }
 }

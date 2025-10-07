@@ -26,6 +26,7 @@ import { JwtRefreshGuard } from './guards/refresh.guard';
 // decorators
 import { IpAddress } from './decorators/ip.decorator';
 import { User } from 'src/common/decorators/user.decorator';
+import { Auth } from './decorators/auth.decorator';
 
 // utils
 import { getDeviceInfo } from 'src/utils/getDeviceInfo';
@@ -152,6 +153,7 @@ export class AuthController {
   }
 
   @Post('logout')
+  @Throttle({ default: { limit: 5, ttl: 60000 } })
   async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const refreshToken = req.cookies['refreshToken'];
 
@@ -172,5 +174,16 @@ export class AuthController {
     await this.authService.logout(refreshToken);
 
     return { message: 'Successfully logged out' };
+  }
+
+  @Post('logout-all')
+  @Throttle({ default: { limit: 3, ttl: 120000 } })
+  @Auth()
+  async logoutAll(@User('id') userId: string, @Req() req: Request) {
+    const refreshToken = req.cookies['refreshToken'];
+    await this.authService.logoutAll(userId, refreshToken);
+    return {
+      message: 'Successfully logged out from all sessions without active',
+    };
   }
 }
