@@ -295,4 +295,51 @@ export class AuthService {
       status: 'success',
     });
   }
+
+  async logout(refreshToken: string) {
+    if (!refreshToken) return;
+
+    const session = await this.prisma.session.findUnique({
+      where: { refreshToken },
+    });
+
+    if (session) {
+      await this.prisma.session.delete({ where: { refreshToken } });
+      this.logger.log(`Logout is succesful for user: ${session.userId}`);
+      await this.logService.write({
+        level: 'INFO',
+        action: 'auth.logout',
+        userId: session.userId,
+        status: 'success',
+      });
+    }
+  }
+
+  async logoutFromAnotherSession(userId: string, sessionId: string) {
+    this.logger.log(`Logout attempt session with id: ${sessionId}`);
+    await this.prisma.session.delete({
+      where: { id: sessionId, userId },
+    });
+    this.logger.log(`Logout session with id successful: ${sessionId}`);
+    await this.logService.write({
+      level: 'INFO',
+      action: 'auth.logoutId',
+      userId,
+      message: 'success',
+    });
+  }
+
+  async logoutAll(userId: string, refreshToken: string) {
+    this.logger.log(`Logout all sessions attempt user: ${userId}`);
+    await this.prisma.session.deleteMany({
+      where: { userId, NOT: { refreshToken } },
+    });
+    this.logger.log(`Logout all sessions is successful user: ${userId}`);
+    await this.logService.write({
+      level: 'INFO',
+      action: 'auth.logoutAll',
+      userId,
+      message: 'success',
+    });
+  }
 }

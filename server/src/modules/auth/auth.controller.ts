@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Param,
   Post,
   Req,
   Res,
@@ -26,6 +27,7 @@ import { JwtRefreshGuard } from './guards/refresh.guard';
 // decorators
 import { IpAddress } from './decorators/ip.decorator';
 import { User } from 'src/common/decorators/user.decorator';
+import { Auth } from './decorators/auth.decorator';
 
 // utils
 import { getDeviceInfo } from 'src/utils/getDeviceInfo';
@@ -149,5 +151,50 @@ export class AuthController {
   async resetPassword(@Body() dto: ResetPasswordDto) {
     await this.authService.resetPassword(dto);
     return { message: 'Password was reset is successfully' };
+  }
+
+  @Post('logout')
+  @Throttle({ default: { limit: 5, ttl: 60000 } })
+  async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+    const refreshToken = req.cookies['refreshToken'];
+
+    res.cookie('accessToken', '', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+      maxAge: 0,
+    });
+
+    res.cookie('refreshToken', '', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+      maxAge: 0,
+    });
+
+    await this.authService.logout(refreshToken);
+
+    return { message: 'Successfully logged out' };
+  }
+
+  @Post('logout/:id')
+  @Auth()
+  async logoutAnother(
+    @Param('id') sessionId: string,
+    @User('id') userId: string,
+  ) {
+    await this.authService.logoutFromAnotherSession(userId, sessionId);
+    return { message: 'Session has been successfully logged out' };
+  }
+
+  @Post('logout-all')
+  @Throttle({ default: { limit: 3, ttl: 120000 } })
+  @Auth()
+  async logoutAll(@User('id') userId: string, @Req() req: Request) {
+    const refreshToken = req.cookies['refreshToken'];
+    await this.authService.logoutAll(userId, refreshToken);
+    return {
+      message: 'Successfully logged out from all sessions without active',
+    };
   }
 }
