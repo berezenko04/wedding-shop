@@ -150,4 +150,27 @@ export class AuthController {
     await this.authService.resetPassword(dto);
     return { message: 'Password was reset is successfully' };
   }
+
+  @Post('logout')
+  async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+    const refreshToken = req.cookies['refreshToken'];
+
+    res.cookie('accessToken', '', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+      maxAge: 0,
+    });
+
+    res.cookie('refreshToken', '', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+      maxAge: 0,
+    });
+
+    await this.authService.logout(refreshToken);
+
+    return { message: 'Successfully logged out' };
+  }
 }
