@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 
 // services
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -96,8 +96,6 @@ export class AuthService {
       userId: user.id,
       status: 'success',
     });
-
-    return { id: user.id, email: user.email };
   }
 
   async login({ email, password }: LoginDto) {
