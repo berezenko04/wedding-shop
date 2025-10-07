@@ -6,6 +6,8 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { MailerService } from '@nestjs-modules/mailer';
+import { randomInt } from 'crypto';
 import bcrypt from 'bcrypt';
 
 // services
@@ -26,6 +28,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly logService: LogService,
+    private readonly mailerService: MailerService,
   ) {}
 
   async validateUser(email: string, password: string) {
@@ -154,5 +157,50 @@ export class AuthService {
     });
 
     return { accessToken, refreshToken };
+  }
+
+  async sendForgotPasswordOtp(email: string) {
+    this.logger.log(`Password reset request: ${email}`);
+
+    const user = await this.prisma.user.findUnique({ where: { email } });
+
+    if (!user) {
+      this.logger.warn(
+        `Password reset request for non-existent user: ${email}`,
+      );
+      return;
+    }
+
+    const otp = randomInt(1000, 9999);
+
+    await this.prisma.passwordReset.deleteMany({
+      where: { userId: user.id, used: false },
+    });
+
+    await this.prisma.passwordReset.create({
+      data: {
+        userId: user.id,
+        otp: otp.toString(),
+        expiresAt: new Date(Date.now() + 1000 * 60 * 30),
+      },
+    });
+
+    await this.mailerService.sendMail({
+      to: user.email,
+      subject: 'Reset password',
+      template: 'forgot-password',
+      context: {
+        email,
+        otp,
+      },
+    });
+
+    this.logger.log(`Password reset email sent: ${user.id}`);
+    await this.logService.write({
+      level: 'INFO',
+      action: 'auth.forgotPassword',
+      userId: user.id,
+      status: 'success',
+    });
   }
 }

@@ -126,4 +126,11 @@ export class AuthController {
       throw new UnauthorizedException('Token refresh failed');
     }
   }
+
+  @Post('forgot-password')
+  @Throttle({ default: { limit: 3, ttl: 180000 } })
+  async forgotPassword(@Body('email') email: string) {
+    await this.authService.sendForgotPasswordOtp(email);
+    return { message: 'Reset password mail has been send' };
+  }
 }
