@@ -2,13 +2,14 @@ import {
   ConflictException,
   Injectable,
   Logger,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { MailerService } from '@nestjs-modules/mailer';
 import { randomInt } from 'crypto';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 
 // services
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -18,6 +19,7 @@ import { LogService } from 'src/common/logging/log.service';
 import { CreateSessionDto } from './dto/create-session.dto';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { VerifyOtpDto } from './dto/verify-otp.dto';
 
 @Injectable()
 export class AuthService {
@@ -41,6 +43,13 @@ export class AuthService {
     if (!isValid) return null;
 
     return user;
+  }
+
+  private createResetToken(userId: string) {
+    return this.jwtService.sign(
+      { id: userId, type: 'reset' },
+      { expiresIn: '15m' },
+    );
   }
 
   private async generateTokens(userId: string) {
@@ -202,5 +211,35 @@ export class AuthService {
       userId: user.id,
       status: 'success',
     });
+  }
+
+  async verifyOtp(dto: VerifyOtpDto) {
+    const { otp, email } = dto;
+    this.logger.log(`Verify otp attempt with otp: ${otp}...`);
+
+    const user = await this.prisma.user.findUnique({ where: { email } });
+    if (!user) throw new NotFoundException('User not found');
+
+    const resetData = await this.prisma.passwordReset.findFirst({
+      where: {
+        userId: user.id,
+        otp,
+        expiresAt: { gte: new Date() },
+        used: false,
+      },
+    });
+
+    if (!resetData) {
+      this.logger.warn(`Invalid or expired reset token: ${otp}...`);
+      await this.logService.write({
+        level: 'SECURITY',
+        action: 'auth.',
+        status: 'fail',
+        message: 'Invalid or expired reset token',
+      });
+      throw new UnauthorizedException('Invalid or expired reset token');
+    }
+
+    return this.createResetToken(user.id);
   }
 }

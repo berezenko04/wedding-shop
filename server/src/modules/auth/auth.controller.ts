@@ -27,6 +27,7 @@ import { User } from 'src/common/decorators/user.decorator';
 
 // utils
 import { getDeviceInfo } from 'src/utils/getDeviceInfo';
+import { VerifyOtpDto } from './dto/verify-otp.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -132,5 +133,11 @@ export class AuthController {
   async forgotPassword(@Body('email') email: string) {
     await this.authService.sendForgotPasswordOtp(email);
     return { message: 'Reset password mail has been send' };
+  }
+
+  @Post('verify-otp')
+  async verifyOtp(@Body() dto: VerifyOtpDto) {
+    const resetToken = await this.authService.verifyOtp(dto);
+    return { resetToken, message: 'Token is valid' };
   }
 }
