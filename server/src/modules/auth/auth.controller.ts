@@ -39,7 +39,8 @@ export class AuthController {
   @Post('register')
   @Throttle({ default: { limit: 2, ttl: 60000 } })
   async register(@Body() dto: RegisterDto) {
-    return this.authService.register(dto);
+    await this.authService.register(dto);
+    return { message: 'Registration is successful' };
   }
 
   @Post('login')
@@ -60,7 +61,7 @@ export class AuthController {
     await this.authService.createSession({
       userId,
       refreshToken,
-      ipAddress: ip === '::1' ? '127.0.0.1' : String(ip),
+      ip: ip === '::1' ? '127.0.0.1' : String(ip),
       userAgent,
       os,
       deviceType,

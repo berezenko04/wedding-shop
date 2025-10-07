@@ -9,7 +9,7 @@ export class CreateSessionDto {
 
   @IsOptional()
   @IsIP()
-  ipAddress?: string;
+  ip?: string;
 
   @IsOptional()
   @IsString()

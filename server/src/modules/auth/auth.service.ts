@@ -108,8 +108,6 @@ export class AuthService {
       userId: user.id,
       status: 'success',
     });
-
-    return { id: user.id, email: user.email };
   }
 
   async login({ email, password }: LoginDto) {
