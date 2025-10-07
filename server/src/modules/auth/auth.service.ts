@@ -20,6 +20,7 @@ import { CreateSessionDto } from './dto/create-session.dto';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -48,8 +49,24 @@ export class AuthService {
   private createResetToken(userId: string) {
     return this.jwtService.sign(
       { id: userId, type: 'reset' },
-      { expiresIn: '15m' },
+      {
+        secret: this.configService.get<string>('JWT_RESET_SECRET'),
+        expiresIn: '15m',
+      },
     );
+  }
+
+  private verifyResetToken(token: string) {
+    try {
+      const payload = this.jwtService.verify(token, {
+        secret: this.configService.get<string>('JWT_RESET_SECRET'),
+      });
+      if (payload.type !== 'reset') throw new Error('Invalid token type');
+      return payload.id;
+    } catch (err) {
+      console.error('JWT verification error:', err);
+      throw new Error('Invalid or expired token');
+    }
   }
 
   private async generateTokens(userId: string) {
@@ -238,6 +255,44 @@ export class AuthService {
       throw new UnauthorizedException('Invalid or expired reset token');
     }
 
+    await this.prisma.passwordReset.update({
+      where: { id: resetData.id },
+      data: { used: true },
+    });
+
     return this.createResetToken(user.id);
+  }
+
+  async resetPassword(dto: ResetPasswordDto) {
+    const { resetToken, password } = dto;
+    this.logger.log(`Password reset attempt with token: ${resetToken}...`);
+
+    const userId = this.verifyResetToken(resetToken);
+
+    if (!userId) {
+      this.logger.warn(`Invalid or expired reset token: ${resetToken}...`);
+      await this.logService.write({
+        level: 'SECURITY',
+        action: 'auth.resetPassword',
+        status: 'fail',
+        message: 'Invalid or expired reset token',
+      });
+      throw new UnauthorizedException('Invalid or expired reset token');
+    }
+
+    const newPasswordHash = await bcrypt.hash(password, 10);
+
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { passwordHash: newPasswordHash },
+    });
+
+    this.logger.log(`Password reset successful: ${userId}`);
+    await this.logService.write({
+      level: 'INFO',
+      action: 'auth.resetPassword',
+      userId,
+      status: 'success',
+    });
   }
 }

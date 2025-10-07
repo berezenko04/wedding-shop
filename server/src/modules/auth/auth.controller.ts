@@ -18,6 +18,7 @@ import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 // guards
 import { JwtRefreshGuard } from './guards/refresh.guard';
@@ -141,5 +142,12 @@ export class AuthController {
   async verifyOtp(@Body() dto: VerifyOtpDto) {
     const resetToken = await this.authService.verifyOtp(dto);
     return { resetToken, message: 'Token is valid' };
+  }
+
+  @Post('reset-password')
+  @Throttle({ default: { limit: 3, ttl: 180000 } })
+  async resetPassword(@Body() dto: ResetPasswordDto) {
+    await this.authService.resetPassword(dto);
+    return { message: 'Password was reset is successfully' };
   }
 }
