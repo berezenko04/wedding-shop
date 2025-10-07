@@ -2,10 +2,13 @@ import {
   ConflictException,
   Injectable,
   Logger,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { MailerService } from '@nestjs-modules/mailer';
+import { randomInt } from 'crypto';
 import * as bcrypt from 'bcrypt';
 
 // services
@@ -16,6 +19,8 @@ import { LogService } from 'src/common/logging/log.service';
 import { CreateSessionDto } from './dto/create-session.dto';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { VerifyOtpDto } from './dto/verify-otp.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -26,6 +31,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
     private readonly logService: LogService,
+    private readonly mailerService: MailerService,
   ) {}
 
   async validateUser(email: string, password: string) {
@@ -40,8 +46,31 @@ export class AuthService {
     return user;
   }
 
+  private createResetToken(userId: string) {
+    return this.jwtService.sign(
+      { id: userId, type: 'reset' },
+      {
+        secret: this.configService.get<string>('JWT_RESET_SECRET'),
+        expiresIn: '15m',
+      },
+    );
+  }
+
+  private verifyResetToken(token: string) {
+    try {
+      const payload = this.jwtService.verify(token, {
+        secret: this.configService.get<string>('JWT_RESET_SECRET'),
+      });
+      if (payload.type !== 'reset') throw new Error('Invalid token type');
+      return payload.id;
+    } catch (err) {
+      console.error('JWT verification error:', err);
+      throw new Error('Invalid or expired token');
+    }
+  }
+
   private async generateTokens(userId: string) {
-    const payload = { sub: userId };
+    const payload = { id: userId };
     const accessToken = await this.jwtService.signAsync(payload, {
       secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
       expiresIn: '15m',
@@ -152,5 +181,118 @@ export class AuthService {
     });
 
     return { accessToken, refreshToken };
+  }
+
+  async sendForgotPasswordOtp(email: string) {
+    this.logger.log(`Password reset request: ${email}`);
+
+    const user = await this.prisma.user.findUnique({ where: { email } });
+
+    if (!user) {
+      this.logger.warn(
+        `Password reset request for non-existent user: ${email}`,
+      );
+      return;
+    }
+
+    const otp = randomInt(1000, 9999);
+
+    await this.prisma.passwordReset.deleteMany({
+      where: { userId: user.id, used: false },
+    });
+
+    await this.prisma.passwordReset.create({
+      data: {
+        userId: user.id,
+        otp: otp.toString(),
+        expiresAt: new Date(Date.now() + 1000 * 60 * 30),
+      },
+    });
+
+    await this.mailerService.sendMail({
+      to: user.email,
+      subject: 'Reset password',
+      template: 'forgot-password',
+      context: {
+        email,
+        otp,
+      },
+    });
+
+    this.logger.log(`Password reset email sent: ${user.id}`);
+    await this.logService.write({
+      level: 'INFO',
+      action: 'auth.forgotPassword',
+      userId: user.id,
+      status: 'success',
+    });
+  }
+
+  async verifyOtp(dto: VerifyOtpDto) {
+    const { otp, email } = dto;
+    this.logger.log(`Verify otp attempt with otp: ${otp}...`);
+
+    const user = await this.prisma.user.findUnique({ where: { email } });
+    if (!user) throw new NotFoundException('User not found');
+
+    const resetData = await this.prisma.passwordReset.findFirst({
+      where: {
+        userId: user.id,
+        otp,
+        expiresAt: { gte: new Date() },
+        used: false,
+      },
+    });
+
+    if (!resetData) {
+      this.logger.warn(`Invalid or expired reset token: ${otp}...`);
+      await this.logService.write({
+        level: 'SECURITY',
+        action: 'auth.',
+        status: 'fail',
+        message: 'Invalid or expired reset token',
+      });
+      throw new UnauthorizedException('Invalid or expired reset token');
+    }
+
+    await this.prisma.passwordReset.update({
+      where: { id: resetData.id },
+      data: { used: true },
+    });
+
+    return this.createResetToken(user.id);
+  }
+
+  async resetPassword(dto: ResetPasswordDto) {
+    const { resetToken, password } = dto;
+    this.logger.log(`Password reset attempt with token: ${resetToken}...`);
+
+    const userId = this.verifyResetToken(resetToken);
+
+    if (!userId) {
+      this.logger.warn(`Invalid or expired reset token: ${resetToken}...`);
+      await this.logService.write({
+        level: 'SECURITY',
+        action: 'auth.resetPassword',
+        status: 'fail',
+        message: 'Invalid or expired reset token',
+      });
+      throw new UnauthorizedException('Invalid or expired reset token');
+    }
+
+    const newPasswordHash = await bcrypt.hash(password, 10);
+
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { passwordHash: newPasswordHash },
+    });
+
+    this.logger.log(`Password reset successful: ${userId}`);
+    await this.logService.write({
+      level: 'INFO',
+      action: 'auth.resetPassword',
+      userId,
+      status: 'success',
+    });
   }
 }

@@ -17,6 +17,8 @@ import { AuthService } from './auth.service';
 // dto
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { VerifyOtpDto } from './dto/verify-otp.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 // guards
 import { JwtRefreshGuard } from './guards/refresh.guard';
@@ -79,7 +81,7 @@ export class AuthController {
       sameSite: isProd ? 'strict' : 'lax',
       maxAge: isProd
         ? parseInt(this.configService.get<string>('JWT_ACCESS_EXPIRY')!)
-        : 30 * 24 * 60 * 60 * 1000,
+        : 15 * 24 * 60 * 60 * 1000,
     });
 
     res.cookie('refreshToken', refreshToken, {
@@ -126,5 +128,26 @@ export class AuthController {
     } catch {
       throw new UnauthorizedException('Token refresh failed');
     }
+  }
+
+  @Post('forgot-password')
+  @Throttle({ default: { limit: 1, ttl: 60000 } })
+  async forgotPassword(@Body('email') email: string) {
+    await this.authService.sendForgotPasswordOtp(email);
+    return { message: 'Reset password mail has been send' };
+  }
+
+  @Post('verify-otp')
+  @Throttle({ default: { limit: 3, ttl: 180000 } })
+  async verifyOtp(@Body() dto: VerifyOtpDto) {
+    const resetToken = await this.authService.verifyOtp(dto);
+    return { resetToken, message: 'Token is valid' };
+  }
+
+  @Post('reset-password')
+  @Throttle({ default: { limit: 3, ttl: 180000 } })
+  async resetPassword(@Body() dto: ResetPasswordDto) {
+    await this.authService.resetPassword(dto);
+    return { message: 'Password was reset is successfully' };
   }
 }

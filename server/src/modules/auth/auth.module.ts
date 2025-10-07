@@ -7,12 +7,16 @@ import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { LogService } from 'src/common/logging/log.service';
 
+// modules
+import { MailModule } from '../mailer/mailer.module';
+
 // controllers
 import { AuthController } from './auth.controller';
 
 @Module({
   imports: [
     PassportModule,
+    MailModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
