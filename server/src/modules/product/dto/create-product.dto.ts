@@ -1,6 +1,9 @@
+import { Genders, Sizes } from '@prisma/client';
 import {
   ArrayNotEmpty,
   IsArray,
+  IsBoolean,
+  IsEnum,
   IsInt,
   IsPositive,
   IsString,
@@ -20,9 +23,18 @@ export class CreateProductDto {
   @Length(10, 256)
   description: string;
 
+  @IsBoolean()
+  available: boolean;
+
   @IsInt()
   @IsPositive()
   price: number;
+
+  @IsEnum(Genders)
+  sex: Genders;
+
+  @IsEnum(Sizes, { each: true })
+  sizes: Sizes[];
 
   @IsArray()
   @ArrayNotEmpty()

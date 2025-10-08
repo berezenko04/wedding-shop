@@ -1,10 +1,22 @@
-import { Controller, Get, Param, ParseUUIDPipe, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Body,
+  ParseUUIDPipe,
+  Post,
+  Query,
+} from '@nestjs/common';
 
 // services
 import { ProductService } from './product.service';
 
+// decorators
+import { Auth } from '../auth/decorators/auth.decorator';
+
 // dto
 import { GetAllProductsDto } from './dto/get-all-products.dto';
+import { CreateProductDto } from './dto/create-product.dto';
 
 @Controller('products')
 export class ProductController {
@@ -18,5 +30,12 @@ export class ProductController {
   @Get(':id')
   async get(@Param('id', new ParseUUIDPipe()) productId: string) {
     return this.productService.get(productId);
+  }
+
+  @Post()
+  @Auth()
+  async create(@Body() dto: CreateProductDto) {
+    await this.productService.create(dto);
+    return { message: 'Product has been successfully added' };
   }
 }

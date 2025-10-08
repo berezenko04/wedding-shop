@@ -5,9 +5,13 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 // dto
 import { GetAllProductsDto } from './dto/get-all-products.dto';
+import { CreateProductDto } from './dto/create-product.dto';
 
 // types
 import { ProductsSortBy } from 'src/types/enums';
+
+// utils
+import { createSlug } from 'src/utils/createSlug';
 
 @Injectable()
 export class ProductService {
@@ -66,5 +70,22 @@ export class ProductService {
     });
     if (!product) throw new NotFoundException('Product is not found');
     return product;
+  }
+
+  async create(dto: CreateProductDto) {
+    const { screenshots, ...rest } = dto;
+
+    const result = await this.prisma.product.create({
+      data: { ...rest, slug: createSlug(rest.title) },
+    });
+
+    await this.prisma.productImage.createMany({
+      data: screenshots.map((url) => ({
+        productId: result.id,
+        url,
+      })),
+    });
+
+    return true;
   }
 }

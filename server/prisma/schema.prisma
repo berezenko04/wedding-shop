@@ -89,6 +89,7 @@ model Product {
   title       String
   description String
   sex         Genders
+  slug        String
   posterUrl   String  @map("poster_url")
   price       Float
   discount    Float?
