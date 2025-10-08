@@ -5,6 +5,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 // dto
 import { GetAllProductsDto } from './dto/get-all-products.dto';
+
+// types
 import { ProductsSortBy } from 'src/types/enums';
 
 @Injectable()

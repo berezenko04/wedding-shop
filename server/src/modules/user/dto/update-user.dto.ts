@@ -1,5 +1,5 @@
+import { Genders } from '@prisma/client';
 import { IsEnum, IsOptional, Length } from 'class-validator';
-import { Sex } from 'src/types/enums';
 
 export class UpdateUserDto {
   @IsOptional()
@@ -15,6 +15,6 @@ export class UpdateUserDto {
   lastName?: string;
 
   @IsOptional()
-  @IsEnum(Sex)
-  sex?: Sex;
+  @IsEnum(Genders)
+  sex?: Genders;
 }

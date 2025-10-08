@@ -84,20 +84,11 @@ model Session {
   @@map("sessions")
 }
 
-model Category {
-  id      String    @id @default(uuid()) @db.Uuid
-  name    String
-  gender  Genders
-  product Product[]
-
-  @@map("categories")
-}
-
 model Product {
   id          String  @id @default(uuid()) @db.Uuid
   title       String
   description String
-  categoryId  String  @map("category_id") @db.Uuid
+  sex         Genders
   posterUrl   String  @map("poster_url")
   price       Float
   discount    Float?
@@ -107,7 +98,6 @@ model Product {
   review       Review[]
   cartItem     CartItem[]
   productImage ProductImage[]
-  category     Category       @relation(fields: [categoryId], references: [id])
 
   createdAt DateTime    @default(now()) @map("created_at")
   updatedAt DateTime    @updatedAt @map("updated_at")
@@ -116,7 +106,6 @@ model Product {
 
   @@index([available])
   @@index([price])
-  @@index([categoryId, price])
   @@map("products")
 }
 

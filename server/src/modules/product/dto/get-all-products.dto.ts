@@ -7,6 +7,8 @@ import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 // decorators
 import { MinLessThanMax } from '../decorators/min-less-than-max.decorator';
+
+// types
 import { ProductsSortBy } from 'src/types/enums';
 
 export class GetAllProductsDto extends PaginationDto {
