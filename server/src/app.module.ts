@@ -12,6 +12,7 @@ import { LogService } from './common/logging/log.service';
 
 // filters
 import { AllExceptionsFilter } from './common/filters/all-exception.filter';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { AllExceptionsFilter } from './common/filters/all-exception.filter';
     ThrottlerModule.forRoot({ throttlers: [{ ttl: 60000, limit: 100 }] }),
     PrismaModule,
     AuthModule,
+    UserModule,
   ],
   controllers: [],
   providers: [
