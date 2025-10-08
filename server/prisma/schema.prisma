@@ -95,16 +95,17 @@ model Product {
   discount    Float?
   available   Boolean
 
-  sizes        Sizes[]
-  review       Review[]
-  cartItem     CartItem[]
-  productImage ProductImage[]
+  sizes    Sizes[]
+  review   Review[]
+  cartItem CartItem[]
+  images   ProductImage[]
 
   createdAt DateTime    @default(now()) @map("created_at")
   updatedAt DateTime    @updatedAt @map("updated_at")
   Wishlist  Wishlist[]
   OrderItem OrderItem[]
 
+  @@unique([slug])
   @@index([available])
   @@index([price])
   @@map("products")
