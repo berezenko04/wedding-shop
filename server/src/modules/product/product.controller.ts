@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Param, ParseUUIDPipe, Query } from '@nestjs/common';
 
 // services
 import { ProductService } from './product.service';
@@ -13,5 +13,10 @@ export class ProductController {
   @Get()
   async all(@Query() dto: GetAllProductsDto) {
     return this.productService.all(dto);
+  }
+
+  @Get(':id')
+  async get(@Param('id', new ParseUUIDPipe()) productId: string) {
+    return this.productService.get(productId);
   }
 }
