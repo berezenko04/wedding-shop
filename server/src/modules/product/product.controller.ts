@@ -27,6 +27,11 @@ export class ProductController {
     return this.productService.all(dto);
   }
 
+  @Get('by-slug/:slug')
+  async getBySlug(@Param('slug') slug: string) {
+    return this.productService.getBySlug(slug);
+  }
+
   @Get(':id')
   async get(@Param('id', new ParseUUIDPipe()) productId: string) {
     return this.productService.get(productId);
