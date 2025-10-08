@@ -36,7 +36,9 @@ export class AllExceptionsFilter implements ExceptionFilter {
       message =
         typeof exceptionResponse === 'string'
           ? exceptionResponse
-          : (exceptionResponse as any)?.message || message;
+          : Array.isArray((exceptionResponse as any)?.message)
+            ? (exceptionResponse as any).message.join(', ')
+            : (exceptionResponse as any)?.message || message;
       error = (exceptionResponse as any)?.error || exception.name || error;
       details =
         typeof exceptionResponse === 'object' &&

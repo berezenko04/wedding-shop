@@ -1,4 +1,4 @@
-export enum Sex {
-  MALE = 'male',
-  FEMALE = 'female',
+export enum ProductsSortBy {
+  PRICE_ASC = 'price_asc',
+  PRICE_DESC = 'price_desc',
 }

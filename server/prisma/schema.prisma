@@ -30,8 +30,8 @@ enum Sizes {
 }
 
 enum Genders {
-  male   @map("Male")
-  female @map("Female")
+  male   @map("male")
+  female @map("female")
 }
 
 enum Rating {
@@ -84,39 +84,30 @@ model Session {
   @@map("sessions")
 }
 
-model Category {
-  id      String    @id @default(uuid()) @db.Uuid
-  name    String
-  gender  Genders
-  product Product[]
-
-  @@map("categories")
-}
-
 model Product {
   id          String  @id @default(uuid()) @db.Uuid
   title       String
   description String
-  categoryId  String  @map("category_id") @db.Uuid
+  sex         Genders
+  slug        String
   posterUrl   String  @map("poster_url")
   price       Float
   discount    Float?
   available   Boolean
 
-  sizes        Sizes[]
-  review       Review[]
-  cartItem     CartItem[]
-  productImage ProductImage[]
-  category     Category       @relation(fields: [categoryId], references: [id])
+  sizes    Sizes[]
+  review   Review[]
+  cartItem CartItem[]
+  images   ProductImage[]
 
   createdAt DateTime    @default(now()) @map("created_at")
   updatedAt DateTime    @updatedAt @map("updated_at")
   Wishlist  Wishlist[]
   OrderItem OrderItem[]
 
+  @@unique([slug])
   @@index([available])
   @@index([price])
-  @@index([categoryId, price])
   @@map("products")
 }
 
