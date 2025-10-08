@@ -27,7 +27,8 @@ export class UserController {
 
   @Patch()
   async update(@User('id') userId: string, @Body() dto: UpdateUserDto) {
-    return this.userService.update(userId, dto);
+    await this.userService.update(userId, dto);
+    return { message: 'Updated successfully' };
   }
 
   @Get('sessions')
