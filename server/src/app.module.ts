@@ -13,6 +13,7 @@ import { LogService } from './common/logging/log.service';
 // filters
 import { AllExceptionsFilter } from './common/filters/all-exception.filter';
 import { UserModule } from './modules/user/user.module';
+import { GeoModule } from './modules/auth/geo/geo.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { UserModule } from './modules/user/user.module';
     PrismaModule,
     AuthModule,
     UserModule,
+    GeoModule,
   ],
   controllers: [],
   providers: [
