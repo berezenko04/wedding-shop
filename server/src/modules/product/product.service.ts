@@ -5,13 +5,14 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 // dto
 import { GetAllProductsDto } from './dto/get-all-products.dto';
+import { ProductsSortBy } from 'src/types/enums';
 
 @Injectable()
 export class ProductService {
   constructor(private readonly prisma: PrismaService) {}
 
   async all(dto: GetAllProductsDto) {
-    const { page, limit, minPrice, maxPrice, size } = dto;
+    const { page, limit, minPrice, maxPrice, size, sortBy } = dto;
 
     const where: any = {};
 
@@ -25,11 +26,23 @@ export class ProductService {
       where.sizes = { has: size };
     }
 
+    let orderBy: any = {};
+
+    switch (sortBy) {
+      case ProductsSortBy.PRICE_ASC:
+        orderBy = { price: 'asc' };
+        break;
+      case ProductsSortBy.PRICE_DESC:
+        orderBy = { price: 'desc' };
+        break;
+    }
+
     const [products, total] = await this.prisma.$transaction([
       this.prisma.product.findMany({
         skip: (page - 1) * limit,
         take: limit,
         where,
+        orderBy,
         select: {
           id: true,
           posterUrl: true,

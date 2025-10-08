@@ -30,8 +30,8 @@ enum Sizes {
 }
 
 enum Genders {
-  male   @map("Male")
-  female @map("Female")
+  male   @map("male")
+  female @map("female")
 }
 
 enum Rating {

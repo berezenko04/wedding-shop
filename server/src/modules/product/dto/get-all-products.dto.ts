@@ -7,6 +7,7 @@ import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 // decorators
 import { MinLessThanMax } from '../decorators/min-less-than-max.decorator';
+import { ProductsSortBy } from 'src/types/enums';
 
 export class GetAllProductsDto extends PaginationDto {
   @Min(0)
@@ -21,6 +22,10 @@ export class GetAllProductsDto extends PaginationDto {
   @Type(() => Number)
   @MinLessThanMax('maxPrice')
   maxPrice?: number;
+
+  @IsOptional()
+  @IsEnum(ProductsSortBy)
+  sortBy?: ProductsSortBy;
 
   @IsEnum(Sizes)
   @IsOptional()
