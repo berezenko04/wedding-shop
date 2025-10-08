@@ -13,7 +13,8 @@ import { LogService } from './common/logging/log.service';
 // filters
 import { AllExceptionsFilter } from './common/filters/all-exception.filter';
 import { UserModule } from './modules/user/user.module';
-import { GeoModule } from './modules/auth/geo/geo.module';
+import { GeoModule } from './modules/geo/geo.module';
+import { ProductModule } from './modules/product/product.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { GeoModule } from './modules/auth/geo/geo.module';
     AuthModule,
     UserModule,
     GeoModule,
+    ProductModule,
   ],
   controllers: [],
   providers: [
