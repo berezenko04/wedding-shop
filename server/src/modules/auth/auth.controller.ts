@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Param,
   Post,
   Req,
   Res,
@@ -17,6 +18,8 @@ import { AuthService } from './auth.service';
 // dto
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { VerifyOtpDto } from './dto/verify-otp.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 // guards
 import { JwtRefreshGuard } from './guards/refresh.guard';
@@ -24,6 +27,7 @@ import { JwtRefreshGuard } from './guards/refresh.guard';
 // decorators
 import { IpAddress } from './decorators/ip.decorator';
 import { User } from 'src/common/decorators/user.decorator';
+import { Auth } from './decorators/auth.decorator';
 
 // utils
 import { getDeviceInfo } from 'src/utils/getDeviceInfo';
@@ -79,7 +83,7 @@ export class AuthController {
       sameSite: isProd ? 'strict' : 'lax',
       maxAge: isProd
         ? parseInt(this.configService.get<string>('JWT_ACCESS_EXPIRY')!)
-        : 30 * 24 * 60 * 60 * 1000,
+        : 15 * 24 * 60 * 60 * 1000,
     });
 
     res.cookie('refreshToken', refreshToken, {
@@ -126,5 +130,71 @@ export class AuthController {
     } catch {
       throw new UnauthorizedException('Token refresh failed');
     }
+  }
+
+  @Post('forgot-password')
+  @Throttle({ default: { limit: 1, ttl: 60000 } })
+  async forgotPassword(@Body('email') email: string) {
+    await this.authService.sendForgotPasswordOtp(email);
+    return { message: 'Reset password mail has been send' };
+  }
+
+  @Post('verify-otp')
+  @Throttle({ default: { limit: 3, ttl: 180000 } })
+  async verifyOtp(@Body() dto: VerifyOtpDto) {
+    const resetToken = await this.authService.verifyOtp(dto);
+    return { resetToken, message: 'Token is valid' };
+  }
+
+  @Post('reset-password')
+  @Throttle({ default: { limit: 3, ttl: 180000 } })
+  async resetPassword(@Body() dto: ResetPasswordDto) {
+    await this.authService.resetPassword(dto);
+    return { message: 'Password was reset is successfully' };
+  }
+
+  @Post('logout')
+  @Throttle({ default: { limit: 5, ttl: 60000 } })
+  async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+    const refreshToken = req.cookies['refreshToken'];
+
+    res.cookie('accessToken', '', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+      maxAge: 0,
+    });
+
+    res.cookie('refreshToken', '', {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+      maxAge: 0,
+    });
+
+    await this.authService.logout(refreshToken);
+
+    return { message: 'Successfully logged out' };
+  }
+
+  @Post('logout/:id')
+  @Auth()
+  async logoutAnother(
+    @Param('id') sessionId: string,
+    @User('id') userId: string,
+  ) {
+    await this.authService.logoutFromAnotherSession(userId, sessionId);
+    return { message: 'Session has been successfully logged out' };
+  }
+
+  @Post('logout-all')
+  @Throttle({ default: { limit: 3, ttl: 120000 } })
+  @Auth()
+  async logoutAll(@User('id') userId: string, @Req() req: Request) {
+    const refreshToken = req.cookies['refreshToken'];
+    await this.authService.logoutAll(userId, refreshToken);
+    return {
+      message: 'Successfully logged out from all sessions without active',
+    };
   }
 }
