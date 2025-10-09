@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  Param,
   ParseUUIDPipe,
   Post,
   Query,
@@ -32,5 +34,14 @@ export class WishlistController {
   @Get()
   async get(@User('id') userId: string, @Query() dto: PaginationDto) {
     return this.wishlistService.get(userId, dto);
+  }
+
+  @Delete(':id')
+  async remove(
+    @User('id') userId: string,
+    @Param('id') wishlistItemId: string,
+  ) {
+    await this.wishlistService.remove(userId, wishlistItemId);
+    return { message: 'Product has been removed from wishlist' };
   }
 }
