@@ -41,7 +41,9 @@ export class CartService {
           size,
         },
       },
-      update: {},
+      update: {
+        quantity,
+      },
       create: {
         cartId: cart.id,
         productId,
