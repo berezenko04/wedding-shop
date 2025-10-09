@@ -16,6 +16,7 @@ import { UserModule } from './modules/user/user.module';
 import { GeoModule } from './modules/geo/geo.module';
 import { ProductModule } from './modules/product/product.module';
 import { CartModule } from './modules/cart/cart.module';
+import { ReviewModule } from './modules/review/review.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { CartModule } from './modules/cart/cart.module';
     GeoModule,
     ProductModule,
     CartModule,
+    ReviewModule,
   ],
   controllers: [],
   providers: [
