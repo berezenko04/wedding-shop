@@ -86,12 +86,10 @@ export class CartService {
 
     if (!cart) throw new NotFoundException('Cart not found');
 
-    const { itemId } = dto;
-
     try {
       await this.prisma.cartItem.delete({
         where: {
-          id: itemId,
+          id: dto.id,
           cartId: cart.id,
         },
       });
