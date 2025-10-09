@@ -52,4 +52,11 @@ export class CartService {
 
     return cartItem;
   }
+
+  async getCart(userId: string) {
+    return this.prisma.cart.findMany({
+      where: { userId },
+      include: { items: true },
+    });
+  }
 }
