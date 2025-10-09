@@ -55,7 +55,7 @@ export class ReviewService {
         skip: (page - 1) * limit,
         take: limit,
         where: { userId },
-        select: { id: true, userId: true, comment: true, rating: true },
+        select: { id: true, comment: true, rating: true },
       }),
       this.prisma.review.count({ where: { userId } }),
     ]);
