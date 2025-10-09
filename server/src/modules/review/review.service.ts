@@ -23,4 +23,13 @@ export class ReviewService {
       throw new ConflictException('Review is already exist for this product');
     }
   }
+
+  async getProductReviews(productId: string) {
+    await this.productService.get(productId);
+    return this.prisma.review.findMany({
+      where: { productId },
+      select: { id: true, userId: true, comment: true, rating: true },
+      take: 10,
+    });
+  }
 }

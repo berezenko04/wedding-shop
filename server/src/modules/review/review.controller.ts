@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
 // services
 import { ReviewService } from './review.service';
@@ -19,5 +19,10 @@ export class ReviewController {
   async create(@User('id') userId: string, @Body() dto: CreateReviewDto) {
     await this.reviewService.create(userId, dto);
     return { message: 'Review was created' };
+  }
+
+  @Get('product/:productId')
+  async getByProduct(@Param('productId') productId: string) {
+    return this.reviewService.getProductReviews(productId);
   }
 }
