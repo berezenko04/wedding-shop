@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
 // services
 import { ProductService } from '../product/product.service';
@@ -57,5 +61,15 @@ export class ReviewService {
     ]);
 
     return { reviews, total };
+  }
+
+  async deleteReview(userId: string, reviewId: string) {
+    const review = await this.prisma.review.findUnique({
+      where: { id: reviewId, userId },
+    });
+
+    if (!review) throw new NotFoundException('Review is not found');
+
+    await this.prisma.review.delete({ where: { id: reviewId } });
   }
 }

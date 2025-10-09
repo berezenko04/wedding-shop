@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  Query,
+} from '@nestjs/common';
 
 // services
 import { ReviewService } from './review.service';
@@ -34,5 +43,15 @@ export class ReviewController {
   @Get('my')
   async getMine(@User('id') userId: string, @Query() dto: PaginationDto) {
     return this.reviewService.getMineReviews(userId, dto);
+  }
+
+  @Auth()
+  @Delete()
+  async delete(
+    @User('id') userId: string,
+    @Query('id', new ParseUUIDPipe()) reviewId: string,
+  ) {
+    await this.reviewService.deleteReview(userId, reviewId);
+    return { message: 'Review is deleted' };
   }
 }
