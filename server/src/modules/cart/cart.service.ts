@@ -56,12 +56,12 @@ export class CartService {
   }
 
   async getCart(userId: string) {
-    return this.prisma.cart.findMany({
+    return this.prisma.cart.findUnique({
       where: { userId },
       select: {
-        id: true,
         items: {
           select: {
+            id: true,
             quantity: true,
             size: true,
             product: {
