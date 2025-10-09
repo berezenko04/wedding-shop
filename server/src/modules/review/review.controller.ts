@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 
 // services
 import { ReviewService } from './review.service';
@@ -9,6 +9,7 @@ import { Auth } from '../auth/decorators/auth.decorator';
 
 // dto
 import { CreateReviewDto } from './dto/create-review.dto';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Controller('reviews')
 export class ReviewController {
@@ -22,7 +23,16 @@ export class ReviewController {
   }
 
   @Get('product/:productId')
-  async getByProduct(@Param('productId') productId: string) {
-    return this.reviewService.getProductReviews(productId);
+  async getByProduct(
+    @Param('productId') productId: string,
+    @Query() dto: PaginationDto,
+  ) {
+    return this.reviewService.getProductReviews(productId, dto);
+  }
+
+  @Auth()
+  @Get('my')
+  async getMine(@User('id') userId: string, @Query() dto: PaginationDto) {
+    return this.reviewService.getMineReviews(userId, dto);
   }
 }
