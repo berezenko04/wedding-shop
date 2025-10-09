@@ -15,6 +15,7 @@ import { AllExceptionsFilter } from './common/filters/all-exception.filter';
 import { UserModule } from './modules/user/user.module';
 import { GeoModule } from './modules/geo/geo.module';
 import { ProductModule } from './modules/product/product.module';
+import { CartModule } from './modules/cart/cart.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { ProductModule } from './modules/product/product.module';
     UserModule,
     GeoModule,
     ProductModule,
+    CartModule,
   ],
   controllers: [],
   providers: [
