@@ -58,7 +58,23 @@ export class CartService {
   async getCart(userId: string) {
     return this.prisma.cart.findMany({
       where: { userId },
-      include: { items: true },
+      select: {
+        id: true,
+        items: {
+          select: {
+            quantity: true,
+            size: true,
+            product: {
+              select: {
+                title: true,
+                posterUrl: true,
+                price: true,
+                discount: true,
+              },
+            },
+          },
+        },
+      },
     });
   }
 }
