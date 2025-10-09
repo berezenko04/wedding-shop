@@ -6,6 +6,7 @@ import { ProductService } from '../product/product.service';
 
 // dto
 import { AddToCartDto } from './dto/add-to-cart.dto';
+import { DeleteFromCartDto } from './dto/delete-from-cart.dto';
 
 @Injectable()
 export class CartService {
@@ -76,5 +77,26 @@ export class CartService {
         },
       },
     });
+  }
+
+  async deleteFromCart(userId: string, dto: DeleteFromCartDto) {
+    const cart = await this.prisma.cart.findUnique({
+      where: { userId },
+    });
+
+    if (!cart) throw new NotFoundException('Cart not found');
+
+    const { itemId } = dto;
+
+    try {
+      await this.prisma.cartItem.delete({
+        where: {
+          id: itemId,
+          cartId: cart.id,
+        },
+      });
+    } catch {
+      throw new NotFoundException('Item not found in cart');
+    }
   }
 }

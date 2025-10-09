@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common';
 
 // services
 import { CartService } from './cart.service';
@@ -9,6 +9,7 @@ import { User } from 'src/common/decorators/user.decorator';
 
 // dto
 import { AddToCartDto } from './dto/add-to-cart.dto';
+import { DeleteFromCartDto } from './dto/delete-from-cart.dto';
 
 @Auth()
 @Controller('cart')
@@ -23,5 +24,11 @@ export class CartController {
   @Get()
   async get(@User('id') userId: string) {
     return this.cartService.getCart(userId);
+  }
+
+  @Delete()
+  async delete(@User('id') userId: string, @Query() dto: DeleteFromCartDto) {
+    await this.cartService.deleteFromCart(userId, dto);
+    return { message: 'Item removed from cart' };
   }
 }
