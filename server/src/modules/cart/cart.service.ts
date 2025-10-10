@@ -57,7 +57,7 @@ export class CartService {
   }
 
   async getCart(userId: string) {
-    return this.prisma.cart.findUnique({
+    const cart = await this.prisma.cart.findUnique({
       where: { userId },
       select: {
         items: {
@@ -77,6 +77,8 @@ export class CartService {
         },
       },
     });
+
+    return cart?.items || [];
   }
 
   async deleteFromCart(userId: string, dto: DeleteFromCartDto) {
