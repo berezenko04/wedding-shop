@@ -18,6 +18,18 @@ enum ShipmentStatuses {
   DELIVERED @map("Delivered")
 }
 
+enum PaymentMethods {
+  PAYPAL @map("Paypal")
+  CARD   @map("Card")
+  AMAZON @map("Amazon")
+}
+
+enum ShippingMethods {
+  COURIER @map("courier")
+  DHL     @map("dhl")
+  PICKUP  @map("pickup")
+}
+
 enum Sizes {
   XXS
   XS
@@ -210,8 +222,8 @@ model Order {
   orderNumber     Int              @default(autoincrement()) @map("order_number")
   shippingAddress String           @map("shipping_address")
   trackingNumber  String           @map("tracking_number")
-  shippingMethod  String           @map("shipping_method")
-  paymentMethod   String           @map("payment_method")
+  shippingMethod  ShippingMethods  @map("shipping_method")
+  paymentMethod   PaymentMethods   @map("payment_method")
   status          ShipmentStatuses @default(DELIVERED)
 
   user  User        @relation(fields: [userId], references: [id])
