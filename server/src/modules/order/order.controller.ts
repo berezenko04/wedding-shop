@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 
 // service
 import { OrderService } from './order.service';
@@ -19,5 +19,10 @@ export class OrderController {
   async create(@User('id') userId: string, @Body() dto: CreateOrderDto) {
     await this.orderService.create(userId, dto);
     return { message: 'Order is created' };
+  }
+
+  @Get()
+  async all(@User('id') userId: string) {
+    return this.orderService.all(userId);
   }
 }

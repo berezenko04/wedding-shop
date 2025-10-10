@@ -51,4 +51,29 @@ export class OrderService {
 
     await this.prisma.cart.delete({ where: { userId } });
   }
+
+  async all(userId: string) {
+    return this.prisma.order.findMany({
+      where: { userId },
+      select: {
+        id: true,
+        shippingAddress: true,
+        shippingMethod: true,
+        trackingNumber: true,
+        paymentMethod: true,
+        createdAt: true,
+        items: {
+          select: {
+            quantity: true,
+            price: true,
+            discount: true,
+            size: true,
+            product: {
+              select: { posterUrl: true, title: true },
+            },
+          },
+        },
+      },
+    });
+  }
 }
