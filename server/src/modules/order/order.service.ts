@@ -62,6 +62,7 @@ export class OrderService {
       where: { userId },
       select: {
         id: true,
+        orderNumber: true,
         shippingAddress: true,
         shippingMethod: true,
         trackingNumber: true,
