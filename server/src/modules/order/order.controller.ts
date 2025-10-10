@@ -5,8 +5,10 @@ import {
   Param,
   ParseUUIDPipe,
   Post,
+  Query,
   Res,
 } from '@nestjs/common';
+import { Response } from 'express';
 
 // service
 import { OrderService } from './order.service';
@@ -17,7 +19,7 @@ import { Auth } from '../auth/decorators/auth.decorator';
 
 // dto
 import { CreateOrderDto } from './dto/create-order.dto';
-import { Response } from 'express';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Controller('orders')
 @Auth()
@@ -31,8 +33,8 @@ export class OrderController {
   }
 
   @Get()
-  async all(@User('id') userId: string) {
-    return this.orderService.all(userId);
+  async all(@User('id') userId: string, @Query() dto: PaginationDto) {
+    return this.orderService.all(userId, dto);
   }
 
   @Get('csv/:id')

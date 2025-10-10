@@ -10,6 +10,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 // dto
 import { CreateOrderDto } from './dto/create-order.dto';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 // utils
 import { generateTrackingNumber } from 'src/utils/generateTrackingNumber';
@@ -57,30 +58,39 @@ export class OrderService {
     await this.prisma.cart.delete({ where: { userId } });
   }
 
-  async all(userId: string) {
-    return this.prisma.order.findMany({
-      where: { userId },
-      select: {
-        id: true,
-        orderNumber: true,
-        shippingAddress: true,
-        shippingMethod: true,
-        trackingNumber: true,
-        paymentMethod: true,
-        createdAt: true,
-        items: {
-          select: {
-            quantity: true,
-            price: true,
-            discount: true,
-            size: true,
-            product: {
-              select: { posterUrl: true, title: true },
+  async all(userId: string, dto: PaginationDto) {
+    const { page, limit } = dto;
+
+    const [orders, total] = await this.prisma.$transaction([
+      this.prisma.order.findMany({
+        skip: (page - 1) * limit,
+        take: limit,
+        where: { userId },
+        select: {
+          id: true,
+          orderNumber: true,
+          shippingAddress: true,
+          shippingMethod: true,
+          trackingNumber: true,
+          paymentMethod: true,
+          createdAt: true,
+          items: {
+            select: {
+              quantity: true,
+              price: true,
+              discount: true,
+              size: true,
+              product: {
+                select: { posterUrl: true, title: true },
+              },
             },
           },
         },
-      },
-    });
+      }),
+      this.prisma.order.count({ where: { userId } }),
+    ]);
+
+    return { orders, total };
   }
 
   async exportToCsv(userId: string, orderId: string) {
