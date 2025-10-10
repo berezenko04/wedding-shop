@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { Parser } from 'json2csv';
 
 // services
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -75,5 +80,46 @@ export class OrderService {
         },
       },
     });
+  }
+
+  async exportToCsv(userId: string, orderId: string) {
+    const order = await this.prisma.order.findUnique({
+      where: { id: orderId, userId },
+      select: {
+        items: {
+          select: {
+            quantity: true,
+            price: true,
+            discount: true,
+            size: true,
+            product: {
+              select: {
+                title: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!order) {
+      throw new NotFoundException('Order is not found');
+    }
+
+    const fields = ['title', 'quantity', 'price', 'discount', 'size'];
+    const opts = { fields };
+    const parser = new Parser(opts);
+
+    const csv = parser.parse(
+      order.items.map((i) => ({
+        title: i.product.title,
+        quantity: i.quantity,
+        price: i.price,
+        discount: i.discount ?? 0,
+        size: i.size,
+      })),
+    );
+
+    return csv;
   }
 }
