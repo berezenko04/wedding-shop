@@ -176,7 +176,7 @@ model CartItem {
   size      Sizes
 
   product Product @relation(fields: [productId], references: [id])
-  cart    Cart    @relation(fields: [cartId], references: [id])
+  cart    Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
