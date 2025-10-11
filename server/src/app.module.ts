@@ -19,6 +19,7 @@ import { CartModule } from './modules/cart/cart.module';
 import { ReviewModule } from './modules/review/review.module';
 import { WishlistModule } from './modules/wishlist/wishlist.module';
 import { OrderModule } from './modules/order/order.module';
+import { AddressModule } from './modules/address/address.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { OrderModule } from './modules/order/order.module';
     ReviewModule,
     WishlistModule,
     OrderModule,
+    AddressModule,
   ],
   controllers: [],
   providers: [
