@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -17,6 +18,14 @@ export class AddressService {
 
   async create(userId: string, dto: CreateAddressDto) {
     try {
+      const addressesCount = await this.prisma.shippingAddress.count({
+        where: { userId },
+      });
+
+      if (addressesCount >= 3) {
+        throw new BadRequestException('You can have a maximum of 3 addresses');
+      }
+
       await this.prisma.shippingAddress.create({ data: { userId, ...dto } });
     } catch (err) {
       console.log(err);
