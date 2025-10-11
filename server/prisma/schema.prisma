@@ -66,11 +66,12 @@ model User {
   review        Review[]
   cart          Cart[]
   passwordReset PasswordReset[]
+  wishlist      Wishlist[]
+  order         Order[]
+  addresses     ShippingAddress[]
 
-  createdAt DateTime   @default(now()) @map("created_at")
-  updatedAt DateTime   @updatedAt @map("updated_at")
-  Wishlist  Wishlist[]
-  Order     Order[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("users")
 }
@@ -107,15 +108,15 @@ model Product {
   discount    Float?
   available   Boolean
 
-  sizes    Sizes[]
-  review   Review[]
-  cartItem CartItem[]
-  images   ProductImage[]
+  sizes     Sizes[]
+  review    Review[]
+  cartItem  CartItem[]
+  images    ProductImage[]
+  wishlist  Wishlist[]
+  orderItem OrderItem[]
 
-  createdAt DateTime    @default(now()) @map("created_at")
-  updatedAt DateTime    @updatedAt @map("updated_at")
-  Wishlist  Wishlist[]
-  OrderItem OrderItem[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@unique([slug])
   @@index([available])
@@ -215,7 +216,7 @@ model Wishlist {
   @@index([productId])
   @@map("wishlists")
 }
-
+  
 model Order {
   id              String           @id @default(uuid()) @db.Uuid
   userId          String           @map("user_id") @db.Uuid
@@ -270,4 +271,17 @@ model Log {
   @@index([level])
   @@index([userId])
   @@map("logs")
+}
+
+model ShippingAddress {
+  id      String  @id @default(uuid()) @db.Uuid
+  userId  String  @db.Uuid
+  address String
+  primary Boolean
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, primary])
+  @@index([userId])
+  @@map("shipping_addresses")
 }
