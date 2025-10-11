@@ -1,11 +1,13 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseUUIDPipe,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 
 // services
@@ -47,5 +49,11 @@ export class AddressController {
   async update(@User('id') userId: string, @Body() dto: UpdateAddressDto) {
     await this.addressService.update(userId, dto);
     return { message: 'Address was successfully updated' };
+  }
+
+  @Delete()
+  async delete(@User('id') userId: string, @Query('id') addressId: string) {
+    await this.addressService.delete(userId, addressId);
+    return { message: 'Address was successfully deleted' };
   }
 }

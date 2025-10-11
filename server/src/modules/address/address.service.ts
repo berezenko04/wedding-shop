@@ -44,7 +44,7 @@ export class AddressService {
 
   async update(userId: string, dto: UpdateAddressDto) {
     const { addressId, address, primary } = dto;
-    await this.get(userId, dto.addressId);
+    await this.get(userId, addressId);
 
     try {
       await this.prisma.shippingAddress.update({
@@ -54,5 +54,13 @@ export class AddressService {
     } catch {
       throw new ConflictException('You are already have a primary address');
     }
+  }
+
+  async delete(userId: string, addressId: string) {
+    await this.get(userId, addressId);
+
+    await this.prisma.shippingAddress.delete({
+      where: { id: addressId, userId },
+    });
   }
 }
