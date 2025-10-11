@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Post,
+} from '@nestjs/common';
 
 // services
 import { AddressService } from './address.service';
@@ -24,5 +31,13 @@ export class AddressController {
   @Get()
   async all(@User('id') userId: string) {
     return this.addressService.all(userId);
+  }
+
+  @Get(':id')
+  async get(
+    @User('id') userId: string,
+    @Param('id', new ParseUUIDPipe()) addressId: string,
+  ) {
+    return this.addressService.get(userId, addressId);
   }
 }

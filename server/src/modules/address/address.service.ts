@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
 // service
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -24,5 +28,16 @@ export class AddressService {
       where: { userId },
       select: { id: true, address: true, primary: true },
     });
+  }
+
+  async get(userId: string, addressId: string) {
+    try {
+      return this.prisma.shippingAddress.findUnique({
+        where: { id: addressId, userId },
+        select: { address: true, primary: true },
+      });
+    } catch {
+      throw new NotFoundException('Address is not found');
+    }
   }
 }
