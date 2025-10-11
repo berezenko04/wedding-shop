@@ -216,7 +216,7 @@ model Wishlist {
   @@index([productId])
   @@map("wishlists")
 }
-  
+
 model Order {
   id              String           @id @default(uuid()) @db.Uuid
   userId          String           @map("user_id") @db.Uuid
@@ -281,7 +281,6 @@ model ShippingAddress {
 
   user User @relation(fields: [userId], references: [id])
 
-  @@unique([userId, primary])
   @@index([userId])
   @@map("shipping_addresses")
 }

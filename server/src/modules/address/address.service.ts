@@ -17,20 +17,28 @@ export class AddressService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(userId: string, dto: CreateAddressDto) {
-    try {
-      const addressesCount = await this.prisma.shippingAddress.count({
-        where: { userId },
-      });
+    const addressesCount = await this.prisma.shippingAddress.count({
+      where: { userId },
+    });
 
-      if (addressesCount >= 3) {
-        throw new BadRequestException('You can have a maximum of 3 addresses');
-      }
-
-      await this.prisma.shippingAddress.create({ data: { userId, ...dto } });
-    } catch (err) {
-      console.log(err);
-      throw new ConflictException('You are already have a primary address');
+    if (addressesCount >= 3) {
+      throw new BadRequestException('You can have a maximum of 3 addresses');
     }
+
+    const hasPrimary = await this.prisma.shippingAddress.findFirst({
+      where: { userId, primary: true },
+    });
+
+    if (hasPrimary) {
+      await this.prisma.shippingAddress.update({
+        where: { id: hasPrimary.id },
+        data: { primary: false },
+      });
+    }
+
+    return this.prisma.shippingAddress.create({
+      data: { userId, address: dto.address, primary: true },
+    });
   }
 
   async all(userId: string) {
