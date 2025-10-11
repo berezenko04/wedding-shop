@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 
 // services
 import { AddressService } from './address.service';
@@ -19,5 +19,10 @@ export class AddressController {
   async create(@User('id') userId: string, @Body() dto: CreateAddressDto) {
     await this.addressService.create(userId, dto);
     return { message: 'Address is created' };
+  }
+
+  @Get()
+  async all(@User('id') userId: string) {
+    return this.addressService.all(userId);
   }
 }

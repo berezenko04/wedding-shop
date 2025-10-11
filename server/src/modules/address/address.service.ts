@@ -18,4 +18,11 @@ export class AddressService {
       throw new ConflictException('You are already have a primary address');
     }
   }
+
+  async all(userId: string) {
+    return this.prisma.shippingAddress.findMany({
+      where: { userId },
+      select: { id: true, address: true, primary: true },
+    });
+  }
 }
