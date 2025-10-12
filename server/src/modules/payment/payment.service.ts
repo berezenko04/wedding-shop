@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
 // services
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -71,5 +75,15 @@ export class PaymentService {
         cardHolder: true,
       },
     });
+  }
+
+  async get(userId: string, paymentId: string) {
+    try {
+      return this.prisma.payment.findUnique({
+        where: { id: paymentId, userId },
+      });
+    } catch {
+      throw new NotFoundException('Payment method is not found');
+    }
   }
 }
