@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 
 // services
 import { PaymentService } from './payment.service';
@@ -19,5 +19,10 @@ export class PaymentController {
   async add(@User('id') userId: string, @Body() dto: AddPaymentDto) {
     await this.paymentService.add(userId, dto);
     return { message: 'Payment method has been successfully added' };
+  }
+
+  @Get()
+  async all(@User('id') userId: string) {
+    return this.paymentService.all(userId);
   }
 }
