@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Query,
 } from '@nestjs/common';
@@ -17,6 +18,7 @@ import { Auth } from '../auth/decorators/auth.decorator';
 
 // dto
 import { AddPaymentDto } from './dto/add-payment.dto';
+import { UpdatePaymentDto } from './dto/update-payment.dto';
 
 @Controller('payment')
 @Auth()
@@ -37,6 +39,12 @@ export class PaymentController {
   @Get(':id')
   async get(@User('id') userId: string, @Param('id') paymentId: string) {
     return this.paymentService.get(userId, paymentId);
+  }
+
+  @Patch()
+  async update(@User('id') userId: string, @Body() dto: UpdatePaymentDto) {
+    await this.paymentService.update(userId, dto);
+    return { messasge: 'Payment method was updated' };
   }
 
   @Delete()

@@ -9,6 +9,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 // dto
 import { AddPaymentDto } from './dto/add-payment.dto';
+import { UpdatePaymentDto } from './dto/update-payment.dto';
 
 // types
 import { PaymentMethods } from '@prisma/client';
@@ -80,6 +81,23 @@ export class PaymentService {
     } catch {
       throw new NotFoundException('Payment method is not found');
     }
+  }
+
+  async update(userId: string, dto: UpdatePaymentDto) {
+    const { paymentId, primary } = dto;
+
+    await this.get(userId, paymentId);
+
+    await this.prisma.$transaction(async (tx) => {
+      await tx.payment.updateMany({
+        where: { userId, primary: true, id: { not: paymentId } },
+        data: { primary: false },
+      });
+      await tx.payment.update({
+        where: { id: paymentId },
+        data: { primary },
+      });
+    });
   }
 
   async delete(userId: string, paymentId: string) {
