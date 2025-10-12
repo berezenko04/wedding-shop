@@ -76,4 +76,12 @@ export class PaymentService {
       throw new NotFoundException('Payment method is not found');
     }
   }
+
+  async delete(userId: string, paymentId: string) {
+    await this.get(userId, paymentId);
+
+    return this.prisma.payment.delete({
+      where: { id: paymentId, userId },
+    });
+  }
 }

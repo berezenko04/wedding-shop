@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 
 // services
 import { PaymentService } from './payment.service';
@@ -29,5 +37,11 @@ export class PaymentController {
   @Get(':id')
   async get(@User('id') userId: string, @Param('id') paymentId: string) {
     return this.paymentService.get(userId, paymentId);
+  }
+
+  @Delete()
+  async delete(@User('id') userId: string, @Query('id') paymentId: string) {
+    await this.paymentService.delete(userId, paymentId);
+    return { message: 'Payment method was removed' };
   }
 }
