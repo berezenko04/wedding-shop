@@ -20,6 +20,7 @@ import { ReviewModule } from './modules/review/review.module';
 import { WishlistModule } from './modules/wishlist/wishlist.module';
 import { OrderModule } from './modules/order/order.module';
 import { AddressModule } from './modules/address/address.module';
+import { PaymentModule } from './modules/payment/payment.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { AddressModule } from './modules/address/address.module';
     WishlistModule,
     OrderModule,
     AddressModule,
+    PaymentModule,
   ],
   controllers: [],
   providers: [
