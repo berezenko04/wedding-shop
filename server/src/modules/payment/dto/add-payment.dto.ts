@@ -1,4 +1,3 @@
-import { PaymentMethods } from '@prisma/client';
 import {
   IsBoolean,
   IsCreditCard,
@@ -7,8 +6,15 @@ import {
   IsString,
   Length,
   Matches,
+  Validate,
   ValidateIf,
 } from 'class-validator';
+
+// types
+import { PaymentMethods } from '@prisma/client';
+
+// dto
+import { CardExpValidator } from './card-exp-validator.dto';
 
 export class AddPaymentDto {
   @IsEnum(PaymentMethods)
@@ -30,7 +36,8 @@ export class AddPaymentDto {
 
   @ValidateIf((o) => o.method === PaymentMethods.CARD)
   @IsString()
-  @Length(4, 5, { message: 'Card expiration must be in MM/YY format' })
+  @Length(5, 5, { message: 'Card expiration must be in MM/YY format' })
+  @Validate(CardExpValidator)
   cardExp?: string;
 
   @ValidateIf((o) => o.method === PaymentMethods.CARD)
