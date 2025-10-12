@@ -18,7 +18,7 @@ export class PaymentService {
   constructor(private readonly prisma: PrismaService) {}
 
   async add(userId: string, dto: AddPaymentDto) {
-    const { method } = dto;
+    const { primary, method } = dto;
 
     const existingPayments = await this.prisma.payment.findMany({
       where: { userId },
@@ -29,35 +29,40 @@ export class PaymentService {
         acc[p.method] = (acc[p.method] || 0) + 1;
         return acc;
       },
-      {} as Record<string, number>,
+      {} as Record<PaymentMethods, number>,
     );
 
-    if (
-      method === PaymentMethods.CARD &&
-      (countByMethod[PaymentMethods.CARD] ?? 0) >= 2
-    ) {
-      throw new BadRequestException('You can have up to 2 cards only');
+    const methodLimits: Record<PaymentMethods, number> = {
+      [PaymentMethods.CARD]: 2,
+      [PaymentMethods.PAYPAL]: 1,
+      [PaymentMethods.AMAZON]: 1,
+    };
+
+    if ((countByMethod[method] ?? 0) >= methodLimits[method]) {
+      throw new BadRequestException(
+        `You can have up to ${methodLimits[method]} ${method.toLowerCase()}${
+          methodLimits[method] > 1 ? 's' : ''
+        } only`,
+      );
     }
 
-    if (
-      method === PaymentMethods.PAYPAL &&
-      (countByMethod[PaymentMethods.PAYPAL] ?? 0) >= 1
-    ) {
-      throw new BadRequestException('You can have only 1 PayPal account');
-    }
+    return this.prisma.$transaction(async (tx) => {
+      if (primary) {
+        await tx.payment.updateMany({
+          where: { userId },
+          data: { primary: false },
+        });
+      }
 
-    if (
-      method === PaymentMethods.AMAZON &&
-      (countByMethod[PaymentMethods.AMAZON] ?? 0) >= 1
-    ) {
-      throw new BadRequestException('You can have only 1 Amazon Pay account');
-    }
+      const isFirst = existingPayments.length === 0;
 
-    return await this.prisma.payment.create({
-      data: {
-        userId,
-        ...dto,
-      },
+      return tx.payment.create({
+        data: {
+          ...dto,
+          userId,
+          primary: isFirst ? true : primary,
+        },
+      });
     });
   }
 

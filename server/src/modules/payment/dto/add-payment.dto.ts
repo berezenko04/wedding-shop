@@ -3,6 +3,7 @@ import {
   IsCreditCard,
   IsEmail,
   IsEnum,
+  IsOptional,
   IsString,
   Length,
   Matches,
@@ -21,6 +22,7 @@ export class AddPaymentDto {
   method: PaymentMethods;
 
   @IsBoolean()
+  @IsOptional()
   primary: boolean;
 
   @ValidateIf(
