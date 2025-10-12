@@ -64,16 +64,6 @@ export class PaymentService {
   async all(userId: string) {
     return this.prisma.payment.findMany({
       where: { userId },
-      select: {
-        id: true,
-        method: true,
-        primary: true,
-        email: true,
-        cardNumber: true,
-        cardExp: true,
-        cardCvv: true,
-        cardHolder: true,
-      },
     });
   }
 
