@@ -23,6 +23,9 @@ const theme = createTheme({
       black: "#121212",
     },
   },
+  typography: {
+    fontFamily: '"Poppins", sans-serif',
+  },
   components: {
     MuiTypography: {
       styleOverrides: {
@@ -50,7 +53,7 @@ const theme = createTheme({
         h5: {
           fontSize: 24,
         },
-        body1: { fontSize: 16, lineHeight: 24 },
+        body1: { fontSize: 16, lineHeight: 3 },
       },
     },
   },
