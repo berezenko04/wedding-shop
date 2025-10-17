@@ -21,13 +21,13 @@ function App() {
         </Route>
 
         <Route path="/profile">
-          <Route path="/account" />
-          <Route path="/wishlist" />
-          <Route path="/settings" />
-          <Route path="/reviews" />
-          <Route path="/orders" />
-          <Route path="/shipping-address" />
-          <Route path="/payment" />
+          <Route path="account" />
+          <Route path="wishlist" />
+          <Route path="settings" />
+          <Route path="reviews" />
+          <Route path="orders" />
+          <Route path="shipping-address" />
+          <Route path="payment" />
         </Route>
 
         <Route>
