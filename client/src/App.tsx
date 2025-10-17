@@ -1,4 +1,7 @@
+import { lazy } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+const HomePage = lazy(() => import("@/pages/Home"));
 
 function App() {
   return (
@@ -15,19 +18,19 @@ function App() {
         </Route>
 
         <Route>
-          <Route path="/" />
+          <Route path="/" element={<HomePage />} />
           <Route path="/catalog" />
           <Route path="/catalog/:slug" />
         </Route>
 
         <Route path="/profile">
-          <Route path="/account" />
-          <Route path="/wishlist" />
-          <Route path="/settings" />
-          <Route path="/reviews" />
-          <Route path="/orders" />
-          <Route path="/shipping-address" />
-          <Route path="/payment" />
+          <Route path="account" />
+          <Route path="wishlist" />
+          <Route path="settings" />
+          <Route path="reviews" />
+          <Route path="orders" />
+          <Route path="shipping-address" />
+          <Route path="payment" />
         </Route>
 
         <Route>
