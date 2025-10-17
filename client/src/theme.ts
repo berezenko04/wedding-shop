@@ -1,11 +1,7 @@
 import { createTheme } from "@mui/material";
 
-const getTheme = () => {
-  const theme = createTheme({
-    palette: {},
-  });
+const theme = createTheme({
+  palette: {},
+});
 
-  return theme;
-};
-
-export default getTheme;
+export default theme;
