@@ -29,6 +29,7 @@ const theme = createTheme({
         root: ({ theme }) => ({
           "&.MuiTypography-h1, &.MuiTypography-h2, &.MuiTypography-h3, &.MuiTypography-h4, &.MuiTypography-h5, &.MuiTypography-h6":
             {
+              fontFamily: '"Cinzel", serif',
               color: theme.palette.grey[700],
               fontWeight: 500,
               letterSpacing: "-2.5%",
