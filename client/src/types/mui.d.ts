@@ -9,3 +9,13 @@ declare module "@mui/material/styles" {
     blue?: PaletteColorOptions;
   }
 }
+
+declare module "@mui/material/Button" {
+  interface ButtonPropsVariantOverrides {
+    iconary: true;
+  }
+
+  interface ButtonPropsColorOverrides {
+    grey: true;
+  }
+}

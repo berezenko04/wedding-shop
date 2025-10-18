@@ -1,4 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { lazy } from "react";
+
+const HomePage = lazy(() => import("@/pages/Homepage"));
 
 function App() {
   return (
@@ -15,7 +18,7 @@ function App() {
         </Route>
 
         <Route>
-          <Route path="/" />
+          <Route path="/" element={<HomePage />} />
           <Route path="/catalog" />
           <Route path="/catalog/:slug" />
         </Route>

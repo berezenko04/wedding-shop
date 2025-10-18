@@ -53,7 +53,7 @@ const theme = createTheme({
         h5: {
           fontSize: 24,
         },
-        body1: { fontSize: 16, lineHeight: 3 },
+        body1: { fontSize: 16, lineHeight: "24px" },
       },
     },
     MuiButton: {
@@ -74,6 +74,36 @@ const theme = createTheme({
           padding: "8px 16px",
         },
       },
+      variants: [
+        {
+          props: { variant: "iconary" },
+          style: {
+            width: 40,
+            height: 40,
+            minWidth: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: 0,
+            padding: 0,
+
+            svg: {
+              width: 24,
+              height: 24,
+            },
+          },
+        },
+        {
+          props: { variant: "iconary", color: "grey" },
+          style: ({ theme }) => ({
+            border: `1px solid ${theme.palette.grey[50]}`,
+
+            svg: {
+              color: theme.palette.grey[500],
+            },
+          }),
+        },
+      ],
     },
   },
 });
