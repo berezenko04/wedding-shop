@@ -56,6 +56,25 @@ const theme = createTheme({
         body1: { fontSize: 16, lineHeight: 3 },
       },
     },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          fontWeight: 500,
+          fontSize: 16,
+          lineHeight: "24px",
+          borderRadius: 0,
+        },
+        containedPrimary: ({ theme }) => ({
+          color: theme.palette.common.white,
+        }),
+        sizeMedium: {
+          padding: "16px 32px",
+        },
+        sizeSmall: {
+          padding: "8px 16px",
+        },
+      },
+    },
   },
 });
 
