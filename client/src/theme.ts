@@ -106,9 +106,20 @@ const theme = createTheme({
             svg: {
               color: theme.palette.grey[500],
             },
+
+            "&:hover": {
+              backgroundColor: theme.palette.grey[100],
+              borderColor: theme.palette.grey[200],
+            },
           }),
         },
-        { props: { color: "grey" }, style: ({ theme }) => ({ color: theme.palette.grey[500] }) },
+        {
+          props: { color: "grey" },
+          style: ({ theme }) => ({
+            color: theme.palette.grey[500],
+            "&:hover": { backgroundColor: theme.palette.grey[50] },
+          }),
+        },
         {
           props: { variant: "outlined", color: "grey" },
           style: ({ theme }) => ({
