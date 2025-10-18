@@ -63,6 +63,11 @@ const theme = createTheme({
           fontSize: 16,
           lineHeight: "24px",
           borderRadius: 0,
+          boxShadow: "none",
+
+          "&:hover": {
+            boxShadow: "none",
+          },
         },
         containedPrimary: ({ theme }) => ({
           color: theme.palette.common.white,
@@ -100,6 +105,18 @@ const theme = createTheme({
 
             svg: {
               color: theme.palette.grey[500],
+            },
+          }),
+        },
+        { props: { color: "grey" }, style: ({ theme }) => ({ color: theme.palette.grey[500] }) },
+        {
+          props: { variant: "outlined", color: "grey" },
+          style: ({ theme }) => ({
+            border: `1px solid ${theme.palette.grey[200]}`,
+            backgroundColor: theme.palette.grey[50],
+
+            "&:hover": {
+              backgroundColor: theme.palette.grey[100],
             },
           }),
         },
