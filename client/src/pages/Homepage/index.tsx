@@ -1,4 +1,5 @@
-import { Button, Typography } from "@mui/material";
+import { ArrowOutward } from "@mui/icons-material";
+import { Box, Button, Typography } from "@mui/material";
 
 const HomePage: React.FC = () => {
   return (
@@ -35,6 +36,11 @@ const HomePage: React.FC = () => {
           <path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
         </svg>
       </Button>
+      <Box sx={{ backgroundColor: "black" }} p={5}>
+        <Button variant="outlined" size="small" color="white" endIcon={<ArrowOutward />}>
+          Hello world
+        </Button>
+      </Box>
     </div>
   );
 };
