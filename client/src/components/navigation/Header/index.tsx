@@ -16,6 +16,7 @@ const Header: React.FC = () => {
         size="small"
         color="grey"
         variant="outlined"
+        href="/catalog"
         sx={{ textTransform: "none" }}
       >
         Catalog
