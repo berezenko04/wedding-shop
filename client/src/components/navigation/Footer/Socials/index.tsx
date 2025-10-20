@@ -5,7 +5,7 @@ import { socials } from "@/data/socials";
 
 const Socials: React.FC = () => {
   return (
-    <Stack sx={{ flexDirection: "row", gap: 2 }}>
+    <Stack sx={{ flexDirection: "row", gap: 1.5 }}>
       {socials.map(({ icon: Icon, href }, idx) => (
         <Link href={href} key={idx} sx={{ width: 24, height: 24 }}>
           <Icon

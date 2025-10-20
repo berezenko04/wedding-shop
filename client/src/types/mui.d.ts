@@ -1,5 +1,5 @@
 import "@mui/material/styles";
-import { PaletteColorOptions } from "@mui/material";
+import { PaletteColor, PaletteColorOptions } from "@mui/material/styles";
 
 declare module "@mui/material/styles" {
   interface Palette {
@@ -18,5 +18,17 @@ declare module "@mui/material/Button" {
   interface ButtonPropsColorOverrides {
     grey: true;
     white: true;
+  }
+}
+
+declare module "@mui/material/Link" {
+  interface LinkPropsColorOverrides {
+    grey: true;
+  }
+}
+
+declare module "@mui/material/Typography" {
+  interface TypographyPropsVariantOverrides {
+    underlined: true;
   }
 }

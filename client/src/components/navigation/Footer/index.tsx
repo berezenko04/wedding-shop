@@ -1,8 +1,10 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Link, Stack, Typography } from "@mui/material";
 
 // components
 import CustomContainer from "@/components/ui/layout/CustomContainer";
 import Socials from "./Socials";
+import Logo from "../Logo";
+import { footerHelpMenu } from "@/data/menus";
 
 const Footer: React.FC = () => {
   return (
@@ -10,7 +12,24 @@ const Footer: React.FC = () => {
       <CustomContainer>
         <Grid container spacing={4}>
           <Grid size={{ xs: 3 }}>
-            <Socials />
+            <Stack gap={3}>
+              <Logo color="light" />
+              <Socials />
+            </Stack>
+          </Grid>
+          <Grid size={{ xs: 3 }}>
+            <Stack gap={2}>
+              <Typography color="common.white" fontSize={20} fontWeight={500} textTransform="uppercase">
+                Get Help
+              </Typography>
+              <Stack component="nav" gap={2}>
+                {footerHelpMenu.map(({ title, href }) => (
+                  <Link href={href} color="grey">
+                    {title}
+                  </Link>
+                ))}
+              </Stack>
+            </Stack>
           </Grid>
         </Grid>
       </CustomContainer>

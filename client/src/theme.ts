@@ -178,7 +178,39 @@ const theme = createTheme({
     MuiLink: {
       defaultProps: {
         component: LinkBehavior,
+        underline: "none",
       },
+      styleOverrides: {
+        root: {
+          transition: "all 0.2s ease",
+        },
+      },
+      variants: [
+        {
+          props: { color: "primary" },
+          style: ({ theme }) => ({
+            color: theme.palette.primary.main,
+            "&:hover": {
+              color: theme.palette.primary.dark,
+            },
+          }),
+        },
+        {
+          props: { variant: "underlined" },
+          style: {
+            textDecoration: "underline",
+          },
+        },
+        {
+          props: { color: "grey" },
+          style: ({ theme }) => ({
+            color: theme.palette.grey[400],
+            "&:hover": {
+              color: theme.palette.common.white,
+            },
+          }),
+        },
+      ],
     },
     MuiOutlinedInput: {
       styleOverrides: {

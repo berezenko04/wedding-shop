@@ -1,8 +1,12 @@
 import { Typography, Link } from "@mui/material";
 
-const Logo: React.FC = () => {
+type LogoProps = {
+  color?: "light" | "dark";
+};
+
+const Logo: React.FC<LogoProps> = ({ color = "dark" }) => {
   return (
-    <Link href="/" sx={{ textDecoration: "none", color: "grey.500" }}>
+    <Link href="/" sx={{ color: color === "dark" ? "grey.500" : "common.white" }}>
       <Typography textTransform="uppercase" fontSize={24} fontFamily='"Cinzel", serif'>
         Sandrela
       </Typography>
