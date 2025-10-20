@@ -1,5 +1,8 @@
 import { createTheme } from "@mui/material";
 
+// providers
+import { LinkBehavior } from "./components/providers/LinkBehavior";
+
 const theme = createTheme({
   palette: {
     primary: { main: "#ED7222", 50: "#FEF7EE" },
@@ -57,6 +60,9 @@ const theme = createTheme({
       },
     },
     MuiButton: {
+      defaultProps: {
+        LinkComponent: LinkBehavior,
+      },
       styleOverrides: {
         root: {
           fontWeight: 500,
@@ -132,6 +138,11 @@ const theme = createTheme({
           }),
         },
       ],
+    },
+    MuiLink: {
+      defaultProps: {
+        component: LinkBehavior,
+      },
     },
   },
 });
