@@ -19,7 +19,7 @@ const Footer: React.FC = () => {
               <Socials />
             </Stack>
           </Grid>
-          <Grid size={{ xs: 3 }}>
+          <Grid size={{ xs: 6 }}>
             <Stack gap={2}>
               <Typography color="common.white" fontSize={20} fontWeight={500} textTransform="uppercase">
                 Get Help
