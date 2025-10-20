@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom";
 import Header from "@/components/navigation/Header";
 import CustomContainer from "@/components/ui/layout/CustomContainer";
 import WarAlert from "@/components/navigation/WarAlert";
+import Footer from "@/components/navigation/Footer";
 
 const PrimaryLayout: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const PrimaryLayout: React.FC = () => {
       <CustomContainer sx={{ flex: 1, display: "flex", flexDirection: "column", py: { xs: 3, md: 6 } }}>
         <Outlet />
       </CustomContainer>
+      <Footer />
     </Stack>
   );
 };
