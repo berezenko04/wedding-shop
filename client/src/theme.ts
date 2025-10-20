@@ -1,5 +1,8 @@
 import { createTheme } from "@mui/material";
 
+// providers
+import { LinkBehavior } from "./components/providers/LinkBehavior";
+
 const theme = createTheme({
   palette: {
     primary: { main: "#ED7222", 50: "#FEF7EE" },
@@ -27,6 +30,11 @@ const theme = createTheme({
     fontFamily: '"Poppins", sans-serif',
   },
   components: {
+    MuiButtonBase: {
+      defaultProps: {
+        LinkComponent: LinkBehavior,
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         root: ({ theme }) => ({
@@ -57,6 +65,9 @@ const theme = createTheme({
       },
     },
     MuiButton: {
+      defaultProps: {
+        component: LinkBehavior,
+      },
       styleOverrides: {
         root: {
           fontWeight: 500,
@@ -64,6 +75,7 @@ const theme = createTheme({
           lineHeight: "24px",
           borderRadius: 0,
           boxShadow: "none",
+          whiteSpace: "nowrap",
 
           "&:hover": {
             boxShadow: "none",
@@ -77,6 +89,7 @@ const theme = createTheme({
         },
         sizeSmall: {
           padding: "8px 16px",
+          height: 40,
         },
       },
       variants: [
@@ -132,6 +145,36 @@ const theme = createTheme({
           }),
         },
       ],
+    },
+    MuiLink: {
+      defaultProps: {
+        component: LinkBehavior,
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          borderRadius: 0,
+          height: 40,
+          boxSizing: "border-box",
+
+          "& .MuiInputAdornment-root svg": {
+            color: theme.palette.grey[400],
+          },
+        }),
+
+        input: ({ theme }) => ({
+          padding: "10px 14px 10px 0",
+          height: "100%",
+          boxSizing: "border-box",
+          color: theme.palette.text.primary,
+
+          "&::placeholder": {
+            color: theme.palette.grey[400],
+            opacity: 1,
+          },
+        }),
+      },
     },
   },
 });
