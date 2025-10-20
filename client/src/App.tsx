@@ -1,6 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy } from "react";
 
+// components
+import PrimaryLayout from "./components/layouts/PrimaryLayout";
+
 const HomePage = lazy(() => import("@/pages/Homepage"));
 
 function App() {
@@ -17,7 +20,7 @@ function App() {
           <Route path="/reset-password-success" />
         </Route>
 
-        <Route>
+        <Route element={<PrimaryLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/catalog" />
           <Route path="/catalog/:slug" />

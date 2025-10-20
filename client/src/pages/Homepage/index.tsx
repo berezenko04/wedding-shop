@@ -1,10 +1,8 @@
-import Header from "@/components/navigation/Header";
 import { Button, Typography } from "@mui/material";
 
 const HomePage: React.FC = () => {
   return (
     <div>
-      <Header />
       <Typography variant="h1">Hello world!</Typography>
       <Typography variant="h2">Hello world!</Typography>
       <Typography variant="h3">Hello world!</Typography>
