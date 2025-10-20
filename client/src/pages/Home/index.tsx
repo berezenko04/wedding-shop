@@ -1,7 +1,7 @@
 import { ArrowOutward } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 
-const HomePage: React.FC = () => {
+const Home: React.FC = () => {
   return (
     <div>
       <Typography variant="h1">Hello world!</Typography>
@@ -45,4 +45,4 @@ const HomePage: React.FC = () => {
   );
 };
 
-export default HomePage;
+export default Home;
