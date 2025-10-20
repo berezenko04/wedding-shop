@@ -6,6 +6,7 @@ import Header from "@/components/navigation/Header";
 import CustomContainer from "@/components/ui/layout/CustomContainer";
 import WarAlert from "@/components/navigation/WarAlert";
 import Footer from "@/components/navigation/Footer";
+import PrivacyRights from "@/components/navigation/Footer/PrivacyRights";
 
 const PrimaryLayout: React.FC = () => {
   return (
@@ -16,6 +17,7 @@ const PrimaryLayout: React.FC = () => {
         <Outlet />
       </CustomContainer>
       <Footer />
+      <PrivacyRights />
     </Stack>
   );
 };

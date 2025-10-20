@@ -39,8 +39,6 @@ function App() {
         <Route>
           <Route path="/privacy-and-policy" />
           <Route path="/terms-of-use" />
-          <Route path="/settings" />
-          <Route path="/reviews" />
         </Route>
 
         <Route>
