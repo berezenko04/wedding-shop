@@ -87,10 +87,20 @@ const theme = createTheme({
         }),
         sizeMedium: {
           padding: "16px 32px",
+
+          svg: {
+            width: 32,
+            height: 32,
+          },
         },
         sizeSmall: {
           padding: "8px 16px",
           height: 40,
+
+          svg: {
+            width: 24,
+            height: 24,
+          },
         },
       },
       variants: [
