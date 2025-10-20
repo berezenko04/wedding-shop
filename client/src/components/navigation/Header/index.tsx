@@ -22,6 +22,14 @@ const Header: React.FC = () => {
         Catalog
       </Button>
       <Searchbar />
+      <Stack flexDirection="row" gap={2} alignItems="center">
+        <Button href="/register" color="primary" variant="outlined" size="small">
+          Sign Up
+        </Button>
+        <Button href="/login" color="primary" variant="contained" size="small">
+          Sign In
+        </Button>
+      </Stack>
     </Stack>
   );
 };

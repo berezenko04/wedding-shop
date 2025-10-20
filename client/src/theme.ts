@@ -30,6 +30,11 @@ const theme = createTheme({
     fontFamily: '"Poppins", sans-serif',
   },
   components: {
+    MuiButtonBase: {
+      defaultProps: {
+        LinkComponent: LinkBehavior,
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         root: ({ theme }) => ({
@@ -61,7 +66,7 @@ const theme = createTheme({
     },
     MuiButton: {
       defaultProps: {
-        LinkComponent: LinkBehavior,
+        component: LinkBehavior,
       },
       styleOverrides: {
         root: {
@@ -70,6 +75,7 @@ const theme = createTheme({
           lineHeight: "24px",
           borderRadius: 0,
           boxShadow: "none",
+          whiteSpace: "nowrap",
 
           "&:hover": {
             boxShadow: "none",
