@@ -76,6 +76,7 @@ const theme = createTheme({
           borderRadius: 0,
           boxShadow: "none",
           whiteSpace: "nowrap",
+          minWidth: "max-content",
 
           "&:hover": {
             boxShadow: "none",
@@ -142,6 +143,23 @@ const theme = createTheme({
             "&:hover": {
               backgroundColor: theme.palette.grey[100],
             },
+          }),
+        },
+        {
+          props: { color: "white" },
+          style: ({ theme }) => ({
+            color: theme.palette.common.white,
+          }),
+        },
+        {
+          props: { variant: "outlined", color: "white" },
+          style: ({ theme }) => ({
+            border: `1px solid ${theme.palette.common.white}`,
+            backgroundColor: "transparent",
+
+            // "&:hover": {
+            //   backgroundColor: theme.palette.grey[100],
+            // },
           }),
         },
       ],
