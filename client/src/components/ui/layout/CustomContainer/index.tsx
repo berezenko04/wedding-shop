@@ -10,6 +10,7 @@ const CustomContainer: React.FC<ContainerProps> = ({ sx, children }) => {
     <Container
       disableGutters
       sx={{
+        position: "relative",
         maxWidth: "1552px !important",
         height: "100%",
         display: "flex",
