@@ -3,15 +3,17 @@ import { lazy } from "react";
 
 // components
 import PrimaryLayout from "./components/layouts/PrimaryLayout";
+import AuthLayout from "./components/layouts/AuthLayout";
 
-const HomePage = lazy(() => import("@/pages/Homepage"));
+const HomePage = lazy(() => import("@/pages/Home"));
+const RegisterPage = lazy(() => import("@/pages/Register"));
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route>
-          <Route path="/register" />
+        <Route element={<AuthLayout />}>
+          <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" />
           <Route path="/forgot-password" />
           <Route path="/verify-otp" />
