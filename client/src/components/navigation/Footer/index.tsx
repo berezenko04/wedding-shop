@@ -4,7 +4,9 @@ import { Box, Grid, Link, Stack, Typography } from "@mui/material";
 import CustomContainer from "@/components/ui/layout/CustomContainer";
 import Socials from "./Socials";
 import Logo from "../Logo";
-import { footerHelpMenu } from "@/data/menus";
+
+// data
+import { footerContacts, footerHelpMenu } from "@/data/menus";
 
 const Footer: React.FC = () => {
   return (
@@ -24,6 +26,20 @@ const Footer: React.FC = () => {
               </Typography>
               <Stack component="nav" gap={2}>
                 {footerHelpMenu.map(({ title, href }) => (
+                  <Link href={href} color="grey">
+                    {title}
+                  </Link>
+                ))}
+              </Stack>
+            </Stack>
+          </Grid>
+          <Grid size={{ xs: 3 }}>
+            <Stack gap={2}>
+              <Typography color="common.white" fontSize={20} fontWeight={500} textTransform="uppercase">
+                Contacts
+              </Typography>
+              <Stack component="nav" gap={2}>
+                {footerContacts.map(({ title, href }) => (
                   <Link href={href} color="grey">
                     {title}
                   </Link>
