@@ -4,7 +4,7 @@ import axios from "axios";
 // import AuthService from "@/api/auth/auth.service";
 
 // utils
-// import { normalizeAxiosError } from "@/utils/normalizeAxiosError";
+import { normalizeAxiosError } from "@/utils/normalizeAxiosError";
 
 export const instance = axios.create({
   baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1`,
@@ -41,7 +41,7 @@ instance.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    // return Promise.reject(normalizeAxiosError(error));
+    return Promise.reject(normalizeAxiosError(error));
   }
 );
 
