@@ -77,7 +77,7 @@ const theme = createTheme({
     },
     MuiButton: {
       defaultProps: {
-        component: LinkBehavior,
+        LinkComponent: LinkBehavior,
       },
       styleOverrides: {
         root: {

@@ -7,8 +7,8 @@ import toast from "react-hot-toast";
 import AuthFormLayout from "@/components/forms/auth/FormLayout";
 import FormField from "@/components/ui/layout/FormField";
 
-// // api
-// import AuthService from "@/api/auth/auth.service";
+// api
+import AuthService from "@/api/auth/auth.service";
 
 type RegisterFormFields = {
   email: string;
@@ -31,7 +31,7 @@ const RegisterForm: React.FC = () => {
     const { repeatPassword, ...data } = formData;
     void repeatPassword;
 
-    // await AuthService.register(data);
+    await AuthService.register(data);
     toast.success("Registration successful");
     navigate("/login");
   };
@@ -87,7 +87,7 @@ const RegisterForm: React.FC = () => {
           />
         </FormField>
 
-        <Button type="submit" variant="contained" size="large" disabled={isSubmitting}>
+        <Button type="submit" variant="contained" size="small" disabled={isSubmitting}>
           Register
         </Button>
       </Stack>
