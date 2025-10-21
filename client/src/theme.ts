@@ -64,18 +64,15 @@ const theme = createTheme({
           fontSize: 80,
         },
         h2: {
-          fontSize: 56,
-        },
-        h3: {
           fontSize: 48,
         },
-        h4: {
+        h3: {
           fontSize: 32,
         },
-        h5: {
+        h4: {
           fontSize: 24,
         },
-        body1: { fontSize: 16, lineHeight: "24px" },
+        body1: ({ theme }) => ({ fontSize: 16, lineHeight: "24px", color: theme.palette.grey[500] }),
       },
     },
     MuiButton: {
