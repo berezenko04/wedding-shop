@@ -8,6 +8,7 @@ import AuthLayout from "./components/layouts/AuthLayout";
 const HomePage = lazy(() => import("@/pages/Home"));
 const RegisterPage = lazy(() => import("@/pages/Register"));
 const LoginPage = lazy(() => import("@/pages/Login"));
+const ForgotPasswordPage = lazy(() => import("@/pages/ForgotPassword"));
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         <Route element={<AuthLayout />}>
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/forgot-password" />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/verify-otp" />
           <Route path="/verify-otp-success" />
           <Route path="/reset-password" />
