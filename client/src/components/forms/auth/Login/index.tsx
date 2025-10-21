@@ -1,4 +1,4 @@
-import { Button, Stack, TextField } from "@mui/material";
+import { Button, Link, Stack, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
@@ -13,7 +13,6 @@ import AuthService from "@/api/auth/auth.service";
 type RegisterFormFields = {
   email: string;
   password: string;
-  repeatPassword: string;
 };
 
 const RegisterForm: React.FC = () => {
@@ -21,28 +20,22 @@ const RegisterForm: React.FC = () => {
   const {
     handleSubmit,
     register,
-    watch,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormFields>();
 
-  const password = watch("password");
-
   const onSubmit = async (formData: RegisterFormFields) => {
-    const { repeatPassword, ...data } = formData;
-    void repeatPassword;
-
-    await AuthService.register(data);
-    toast.success("Registration successful");
-    navigate("/login");
+    // await AuthService.register(data);
+    // toast.success("Registration successful");
+    // navigate("/login");
   };
 
   return (
     <AuthFormLayout
-      title="Create an account"
+      title="Login an account"
       description="Start your experience with us."
-      footerText="Already have an account?"
-      footerLinkText="Log in"
-      footerLinkHref="/login"
+      footerText="Don`t have an account?"
+      footerLinkText="Register"
+      footerLinkHref="/register"
       isBackToLogin={false}
     >
       <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ gap: 1.5 }}>
@@ -74,21 +67,12 @@ const RegisterForm: React.FC = () => {
           />
         </FormField>
 
-        <FormField label="Repeat password">
-          <TextField
-            placeholder="****************"
-            type="password"
-            {...register("repeatPassword", {
-              required: "Please confirm your password",
-              validate: (value) => value === password || "Passwords do not match",
-            })}
-            error={!!errors.repeatPassword}
-            helperText={errors.repeatPassword?.message}
-          />
-        </FormField>
+        <Link href="/forgot-password" variant="underlined" sx={{ alignSelf: "flex-end" }}>
+          Forgot Password?
+        </Link>
 
         <Button type="submit" variant="contained" size="small" disabled={isSubmitting}>
-          Create Account
+          Login
         </Button>
       </Stack>
     </AuthFormLayout>
