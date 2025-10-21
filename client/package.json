@@ -17,6 +17,7 @@
     "@mui/material": "^7.3.4",
     "@reduxjs/toolkit": "^2.9.1",
     "axios": "^1.12.2",
+    "mui-one-time-password-input": "^5.0.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-hook-form": "^7.65.0",

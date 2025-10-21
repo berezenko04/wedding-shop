@@ -7,9 +7,9 @@ type FormLayoutProps = {
   title: string;
   description: string;
   isBackToLogin?: boolean;
-  footerText: string;
-  footerLinkText: string;
-  footerLinkHref: string;
+  footerText?: string;
+  footerLinkText?: string;
+  footerLinkHref?: string;
   children: React.ReactNode;
 };
 
@@ -23,19 +23,21 @@ const FormLayout: React.FC<FormLayoutProps> = ({
   isBackToLogin = true,
 }) => {
   return (
-    <Stack gap={4} sx={{ width: "100%", alignItems: "center" }}>
+    <Stack gap={4} sx={{ width: "100%", alignItems: "center", maxWidth: 420 }}>
       <Stack alignItems="center" gap={1.5}>
         <Typography variant="h3">{title}</Typography>
-        <Typography>{description}</Typography>
+        <Typography textAlign="center">{description}</Typography>
       </Stack>
-      <Stack gap={3} maxWidth={420} width="100%">
+      <Stack gap={3} sx={{ width: "100%" }}>
         {children}
-        <Stack flexDirection="row" alignItems="center" justifyContent="center" gap={1}>
-          <Typography>{footerText}</Typography>
-          <Link variant="underlined" href={footerLinkHref}>
-            {footerLinkText}
-          </Link>
-        </Stack>
+        {footerText && (
+          <Stack flexDirection="row" alignItems="center" justifyContent="center" gap={1}>
+            <Typography>{footerText}</Typography>
+            <Link variant="underlined" href={footerLinkHref}>
+              {footerLinkText}
+            </Link>
+          </Stack>
+        )}
         {isBackToLogin && (
           <Button href="/login" startIcon={<KeyboardArrowLeft />} color="grey" size="small">
             Back to Login
