@@ -25,8 +25,8 @@ const AuthLayout: React.FC = () => {
           </Stack>
         </Box>
       </Grid>
-      <Grid size={{ xs: 6 }} sx={{ height: "100%" }}>
-        <Stack sx={{ height: "100%", alignItems: "center", justifyContent: "center" }}>
+      <Grid size={{ xs: 6 }} sx={{ display: "flex", height: "100%" }}>
+        <Stack sx={{ flex: 1, height: "100%", alignItems: "center", justifyContent: "center" }}>
           <Outlet />
         </Stack>
       </Grid>

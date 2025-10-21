@@ -12,14 +12,7 @@ const Header: React.FC = () => {
   return (
     <Box component="header">
       <CustomContainer>
-        <Stack
-          component="header"
-          flexDirection="row"
-          gap={3}
-          py={2}
-          justifyContent="space-between"
-          alignItems="center"
-        >
+        <Stack component="header" flexDirection="row" gap={3} py={2} justifyContent="space-between" alignItems="center">
           <Logo />
           <Button
             startIcon={<StorefrontOutlined />}
