@@ -1,7 +1,7 @@
 import { httpPost } from "@/middlewares/axios.middleware";
 
 // types
-import { LoginBody, RegisterBody, VerifyOtpBody, VerifyOtpResponse } from "./auth.types";
+import { LoginBody, RegisterBody, ResetPasswordBody, VerifyOtpBody, VerifyOtpResponse } from "./auth.types";
 import { BaseResponseData } from "@/types/base.types";
 
 const R = {
@@ -9,6 +9,7 @@ const R = {
   login: "/auth/login",
   forgotPassword: "/auth/forgot-password",
   verifyOtp: "/auth/verify-otp",
+  resetPassword: "/auth/reset-password",
 } as const;
 
 const AuthService = {
@@ -26,6 +27,10 @@ const AuthService = {
 
   async verifyOtp(body: VerifyOtpBody) {
     return httpPost<VerifyOtpResponse>(R.verifyOtp, body);
+  },
+
+  async resetPassword(body: ResetPasswordBody) {
+    return httpPost<BaseResponseData>(R.resetPassword, body);
   },
 };
 

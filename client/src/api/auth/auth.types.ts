@@ -15,3 +15,8 @@ export type VerifyOtpBody = {
 export type VerifyOtpResponse = BaseResponseData & {
   resetToken: string;
 };
+
+export type ResetPasswordBody = {
+  resetToken: string;
+  password: string;
+};

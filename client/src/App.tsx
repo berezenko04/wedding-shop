@@ -11,6 +11,7 @@ const LoginPage = lazy(() => import("@/pages/Login"));
 const ForgotPasswordPage = lazy(() => import("@/pages/ForgotPassword"));
 const VerifyOtpPage = lazy(() => import("@/pages/VerifyOtp"));
 const VerifyOtpSuccessPage = lazy(() => import("@/pages/VerifyOtpSuccess"));
+const ResetPasswordPage = lazy(() => import("@/pages/ResetPassword"));
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/verify-otp" element={<VerifyOtpPage />} />
           <Route path="/verify-otp-success" element={<VerifyOtpSuccessPage />} />
-          <Route path="/reset-password" />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/reset-password-success" />
         </Route>
 
