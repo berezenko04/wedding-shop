@@ -1,7 +1,6 @@
 import { Button, Link, Stack, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import toast from "react-hot-toast";
 
 // components
 import AuthFormLayout from "@/components/forms/auth/FormLayout";
@@ -23,10 +22,9 @@ const LoginForm: React.FC = () => {
     formState: { errors, isSubmitting },
   } = useForm<LoginFormFields>();
 
-  const onSubmit = async (formData: LoginFormFields) => {
-    // await AuthService.register(data);
-    // toast.success("Registration successful");
-    // navigate("/login");
+  const onSubmit = async (data: LoginFormFields) => {
+    await AuthService.login(data);
+    navigate("/");
   };
 
   return (
