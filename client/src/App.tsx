@@ -6,6 +6,9 @@ import PrimaryLayout from "./components/layouts/PrimaryLayout";
 import AuthLayout from "./components/layouts/AuthLayout";
 
 const HomePage = lazy(() => import("@/pages/Home"));
+const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"));
+
+// auth
 const RegisterPage = lazy(() => import("@/pages/Register"));
 const LoginPage = lazy(() => import("@/pages/Login"));
 const ForgotPasswordPage = lazy(() => import("@/pages/ForgotPassword"));
@@ -32,6 +35,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/catalog" />
           <Route path="/catalog/:slug" />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
 
         <Route path="/profile">
@@ -47,10 +51,6 @@ function App() {
         <Route>
           <Route path="/privacy-and-policy" />
           <Route path="/terms-of-use" />
-        </Route>
-
-        <Route>
-          <Route path="*" />
         </Route>
       </Routes>
     </BrowserRouter>
