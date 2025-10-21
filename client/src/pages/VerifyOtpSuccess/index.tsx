@@ -20,7 +20,7 @@ const VerifyOtpSuccess: React.FC = () => {
   return (
     <AuthFormLayout
       title="Email verified"
-      description="Your password has been successfully reset. Click below to log in magically."
+      description="Your verification code has been confirmed. You can now reset your password."
     >
       <Button
         onClick={() => navigate(`/reset-password?resetToken=${resetToken}`)}
