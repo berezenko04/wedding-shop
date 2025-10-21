@@ -35,8 +35,8 @@ const VerifyOtpForm: React.FC = () => {
   }, [email, navigate]);
 
   const onSubmit = async ({ otp }: { otp: string }) => {
-    const result = await AuthService.verifyOtp({ email, otp });
-    navigate(`/reset-password?token=${result.resetToken}`);
+    const { resetToken } = await AuthService.verifyOtp({ email, otp });
+    navigate("/verify-otp-success", { state: { resetToken } });
   };
 
   return (

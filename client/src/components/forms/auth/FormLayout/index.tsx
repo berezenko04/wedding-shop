@@ -23,12 +23,12 @@ const FormLayout: React.FC<FormLayoutProps> = ({
   isBackToLogin = true,
 }) => {
   return (
-    <Stack gap={4} sx={{ width: "100%", alignItems: "center" }}>
+    <Stack gap={4} sx={{ width: "100%", alignItems: "center", maxWidth: 420 }}>
       <Stack alignItems="center" gap={1.5}>
         <Typography variant="h3">{title}</Typography>
-        <Typography>{description}</Typography>
+        <Typography textAlign="center">{description}</Typography>
       </Stack>
-      <Stack gap={3} maxWidth={420} width="100%">
+      <Stack gap={3} sx={{ width: "100%" }}>
         {children}
         {footerText && (
           <Stack flexDirection="row" alignItems="center" justifyContent="center" gap={1}>
