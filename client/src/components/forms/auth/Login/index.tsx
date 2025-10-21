@@ -1,4 +1,5 @@
 import { Button, Link, Stack, TextField } from "@mui/material";
+import { useAppDispatch } from "@/redux/store";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 
@@ -6,8 +7,8 @@ import { useNavigate } from "react-router";
 import AuthFormLayout from "@/components/forms/auth/FormLayout";
 import FormField from "@/components/ui/layout/FormField";
 
-// api
-import AuthService from "@/api/auth/auth.service";
+// redux
+import { login } from "@/redux/auth/auth.actions";
 
 type LoginFormFields = {
   email: string;
@@ -15,6 +16,7 @@ type LoginFormFields = {
 };
 
 const LoginForm: React.FC = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -23,7 +25,9 @@ const LoginForm: React.FC = () => {
   } = useForm<LoginFormFields>();
 
   const onSubmit = async (data: LoginFormFields) => {
-    await AuthService.login(data);
+    const result = await dispatch(login(data));
+
+    if (login.rejected.match(result)) return;
     navigate("/");
   };
 
