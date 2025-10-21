@@ -61,7 +61,7 @@ const theme = createTheme({
             },
         }),
         h1: {
-          fontSize: 80,
+          fontSize: 60,
         },
         h2: {
           fontSize: 48,
@@ -89,6 +89,11 @@ const theme = createTheme({
           whiteSpace: "nowrap",
           minWidth: "max-content",
 
+          svg: {
+            width: 24,
+            height: 24,
+          },
+
           "&:hover": {
             boxShadow: "none",
           },
@@ -98,20 +103,11 @@ const theme = createTheme({
         }),
         sizeMedium: {
           padding: "16px 32px",
-
-          svg: {
-            width: 32,
-            height: 32,
-          },
+          height: 56,
         },
         sizeSmall: {
           padding: "8px 16px",
           height: 40,
-
-          svg: {
-            width: 24,
-            height: 24,
-          },
         },
       },
       variants: [
