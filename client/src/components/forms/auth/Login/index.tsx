@@ -10,20 +10,20 @@ import FormField from "@/components/ui/layout/FormField";
 // api
 import AuthService from "@/api/auth/auth.service";
 
-type RegisterFormFields = {
+type LoginFormFields = {
   email: string;
   password: string;
 };
 
-const RegisterForm: React.FC = () => {
+const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterFormFields>();
+  } = useForm<LoginFormFields>();
 
-  const onSubmit = async (formData: RegisterFormFields) => {
+  const onSubmit = async (formData: LoginFormFields) => {
     // await AuthService.register(data);
     // toast.success("Registration successful");
     // navigate("/login");
@@ -79,4 +79,4 @@ const RegisterForm: React.FC = () => {
   );
 };
 
-export default RegisterForm;
+export default LoginForm;
