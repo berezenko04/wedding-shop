@@ -235,7 +235,7 @@ const theme = createTheme({
         }),
 
         input: ({ theme }) => ({
-          padding: "10px 14px 10px 0",
+          padding: "10px 14px",
           height: "100%",
           boxSizing: "border-box",
           color: theme.palette.text.primary,

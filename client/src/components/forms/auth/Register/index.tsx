@@ -1,21 +1,17 @@
-import { Button, InputAdornment, Stack, TextField } from "@mui/material";
-import {  useForm } from "react-hook-form";
+import { Button, Stack, TextField } from "@mui/material";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 
 // components
 import AuthFormLayout from "@/components/forms/auth/FormLayout";
+import FormField from "@/components/ui/layout/FormField";
 
 // // api
 // import AuthService from "@/api/auth/auth.service";
 
-// icons
-import { BadgeOutlined, PersonOutlineOutlined } from "@mui/icons-material";
-
 type RegisterFormFields = {
   email: string;
-  firstName: string;
-  lastName: string;
   password: string;
   repeatPassword: string;
 };
@@ -25,7 +21,6 @@ const RegisterForm: React.FC = () => {
   const {
     handleSubmit,
     register,
-    control,
     watch,
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormFields>();
@@ -51,111 +46,47 @@ const RegisterForm: React.FC = () => {
       isBackToLogin={false}
     >
       <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ gap: 1.5 }}>
-        <TextField
-          placeholder="Email"
-          {...register("email", {
-            required: "Email is required",
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: "Invalid email address",
-            },
-          })}
-          error={!!errors.email}
-          helperText={errors.email?.message}
-          slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  <PersonOutlineOutlined />
-                </InputAdornment>
-              ),
-            },
-          }}
-        />
-        <TextField
-          {...register("firstName", {
-            required: "First name is required",
-            minLength: {
-              value: 2,
-              message: "First name is too short (minimum 2 characters)",
-            },
-            maxLength: {
-              value: 32,
-              message: "First name is too long (maximum 32 characters)",
-            },
-          })}
-          error={!!errors.firstName}
-          helperText={errors.firstName?.message}
-          placeholder="First Name"
-          slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  <BadgeOutlined />
-                </InputAdornment>
-              ),
-            },
-          }}
-        />
-        <TextField
-          {...register("lastName", {
-            required: "Last name is required",
-            minLength: {
-              value: 2,
-              message: "Last name is too short (minimum 2 characters)",
-            },
-            maxLength: {
-              value: 32,
-              message: "Last name is too long (maximum 32 characters)",
-            },
-          })}
-          error={!!errors.lastName}
-          helperText={errors.lastName?.message}
-          placeholder="Last Name"
-          slotProps={{
-            input: {
-              startAdornment: (
-                <InputAdornment position="start">
-                  <BadgeOutlined />
-                </InputAdornment>
-              ),
-            },
-          }}
-        />
-        {/* <Controller
-          name="password"
-          control={control}
-          rules={{
-            required: "Password is required",
-            minLength: { value: 8, message: "Password is too short (minimum 8 characters)" },
-          }}
-          render={({ field }) => (
-            <PasswordInput
-              placeholder="Password"
-              value={field.value || ""}
-              setValue={field.onChange}
-              error={!!errors.password}
-              helperText={errors.password?.message}
-            />
-          )}
-        />
-        <Controller
-          name="repeatPassword"
-          control={control}
-          rules={{
-            required: "Please confirm your password",
-            validate: (value) => value === password || "Passwords do not match",
-          }}
-          render={({ field }) => (
-            <PasswordInput
-              placeholder="Repeat Password"
-              value={field.value || ""}
-              setValue={field.onChange}
-              error={!!errors.password}
-              helperText={errors.password?.message}
-            />
-          )}
-        /> */}
+        <FormField label="Email">
+          <TextField
+            placeholder="Enter email"
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Invalid email address",
+              },
+            })}
+            error={!!errors.email}
+            helperText={errors.email?.message}
+          />
+        </FormField>
+
+        <FormField label="Password">
+          <TextField
+            placeholder="****************"
+            type="password"
+            {...register("password", {
+              required: "Password is required",
+              minLength: { value: 8, message: "Password is too short (minimum 8 characters)" },
+            })}
+            error={!!errors.password}
+            helperText={errors.password?.message}
+          />
+        </FormField>
+
+        <FormField label="Repeat password">
+          <TextField
+            placeholder="****************"
+            type="password"
+            {...register("repeatPassword", {
+              required: "Please confirm your password",
+              validate: (value) => value === password || "Passwords do not match",
+            })}
+            error={!!errors.repeatPassword}
+            helperText={errors.repeatPassword?.message}
+          />
+        </FormField>
+
         <Button type="submit" variant="contained" size="large" disabled={isSubmitting}>
           Register
         </Button>
