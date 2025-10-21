@@ -26,7 +26,7 @@ const ForgotPasswordForm: React.FC = () => {
   const onSubmit = async ({ email }: ForgotPasswordFormFields) => {
     const result = await AuthService.sendForgotPasswordOtp(email);
     toast.success(result.message);
-    navigate("/verify-otp");
+    navigate("/verify-otp", { state: { email } });
   };
 
   return (

@@ -5,7 +5,7 @@ import { LinkBehavior } from "./components/providers/LinkBehavior";
 
 const theme = createTheme({
   palette: {
-    primary: { main: "#ED7222", 50: "#FEF7EE" },
+    primary: { main: "#ED7222", 300: "#F6B87B", 50: "#FEF7EE" },
     success: { main: "#12B76A", 100: "#C2E9D1" },
     error: { main: "#F04438" },
     blue: {

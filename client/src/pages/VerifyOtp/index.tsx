@@ -1,7 +1,8 @@
-import React from "react";
+// components
+import VerifyOtpForm from "@/components/forms/auth/VerifyOtp";
 
 const VerifyOtp: React.FC = () => {
-  return <div>VerifyOtp</div>;
+  return <VerifyOtpForm />;
 };
 
 export default VerifyOtp;
