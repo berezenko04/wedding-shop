@@ -39,9 +39,9 @@ const Header: React.FC = () => {
               <IconButton>
                 <LocalMallOutlined />
               </IconButton>
-              <IconButton href="/profile" sx={{ backgroundColor: "grey.100" }}>
+              <Button href="/profile" variant="iconary" color="grey">
                 <PersonOutline />
-              </IconButton>
+              </Button>
             </Stack>
           ) : (
             <Stack flexDirection="row" gap={2} alignItems="center">

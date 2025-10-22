@@ -34,7 +34,7 @@ const Home: React.FC = () => {
           </Grid>
         </Grid>
       </HomepageSection>
-      <HomepageSection title="Clothing">
+      <HomepageSection title="Clothing" isSwiper>
         <Grid container spacing={4}>
           <Grid size={{ xs: 6 }}>
             <ImageWithButton

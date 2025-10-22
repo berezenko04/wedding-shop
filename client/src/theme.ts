@@ -128,7 +128,7 @@ const theme = createTheme({
       variants: [
         {
           props: { variant: "iconary" },
-          style: {
+          style: ({ theme }) => ({
             width: 40,
             height: 40,
             minWidth: 0,
@@ -141,17 +141,21 @@ const theme = createTheme({
             svg: {
               width: 24,
               height: 24,
+              color: theme.palette.grey[500],
             },
+          }),
+        },
+        {
+          props: { variant: "iconary", size: "large" },
+          style: {
+            width: 48,
+            height: 48,
           },
         },
         {
           props: { variant: "iconary", color: "white" },
           style: ({ theme }) => ({
             backgroundColor: theme.palette.common.white,
-
-            svg: {
-              color: theme.palette.grey[500],
-            },
 
             "&:hover": {
               backgroundColor: theme.palette.grey[100],
@@ -162,11 +166,18 @@ const theme = createTheme({
         {
           props: { variant: "iconary", color: "grey" },
           style: ({ theme }) => ({
-            border: `1px solid ${theme.palette.grey[50]}`,
+            backgroundColor: theme.palette.grey[50],
 
-            svg: {
-              color: theme.palette.grey[500],
+            "&:hover": {
+              backgroundColor: theme.palette.grey[100],
+              borderColor: theme.palette.grey[200],
             },
+          }),
+        },
+        {
+          props: { variant: "iconaryOutlined" },
+          style: ({ theme }) => ({
+            border: `1px solid ${theme.palette.grey[50]}`,
 
             "&:hover": {
               backgroundColor: theme.palette.grey[100],
