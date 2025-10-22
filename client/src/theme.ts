@@ -147,7 +147,7 @@ const theme = createTheme({
           props: { variant: "iconary", color: "white" },
           style: ({ theme }) => ({
             backgroundColor: theme.palette.common.white,
-            
+
             svg: {
               color: theme.palette.grey[500],
             },
