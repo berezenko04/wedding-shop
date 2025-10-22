@@ -72,9 +72,24 @@ const theme = createTheme({
         h4: {
           fontSize: 24,
         },
-        body1: ({ theme }) => ({ fontSize: 16, lineHeight: "24px", color: theme.palette.grey[500] }),
+        body1: ({ theme }) => ({
+          fontSize: 16,
+          lineHeight: "24px",
+          color: theme.palette.grey[500],
+        }),
       },
+      variants: [
+        {
+          props: { variant: "medium" },
+          style: ({ theme }) => ({
+            fontSize: 20,
+            fontWeight: 500,
+            color: theme.palette.grey[700],
+          }),
+        },
+      ],
     },
+
     MuiButton: {
       defaultProps: {
         LinkComponent: LinkBehavior,

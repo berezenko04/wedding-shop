@@ -19,7 +19,7 @@ export const useProducts = () => {
   });
 
   return {
-    movies: data?.data ?? [],
+    products: data?.data ?? [],
     total: data?.total ?? 0,
     page,
     setPage,
