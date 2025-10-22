@@ -12,6 +12,7 @@ import { useProducts } from "@/hooks/useProducts";
 
 // types
 import type { Swiper } from "swiper/types";
+import HomepageCompanies from "@/components/ui/layout/HomepageCompanies";
 
 const Home: React.FC = () => {
   const bestsellersRef = useRef<Swiper | null>(null);
@@ -72,6 +73,7 @@ const Home: React.FC = () => {
       <HomepageSection title="Suits" isSwiper swiperRef={suitsRef}>
         <ProductsSwiper data={products} swiperRef={suitsRef} />
       </HomepageSection>
+      <HomepageCompanies />
     </Stack>
   );
 };

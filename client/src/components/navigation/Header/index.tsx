@@ -31,7 +31,7 @@ const Header: React.FC = () => {
             Catalog
           </Button>
           <Searchbar />
-          {!isAuth ? (
+          {isAuth ? (
             <Stack flexDirection="row" alignItems="center" gap={0.5}>
               <IconButton href="/profile/wishlist">
                 <FavoriteBorderOutlined />
