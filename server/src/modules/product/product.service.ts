@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 
 // services
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -89,9 +93,15 @@ export class ProductService {
   async create(dto: CreateProductDto) {
     const { screenshots, ...rest } = dto;
 
-    const result = await this.prisma.product.create({
-      data: { ...rest, slug: createSlug(rest.title) },
-    });
+    let result;
+
+    try {
+      result = await this.prisma.product.create({
+        data: { ...rest, slug: createSlug(rest.title) },
+      });
+    } catch {
+      throw new ConflictException("Product can't have the same slug");
+    }
 
     await this.prisma.productImage.createMany({
       data: screenshots.map((url) => ({
@@ -99,7 +109,5 @@ export class ProductService {
         url,
       })),
     });
-
-    return true;
   }
 }

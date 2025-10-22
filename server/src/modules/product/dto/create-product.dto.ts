@@ -5,10 +5,13 @@ import {
   IsBoolean,
   IsEnum,
   IsInt,
+  IsNumber,
   IsPositive,
   IsString,
   IsUrl,
   Length,
+  Max,
+  Min,
 } from 'class-validator';
 
 export class CreateProductDto {
@@ -29,6 +32,11 @@ export class CreateProductDto {
   @IsInt()
   @IsPositive()
   price: number;
+
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @Min(0.01)
+  @Max(1)
+  discount: number;
 
   @IsEnum(Genders)
   sex: Genders;
