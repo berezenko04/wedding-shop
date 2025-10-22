@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { alpha, createTheme } from "@mui/material";
 
 // providers
 import { LinkBehavior } from "./components/providers/LinkBehavior";
@@ -200,12 +200,13 @@ const theme = createTheme({
         {
           props: { variant: "outlined", color: "white" },
           style: ({ theme }) => ({
+            fontSize: 24,
             border: `1px solid ${theme.palette.common.white}`,
             backgroundColor: "transparent",
 
-            // "&:hover": {
-            //   backgroundColor: theme.palette.grey[100],
-            // },
+            "&:hover": {
+              backgroundColor: alpha(theme.palette.common.white, 0.4),
+            },
           }),
         },
       ],

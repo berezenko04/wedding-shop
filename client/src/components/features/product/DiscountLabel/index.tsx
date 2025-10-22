@@ -8,6 +8,7 @@ const DiscountLabel: React.FC<DiscountLabelProps> = ({ discount }) => {
   return (
     <Box
       sx={{
+        userSelect: 'none',
         position: "absolute",
         bottom: 40,
         right: -40,
