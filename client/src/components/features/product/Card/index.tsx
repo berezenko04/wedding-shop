@@ -5,6 +5,7 @@ import DiscountLabel from "../DiscountLabel";
 
 // types
 import { Product } from "@/api/products/products.types";
+import AddToWishlistButton from "@/components/ui/buttons/AddToWishlist";
 
 const Card: React.FC<Product> = ({ posterUrl, title, price, slug, discount }) => {
   return (
@@ -16,6 +17,7 @@ const Card: React.FC<Product> = ({ posterUrl, title, price, slug, discount }) =>
           sx={{ height: "100%", width: "100%", objectFit: "cover", objectPosition: "center" }}
         />
         {discount > 0 && <DiscountLabel discount={discount} />}
+        <AddToWishlistButton />
       </Box>
 
       <Stack gap={1}>

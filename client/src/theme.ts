@@ -89,7 +89,6 @@ const theme = createTheme({
         },
       ],
     },
-
     MuiButton: {
       defaultProps: {
         LinkComponent: LinkBehavior,
@@ -135,7 +134,7 @@ const theme = createTheme({
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            borderRadius: 0,
+            borderRadius: "100%",
             padding: 0,
 
             svg: {
@@ -143,6 +142,21 @@ const theme = createTheme({
               height: 24,
             },
           },
+        },
+        {
+          props: { variant: "iconary", color: "white" },
+          style: ({ theme }) => ({
+            backgroundColor: theme.palette.common.white,
+            
+            svg: {
+              color: theme.palette.grey[500],
+            },
+
+            "&:hover": {
+              backgroundColor: theme.palette.grey[100],
+              borderColor: theme.palette.grey[200],
+            },
+          }),
         },
         {
           props: { variant: "iconary", color: "grey" },
