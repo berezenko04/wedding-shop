@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { alpha, createTheme } from "@mui/material";
 
 // providers
 import { LinkBehavior } from "./components/providers/LinkBehavior";
@@ -54,17 +54,18 @@ const theme = createTheme({
         root: ({ theme }) => ({
           "&.MuiTypography-h1, &.MuiTypography-h2, &.MuiTypography-h3, &.MuiTypography-h4, &.MuiTypography-h5, &.MuiTypography-h6":
             {
-              fontFamily: '"Cinzel", serif',
+              fontFamily: "Placid Armor",
               color: theme.palette.grey[700],
+              textTransform: "uppercase",
               fontWeight: 500,
               letterSpacing: "-2.5%",
             },
         }),
         h1: {
-          fontSize: 60,
+          fontSize: 64,
         },
         h2: {
-          fontSize: 48,
+          fontSize: 56,
         },
         h3: {
           fontSize: 32,
@@ -127,7 +128,7 @@ const theme = createTheme({
       variants: [
         {
           props: { variant: "iconary" },
-          style: {
+          style: ({ theme }) => ({
             width: 40,
             height: 40,
             minWidth: 0,
@@ -140,17 +141,21 @@ const theme = createTheme({
             svg: {
               width: 24,
               height: 24,
+              color: theme.palette.grey[500],
             },
+          }),
+        },
+        {
+          props: { variant: "iconary", size: "large" },
+          style: {
+            width: 48,
+            height: 48,
           },
         },
         {
           props: { variant: "iconary", color: "white" },
           style: ({ theme }) => ({
             backgroundColor: theme.palette.common.white,
-
-            svg: {
-              color: theme.palette.grey[500],
-            },
 
             "&:hover": {
               backgroundColor: theme.palette.grey[100],
@@ -161,11 +166,18 @@ const theme = createTheme({
         {
           props: { variant: "iconary", color: "grey" },
           style: ({ theme }) => ({
-            border: `1px solid ${theme.palette.grey[50]}`,
+            backgroundColor: theme.palette.grey[50],
 
-            svg: {
-              color: theme.palette.grey[500],
+            "&:hover": {
+              backgroundColor: theme.palette.grey[100],
+              borderColor: theme.palette.grey[200],
             },
+          }),
+        },
+        {
+          props: { variant: "iconaryOutlined" },
+          style: ({ theme }) => ({
+            border: `1px solid ${theme.palette.grey[50]}`,
 
             "&:hover": {
               backgroundColor: theme.palette.grey[100],
@@ -200,12 +212,13 @@ const theme = createTheme({
         {
           props: { variant: "outlined", color: "white" },
           style: ({ theme }) => ({
+            fontSize: 24,
             border: `1px solid ${theme.palette.common.white}`,
             backgroundColor: "transparent",
 
-            // "&:hover": {
-            //   backgroundColor: theme.palette.grey[100],
-            // },
+            "&:hover": {
+              backgroundColor: alpha(theme.palette.common.white, 0.4),
+            },
           }),
         },
       ],

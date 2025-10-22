@@ -26,6 +26,7 @@
     "react-redux": "^9.2.0",
     "react-router": "^7.9.4",
     "react-router-dom": "^7.9.4",
+    "swiper": "^12.0.3",
     "yet-another-react-lightbox": "^3.25.0"
   },
   "devDependencies": {

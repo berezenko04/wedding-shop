@@ -1,18 +1,80 @@
-import Card from "@/components/features/product/Card";
+import { Grid, Stack } from "@mui/material";
+import { useRef } from "react";
+
+// components
+import HomepageSection from "@/components/sections/HomepageSection";
+import HomepageBanner from "@/components/ui/layout/HomepageBanner";
+import ImageWithButton from "@/components/ui/cards/ImageWithButton";
+import ProductsSwiper from "@/components/features/product/Swiper";
+
+// hooks
 import { useProducts } from "@/hooks/useProducts";
-import { Grid } from "@mui/material";
+
+// types
+import type { Swiper } from "swiper/types";
+import HomepageCompanies from "@/components/ui/layout/HomepageCompanies";
 
 const Home: React.FC = () => {
+  const bestsellersRef = useRef<Swiper | null>(null);
+  const dressesRef = useRef<Swiper | null>(null);
+  const suitsRef = useRef<Swiper | null>(null);
+
   const { products } = useProducts();
 
   return (
-    <Grid container spacing={3}>
-      {products?.map((i) => (
-        <Grid key={i.id} size={{ xs: 4 }}>
-          <Card {...i} />
+    <Stack>
+      <HomepageBanner />
+      <HomepageSection title="Our categories">
+        <Grid container spacing={4}>
+          <Grid size={{ xs: 6 }}>
+            <ImageWithButton
+              height={730}
+              imgSrc="/categories-dresses.png"
+              linkText="Dresses"
+              linkHref="/catalog?sex=female"
+            />
+          </Grid>
+          <Grid size={{ xs: 6 }}>
+            <ImageWithButton
+              height={730}
+              imgSrc="/categories-suits.png"
+              linkText="Suits"
+              linkHref="/catalog?sex=male"
+            />
+          </Grid>
         </Grid>
-      ))}
-    </Grid>
+      </HomepageSection>
+      <HomepageSection title="Clothing">
+        <Grid container spacing={4}>
+          <Grid size={{ xs: 6 }}>
+            <ImageWithButton
+              height={480}
+              imgSrc="/clothing-for-her.png"
+              linkText="For her"
+              linkHref="/catalog?sex=female"
+            />
+          </Grid>
+          <Grid size={{ xs: 6 }}>
+            <ImageWithButton
+              height={480}
+              imgSrc="/clothing-for-him.png"
+              linkText="For him"
+              linkHref="/catalog?sex=male"
+            />
+          </Grid>
+        </Grid>
+      </HomepageSection>
+      <HomepageSection title="Bestsellers" isSwiper swiperRef={bestsellersRef}>
+        <ProductsSwiper data={products} swiperRef={bestsellersRef} />
+      </HomepageSection>
+      <HomepageSection title="Dresses" isSwiper swiperRef={dressesRef}>
+        <ProductsSwiper data={products} swiperRef={dressesRef} />
+      </HomepageSection>
+      <HomepageSection title="Suits" isSwiper swiperRef={suitsRef}>
+        <ProductsSwiper data={products} swiperRef={suitsRef} />
+      </HomepageSection>
+      <HomepageCompanies />
+    </Stack>
   );
 };
 

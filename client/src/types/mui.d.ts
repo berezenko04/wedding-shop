@@ -13,6 +13,7 @@ declare module "@mui/material/styles" {
 declare module "@mui/material/Button" {
   interface ButtonPropsVariantOverrides {
     iconary: true;
+    iconaryOutlined: true;
   }
 
   interface ButtonPropsColorOverrides {

@@ -18,7 +18,7 @@ const Card: React.FC<CardProps> = ({ posterUrl, title, price, slug, discount, va
         <Box
           component="img"
           src={posterUrl}
-          sx={{ height: "100%", width: "100%", objectFit: "cover", objectPosition: "center" }}
+          sx={{ height: "100%", width: "100%", objectFit: "cover", objectPosition: "center", userSelect: "none" }}
         />
         {discount > 0 && <DiscountLabel discount={discount} />}
         <AddToWishlistButton />
