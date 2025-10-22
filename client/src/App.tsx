@@ -1,14 +1,14 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { lazy } from "react";
+import { lazy, useEffect } from "react";
+import { useAppDispatch } from "./redux/store";
 
 // components
 import PrimaryLayout from "./components/layouts/PrimaryLayout";
 import AuthLayout from "./components/layouts/AuthLayout";
 
-const HomePage = lazy(() => import("@/pages/Home"));
-const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"));
+// redux
+import { refresh } from "./redux/auth/auth.actions";
 
-// auth
 const RegisterPage = lazy(() => import("@/pages/Register"));
 const LoginPage = lazy(() => import("@/pages/Login"));
 const ForgotPasswordPage = lazy(() => import("@/pages/ForgotPassword"));
@@ -17,7 +17,16 @@ const VerifyOtpSuccessPage = lazy(() => import("@/pages/VerifyOtpSuccess"));
 const ResetPasswordPage = lazy(() => import("@/pages/ResetPassword"));
 const ResetPasswordSuccessPage = lazy(() => import("@/pages/ResetPasswordSuccess"));
 
+const HomePage = lazy(() => import("@/pages/Home"));
+const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"));
+
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(refresh());
+  }, [dispatch]);
+
   return (
     <BrowserRouter>
       <Routes>

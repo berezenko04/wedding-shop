@@ -19,3 +19,17 @@ export const login = createAsyncThunk<boolean, LoginBody, { rejectValue: { messa
     }
   }
 );
+
+export const refresh = createAsyncThunk<boolean, void, { rejectValue: { message: string } }>(
+  "auth/refresh",
+  async (_, { rejectWithValue }) => {
+    try {
+      await AuthService.refresh();
+      return true;
+    } catch (err: any) {
+      return rejectWithValue({
+        message: err.message || "Unknown error",
+      });
+    }
+  }
+);

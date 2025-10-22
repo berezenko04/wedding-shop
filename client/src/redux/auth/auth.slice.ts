@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 // actions
-import { login } from "./auth.actions";
+import { login, refresh } from "./auth.actions";
 
 // types
 import { Statuses } from "@/types/enums.types";
@@ -26,6 +26,17 @@ const authSlice = createSlice({
         state.status = Statuses.SUCCESS;
       })
       .addCase(login.rejected, (state) => {
+        state.status = Statuses.ERROR;
+      })
+
+      .addCase(refresh.pending, (state) => {
+        state.status = Statuses.LOADING;
+      })
+      .addCase(refresh.fulfilled, (state, action) => {
+        state.isAuth = action.payload;
+        state.status = Statuses.SUCCESS;
+      })
+      .addCase(refresh.rejected, (state) => {
         state.status = Statuses.ERROR;
       });
   },

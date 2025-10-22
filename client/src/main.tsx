@@ -1,4 +1,3 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -28,15 +27,13 @@ const queryClient = new QueryClient({
 });
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <App />
-          <Toaster position="top-center" toastOptions={{ style: { maxWidth: 600 } }} />
-        </ThemeProvider>
-      </QueryClientProvider>
-    </Provider>
-  </StrictMode>
+  <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <App />
+        <Toaster position="top-center" toastOptions={{ style: { maxWidth: 600 } }} />
+      </ThemeProvider>
+    </QueryClientProvider>
+  </Provider>
 );
