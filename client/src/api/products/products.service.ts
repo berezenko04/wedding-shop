@@ -1,7 +1,7 @@
 import { httpGet } from "@/middlewares/axios.middleware";
 
 // types
-import { BaseResponseData } from "@/types/base.types";
+import { GetAllProducts } from "./products.types";
 
 const R = {
   all: "/products",
@@ -9,7 +9,7 @@ const R = {
 
 const ProductsService = {
   async getAll() {
-    return httpGet<BaseResponseData>(R.all);
+    return httpGet<GetAllProducts>(R.all);
   },
 };
 
