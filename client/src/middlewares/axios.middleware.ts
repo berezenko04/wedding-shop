@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// // api
-// import AuthService from "@/api/auth/auth.service";
+// api
+import AuthService from "@/api/auth/auth.service";
 
 // utils
 import { normalizeAxiosError } from "@/utils/normalizeAxiosError";
@@ -16,26 +16,26 @@ instance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config as any;
 
-    // const isAuthEndpoint =
-    //   originalRequest?.url?.includes("/auth/login") || originalRequest?.url?.includes("/auth/register");
+    const isAuthEndpoint =
+      originalRequest?.url?.includes("/auth/login") || originalRequest?.url?.includes("/auth/register");
 
-    // if (
-    //   error?.response?.status === 401 &&
-    //   !originalRequest?._isRetry &&
-    //   !originalRequest?.url?.includes("/auth/refresh") &&
-    //   !isAuthEndpoint
-    // ) {
-    //   originalRequest._isRetry = true;
-    //   try {
-    //     await AuthService.refresh();
-    //     return instance.request(originalRequest);
-    //   } catch (err) {
-    //     try {
-    //       await AuthService.logout();
-    //     } catch {}
-    //     return Promise.reject(normalizeAxiosError(err));
-    //   }
-    // }
+    if (
+      error?.response?.status === 401 &&
+      !originalRequest?._isRetry &&
+      !originalRequest?.url?.includes("/auth/refresh") &&
+      !isAuthEndpoint
+    ) {
+      originalRequest._isRetry = true;
+      try {
+        await AuthService.refresh();
+        return instance.request(originalRequest);
+      } catch (err) {
+        // try {
+        //   await AuthService.logout();
+        // } catch {}
+        return Promise.reject(normalizeAxiosError(err));
+      }
+    }
 
     if (originalRequest?.url?.includes("/auth/refresh")) {
       return Promise.reject(error);
