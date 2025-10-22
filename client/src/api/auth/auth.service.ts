@@ -7,6 +7,7 @@ import { BaseResponseData } from "@/types/base.types";
 const R = {
   register: "/auth/register",
   login: "/auth/login",
+  refresh: "/auth/refresh",
   forgotPassword: "/auth/forgot-password",
   verifyOtp: "/auth/verify-otp",
   resetPassword: "/auth/reset-password",
@@ -19,6 +20,10 @@ const AuthService = {
 
   async login(body: LoginBody) {
     return httpPost<BaseResponseData>(R.login, body);
+  },
+
+  async refresh() {
+    return httpPost<void>(R.refresh);
   },
 
   async sendForgotPasswordOtp(email: string) {
