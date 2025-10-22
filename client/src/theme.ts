@@ -72,8 +72,22 @@ const theme = createTheme({
         h4: {
           fontSize: 24,
         },
-        body1: ({ theme }) => ({ fontSize: 16, lineHeight: "24px", color: theme.palette.grey[500] }),
+        body1: ({ theme }) => ({
+          fontSize: 16,
+          lineHeight: "24px",
+          color: theme.palette.grey[500],
+        }),
       },
+      variants: [
+        {
+          props: { variant: "medium" },
+          style: ({ theme }) => ({
+            fontSize: 20,
+            fontWeight: 500,
+            color: theme.palette.grey[700],
+          }),
+        },
+      ],
     },
     MuiButton: {
       defaultProps: {
@@ -120,7 +134,7 @@ const theme = createTheme({
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            borderRadius: 0,
+            borderRadius: "100%",
             padding: 0,
 
             svg: {
@@ -128,6 +142,21 @@ const theme = createTheme({
               height: 24,
             },
           },
+        },
+        {
+          props: { variant: "iconary", color: "white" },
+          style: ({ theme }) => ({
+            backgroundColor: theme.palette.common.white,
+            
+            svg: {
+              color: theme.palette.grey[500],
+            },
+
+            "&:hover": {
+              backgroundColor: theme.palette.grey[100],
+              borderColor: theme.palette.grey[200],
+            },
+          }),
         },
         {
           props: { variant: "iconary", color: "grey" },
