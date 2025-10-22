@@ -12,7 +12,7 @@ const PrimaryLayout: React.FC = () => {
     <Stack sx={{ minHeight: "100svh" }}>
       <WarAlert />
       <Header />
-      <Stack sx={{ flex: 1, display: "flex", flexDirection: "column", py: { xs: 3, md: 7.5 } }}>
+      <Stack sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
         <Outlet />
       </Stack>
       <Footer />

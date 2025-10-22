@@ -34,6 +34,26 @@ const Home: React.FC = () => {
           </Grid>
         </Grid>
       </HomepageSection>
+      <HomepageSection title="Clothing">
+        <Grid container spacing={4}>
+          <Grid size={{ xs: 6 }}>
+            <ImageWithButton
+              height={480}
+              imgSrc="/clothing-for-her.png"
+              linkText="For her"
+              linkHref="/catalog?sex=female"
+            />
+          </Grid>
+          <Grid size={{ xs: 6 }}>
+            <ImageWithButton
+              height={480}
+              imgSrc="/clothing-for-him.png"
+              linkText="For him"
+              linkHref="/catalog?sex=male"
+            />
+          </Grid>
+        </Grid>
+      </HomepageSection>
     </Stack>
   );
 };
