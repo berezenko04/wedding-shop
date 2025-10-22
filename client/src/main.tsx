@@ -6,6 +6,10 @@ import { Provider } from "react-redux";
 import { Toaster } from "react-hot-toast";
 import App from "./App.tsx";
 
+// styles
+import "swiper/css";
+import "swiper/css/navigation";
+
 // theme
 import theme from "./theme.ts";
 

@@ -1,32 +1,38 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Stack, Typography, Button } from "@mui/material";
 
 // components
 import CustomContainer from "@/components/ui/layout/CustomContainer";
 
+// types
+import type { Swiper as SwiperType } from "swiper/types";
+
 // icons
-import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 
 type HomepageSectionProps = {
   title: string;
   children: React.ReactNode;
   isSwiper?: boolean;
-  onPrev?: () => void;
-  onNext?: () => void;
+  swiperRef?: React.RefObject<SwiperType | null>;
 };
 
-const HomepageSection: React.FC<HomepageSectionProps> = ({ title, isSwiper, onPrev, onNext, children }) => {
+const HomepageSection: React.FC<HomepageSectionProps> = ({ title, children, isSwiper, swiperRef }) => {
+  const handlePrev = () => swiperRef?.current?.slidePrev();
+  const handleNext = () => swiperRef?.current?.slideNext();
+
   return (
     <CustomContainer>
-      <Stack component="section" py={9} gap={8}>
-        <Stack flexDirection="row" alignItems="center" gap={4} justifyContent="space-between">
+      <Stack component="section" py={8} gap={6}>
+        <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Typography variant="h2">{title}</Typography>
+
           {isSwiper && (
             <Stack direction="row" gap={1}>
-              <Button onClick={onPrev} variant="iconary" color="grey" size="large">
-                <ChevronLeft />
+              <Button variant="iconary" color="grey" onClick={handlePrev}>
+                <KeyboardArrowLeft />
               </Button>
-              <Button onClick={onNext} variant="iconary" color="grey" size="large">
-                <ChevronRight />
+              <Button variant="iconary" color="grey" onClick={handleNext}>
+                <KeyboardArrowRight />
               </Button>
             </Stack>
           )}
