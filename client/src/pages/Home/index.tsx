@@ -1,7 +1,12 @@
-import Card from "@/components/features/product/Card";
-import HomepageBanner from "@/components/ui/layout/HomepageBanner";
-import { useProducts } from "@/hooks/useProducts";
 import { Stack } from "@mui/material";
+
+// components
+import HomepageSection from "@/components/sections/HomepageSection";
+import HomepageBanner from "@/components/ui/layout/HomepageBanner";
+
+// hooks
+import { useProducts } from "@/hooks/useProducts";
+
 
 const Home: React.FC = () => {
   const { products } = useProducts();
@@ -9,6 +14,9 @@ const Home: React.FC = () => {
   return (
     <Stack>
       <HomepageBanner />
+      <HomepageSection title="Our categories">
+
+      </HomepageSection>
     </Stack>
   );
 };
