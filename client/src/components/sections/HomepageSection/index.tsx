@@ -12,7 +12,7 @@ const HomepageSection: React.FC<HomepageSectionProps> = ({ title, children }) =>
   return (
     <CustomContainer>
       <Stack component="section" py={9} gap={8}>
-        <Typography variant="h3">{title}</Typography>
+        <Typography variant="h2">{title}</Typography>
         {children}
       </Stack>
     </CustomContainer>

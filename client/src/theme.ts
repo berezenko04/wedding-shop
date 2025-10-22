@@ -61,10 +61,10 @@ const theme = createTheme({
             },
         }),
         h1: {
-          fontSize: 60,
+          fontSize: 64,
         },
         h2: {
-          fontSize: 48,
+          fontSize: 56,
         },
         h3: {
           fontSize: 32,
