@@ -7,7 +7,7 @@ type LogoProps = {
 const Logo: React.FC<LogoProps> = ({ color = "dark" }) => {
   return (
     <Link href="/" sx={{ color: color === "dark" ? "grey.500" : "common.white" }}>
-      <Typography textTransform="uppercase" fontSize={24} fontFamily='"Cinzel", serif'>
+      <Typography color="inherit" textTransform="uppercase" fontSize={24} fontFamily='"Cinzel", serif'>
         Sandrela
       </Typography>
     </Link>
