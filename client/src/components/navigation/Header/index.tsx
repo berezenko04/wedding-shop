@@ -1,14 +1,20 @@
-import { Box, Button, Stack } from "@mui/material";
+import { Box, Button, IconButton, Stack } from "@mui/material";
+import { useSelector } from "react-redux";
 
 // components
 import Logo from "../Logo";
 import Searchbar from "./Searchbar";
 import CustomContainer from "@/components/ui/layout/CustomContainer";
 
+// redux
+import { authSelector } from "@/redux/auth/auth.selectors";
+
 // icons
-import { StorefrontOutlined } from "@mui/icons-material";
+import { FavoriteBorderOutlined, LocalMallOutlined, PersonOutline, StorefrontOutlined } from "@mui/icons-material";
 
 const Header: React.FC = () => {
+  const { isAuth } = useSelector(authSelector);
+
   return (
     <Box component="header">
       <CustomContainer>
@@ -25,14 +31,28 @@ const Header: React.FC = () => {
             Catalog
           </Button>
           <Searchbar />
-          <Stack flexDirection="row" gap={2} alignItems="center">
-            <Button href="/register" color="primary" variant="outlined" size="small">
-              Sign Up
-            </Button>
-            <Button href="/login" color="primary" variant="contained" size="small">
-              Sign In
-            </Button>
-          </Stack>
+          {!isAuth ? (
+            <Stack flexDirection="row" alignItems="center" gap={0.5}>
+              <IconButton href="/profile/wishlist">
+                <FavoriteBorderOutlined />
+              </IconButton>
+              <IconButton>
+                <LocalMallOutlined />
+              </IconButton>
+              <IconButton href="/profile" sx={{ backgroundColor: "grey.100" }}>
+                <PersonOutline />
+              </IconButton>
+            </Stack>
+          ) : (
+            <Stack flexDirection="row" gap={2} alignItems="center">
+              <Button href="/register" color="primary" variant="outlined" size="small">
+                Sign Up
+              </Button>
+              <Button href="/login" color="primary" variant="contained" size="small">
+                Sign In
+              </Button>
+            </Stack>
+          )}
         </Stack>
       </CustomContainer>
     </Box>
