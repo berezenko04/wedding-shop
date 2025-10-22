@@ -28,15 +28,13 @@ const queryClient = new QueryClient({
 });
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <App />
-          <Toaster position="top-center" toastOptions={{ style: { maxWidth: 600 } }} />
-        </ThemeProvider>
-      </QueryClientProvider>
-    </Provider>
-  </StrictMode>
+  <Provider store={store}>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <App />
+        <Toaster position="top-center" toastOptions={{ style: { maxWidth: 600 } }} />
+      </ThemeProvider>
+    </QueryClientProvider>
+  </Provider>
 );
