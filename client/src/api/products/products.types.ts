@@ -5,6 +5,7 @@ export type Product = {
   price: number;
   discount: number;
   available: boolean;
+  slug: string;
 };
 
 export interface GetAllProducts {

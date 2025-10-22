@@ -58,6 +58,7 @@ export class ProductService {
           posterUrl: true,
           title: true,
           price: true,
+          slug: true,
           discount: true,
           available: true,
         },
