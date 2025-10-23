@@ -8,6 +8,7 @@ import App from "./App.tsx";
 // styles
 import "swiper/css";
 import "swiper/css/navigation";
+import "./global.css";
 
 // theme
 import theme from "./theme.ts";
