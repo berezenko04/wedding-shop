@@ -1,4 +1,5 @@
 import { Slider, Box, Typography, Stack } from "@mui/material";
+import { useState } from "react";
 
 // components
 import FilterItem from "../FilterItem";
@@ -9,18 +10,22 @@ export type FilterPriceProps = {
 };
 
 const FilterPrice: React.FC<FilterPriceProps> = ({ priceRange, setPriceRange }) => {
-  const handleChange = (event: Event, newValue: number | number[]) => {
-    setPriceRange(newValue as number[]);
+  const [localRange, setLocalRange] = useState(priceRange);
+
+  const handleChange = (_: Event, newValue: number | number[]) => {
+    setLocalRange(newValue as number[]);
   };
 
-  const handleCommit = (event: React.SyntheticEvent | Event, value: number | number[]) => {};
+  const handleCommit = (_: Event | React.SyntheticEvent, newValue: number | number[]) => {
+    setPriceRange(newValue as number[]);
+  };
 
   return (
     <FilterItem title="At a Price">
       <Box>
         <Box mx={0.75}>
           <Slider
-            value={priceRange}
+            value={localRange}
             onChange={handleChange}
             onChangeCommitted={handleCommit}
             valueLabelDisplay="off"
