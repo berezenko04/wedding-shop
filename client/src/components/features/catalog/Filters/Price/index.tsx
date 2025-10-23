@@ -5,19 +5,19 @@ import { useState } from "react";
 import FilterItem from "../FilterItem";
 
 export type FilterPriceProps = {
-  priceRange: number[];
-  setPriceRange: (v: number[]) => void;
+  priceRange: [number, number];
+  setPriceRange: (v: [number, number]) => void;
 };
 
 const FilterPrice: React.FC<FilterPriceProps> = ({ priceRange, setPriceRange }) => {
-  const [localRange, setLocalRange] = useState(priceRange);
+  const [localRange, setLocalRange] = useState<[number, number]>(priceRange);
 
   const handleChange = (_: Event, newValue: number | number[]) => {
-    setLocalRange(newValue as number[]);
+    setLocalRange(newValue as [number, number]);
   };
 
   const handleCommit = (_: Event | React.SyntheticEvent, newValue: number | number[]) => {
-    setPriceRange(newValue as number[]);
+    setPriceRange(newValue as [number, number]);
   };
 
   return (

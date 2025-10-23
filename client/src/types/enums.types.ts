@@ -5,14 +5,14 @@ export enum Statuses {
 }
 
 export enum Sizes {
-  XXS,
-  XS,
-  S,
-  M,
-  L,
-  XL,
-  XXL,
-  XXXL,
+  XXS = "XXS",
+  XS = "XS",
+  S = "S",
+  M = "M",
+  L = "L",
+  XL = "XL",
+  XXL = "XXL",
+  XXXL = "XXXL",
 }
 
 export enum SortBy {
