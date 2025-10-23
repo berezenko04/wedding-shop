@@ -5,3 +5,8 @@ export const companies = [
   { src: "/logos/amazon.png", alt: "Amazon" },
   { src: "/logos/square.png", alt: "Square" },
 ];
+
+export const sortByCatalog = [
+  { label: "Price: Low to High", value: "price_asc" },
+  { label: "Price: High to Low", value: "price_desc" },
+];

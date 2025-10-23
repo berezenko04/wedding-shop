@@ -2,6 +2,7 @@ import { alpha, createTheme } from "@mui/material";
 
 // providers
 import { LinkBehavior } from "./components/providers/LinkBehavior";
+import { KeyboardArrowDown } from "@mui/icons-material";
 
 const theme = createTheme({
   palette: {
@@ -52,7 +53,7 @@ const theme = createTheme({
     MuiTypography: {
       styleOverrides: {
         root: ({ theme }) => ({
-            "&.MuiTypography-h1, &.MuiTypography-h2, &.MuiTypography-h3, &.MuiTypography-h4, &.MuiTypography-h5, &.MuiTypography-h6":
+          "&.MuiTypography-h1, &.MuiTypography-h2, &.MuiTypography-h3, &.MuiTypography-h4, &.MuiTypography-h5, &.MuiTypography-h6":
             {
               fontFamily: `"Placid Armor", serif`,
               color: theme.palette.grey[700],
@@ -282,6 +283,29 @@ const theme = createTheme({
             opacity: 1,
           },
         }),
+      },
+    },
+    MuiSelect: {
+      defaultProps: {
+        IconComponent: KeyboardArrowDown,
+      },
+      styleOverrides: {
+        icon: ({ theme }) => ({
+          color: theme.palette.grey[700],
+        }),
+        select: ({ theme }) => ({
+          textTransform: "uppercase",
+          fontWeight: 500,
+          color: theme.palette.grey[700],
+        }),
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          fontWeight: 500,
+          textTransform: "uppercase",
+        },
       },
     },
   },
