@@ -1,12 +1,14 @@
 import { Stack } from "@mui/material";
 
 // components
-import FilterPrice from "./Price";
+import FilterPrice, { FilterPriceProps } from "./Price";
 
-const Filters: React.FC = () => {
+type FiltersProps = FilterPriceProps & {};
+
+const Filters: React.FC<FiltersProps> = ({ priceRange, setPriceRange }) => {
   return (
     <Stack gap={3}>
-      <FilterPrice />
+      <FilterPrice priceRange={priceRange} setPriceRange={setPriceRange} />
     </Stack>
   );
 };

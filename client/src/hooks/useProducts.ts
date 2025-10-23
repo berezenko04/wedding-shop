@@ -13,12 +13,15 @@ import { sortByCatalog } from "@/data/main";
 
 export const useProducts = (initialParams: GetAllProductParams = {}) => {
   const [page, setPage] = useState<number>(initialParams.page ?? 1);
+  const [priceRange, setPriceRange] = useState<number[]>([0, 2000]);
   const [sortBy, setSortBy] = useState<SortBy>(initialParams.sortBy ?? sortByCatalog[0].value);
 
   const params: GetAllProductParams = {
     ...initialParams,
     page,
     limit: initialParams.limit ?? 12,
+    minPrice: priceRange[0],
+    maxPrice: priceRange[1],
     ...(sortBy ? { sortBy } : {}),
   };
 
@@ -34,6 +37,8 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
     page,
     setPage,
     sortBy,
+    priceRange,
+    setPriceRange,
     setSortBy,
     isLoading,
     error,
