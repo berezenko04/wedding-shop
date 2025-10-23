@@ -1,3 +1,5 @@
+import { SortBy } from "@/types/enums.types";
+
 export const companies = [
   { src: "/logos/bussiness-insider.png", alt: "Business Insider" },
   { src: "/logos/forbes.png", alt: "Forbes" },
@@ -7,6 +9,6 @@ export const companies = [
 ];
 
 export const sortByCatalog = [
-  { label: "Price: Low to High", value: "price_asc" },
-  { label: "Price: High to Low", value: "price_desc" },
+  { label: "Price: Low to High", value: SortBy.PRICE_ASC },
+  { label: "Price: High to Low", value: SortBy.PRICE_DESC },
 ];

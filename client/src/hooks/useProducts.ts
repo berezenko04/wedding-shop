@@ -5,17 +5,27 @@ import { useQuery } from "@tanstack/react-query";
 import ProductsService from "@/api/products/products.service";
 
 // types
-import type { Product } from "@/api/products/products.types";
+import type { GetAllProductParams, GetAllProducts } from "@/api/products/products.types";
+import type { SortBy } from "@/types/enums.types";
 
-export const useProducts = () => {
-  const [page, setPage] = useState<number>(1);
+// data
+import { sortByCatalog } from "@/data/main";
 
-  const { data, isLoading, error } = useQuery<{ data: Product[]; total: number }>({
-    queryKey: ["products"],
-    queryFn: async () => {
-      return await ProductsService.getAll();
-    },
-    placeholderData: (prev) => prev,
+export const useProducts = (initialParams: GetAllProductParams = {}) => {
+  const [page, setPage] = useState<number>(initialParams.page ?? 1);
+  const [sortBy, setSortBy] = useState<SortBy>(initialParams.sortBy ?? sortByCatalog[0].value);
+
+  const params: GetAllProductParams = {
+    ...initialParams,
+    page,
+    limit: initialParams.limit ?? 12,
+    ...(sortBy ? { sortBy } : {}),
+  };
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["products", params],
+    queryFn: () => ProductsService.getAll(params),
+    placeholderData: (prev: GetAllProducts | undefined) => prev,
   });
 
   return {
@@ -23,6 +33,8 @@ export const useProducts = () => {
     total: data?.total ?? 0,
     page,
     setPage,
+    sortBy,
+    setSortBy,
     isLoading,
     error,
   };

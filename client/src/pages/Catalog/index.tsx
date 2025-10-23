@@ -8,13 +8,13 @@ import CatalogSort from "@/components/features/catalog/Sort";
 import { useProducts } from "@/hooks/useProducts";
 
 const CatalogPage: React.FC = () => {
-  const { total } = useProducts();
+  const { total, sortBy, setSortBy } = useProducts({});
 
   return (
     <CustomContainer sx={{ py: 8 }}>
       <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={4}>
         <Typography variant="h3">Dresses ({total})</Typography>
-        <CatalogSort />
+        <CatalogSort value={sortBy} onChange={setSortBy} />
       </Stack>
     </CustomContainer>
   );

@@ -3,9 +3,12 @@ import { MenuItem, Select, Stack, Typography } from "@mui/material";
 // data
 import { sortByCatalog } from "@/data/main";
 
+// types
+import { SortBy } from "@/types/enums.types";
+
 type SortProps = {
-  value: string;
-  onChange: () => void;
+  value: SortBy;
+  onChange: (value: SortBy) => void;
 };
 
 const Sort: React.FC<SortProps> = ({ value, onChange }) => {
@@ -17,7 +20,7 @@ const Sort: React.FC<SortProps> = ({ value, onChange }) => {
         disableUnderline
         defaultValue={sortByCatalog[0].value}
         value={value}
-        onChange={onChange}
+        onChange={(e) => onChange(e.target.value as SortBy)}
       >
         {sortByCatalog.map(({ value, label }) => (
           <MenuItem key={value} value={value}>
