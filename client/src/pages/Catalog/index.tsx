@@ -1,4 +1,4 @@
-import { Grid, Stack, Typography } from "@mui/material";
+import { Divider, Grid, Pagination, Stack, Typography } from "@mui/material";
 
 // components
 import CustomContainer from "@/components/ui/layout/CustomContainer";
@@ -31,13 +31,17 @@ const CatalogPage: React.FC = () => {
             />
           </Grid>
           <Grid size={{ xs: 10 }}>
-            <Grid container spacing={4}>
-              {products.map((i) => (
-                <Grid key={i.id} size={{ xs: 4 }}>
-                  <ProductCard variant="catalog" {...i} />
-                </Grid>
-              ))}
-            </Grid>
+            <Stack gap={4}>
+              <Grid container spacing={4}>
+                {products.map((i) => (
+                  <Grid key={i.id} size={{ xs: 4 }}>
+                    <ProductCard variant="catalog" {...i} />
+                  </Grid>
+                ))}
+              </Grid>
+              <Divider />
+              <Pagination count={20} />
+            </Stack>
           </Grid>
         </Grid>
       </Stack>

@@ -308,6 +308,45 @@ const theme = createTheme({
         },
       },
     },
+    MuiPagination: {
+      styleOverrides: {
+        root: {
+          alignSelf: "center",
+        },
+      },
+    },
+    MuiPaginationItem: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          width: 40,
+          height: 40,
+          borderRadius: 0,
+          margin: 0,
+          color: theme.palette.grey[700],
+          backgroundColor: theme.palette.common.white,
+          border: `1px solid ${theme.palette.grey[200]}`,
+          fontSize: 14,
+          fontWeight: 500,
+
+          "&:not(:first-of-type)": {
+            marginLeft: "-1px",
+          },
+
+          "&.Mui-selected": {
+            backgroundColor: theme.palette.grey[50],
+          },
+
+          "&:hover": {
+            backgroundColor: theme.palette.grey[100],
+          },
+        }),
+        ellipsis: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        },
+      },
+    },
   },
 });
 

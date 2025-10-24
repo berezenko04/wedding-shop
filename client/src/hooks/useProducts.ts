@@ -16,7 +16,7 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
   const [filters, setFilters] = useState({
     priceRange: [0, 2000] as [number, number],
     size: null as Sizes | null,
-    sortBy: initialParams.sortBy ?? sortByCatalog[0].value,
+    sortBy: (initialParams.sortBy ?? sortByCatalog[0].value) as SortBy | "none",
     sex: null as Sex | null,
   });
 
@@ -28,7 +28,7 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
     maxPrice: filters.priceRange[1],
     size: filters.size ?? undefined,
     sex: filters.sex ?? undefined,
-    ...(filters.sortBy ? { sortBy: filters.sortBy } : {}),
+    ...(filters.sortBy && filters.sortBy !== "none" ? { sortBy: filters.sortBy } : {}),
   };
 
   const { data, isLoading, error } = useQuery({

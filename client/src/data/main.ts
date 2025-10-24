@@ -10,6 +10,7 @@ export const companies = [
 ];
 
 export const sortByCatalog = [
+  { label: "Recommended", value: "none" },
   { label: "Price: Low to High", value: SortBy.PRICE_ASC },
   { label: "Price: High to Low", value: SortBy.PRICE_DESC },
 ];

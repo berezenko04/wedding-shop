@@ -7,7 +7,7 @@ import { sortByCatalog } from "@/data/main";
 import { SortBy } from "@/types/enums.types";
 
 type SortProps = {
-  value: SortBy;
+  value: SortBy | "none";
   onChange: (value: SortBy) => void;
 };
 
