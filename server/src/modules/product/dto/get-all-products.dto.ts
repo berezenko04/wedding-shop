@@ -1,4 +1,4 @@
-import { Sizes } from '@prisma/client';
+import { Genders, Sizes } from '@prisma/client';
 import { IsEnum, IsInt, IsOptional, Max, Min } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -32,4 +32,8 @@ export class GetAllProductsDto extends PaginationDto {
   @IsEnum(Sizes)
   @IsOptional()
   size?: Sizes;
+
+  @IsOptional()
+  @IsEnum(Genders)
+  sex?: Genders;
 }

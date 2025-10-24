@@ -3,6 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 
 // services
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -22,9 +23,9 @@ export class ProductService {
   constructor(private readonly prisma: PrismaService) {}
 
   async all(dto: GetAllProductsDto) {
-    const { page, limit, minPrice, maxPrice, size, sortBy } = dto;
+    const { page, limit, minPrice, maxPrice, size, sortBy, sex } = dto;
 
-    const where: any = {};
+    const where: Prisma.ProductWhereInput = {};
 
     if (minPrice !== undefined || maxPrice !== undefined) {
       where.price = {};
@@ -34,6 +35,10 @@ export class ProductService {
 
     if (size) {
       where.sizes = { has: size };
+    }
+
+    if (sex) {
+      where.sex = sex;
     }
 
     let orderBy: any = {};
