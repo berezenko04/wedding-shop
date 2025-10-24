@@ -10,7 +10,9 @@ import Filters from "@/components/features/catalog/Filters";
 import { useProducts } from "@/hooks/useProducts";
 
 const CatalogPage: React.FC = () => {
-  const { products, total, filters, setSortBy, setPriceRange, setSize, setSex } = useProducts({});
+  const { products, total, page, filters, setSortBy, setPriceRange, setPage, setSize, setSex } = useProducts({});
+
+  const pages = Math.ceil(total / 12);
 
   return (
     <CustomContainer sx={{ py: 8 }}>
@@ -40,7 +42,14 @@ const CatalogPage: React.FC = () => {
                 ))}
               </Grid>
               <Divider />
-              <Pagination count={20} />
+              <Pagination
+                count={pages}
+                page={page}
+                onChange={(_, p) => {
+                  setPage(p);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+              />
             </Stack>
           </Grid>
         </Grid>

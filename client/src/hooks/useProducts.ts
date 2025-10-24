@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 // api
@@ -20,16 +20,19 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
     sex: null as Sex | null,
   });
 
-  const params: GetAllProductParams = {
-    ...initialParams,
-    page,
-    limit: initialParams.limit ?? 12,
-    minPrice: filters.priceRange[0],
-    maxPrice: filters.priceRange[1],
-    size: filters.size ?? undefined,
-    sex: filters.sex ?? undefined,
-    ...(filters.sortBy && filters.sortBy !== "none" ? { sortBy: filters.sortBy } : {}),
-  };
+  const params = useMemo(
+    () => ({
+      ...initialParams,
+      page,
+      limit: initialParams.limit ?? 12,
+      minPrice: filters.priceRange[0],
+      maxPrice: filters.priceRange[1],
+      size: filters.size ?? undefined,
+      sex: filters.sex ?? undefined,
+      ...(filters.sortBy && filters.sortBy !== "none" ? { sortBy: filters.sortBy } : {}),
+    }),
+    [page, filters, initialParams]
+  );
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["products", params],
@@ -37,10 +40,22 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
     placeholderData: (prev: GetAllProducts | undefined) => prev,
   });
 
-  const setPriceRange = (range: [number, number]) => setFilters((prev) => ({ ...prev, priceRange: range }));
-  const setSize = (size: Sizes | null) => setFilters((prev) => ({ ...prev, size }));
-  const setSortBy = (sortBy: SortBy) => setFilters((prev) => ({ ...prev, sortBy }));
-  const setSex = (sex: Sex | null) => setFilters((prev) => ({ ...prev, sex }));
+  const setSize = (size: Sizes | null) => {
+    setPage(1);
+    setFilters((prev) => ({ ...prev, size }));
+  };
+  const setSex = (sex: Sex | null) => {
+    setPage(1);
+    setFilters((prev) => ({ ...prev, sex }));
+  };
+  const setSortBy = (sortBy: SortBy) => {
+    setPage(1);
+    setFilters((prev) => ({ ...prev, sortBy }));
+  };
+  const setPriceRange = (range: [number, number]) => {
+    setPage(1);
+    setFilters((prev) => ({ ...prev, priceRange: range }));
+  };
 
   return {
     products: data?.data ?? [],
