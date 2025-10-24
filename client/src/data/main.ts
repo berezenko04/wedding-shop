@@ -12,3 +12,8 @@ export const sortByCatalog = [
   { label: "Price: Low to High", value: SortBy.PRICE_ASC },
   { label: "Price: High to Low", value: SortBy.PRICE_DESC },
 ];
+
+export const sexOptionsFilter = [
+  { label: "For him", value: "male" },
+  { label: "For her", value: "female" },
+];

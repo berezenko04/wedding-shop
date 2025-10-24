@@ -2,7 +2,8 @@ import { Stack } from "@mui/material";
 
 // components
 import FilterPrice, { FilterPriceProps } from "./Price";
-import SizeFilter, { FilterSizeProps } from "./Size";
+import FilterSize, { FilterSizeProps } from "./Size";
+import FilterBySex from "./Sex";
 
 type FiltersProps = FilterPriceProps & FilterSizeProps & {};
 
@@ -10,7 +11,8 @@ const Filters: React.FC<FiltersProps> = ({ priceRange, setPriceRange, size, setS
   return (
     <Stack gap={3}>
       <FilterPrice priceRange={priceRange} setPriceRange={setPriceRange} />
-      <SizeFilter size={size} setSize={setSize} />
+      <FilterSize size={size} setSize={setSize} />
+      <FilterBySex />
     </Stack>
   );
 };

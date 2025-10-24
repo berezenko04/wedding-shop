@@ -1,6 +1,6 @@
 // components
 import FilterItem from "../FilterItem";
-import SizePicker from "@/components/features/product/SizePicker";
+import Picker from "@/components/ui/Picker";
 
 // types
 import { Sizes } from "@/types/enums.types";
@@ -13,7 +13,7 @@ export type FilterSizeProps = {
 const SizeFilter: React.FC<FilterSizeProps> = ({ size, setSize }) => {
   return (
     <FilterItem title="By Size">
-      <SizePicker value={size} onChange={setSize} />
+      <Picker items={Object.values(Sizes)} value={size} onChange={setSize} />
     </FilterItem>
   );
 };

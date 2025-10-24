@@ -6,6 +6,7 @@ import {
   IsEnum,
   IsInt,
   IsNumber,
+  IsOptional,
   IsPositive,
   IsString,
   IsUrl,
@@ -33,10 +34,11 @@ export class CreateProductDto {
   @IsPositive()
   price: number;
 
+  @IsOptional()
   @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0.01)
   @Max(1)
-  discount: number;
+  discount?: number | null;
 
   @IsEnum(Genders)
   sex: Genders;

@@ -16,7 +16,7 @@ const CatalogPage: React.FC = () => {
     <CustomContainer sx={{ py: 8 }}>
       <Stack gap={4}>
         <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={4}>
-          <Typography variant="h3">Dresses ({total})</Typography>
+          <Typography variant="h3">Products ({total})</Typography>
           <CatalogSort value={filters.sortBy} onChange={setSortBy} />
         </Stack>
         <Grid container spacing={4}>

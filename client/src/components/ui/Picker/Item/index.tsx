@@ -1,20 +1,17 @@
 import { Box } from "@mui/material";
 
-// types
-import { Sizes } from "@/types/enums.types";
-
-type SizePickerItemProps = {
-  size: Sizes;
+type PickerItemProps<T = string | number> = {
+  value: T;
   isSelected: boolean;
-  setIsSelected: () => void;
+  onSelect: (value: T) => void;
 };
 
-const SizePickerItem: React.FC<SizePickerItemProps> = ({ isSelected, setIsSelected, size }) => {
+const PickerItem = <T extends string | number>({ value, isSelected, onSelect }: PickerItemProps<T>) => {
   return (
     <Box
       role="radio"
       aria-checked={isSelected}
-      onClick={setIsSelected}
+      onClick={() => onSelect(value)}
       sx={(theme) => ({
         width: "100%",
         cursor: "pointer",
@@ -30,9 +27,9 @@ const SizePickerItem: React.FC<SizePickerItemProps> = ({ isSelected, setIsSelect
         "&:hover": { borderColor: isSelected ? theme.palette.primary.main : theme.palette.grey[400] },
       })}
     >
-      {size}
+      {value}
     </Box>
   );
 };
 
-export default SizePickerItem;
+export default PickerItem;
