@@ -4,9 +4,10 @@ type PickerItemProps<T = string | number> = {
   value: T;
   isSelected: boolean;
   onSelect: (value: T) => void;
+  children?: React.ReactNode;
 };
 
-const PickerItem = <T extends string | number>({ value, isSelected, onSelect }: PickerItemProps<T>) => {
+const PickerItem = <T extends string | number>({ value, isSelected, onSelect, children }: PickerItemProps<T>) => {
   return (
     <Box
       role="radio"
@@ -27,7 +28,7 @@ const PickerItem = <T extends string | number>({ value, isSelected, onSelect }: 
         "&:hover": { borderColor: isSelected ? theme.palette.primary.main : theme.palette.grey[400] },
       })}
     >
-      {value}
+      {children ?? value}
     </Box>
   );
 };

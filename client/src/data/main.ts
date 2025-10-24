@@ -1,4 +1,5 @@
-import { SortBy } from "@/types/enums.types";
+import { PickerItemType } from "@/components/ui/Picker";
+import { Sex, SortBy } from "@/types/enums.types";
 
 export const companies = [
   { src: "/logos/bussiness-insider.png", alt: "Business Insider" },
@@ -13,7 +14,7 @@ export const sortByCatalog = [
   { label: "Price: High to Low", value: SortBy.PRICE_DESC },
 ];
 
-export const sexOptionsFilter = [
-  { label: "For him", value: "male" },
-  { label: "For her", value: "female" },
+export const sexOptionsFilter: PickerItemType<Sex>[] = [
+  { label: "For him", value: Sex.MALE },
+  { label: "For her", value: Sex.FEMALE },
 ];

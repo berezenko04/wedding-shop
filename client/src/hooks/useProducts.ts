@@ -6,7 +6,7 @@ import ProductsService from "@/api/products/products.service";
 
 // types
 import type { GetAllProductParams, GetAllProducts } from "@/api/products/products.types";
-import { Sizes, type SortBy } from "@/types/enums.types";
+import type { Sex, Sizes, SortBy } from "@/types/enums.types";
 
 // data
 import { sortByCatalog } from "@/data/main";
@@ -17,6 +17,7 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
     priceRange: [0, 2000] as [number, number],
     size: null as Sizes | null,
     sortBy: initialParams.sortBy ?? sortByCatalog[0].value,
+    sex: null as Sex | null,
   });
 
   const params: GetAllProductParams = {
@@ -26,6 +27,7 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
     minPrice: filters.priceRange[0],
     maxPrice: filters.priceRange[1],
     size: filters.size ?? undefined,
+    sex: filters.sex ?? undefined,
     ...(filters.sortBy ? { sortBy: filters.sortBy } : {}),
   };
 
@@ -37,7 +39,8 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
 
   const setPriceRange = (range: [number, number]) => setFilters((prev) => ({ ...prev, priceRange: range }));
   const setSize = (size: Sizes | null) => setFilters((prev) => ({ ...prev, size }));
-  const setSortBy = (sort: SortBy) => setFilters((prev) => ({ ...prev, sortBy: sort }));
+  const setSortBy = (sortBy: SortBy) => setFilters((prev) => ({ ...prev, sortBy }));
+  const setSex = (sex: Sex | null) => setFilters((prev) => ({ ...prev, sex }));
 
   return {
     products: data?.data ?? [],
@@ -48,6 +51,7 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
     setPriceRange,
     setSize,
     setSortBy,
+    setSex,
     isLoading,
     error,
   };

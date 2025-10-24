@@ -10,7 +10,7 @@ import Filters from "@/components/features/catalog/Filters";
 import { useProducts } from "@/hooks/useProducts";
 
 const CatalogPage: React.FC = () => {
-  const { products, total, filters, setSortBy, setPriceRange, setSize } = useProducts({});
+  const { products, total, filters, setSortBy, setPriceRange, setSize, setSex } = useProducts({});
 
   return (
     <CustomContainer sx={{ py: 8 }}>
@@ -26,6 +26,8 @@ const CatalogPage: React.FC = () => {
               setPriceRange={setPriceRange}
               size={filters.size}
               setSize={setSize}
+              sex={filters.sex}
+              setSex={setSex}
             />
           </Grid>
           <Grid size={{ xs: 10 }}>
