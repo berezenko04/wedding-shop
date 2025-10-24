@@ -1,4 +1,6 @@
 import { PickerItemType } from "@/components/ui/Picker";
+
+// types
 import { Sex, SortBy } from "@/types/enums.types";
 
 export const companies = [

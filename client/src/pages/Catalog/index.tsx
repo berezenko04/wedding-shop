@@ -9,10 +9,13 @@ import Filters from "@/components/features/catalog/Filters";
 // hooks
 import { useProducts } from "@/hooks/useProducts";
 
+// constants
+import { PAGE_LIMIT } from "@/constants";
+
 const CatalogPage: React.FC = () => {
   const { products, total, page, filters, setSortBy, setPriceRange, setPage, setSize, setSex } = useProducts({});
 
-  const pages = Math.ceil(total / 12);
+  const pages = Math.ceil(total / PAGE_LIMIT);
 
   return (
     <CustomContainer sx={{ py: 8 }}>
