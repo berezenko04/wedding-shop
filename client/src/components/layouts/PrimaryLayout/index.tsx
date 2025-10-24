@@ -6,12 +6,14 @@ import Header from "@/components/navigation/Header";
 import WarAlert from "@/components/navigation/WarAlert";
 import Footer from "@/components/navigation/Footer";
 import PrivacyRights from "@/components/navigation/Footer/PrivacyRights";
+import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 
 const PrimaryLayout: React.FC = () => {
   return (
     <Stack sx={{ minHeight: "100svh" }}>
       <WarAlert />
       <Header />
+      <Breadcrumbs />
       <Stack sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
         <Outlet />
       </Stack>
