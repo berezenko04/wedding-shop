@@ -1,3 +1,8 @@
 export type BaseResponseData = {
-    message: string;
-  };
+  message: string;
+};
+
+export type Pagination = {
+  page?: number;
+  limit?: number;
+};

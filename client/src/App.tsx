@@ -18,7 +18,8 @@ const ResetPasswordPage = lazy(() => import("@/pages/ResetPassword"));
 const ResetPasswordSuccessPage = lazy(() => import("@/pages/ResetPasswordSuccess"));
 
 const HomePage = lazy(() => import("@/pages/Home"));
-const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"));
+const CatalogPage = lazy(() => import("@/pages/Catalog"));
+const NotFoundPage = lazy(() => import("@/pages/NotFound"));
 
 function App() {
   const dispatch = useAppDispatch();
@@ -42,7 +43,7 @@ function App() {
 
         <Route element={<PrimaryLayout />}>
           <Route path="/" element={<HomePage />} />
-          <Route path="/catalog" />
+          <Route path="/catalog" element={<CatalogPage />} />
           <Route path="/catalog/:slug" />
           <Route path="*" element={<NotFoundPage />} />
         </Route>

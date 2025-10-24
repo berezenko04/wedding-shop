@@ -6,13 +6,14 @@ import HomepageSection from "@/components/sections/HomepageSection";
 import HomepageBanner from "@/components/ui/layout/HomepageBanner";
 import ImageWithButton from "@/components/ui/cards/ImageWithButton";
 import ProductsSwiper from "@/components/features/product/Swiper";
+import HomepageCompanies from "@/components/ui/layout/HomepageCompanies";
 
 // hooks
 import { useProducts } from "@/hooks/useProducts";
 
 // types
 import type { Swiper } from "swiper/types";
-import HomepageCompanies from "@/components/ui/layout/HomepageCompanies";
+
 
 const Home: React.FC = () => {
   const bestsellersRef = useRef<Swiper | null>(null);

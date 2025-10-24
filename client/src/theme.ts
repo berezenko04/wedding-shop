@@ -2,6 +2,7 @@ import { alpha, createTheme } from "@mui/material";
 
 // providers
 import { LinkBehavior } from "./components/providers/LinkBehavior";
+import { KeyboardArrowDown } from "@mui/icons-material";
 
 const theme = createTheme({
   palette: {
@@ -54,11 +55,10 @@ const theme = createTheme({
         root: ({ theme }) => ({
           "&.MuiTypography-h1, &.MuiTypography-h2, &.MuiTypography-h3, &.MuiTypography-h4, &.MuiTypography-h5, &.MuiTypography-h6":
             {
-              fontFamily: "Placid Armor",
+              fontFamily: `"Placid Armor", serif`,
               color: theme.palette.grey[700],
               textTransform: "uppercase",
               fontWeight: 500,
-              letterSpacing: "-2.5%",
             },
         }),
         h1: {
@@ -283,6 +283,68 @@ const theme = createTheme({
             opacity: 1,
           },
         }),
+      },
+    },
+    MuiSelect: {
+      defaultProps: {
+        IconComponent: KeyboardArrowDown,
+      },
+      styleOverrides: {
+        icon: ({ theme }) => ({
+          color: theme.palette.grey[700],
+        }),
+        select: ({ theme }) => ({
+          textTransform: "uppercase",
+          fontWeight: 500,
+          color: theme.palette.grey[700],
+        }),
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          fontWeight: 500,
+          textTransform: "uppercase",
+        },
+      },
+    },
+    MuiPagination: {
+      styleOverrides: {
+        root: {
+          alignSelf: "center",
+        },
+      },
+    },
+    MuiPaginationItem: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          width: 40,
+          height: 40,
+          borderRadius: 0,
+          margin: 0,
+          color: theme.palette.grey[700],
+          backgroundColor: theme.palette.common.white,
+          border: `1px solid ${theme.palette.grey[200]}`,
+          fontSize: 14,
+          fontWeight: 500,
+
+          "&:not(:first-of-type)": {
+            marginLeft: "-1px",
+          },
+
+          "&.Mui-selected": {
+            backgroundColor: theme.palette.grey[50],
+          },
+
+          "&:hover": {
+            backgroundColor: theme.palette.grey[100],
+          },
+        }),
+        ellipsis: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        },
       },
     },
   },
