@@ -11,6 +11,9 @@ import type { Sex, Sizes, SortBy } from "@/types/enums.types";
 // data
 import { sortByCatalog } from "@/data/main";
 
+// constants
+import { PAGE_LIMIT } from "@/constants";
+
 export const useProducts = (initialParams: GetAllProductParams = {}) => {
   const [page, setPage] = useState<number>(initialParams.page ?? 1);
   const [filters, setFilters] = useState({
@@ -24,7 +27,7 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
     () => ({
       ...initialParams,
       page,
-      limit: initialParams.limit ?? 12,
+      limit: initialParams.limit ?? PAGE_LIMIT,
       minPrice: filters.priceRange[0],
       maxPrice: filters.priceRange[1],
       size: filters.size ?? undefined,
