@@ -4,6 +4,7 @@ import { useAppDispatch } from "./redux/store";
 
 // components
 import PrimaryLayout from "./components/layouts/PrimaryLayout";
+import HomeLayout from "./components/layouts/HomeLayout";
 import AuthLayout from "./components/layouts/AuthLayout";
 
 // redux
@@ -42,8 +43,11 @@ function App() {
           <Route path="/reset-password-success" element={<ResetPasswordSuccessPage />} />
         </Route>
 
-        <Route element={<PrimaryLayout />}>
+        <Route element={<HomeLayout />}>
           <Route path="/" element={<HomePage />} />
+        </Route>
+
+        <Route element={<PrimaryLayout />}>
           <Route path="/catalog" element={<CatalogPage />} />
           <Route path="/catalog/:slug" element={<CatalogProductPage />} />
           <Route path="*" element={<NotFoundPage />} />

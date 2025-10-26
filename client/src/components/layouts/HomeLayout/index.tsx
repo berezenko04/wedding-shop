@@ -6,19 +6,14 @@ import Header from "@/components/navigation/Header";
 import WarAlert from "@/components/navigation/WarAlert";
 import Footer from "@/components/navigation/Footer";
 import PrivacyRights from "@/components/navigation/Footer/PrivacyRights";
-import Breadcrumbs from "@/components/navigation/Breadcrumbs";
-import CustomContainer from "@/components/ui/layout/CustomContainer";
 
-const PrimaryLayout: React.FC = () => {
+const HomeLayout: React.FC = () => {
   return (
     <Stack minHeight="100svh">
       <WarAlert />
       <Header />
-      <Breadcrumbs />
-      <Stack flexGrow={1} flexDirection="column" py={6}>
-        <CustomContainer>
-          <Outlet />
-        </CustomContainer>
+      <Stack flexGrow={1} flexDirection="column">
+        <Outlet />
       </Stack>
       <Footer />
       <PrivacyRights />
@@ -26,4 +21,4 @@ const PrimaryLayout: React.FC = () => {
   );
 };
 
-export default PrimaryLayout;
+export default HomeLayout;
