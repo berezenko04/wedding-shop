@@ -1,5 +1,5 @@
 import { Stack } from "@mui/material";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 // components
 import Header from "@/components/navigation/Header";
@@ -9,12 +9,15 @@ import PrivacyRights from "@/components/navigation/Footer/PrivacyRights";
 import Breadcrumbs from "@/components/navigation/Breadcrumbs";
 
 const PrimaryLayout: React.FC = () => {
+  const location = useLocation();
+  const isHome = location.pathname === "/";
+
   return (
-    <Stack sx={{ minHeight: "100svh" }}>
+    <Stack minHeight="100svh">
       <WarAlert />
       <Header />
-      <Breadcrumbs />
-      <Stack sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
+      {!isHome && <Breadcrumbs />}
+      <Stack flexGrow={1} flexDirection="column" py={isHome ? 0 : 8}>
         <Outlet />
       </Stack>
       <Footer />

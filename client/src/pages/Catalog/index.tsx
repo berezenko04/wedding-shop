@@ -19,7 +19,7 @@ const CatalogPage: React.FC = () => {
   const pages = Math.ceil(total / PAGE_LIMIT);
 
   return (
-    <CustomContainer sx={{ py: 8 }}>
+    <CustomContainer>
       <Stack gap={4}>
         <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={4}>
           <Typography variant="h3">Products ({total})</Typography>
