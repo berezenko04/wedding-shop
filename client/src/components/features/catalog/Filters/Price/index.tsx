@@ -1,5 +1,5 @@
 import { Slider, Box, Typography, Stack } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // components
 import FilterItem from "../FilterItem";
@@ -11,6 +11,10 @@ export type FilterPriceProps = {
 
 const FilterPrice: React.FC<FilterPriceProps> = ({ priceRange, setPriceRange }) => {
   const [localRange, setLocalRange] = useState<[number, number]>(priceRange);
+
+  useEffect(() => {
+    setLocalRange(priceRange);
+  }, [priceRange]);
 
   const handleChange = (_: Event, newValue: number | number[]) => {
     setLocalRange(newValue as [number, number]);
