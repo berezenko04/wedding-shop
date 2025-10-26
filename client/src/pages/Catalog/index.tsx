@@ -44,15 +44,19 @@ const CatalogPage: React.FC = () => {
                   </Grid>
                 ))}
               </Grid>
-              <Divider />
-              <Pagination
-                count={pages}
-                page={page}
-                onChange={(_, p) => {
-                  setPage(p);
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }}
-              />
+              {pages > 1 && (
+                <>
+                  <Divider />
+                  <Pagination
+                    count={pages}
+                    page={page}
+                    onChange={(_, p) => {
+                      setPage(p);
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }}
+                  />
+                </>
+              )}
             </Stack>
           </Grid>
         </Grid>
