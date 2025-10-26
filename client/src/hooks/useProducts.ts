@@ -14,13 +14,20 @@ import { sortByCatalog } from "@/data/main";
 // constants
 import { PAGE_LIMIT } from "@/constants";
 
+interface Filters {
+  priceRange: [number, number];
+  size: Sizes | null;
+  sortBy: SortBy | "none";
+  sex: Sex | null;
+}
+
 export const useProducts = (initialParams: GetAllProductParams = {}) => {
   const [page, setPage] = useState<number>(initialParams.page ?? 1);
-  const [filters, setFilters] = useState({
-    priceRange: [0, 2000] as [number, number],
-    size: null as Sizes | null,
+  const [filters, setFilters] = useState<Filters>({
+    priceRange: [0, 2000],
+    size: null,
     sortBy: (initialParams.sortBy ?? sortByCatalog[0].value) as SortBy | "none",
-    sex: null as Sex | null,
+    sex: null,
   });
 
   const params = useMemo(
@@ -43,21 +50,13 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
     placeholderData: (prev: GetAllProducts | undefined) => prev,
   });
 
-  const setSize = (size: Sizes | null) => {
+  const setFilter = <K extends keyof typeof filters>(key: K, value: (typeof filters)[K]) => {
     setPage(1);
-    setFilters((prev) => ({ ...prev, size }));
+    setFilters((prev) => ({ ...prev, [key]: value }));
   };
-  const setSex = (sex: Sex | null) => {
-    setPage(1);
-    setFilters((prev) => ({ ...prev, sex }));
-  };
-  const setSortBy = (sortBy: SortBy) => {
-    setPage(1);
-    setFilters((prev) => ({ ...prev, sortBy }));
-  };
-  const setPriceRange = (range: [number, number]) => {
-    setPage(1);
-    setFilters((prev) => ({ ...prev, priceRange: range }));
+
+  const clearFilters = () => {
+    setFilters({ priceRange: [0, 2000], size: null, sortBy: "none", sex: null });
   };
 
   return {
@@ -66,11 +65,9 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
     page,
     setPage,
     filters,
-    setPriceRange,
-    setSize,
-    setSortBy,
-    setSex,
+    setFilter,
     isLoading,
+    clearFilters,
     error,
   };
 };

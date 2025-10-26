@@ -2,6 +2,7 @@ import { Divider, Grid, Pagination, Stack, Typography } from "@mui/material";
 
 // components
 import CustomContainer from "@/components/ui/layout/CustomContainer";
+import EmptyCatalog from "@/components/features/catalog/Empty";
 import CatalogSort from "@/components/features/catalog/Sort";
 import ProductCard from "@/components/features/product/Card";
 import Filters from "@/components/features/catalog/Filters";
@@ -13,7 +14,7 @@ import { useProducts } from "@/hooks/useProducts";
 import { PAGE_LIMIT } from "@/constants";
 
 const CatalogPage: React.FC = () => {
-  const { products, total, page, filters, setSortBy, setPriceRange, setPage, setSize, setSex } = useProducts({});
+  const { products, total, page, filters, clearFilters, setPage, setFilter } = useProducts({});
 
   const pages = Math.ceil(total / PAGE_LIMIT);
 
@@ -22,28 +23,26 @@ const CatalogPage: React.FC = () => {
       <Stack gap={4}>
         <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={4}>
           <Typography variant="h3">Products ({total})</Typography>
-          <CatalogSort value={filters.sortBy} onChange={setSortBy} />
+          <CatalogSort value={filters.sortBy} onChange={(sortBy) => setFilter("sortBy", sortBy)} />
         </Stack>
         <Grid container spacing={4}>
           <Grid size={{ xs: 2 }}>
-            <Filters
-              priceRange={filters.priceRange}
-              setPriceRange={setPriceRange}
-              size={filters.size}
-              setSize={setSize}
-              sex={filters.sex}
-              setSex={setSex}
-            />
+            <Filters filters={filters} setFilter={setFilter} />
           </Grid>
           <Grid size={{ xs: 10 }}>
             <Stack gap={4}>
-              <Grid container spacing={4}>
-                {products.map((i) => (
-                  <Grid key={i.id} size={{ xs: 4 }}>
-                    <ProductCard variant="catalog" {...i} />
-                  </Grid>
-                ))}
-              </Grid>
+              {total > 0 ? (
+                <Grid container spacing={4}>
+                  {products.map((i) => (
+                    <Grid key={i.id} size={{ xs: 4 }}>
+                      <ProductCard variant="catalog" {...i} />
+                    </Grid>
+                  ))}
+                </Grid>
+              ) : (
+                <EmptyCatalog onClearFilters={clearFilters} />
+              )}
+
               {pages > 1 && (
                 <>
                   <Divider />

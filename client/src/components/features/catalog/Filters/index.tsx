@@ -1,18 +1,32 @@
 import { Stack } from "@mui/material";
 
 // components
-import FilterPrice, { FilterPriceProps } from "./Price";
-import FilterSize, { FilterSizeProps } from "./Size";
-import FilterBySex, { FilterBySexProps } from "./Sex";
+import FilterPrice from "./Price";
+import FilterSize from "./Size";
+import FilterBySex from "./Sex";
 
-type FiltersProps = FilterPriceProps & FilterSizeProps & FilterBySexProps;
+// types
+import { Sex, Sizes, SortBy } from "@/types/enums.types";
 
-const Filters: React.FC<FiltersProps> = ({ priceRange, setPriceRange, size, setSize, sex, setSex }) => {
+interface FiltersProps {
+  filters: {
+    priceRange: [number, number];
+    size: Sizes | null;
+    sex: Sex | null;
+    sortBy: SortBy | "none";
+  };
+  setFilter: <K extends keyof FiltersProps["filters"]>(key: K, value: FiltersProps["filters"][K]) => void;
+}
+
+const Filters: React.FC<FiltersProps> = ({ filters, setFilter }) => {
   return (
     <Stack gap={3}>
-      <FilterPrice priceRange={priceRange} setPriceRange={setPriceRange} />
-      <FilterSize size={size} setSize={setSize} />
-      <FilterBySex sex={sex} setSex={setSex} />
+      <FilterPrice
+        priceRange={filters.priceRange}
+        setPriceRange={(priceRange) => setFilter("priceRange", priceRange)}
+      />
+      <FilterSize size={filters.size} setSize={(size) => setFilter("size", size)} />
+      <FilterBySex sex={filters.sex} setSex={(sex) => setFilter("sex", sex)} />
     </Stack>
   );
 };
