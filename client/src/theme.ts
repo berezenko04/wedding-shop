@@ -15,6 +15,9 @@ const theme = createTheme({
       800: "#444A58",
       200: "#BCBCFF",
     },
+    yellow: {
+      500: "#FFCE15",
+    },
     grey: {
       800: "#383838",
       700: "#434343",

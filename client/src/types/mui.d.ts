@@ -4,9 +4,11 @@ import { PaletteColor, PaletteColorOptions } from "@mui/material/styles";
 declare module "@mui/material/styles" {
   interface Palette {
     blue: PaletteColor;
+    yellow: PaletteColor;
   }
   interface PaletteOptions {
     blue?: PaletteColorOptions;
+    yellow?: PaletteColorOptions;
   }
 }
 
