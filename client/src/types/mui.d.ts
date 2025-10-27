@@ -31,6 +31,7 @@ declare module "@mui/material/Link" {
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     underlined: true;
+    plain: true;
     medium: true;
   }
 }
