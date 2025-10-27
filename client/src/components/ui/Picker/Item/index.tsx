@@ -25,6 +25,7 @@ const PickerItem = <T extends string | number>({ value, isSelected, onSelect, ch
         alignItems: "center",
         justifyContent: "center",
         transition: "all .15s ease",
+        userSelect: "none",
         "&:hover": { borderColor: isSelected ? theme.palette.primary.main : theme.palette.grey[400] },
       })}
     >

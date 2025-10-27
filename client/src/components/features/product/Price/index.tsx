@@ -5,11 +5,13 @@ type ProductPriceProps = {
   discount: number | null;
 };
 
-const ProductPrice: React.FC<ProductPriceProps> = ({ price, discount }) => {
+const ProductPrice: React.FC<ProductPriceProps> = ({ price = 0, discount = 0 }) => {
+  const finalPrice = discount ? price - price * discount : price;
+
   return (
     <Stack flexDirection="row" alignItems="center" gap={2}>
       <Typography variant="medium" color="primary.main">
-        {discount ? (price - price * discount).toFixed(2) : price.toFixed(2)} USD
+        {finalPrice.toFixed(2)} USD
       </Typography>
 
       {discount && discount > 0 && (

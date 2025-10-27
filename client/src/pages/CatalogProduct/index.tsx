@@ -17,16 +17,13 @@ const CatalogProduct: React.FC = () => {
       if (!slug) throw new Error("Slug is not provided");
       return ProductsService.get(slug);
     },
-    enabled: !!slug,
   });
 
   return (
     <Stack>
       <Grid container spacing={4}>
         <Grid size={{ xs: 6 }}></Grid>
-        <Grid size={{ xs: 6 }}>
-          <ProductInfo {...data} />
-        </Grid>
+        <Grid size={{ xs: 6 }}>{data && <ProductInfo {...data} />}</Grid>
       </Grid>
     </Stack>
   );

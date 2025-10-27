@@ -1,7 +1,9 @@
 import { Stack, Typography } from "@mui/material";
+import { useState } from "react";
 
 // components
 import ProductPrice from "../Price";
+import ProductSizes from "../Sizes";
 
 // types
 import { Sizes } from "@/types/enums.types";
@@ -11,10 +13,12 @@ type ProductInfoProps = {
   price: number;
   discount: number;
   description: string;
-  sizes: Sizes;
+  sizes: Sizes[];
 };
 
-const ProductInfo: React.FC<ProductInfoProps> = ({ title, price, discount, description }) => {
+const ProductInfo: React.FC<ProductInfoProps> = ({ title, price, discount, description, sizes }) => {
+  const [selectedSize, setSelectedSize] = useState<Sizes>(sizes[0]);
+
   return (
     <Stack gap={4} px={8}>
       <Stack gap={1}>
@@ -29,6 +33,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ title, price, discount, descr
         )}
       </Stack>
       <Typography>{description}</Typography>
+      <ProductSizes sizes={sizes} selectedSize={selectedSize} onSelectSize={setSelectedSize} />
     </Stack>
   );
 };
