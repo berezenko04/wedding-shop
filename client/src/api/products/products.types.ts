@@ -14,7 +14,7 @@ export type Product = {
 export interface ProductExtended extends Product {
   description: string;
   sex: string;
-  sizes: Sizes;
+  sizes: Sizes[];
   images: ProductImage[];
 }
 
