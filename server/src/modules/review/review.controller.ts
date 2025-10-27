@@ -39,6 +39,11 @@ export class ReviewController {
     return this.reviewService.getProductReviews(productId, dto);
   }
 
+  @Get('product/:productId/ratings')
+  async getRatingsByProduct(@Param('productId') productId: string) {
+    return this.reviewService.getProductRatings(productId);
+  }
+
   @Auth()
   @Get('my')
   async getMine(@User('id') userId: string, @Query() dto: PaginationDto) {
