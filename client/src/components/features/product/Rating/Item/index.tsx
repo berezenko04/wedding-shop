@@ -27,8 +27,8 @@ const ProductRatingItem: React.FC<ProductRatingItemProps> = ({ ratingMark, ratin
         </Typography>
       </Stack>
       <LinearProgress variant="determinate" value={progressValue} sx={{ flexGrow: 1, height: 8, width: 480 }} />
-      <Typography fontWeight={500} color="grey.300">
-        {allRatingCount}
+      <Typography fontWeight={500} color="grey.300" width={24}>
+        {ratingCount}
       </Typography>
     </Stack>
   );

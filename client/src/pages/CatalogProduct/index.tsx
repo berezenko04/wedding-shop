@@ -9,7 +9,6 @@ import ProductRating from "@/components/features/product/Rating";
 
 // api
 import ProductsService from "@/api/products/products.service";
-import ReviewsService from "@/api/reviews/reviews.service";
 
 const CatalogProduct: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -21,15 +20,6 @@ const CatalogProduct: React.FC = () => {
       return ProductsService.get(slug);
     },
     enabled: !!slug,
-  });
-
-  const { data: reviews } = useQuery({
-    queryKey: ["productReviews"],
-    queryFn: async () => {
-      if (!product?.id) throw new Error("Product id is not provided");
-      await ReviewsService.getByProduct(product.id, { page: 1, limit: 10 });
-    },
-    enabled: !!product?.id,
   });
 
   return (
@@ -44,7 +34,7 @@ const CatalogProduct: React.FC = () => {
           </Grid>
         </Grid>
       )}
-      <ProductRating />
+      <ProductRating productId={product?.id} />
     </Stack>
   );
 };
