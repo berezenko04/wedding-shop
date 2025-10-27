@@ -5,22 +5,33 @@ type PickerItemProps<T = string | number> = {
   isSelected: boolean;
   onSelect: (value: T) => void;
   children?: React.ReactNode;
+  disabled?: boolean;
 };
 
-const PickerItem = <T extends string | number>({ value, isSelected, onSelect, children }: PickerItemProps<T>) => {
+const PickerItem = <T extends string | number>({
+  value,
+  isSelected,
+  onSelect,
+  disabled,
+  children,
+}: PickerItemProps<T>) => {
   return (
     <Box
       role="radio"
       aria-checked={isSelected}
-      onClick={() => onSelect(value)}
+      onClick={() => !disabled && onSelect(value)}
       sx={(theme) => ({
         width: "100%",
-        cursor: "pointer",
+        cursor: disabled ? "not-allowed" : "pointer",
         fontWeight: 500,
         height: 32,
         border: "1px solid",
-        borderColor: isSelected ? theme.palette.primary.main : theme.palette.grey[200],
-        color: isSelected ? theme.palette.primary.main : theme.palette.grey[700],
+        borderColor: disabled
+          ? theme.palette.grey[200]
+          : isSelected
+          ? theme.palette.primary.main
+          : theme.palette.grey[200],
+        color: disabled ? theme.palette.grey[200] : isSelected ? theme.palette.primary.main : theme.palette.grey[700],
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

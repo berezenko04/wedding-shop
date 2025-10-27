@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 
 // components
-import Picker from "@/components/ui/Picker";
+import SizesPicker from "../SizesPicker";
 
 // types
 import { Sizes } from "@/types/enums.types";
@@ -18,7 +18,12 @@ const ProductSizes: React.FC<ProductSizesProps> = ({ sizes, selectedSize, onSele
       <Typography variant="medium" fontSize={16} textTransform="uppercase">
         Sizes
       </Typography>
-      <Picker items={sizes} value={selectedSize} onChange={(v) => onSelectSize(v as Sizes)} allowDeselect={false} />
+      <SizesPicker
+        initialItems={Object.values(Sizes)}
+        items={sizes}
+        selectedSize={selectedSize}
+        onSelectSize={onSelectSize}
+      />
     </Stack>
   );
 };

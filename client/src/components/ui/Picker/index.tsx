@@ -10,22 +10,11 @@ type PickerProps<T = string | number> = {
   value: T | null;
   onChange: (v: T | null) => void;
   columns?: number;
-  allowDeselect?: boolean;
 };
 
-const Picker = <T extends string | number>({
-  items,
-  value,
-  onChange,
-  columns = 3,
-  allowDeselect = true,
-}: PickerProps<T>) => {
+const Picker = <T extends string | number>({ items, value, onChange, columns = 3 }: PickerProps<T>) => {
   const handlePick = (itemValue: T) => {
-    if (allowDeselect) {
-      onChange(value === itemValue ? null : itemValue);
-    } else {
-      onChange(itemValue);
-    }
+    onChange(itemValue);
   };
 
   return (
