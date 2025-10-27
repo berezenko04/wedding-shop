@@ -11,6 +11,18 @@ export type Product = {
   slug: string;
 };
 
+export interface ProductExtended extends Product {
+  description: string;
+  sex: string;
+  sizes: Sizes;
+  images: ProductImage[];
+}
+
+export type ProductImage = {
+  id: string;
+  url: string;
+};
+
 export interface GetAllProducts {
   data: Product[];
   total: number;

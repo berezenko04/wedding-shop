@@ -1,7 +1,6 @@
 import { Divider, Grid, Pagination, Stack, Typography } from "@mui/material";
 
 // components
-import CustomContainer from "@/components/ui/layout/CustomContainer";
 import EmptyCatalog from "@/components/features/catalog/Empty";
 import CatalogSort from "@/components/features/catalog/Sort";
 import ProductCard from "@/components/features/product/Card";
@@ -19,48 +18,46 @@ const CatalogPage: React.FC = () => {
   const pages = Math.ceil(total / PAGE_LIMIT);
 
   return (
-    <CustomContainer sx={{ py: 8 }}>
-      <Stack gap={4}>
-        <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={4}>
-          <Typography variant="h3">Products ({total})</Typography>
-          <CatalogSort value={filters.sortBy} onChange={(sortBy) => setFilter("sortBy", sortBy)} />
-        </Stack>
-        <Grid container spacing={4}>
-          <Grid size={{ xs: 2 }}>
-            <Filters filters={filters} setFilter={setFilter} />
-          </Grid>
-          <Grid size={{ xs: 10 }}>
-            <Stack gap={4}>
-              {total > 0 ? (
-                <Grid container spacing={4}>
-                  {products.map((i) => (
-                    <Grid key={i.id} size={{ xs: 4 }}>
-                      <ProductCard variant="catalog" {...i} />
-                    </Grid>
-                  ))}
-                </Grid>
-              ) : (
-                <EmptyCatalog onClearFilters={clearFilters} />
-              )}
-
-              {pages > 1 && (
-                <>
-                  <Divider />
-                  <Pagination
-                    count={pages}
-                    page={page}
-                    onChange={(_, p) => {
-                      setPage(p);
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }}
-                  />
-                </>
-              )}
-            </Stack>
-          </Grid>
-        </Grid>
+    <Stack gap={4}>
+      <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={4}>
+        <Typography variant="h3">Products ({total})</Typography>
+        <CatalogSort value={filters.sortBy} onChange={(sortBy) => setFilter("sortBy", sortBy)} />
       </Stack>
-    </CustomContainer>
+      <Grid container spacing={4}>
+        <Grid size={{ xs: 2 }}>
+          <Filters filters={filters} setFilter={setFilter} />
+        </Grid>
+        <Grid size={{ xs: 10 }}>
+          <Stack gap={4}>
+            {total > 0 ? (
+              <Grid container spacing={4}>
+                {products.map((i) => (
+                  <Grid key={i.id} size={{ xs: 4 }}>
+                    <ProductCard variant="catalog" {...i} />
+                  </Grid>
+                ))}
+              </Grid>
+            ) : (
+              <EmptyCatalog onClearFilters={clearFilters} />
+            )}
+
+            {pages > 1 && (
+              <>
+                <Divider />
+                <Pagination
+                  count={pages}
+                  page={page}
+                  onChange={(_, p) => {
+                    setPage(p);
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
+                />
+              </>
+            )}
+          </Stack>
+        </Grid>
+      </Grid>
+    </Stack>
   );
 };
 

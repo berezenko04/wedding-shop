@@ -3,6 +3,7 @@ import { Box, Link, Stack, Typography } from "@mui/material";
 // components
 import DiscountLabel from "../DiscountLabel";
 import AddToWishlistButton from "@/components/ui/buttons/AddToWishlist";
+import ProductPrice from "../Price";
 
 // types
 import { Product } from "@/api/products/products.types";
@@ -18,6 +19,7 @@ const Card: React.FC<CardProps> = ({ posterUrl, title, price, slug, discount, va
         <Box
           component="img"
           src={posterUrl}
+          loading="lazy"
           sx={{ height: "100%", width: "100%", objectFit: "cover", objectPosition: "center", userSelect: "none" }}
         />
         {discount > 0 && <DiscountLabel discount={discount} />}
@@ -34,19 +36,7 @@ const Card: React.FC<CardProps> = ({ posterUrl, title, price, slug, discount, va
           )}
         </Stack>
 
-        {variant === "catalog" && (
-          <Stack flexDirection="row" alignItems="center" gap={2}>
-            <Typography variant="medium" color="primary.main">
-              {discount ? (price - price * discount).toFixed(2) : price.toFixed(2)} USD
-            </Typography>
-
-            {discount > 0 && (
-              <Typography variant="medium" color="grey.400" sx={{ textDecoration: "line-through" }}>
-                {price.toFixed(2)} USD
-              </Typography>
-            )}
-          </Stack>
-        )}
+        {variant === "catalog" && <ProductPrice price={price} discount={discount} />}
       </Stack>
     </Stack>
   );
