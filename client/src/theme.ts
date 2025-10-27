@@ -2,6 +2,8 @@ import { alpha, createTheme } from "@mui/material";
 
 // providers
 import { LinkBehavior } from "./components/providers/LinkBehavior";
+
+// icons
 import { KeyboardArrowDown } from "@mui/icons-material";
 
 const theme = createTheme({
@@ -146,11 +148,47 @@ const theme = createTheme({
           }),
         },
         {
+          props: { variant: "iconaryOutlined" },
+          style: ({ theme }) => ({
+            width: 40,
+            height: 40,
+            minWidth: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 0,
+
+            svg: {
+              width: 24,
+              height: 24,
+              color: theme.palette.grey[500],
+            },
+          }),
+        },
+        {
           props: { variant: "iconary", size: "large" },
           style: {
-            width: 48,
-            height: 48,
+            width: 56,
+            height: 56,
           },
+        },
+        {
+          props: { variant: "iconaryOutlined", size: "large" },
+          style: {
+            flexShrink: 0,
+            width: 56,
+            height: 56,
+          },
+        },
+        {
+          props: { variant: "iconaryOutlined", color: "grey" },
+          style: ({ theme }) => ({
+            border: `1px solid ${theme.palette.grey[200]}`,
+
+            "&:hover": {
+              backgroundColor: theme.palette.grey[100],
+            },
+          }),
         },
         {
           props: { variant: "iconary", color: "white" },
@@ -167,17 +205,6 @@ const theme = createTheme({
           props: { variant: "iconary", color: "grey" },
           style: ({ theme }) => ({
             backgroundColor: theme.palette.grey[50],
-
-            "&:hover": {
-              backgroundColor: theme.palette.grey[100],
-              borderColor: theme.palette.grey[200],
-            },
-          }),
-        },
-        {
-          props: { variant: "iconaryOutlined" },
-          style: ({ theme }) => ({
-            border: `1px solid ${theme.palette.grey[50]}`,
 
             "&:hover": {
               backgroundColor: theme.palette.grey[100],

@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 
 // components
@@ -7,6 +7,9 @@ import ProductSizes from "../Sizes";
 
 // types
 import { Sizes } from "@/types/enums.types";
+
+// icons
+import { FavoriteBorderOutlined } from "@mui/icons-material";
 
 type ProductInfoProps = {
   title: string;
@@ -34,6 +37,14 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ title, price, discount, descr
       </Stack>
       <Typography>{description}</Typography>
       <ProductSizes sizes={sizes} selectedSize={selectedSize} onSelectSize={setSelectedSize} />
+      <Stack flexDirection="row" alignItems="center" gap={2}>
+        <Button variant="outlined" color="primary" fullWidth>
+          Add to Bag
+        </Button>
+        <Button variant="iconaryOutlined" color="grey" size="large">
+          <FavoriteBorderOutlined />
+        </Button>
+      </Stack>
     </Stack>
   );
 };
