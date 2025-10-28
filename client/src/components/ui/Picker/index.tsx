@@ -14,7 +14,7 @@ type PickerProps<T = string | number> = {
 
 const Picker = <T extends string | number>({ items, value, onChange, columns = 3 }: PickerProps<T>) => {
   const handlePick = (itemValue: T) => {
-    onChange(itemValue);
+    onChange(itemValue === value ? null : itemValue);
   };
 
   return (

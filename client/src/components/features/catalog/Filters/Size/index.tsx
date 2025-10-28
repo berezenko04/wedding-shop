@@ -13,7 +13,7 @@ export type FilterSizeProps = {
 const SizeFilter: React.FC<FilterSizeProps> = ({ size, setSize }) => {
   return (
     <FilterItem title="By Size">
-      <Picker items={Object.values(Sizes)} value={size} onChange={setSize} />
+      <Picker items={Object.values(Sizes)} value={size} onChange={setSize}/>
     </FilterItem>
   );
 };

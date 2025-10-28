@@ -24,3 +24,11 @@ export enum Sex {
   MALE = "male",
   FEMALE = "female",
 }
+
+export enum Rating {
+  ONE = "ONE",
+  TWO = "TWO",
+  THREE = "THREE",
+  FOUR = "FOUR",
+  FIVE = "FIVE",
+}

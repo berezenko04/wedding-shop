@@ -15,6 +15,9 @@ const theme = createTheme({
       800: "#444A58",
       200: "#BCBCFF",
     },
+    yellow: {
+      500: "#FFCE15",
+    },
     grey: {
       800: "#383838",
       700: "#434343",
@@ -303,6 +306,12 @@ const theme = createTheme({
           "& .MuiInputAdornment-root svg": {
             color: theme.palette.grey[400],
           },
+
+          "&.MuiInputBase-multiline": {
+            height: "100%",
+            border: "none",
+            padding: 0,
+          },
         }),
 
         input: ({ theme }) => ({
@@ -378,6 +387,13 @@ const theme = createTheme({
           alignItems: "center",
           justifyContent: "center",
         },
+      },
+    },
+    MuiRating: {
+      styleOverrides: {
+        iconEmpty: ({ theme }) => ({
+          color: theme.palette.yellow[500],
+        }),
       },
     },
   },

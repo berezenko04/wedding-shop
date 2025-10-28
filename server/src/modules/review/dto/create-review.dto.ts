@@ -7,7 +7,7 @@ export class CreateReviewDto {
   productId: string;
 
   @IsString()
-  @Length(4, 256)
+  @Length(4, 512)
   comment: string;
 
   @IsEnum(Rating)
