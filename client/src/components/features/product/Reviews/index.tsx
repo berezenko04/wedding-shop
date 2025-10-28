@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Divider, Stack, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 
@@ -11,6 +11,7 @@ import { authSelector } from "@/redux/auth/auth.selectors";
 
 // api
 import ReviewsService from "@/api/reviews/reviews.service";
+import { Fragment } from "react/jsx-runtime";
 
 type ProductReviewsProps = {
   productId: string;
@@ -37,8 +38,11 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId }) => {
           <ReviewForm productId={productId} />
         </>
       )}
-      {data?.reviews.map((review) => (
-        <ReviewsItem key={review.id} {...review} />
+      {data?.reviews.map((review, idx) => (
+        <Fragment key={review.id}>
+          <ReviewsItem {...review} />
+          {idx !== data.reviews.length - 1 && <Divider />}
+        </Fragment>
       ))}
     </Stack>
   );
