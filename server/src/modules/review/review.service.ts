@@ -81,6 +81,7 @@ export class ReviewService {
         skip: (page - 1) * limit,
         take: limit,
         where: { productId },
+        orderBy: { createdAt: 'desc' },
         select: {
           id: true,
           user: { select: { id: true, email: true } },
