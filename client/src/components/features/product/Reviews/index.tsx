@@ -1,17 +1,18 @@
 import { Stack, Typography } from "@mui/material";
 
-const ProductReviews: React.FC = () => {
+// components
+import ReviewForm from "@/components/forms/Review";
+
+type ProductReviewsProps = {
+  productId: string | undefined;
+};
+
+const ProductReviews: React.FC<ProductReviewsProps> = ({ productId }) => {
   return (
-    <Stack gap={6}>
-      <Typography variant="h3">Rating & Reviews</Typography>
-      <Stack flexDirection="row" alignItems="center" gap={8}>
-        <Stack>
-          <Typography fontSize={64} variant="medium">
-            4.5
-          </Typography>
-          <Typography textTransform="uppercase">60 Ratings</Typography>
-        </Stack>
-      </Stack>
+    <Stack gap={4}>
+      <Typography variant="h4">Comments (10)</Typography>
+      <Typography>Review this product?</Typography>
+      <ReviewForm />
     </Stack>
   );
 };

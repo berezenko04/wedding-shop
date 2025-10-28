@@ -6,6 +6,7 @@ import { useParams } from "react-router";
 import ProductInfo from "@/components/features/product/Info";
 import ProductGallery from "@/components/features/product/Gallery";
 import ProductRating from "@/components/features/product/Rating";
+import ProductReviews from "@/components/features/product/Reviews";
 
 // api
 import ProductsService from "@/api/products/products.service";
@@ -35,6 +36,7 @@ const CatalogProduct: React.FC = () => {
         </Grid>
       )}
       <ProductRating productId={product?.id} />
+      <ProductReviews productId={product?.id} />
     </Stack>
   );
 };
