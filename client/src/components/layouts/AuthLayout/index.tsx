@@ -8,7 +8,7 @@ const AuthLayout: React.FC = () => {
         <Box sx={{ position: "relative", height: "100%", overflow: "hidden" }}>
           <Box
             component="img"
-            src="/auth.png"
+            src="/auth.webp"
             sx={{
               width: "100%",
               height: "100%",

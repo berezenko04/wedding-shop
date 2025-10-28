@@ -21,7 +21,7 @@ const WarAlert: React.FC = () => {
     <Box sx={{ backgroundColor: "blue.800" }} py={2} px={3}>
       <CustomContainer>
         <Box display="flex" alignItems="center" justifyContent="center" sx={{ position: "relative" }}>
-          <Box component="img" src="/ua.png" width={32} height={24} mr={2} />
+          <Box component="img" src="/ua.webp" width={32} height={24} mr={2} />
 
           <Typography color="common.white" textAlign="center">
             Stop the war. Support Ukraine.&nbsp;

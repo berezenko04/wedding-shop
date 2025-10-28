@@ -30,7 +30,7 @@ const Home: React.FC = () => {
           <Grid size={{ xs: 6 }}>
             <ImageWithButton
               height={730}
-              imgSrc="/categories-dresses.png"
+              imgSrc="/categories-dresses.webp"
               linkText="Dresses"
               linkHref="/catalog?sex=female"
             />
@@ -38,7 +38,7 @@ const Home: React.FC = () => {
           <Grid size={{ xs: 6 }}>
             <ImageWithButton
               height={730}
-              imgSrc="/categories-suits.png"
+              imgSrc="/categories-suits.webp"
               linkText="Suits"
               linkHref="/catalog?sex=male"
             />
@@ -50,7 +50,7 @@ const Home: React.FC = () => {
           <Grid size={{ xs: 6 }}>
             <ImageWithButton
               height={480}
-              imgSrc="/clothing-for-her.png"
+              imgSrc="/clothing-for-her.webp"
               linkText="For her"
               linkHref="/catalog?sex=female"
             />
@@ -58,7 +58,7 @@ const Home: React.FC = () => {
           <Grid size={{ xs: 6 }}>
             <ImageWithButton
               height={480}
-              imgSrc="/clothing-for-him.png"
+              imgSrc="/clothing-for-him.webp"
               linkText="For him"
               linkHref="/catalog?sex=male"
             />

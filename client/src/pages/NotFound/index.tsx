@@ -12,7 +12,7 @@ const NotFoundPage: React.FC = () => {
       <Grid size={{ xs: 6 }}>
         <Box
           component="img"
-          src="/404.png"
+          src="/404.webp"
           sx={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
         />
       </Grid>
