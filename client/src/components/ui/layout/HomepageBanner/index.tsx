@@ -11,7 +11,7 @@ const HomepageBanner: React.FC = () => {
     <Box sx={{ width: "100%", height: 650, position: "relative" }}>
       <Box
         component="img"
-        src="/banner.png"
+        src="/banner.webp"
         sx={{
           width: "100%",
           height: "100%",
