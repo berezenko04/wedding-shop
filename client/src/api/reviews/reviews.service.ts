@@ -1,12 +1,13 @@
-import { httpGet } from "@/middlewares/axios.middleware";
+import { httpGet, httpPost } from "@/middlewares/axios.middleware";
 
 // types
-import { GetAllReviews, ProductRatings } from "./reviews.types";
-import { Pagination } from "@/types/base.types";
+import { CreateReviewBody, GetAllReviews, ProductRatings } from "./reviews.types";
+import { BaseResponseData, Pagination } from "@/types/base.types";
 
 const R = {
   getByProduct: (id: string) => `/reviews/product/${id}`,
   getRatingsByProduct: (id: string) => `/reviews/product/${id}/ratings`,
+  createReview: `/reviews`,
 } as const;
 
 const ReviewsService = {
@@ -15,6 +16,9 @@ const ReviewsService = {
   },
   async getProductRatings(id: string) {
     return httpGet<ProductRatings>(R.getRatingsByProduct(id));
+  },
+  async createReview(body: CreateReviewBody) {
+    return httpPost<BaseResponseData>(R.createReview, body);
   },
 };
 

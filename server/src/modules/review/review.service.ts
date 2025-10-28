@@ -11,6 +11,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 // dto
 import { CreateReviewDto } from './dto/create-review.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { maskEmail } from 'src/utils/maskEmail';
 
 @Injectable()
 export class ReviewService {
@@ -78,12 +79,25 @@ export class ReviewService {
         skip: (page - 1) * limit,
         take: limit,
         where: { productId },
-        select: { id: true, userId: true, comment: true, rating: true },
+        select: {
+          id: true,
+          user: { select: { id: true, email: true } },
+          comment: true,
+          rating: true,
+        },
       }),
       this.prisma.review.count({ where: { productId } }),
     ]);
 
-    return { reviews, total };
+    const maskedReviews = reviews.map((review) => ({
+      ...review,
+      user: {
+        ...review.user,
+        email: maskEmail(review.user.email),
+      },
+    }));
+
+    return { reviews: maskedReviews, total };
   }
 
   async getMineReviews(userId: string, dto: PaginationDto) {

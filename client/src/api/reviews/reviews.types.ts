@@ -17,3 +17,9 @@ export type ProductRatings = {
   totalVotes: number;
   distribution: Record<Rating, number>;
 };
+
+export type CreateReviewBody = {
+  productId: string;
+  comment: string;
+  rating: Rating;
+};
