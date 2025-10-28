@@ -26,17 +26,19 @@ const CatalogProduct: React.FC = () => {
   return (
     <Stack gap={8}>
       {product && (
-        <Grid container spacing={4}>
-          <Grid size={{ xs: 6 }}>
-            <ProductGallery images={[product?.posterUrl, ...(product?.images?.map((img) => img.url) || [])]} />
+        <>
+          <Grid container spacing={4}>
+            <Grid size={{ xs: 6 }}>
+              <ProductGallery images={[product?.posterUrl, ...(product?.images?.map((img) => img.url) || [])]} />
+            </Grid>
+            <Grid size={{ xs: 6 }}>
+              <ProductInfo {...product} />
+            </Grid>
           </Grid>
-          <Grid size={{ xs: 6 }}>
-            <ProductInfo {...product} />
-          </Grid>
-        </Grid>
+          <ProductRating productId={product?.id} />
+          <ProductReviews productId={product?.id} />
+        </>
       )}
-      <ProductRating productId={product?.id} />
-      <ProductReviews productId={product?.id} />
     </Stack>
   );
 };

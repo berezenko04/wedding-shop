@@ -1,5 +1,6 @@
 import { Button, Rating, Stack, TextField } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
+import { useQueryClient } from "@tanstack/react-query";
 
 // api
 import ReviewsService from "@/api/reviews/reviews.service";
@@ -17,6 +18,8 @@ type ReviewFormFields = {
 };
 
 const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
+  const queryClient = useQueryClient();
+
   const {
     control,
     handleSubmit,
@@ -42,6 +45,8 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
       rating: numberToRating[rating as keyof typeof numberToRating],
     });
     reset();
+    queryClient.invalidateQueries({ queryKey: ["productRating", productId] });
+    queryClient.invalidateQueries({ queryKey: ["productReviews", productId] });
   };
 
   return (

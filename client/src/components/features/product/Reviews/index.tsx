@@ -13,7 +13,7 @@ import { authSelector } from "@/redux/auth/auth.selectors";
 import ReviewsService from "@/api/reviews/reviews.service";
 
 type ProductReviewsProps = {
-  productId: string | undefined;
+  productId: string;
 };
 
 const ProductReviews: React.FC<ProductReviewsProps> = ({ productId }) => {

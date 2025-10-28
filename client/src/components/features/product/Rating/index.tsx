@@ -19,7 +19,7 @@ type ProductRatingProps = {
 
 const ProductRating: React.FC<ProductRatingProps> = ({ productId }) => {
   const { data: ratings } = useQuery({
-    queryKey: ["productReviews"],
+    queryKey: ["productRating", productId],
     queryFn: async () => {
       if (!productId) throw new Error("Product id is not provided");
       return ReviewsService.getProductRatings(productId);
