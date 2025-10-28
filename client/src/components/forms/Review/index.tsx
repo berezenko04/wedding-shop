@@ -39,14 +39,17 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
   const isDisabled = isSubmitting || rating === null || comment.trim().length < 4;
 
   const onSubmit = async ({ comment, rating }: ReviewFormFields) => {
-    await ReviewsService.createReview({
-      productId,
-      comment,
-      rating: numberToRating[rating as keyof typeof numberToRating],
-    });
-    reset();
-    queryClient.invalidateQueries({ queryKey: ["productRating", productId] });
-    queryClient.invalidateQueries({ queryKey: ["productReviews", productId] });
+    try {
+      await ReviewsService.createReview({
+        productId,
+        comment,
+        rating: numberToRating[rating as keyof typeof numberToRating],
+      });
+      queryClient.invalidateQueries({ queryKey: ["productRating", productId] });
+      queryClient.invalidateQueries({ queryKey: ["productReviews", productId] });
+    } finally {
+      reset();
+    }
   };
 
   return (

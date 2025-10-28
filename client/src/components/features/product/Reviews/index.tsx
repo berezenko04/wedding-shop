@@ -1,6 +1,8 @@
-import { Divider, Stack, Typography } from "@mui/material";
+import { Divider, Pagination, Stack, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
+import { Fragment } from "react/jsx-runtime";
+import { useState } from "react";
 
 // components
 import ReviewForm from "@/components/forms/Review";
@@ -11,7 +13,9 @@ import { authSelector } from "@/redux/auth/auth.selectors";
 
 // api
 import ReviewsService from "@/api/reviews/reviews.service";
-import { Fragment } from "react/jsx-runtime";
+
+// constants
+import { REVIEWS_LIMIT } from "@/constants";
 
 type ProductReviewsProps = {
   productId: string;
@@ -20,14 +24,19 @@ type ProductReviewsProps = {
 const ProductReviews: React.FC<ProductReviewsProps> = ({ productId }) => {
   const { isAuth } = useSelector(authSelector);
 
+  const [page, setPage] = useState<number>(1);
+
   const { data } = useQuery({
-    queryKey: ["productReviews", productId],
+    queryKey: ["productReviews", productId, page],
     queryFn: async () => {
       if (!productId) return null;
-      return await ReviewsService.getByProduct(productId, { page: 1, limit: 10 });
+      return await ReviewsService.getByProduct(productId, { page, limit: REVIEWS_LIMIT });
     },
+    placeholderData: (prev) => prev,
     enabled: !!productId,
   });
+
+  const pages = data?.total ? Math.ceil(data.total / REVIEWS_LIMIT) : 0;
 
   return (
     <Stack gap={4}>
@@ -44,6 +53,7 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId }) => {
           {idx !== data.reviews.length - 1 && <Divider />}
         </Fragment>
       ))}
+      {pages > 1 && <Pagination page={page} onChange={(_, val) => setPage(val)} count={pages} />}
     </Stack>
   );
 };
