@@ -12,7 +12,7 @@ type ReviewFormProps = {
 };
 
 type ReviewFormFields = {
-  rating: number;
+  rating: number | null;
   comment: string;
 };
 
@@ -25,7 +25,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
     formState: { isSubmitting },
   } = useForm<ReviewFormFields>({
     defaultValues: {
-      rating: 0,
+      rating: null,
       comment: "",
     },
   });
@@ -62,11 +62,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
       <Controller
         name="comment"
         control={control}
-        rules={{
-          required: "Please enter your comment",
-          maxLength: { value: 300, message: "Too long (max 300 chars)" },
-        }}
-        render={({ field, fieldState }) => (
+        render={({ field }) => (
           <TextField
             {...field}
             multiline
@@ -77,8 +73,6 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
             slotProps={{
               input: { disableUnderline: true },
             }}
-            error={!!fieldState.error}
-            helperText={fieldState.error?.message}
           />
         )}
       />

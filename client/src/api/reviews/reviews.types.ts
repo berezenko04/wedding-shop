@@ -2,9 +2,13 @@ import { Rating } from "@/types/enums.types";
 
 export type Review = {
   id: string;
-  userId: string;
+  user: {
+    id: string;
+    email: string;
+  };
   comment: string;
   rating: Rating;
+  createdAt: Date;
 };
 
 export type GetAllReviews = {

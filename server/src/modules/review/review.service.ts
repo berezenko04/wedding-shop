@@ -11,6 +11,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 // dto
 import { CreateReviewDto } from './dto/create-review.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+
+// utils
 import { maskEmail } from 'src/utils/maskEmail';
 
 @Injectable()
@@ -84,6 +86,7 @@ export class ReviewService {
           user: { select: { id: true, email: true } },
           comment: true,
           rating: true,
+          createdAt: true,
         },
       }),
       this.prisma.review.count({ where: { productId } }),
