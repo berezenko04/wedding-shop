@@ -11,6 +11,7 @@ import CartService from "@/api/cart/cart.service";
 // icons
 import { Close } from "@mui/icons-material";
 import CartTotal from "../Total";
+import EmptyCart from "../Empty";
 
 type CartProps = {
   isOpened: boolean;
@@ -37,12 +38,12 @@ const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
       }}
     >
       <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={4} p={3}>
-        <Typography variant="h3">Cart ({data?.length || 0})</Typography>
+        <Typography variant="h3">Cart {data && data?.length > 0 ? `(${data?.length})` : ""}</Typography>
         <IconButton onClick={handleClose}>
           <Close />
         </IconButton>
       </Stack>
-      {data && (
+      {data && data.length > 0 ? (
         <>
           <Stack px={3} flex={1}>
             {data.map((item, idx) => (
@@ -65,6 +66,8 @@ const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
             </Button>
           </Stack>
         </>
+      ) : (
+        <EmptyCart handleClose={handleClose} />
       )}
     </Drawer>
   );
