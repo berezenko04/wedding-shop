@@ -29,7 +29,7 @@ const Counter: React.FC<CounterProps> = ({ value, onChange, min = 1, max = 10 })
         border: `1px solid ${theme.palette.grey[200]}`,
         width: 94,
         height: 32,
-        borderRadius: 1,
+        userSelect: "none",
       })}
     >
       <ButtonBase onClick={handleDecrease} disabled={value <= min}>

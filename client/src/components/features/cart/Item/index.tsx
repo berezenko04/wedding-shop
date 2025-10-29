@@ -64,7 +64,7 @@ const CartItem: React.FC<CartItemProps> = ({ size, quantity, product }) => {
             </Typography>
             <Counter
               min={1}
-              max={10}
+              max={5}
               value={quantity}
               onChange={(newQty) => updateQuantity({ productId: product.id, quantity: newQty, size })}
             />
