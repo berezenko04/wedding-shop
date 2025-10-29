@@ -20,6 +20,7 @@ export class CartService {
       where: { userId },
       select: {
         items: {
+          orderBy: { createdAt: 'desc' },
           select: {
             id: true,
             quantity: true,

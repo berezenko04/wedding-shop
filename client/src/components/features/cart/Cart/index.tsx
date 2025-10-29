@@ -32,6 +32,8 @@ const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
         paper: {
           sx: {
             width: 580,
+            height: "100vh",
+            maxHeight: "100vh",
           },
         },
       }}
@@ -46,7 +48,7 @@ const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
       </Stack>
       {cart.length > 0 ? (
         <>
-          <Stack px={3} flex={1}>
+          <Stack px={3} flex={1} height="100%" sx={{ overFlowY: "auto" }}>
             {cart.map((item, idx) => (
               <Fragment key={item.id}>
                 <CartItem {...item} />
