@@ -1,10 +1,12 @@
 import { Box, Button, IconButton, Stack } from "@mui/material";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 // components
 import Logo from "../Logo";
 import Searchbar from "./Searchbar";
 import CustomContainer from "@/components/ui/layout/CustomContainer";
+import Cart from "@/components/features/cart/Cart";
 
 // redux
 import { authSelector } from "@/redux/auth/auth.selectors";
@@ -14,6 +16,8 @@ import { FavoriteBorderOutlined, LocalMallOutlined, PersonOutline, StorefrontOut
 
 const Header: React.FC = () => {
   const { isAuth } = useSelector(authSelector);
+
+  const [isCartOpened, setIsCartOpened] = useState<boolean>(false);
 
   return (
     <Box component="header">
@@ -36,7 +40,7 @@ const Header: React.FC = () => {
               <IconButton href="/profile/wishlist">
                 <FavoriteBorderOutlined />
               </IconButton>
-              <IconButton>
+              <IconButton onClick={() => setIsCartOpened(true)}>
                 <LocalMallOutlined />
               </IconButton>
               <Button href="/profile" variant="iconary" color="grey">
@@ -55,6 +59,7 @@ const Header: React.FC = () => {
           )}
         </Stack>
       </CustomContainer>
+      {isAuth && <Cart isOpened={isCartOpened} handleClose={() => setIsCartOpened(false)} />}
     </Box>
   );
 };
