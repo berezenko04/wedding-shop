@@ -5,18 +5,19 @@ import { Add, Remove } from "@mui/icons-material";
 
 type CounterProps = {
   value: number;
-  onChange: (v: number) => void;
+  onChange: (v: -1 | 1) => void;
   min?: number;
   max?: number;
+  disabled?: boolean;
 };
 
-const Counter: React.FC<CounterProps> = ({ value, onChange, min = 1, max = 10 }) => {
+const Counter: React.FC<CounterProps> = ({ value, onChange, disabled, min = 1, max = 10 }) => {
   const handleDecrease = () => {
-    if (value > min) onChange(value - 1);
+    if (value > min) onChange(-1);
   };
 
   const handleIncrease = () => {
-    if (value < max) onChange(value + 1);
+    if (value < max) onChange(1);
   };
 
   return (
@@ -32,7 +33,7 @@ const Counter: React.FC<CounterProps> = ({ value, onChange, min = 1, max = 10 })
         userSelect: "none",
       })}
     >
-      <ButtonBase onClick={handleDecrease} disabled={value <= min}>
+      <ButtonBase onClick={handleDecrease} disabled={disabled || value <= min}>
         <Remove />
       </ButtonBase>
 
@@ -40,7 +41,7 @@ const Counter: React.FC<CounterProps> = ({ value, onChange, min = 1, max = 10 })
         {value}
       </Typography>
 
-      <ButtonBase onClick={handleIncrease} disabled={value >= max}>
+      <ButtonBase onClick={handleIncrease} disabled={disabled || value >= max}>
         <Add />
       </ButtonBase>
     </Stack>

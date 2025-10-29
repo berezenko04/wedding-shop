@@ -13,8 +13,8 @@ export type CartItem = {
   };
 };
 
-export type AddToCartBody = {
+export type UpdateCartBody = {
   productId: string;
   size: Sizes;
-  quantity: number;
+  change: -1 | 1;
 };
