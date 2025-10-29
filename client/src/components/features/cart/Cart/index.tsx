@@ -48,7 +48,29 @@ const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
       </Stack>
       {cart.length > 0 ? (
         <>
-          <Stack px={3} flex={1} height="100%" sx={{ overFlowY: "auto" }}>
+          <Stack
+            px={3}
+            flex={1}
+            sx={(theme) => ({
+              overflowY: "auto",
+              "&::-webkit-scrollbar": {
+                width: 32,
+                height: 32,
+              },
+
+              "&::-webkit-scrollbar-thumb": {
+                backgroundColor: theme.palette.primary.main,
+                border: "12px solid transparent",
+                backgroundClip: "content-box",
+              },
+
+              "&::-webkit-scrollbar-button": {
+                display: "none",
+                height: 0,
+                width: 0,
+              },
+            })}
+          >
             {cart.map((item, idx) => (
               <Fragment key={item.id}>
                 <CartItem {...item} />
