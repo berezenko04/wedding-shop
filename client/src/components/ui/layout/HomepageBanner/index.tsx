@@ -38,7 +38,7 @@ const HomepageBanner: React.FC = () => {
             <Typography
               variant="h1"
               sx={(theme) => ({
-                fontSize: 80,
+                fontSize: 76,
                 color: `${theme.palette.grey[50]} !important`,
                 textAlign: "center",
                 lineHeight: "130%",

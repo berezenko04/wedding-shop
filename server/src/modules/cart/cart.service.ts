@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { ProductService } from '../product/product.service';
 
 // dto
-import { AddToCartDto } from './dto/add-to-cart.dto';
+import { UpdateCartDto } from './dto/update-cart.dto';
 import { DeleteFromCartDto } from './dto/delete-from-cart.dto';
 
 @Injectable()
@@ -15,10 +15,37 @@ export class CartService {
     private readonly productService: ProductService,
   ) {}
 
-  async addToCart(userId: string, dto: AddToCartDto) {
-    await this.productService.get(dto.productId);
+  async getCart(userId: string) {
+    const cart = await this.prisma.cart.findUnique({
+      where: { userId },
+      select: {
+        items: {
+          orderBy: { createdAt: 'desc' },
+          select: {
+            id: true,
+            quantity: true,
+            size: true,
+            product: {
+              select: {
+                id: true,
+                title: true,
+                posterUrl: true,
+                price: true,
+                discount: true,
+              },
+            },
+          },
+        },
+      },
+    });
 
-    const { productId, size, quantity } = dto;
+    return cart?.items || [];
+  }
+
+  async updateCart(userId: string, dto: UpdateCartDto) {
+    const { productId, size, change } = dto;
+
+    await this.productService.get(productId);
 
     const isSizeAvailable = await this.prisma.product.findUnique({
       where: { id: productId, sizes: { has: size } },
@@ -34,7 +61,7 @@ export class CartService {
       create: { userId },
     });
 
-    const cartItem = await this.prisma.cartItem.upsert({
+    const existingItem = await this.prisma.cartItem.findUnique({
       where: {
         cartId_productId_size: {
           cartId: cart.id,
@@ -42,43 +69,36 @@ export class CartService {
           size,
         },
       },
-      update: {
-        quantity,
-      },
-      create: {
-        cartId: cart.id,
-        productId,
-        quantity,
-        size,
-      },
     });
 
-    return cartItem;
-  }
+    if (existingItem) {
+      let newQuantity = existingItem.quantity + change;
 
-  async getCart(userId: string) {
-    const cart = await this.prisma.cart.findUnique({
-      where: { userId },
-      select: {
-        items: {
-          select: {
-            id: true,
-            quantity: true,
-            size: true,
-            product: {
-              select: {
-                title: true,
-                posterUrl: true,
-                price: true,
-                discount: true,
-              },
-            },
+      if (newQuantity < 1) newQuantity = 1;
+      if (newQuantity > 5) newQuantity = 5;
+
+      await this.prisma.cartItem.update({
+        where: {
+          cartId_productId_size: {
+            cartId: cart.id,
+            productId,
+            size,
           },
         },
-      },
-    });
-
-    return cart?.items || [];
+        data: {
+          quantity: newQuantity,
+        },
+      });
+    } else if (change > 0) {
+      await this.prisma.cartItem.create({
+        data: {
+          cartId: cart.id,
+          productId,
+          size,
+          quantity: 1,
+        },
+      });
+    }
   }
 
   async deleteFromCart(userId: string, dto: DeleteFromCartDto) {

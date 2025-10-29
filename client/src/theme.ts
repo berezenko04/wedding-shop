@@ -396,6 +396,14 @@ const theme = createTheme({
         }),
       },
     },
+    MuiBadge: {
+      styleOverrides: {
+        badge: ({ theme }) => ({
+          color: theme.palette.common.white,
+          padding: "2px",
+        }),
+      },
+    },
   },
 });
 
