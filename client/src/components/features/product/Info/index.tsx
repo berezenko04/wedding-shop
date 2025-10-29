@@ -31,7 +31,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ id, title, price, discount, d
   const queryClient = useQueryClient();
 
   const handleAddToBag = async () => {
-    const result = await CartService.addToCart({ productId: id, size: selectedSize, quantity: 1 });
+    const result = await CartService.updateCart({ productId: id, size: selectedSize, change: 1 });
     queryClient.setQueryData(["cart"], result);
   };
 

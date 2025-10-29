@@ -1,6 +1,7 @@
-import { Box, Button, IconButton, Stack } from "@mui/material";
+import { Badge, Box, Button, IconButton, Stack } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 // components
 import Logo from "../Logo";
@@ -11,6 +12,9 @@ import Cart from "@/components/features/cart/Cart";
 // redux
 import { authSelector } from "@/redux/auth/auth.selectors";
 
+// api
+import CartService from "@/api/cart/cart.service";
+
 // icons
 import { FavoriteBorderOutlined, LocalMallOutlined, PersonOutline, StorefrontOutlined } from "@mui/icons-material";
 
@@ -18,6 +22,12 @@ const Header: React.FC = () => {
   const { isAuth } = useSelector(authSelector);
 
   const [isCartOpened, setIsCartOpened] = useState<boolean>(false);
+
+  const { data: cartItems = [] } = useQuery({
+    queryKey: ["cart"],
+    queryFn: async () => await CartService.getAll(),
+    staleTime: Infinity,
+  });
 
   return (
     <Box component="header">
@@ -41,7 +51,9 @@ const Header: React.FC = () => {
                 <FavoriteBorderOutlined />
               </IconButton>
               <IconButton onClick={() => setIsCartOpened(true)}>
-                <LocalMallOutlined />
+                <Badge color="primary" badgeContent={cartItems.length}>
+                  <LocalMallOutlined />
+                </Badge>
               </IconButton>
               <Button href="/profile" variant="iconary" color="grey">
                 <PersonOutline />
