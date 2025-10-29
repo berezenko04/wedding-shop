@@ -13,7 +13,7 @@ const CartService = {
     return httpGet<CartItem[]>(R.cart);
   },
   async addToCart(body: AddToCartBody) {
-    return httpPost<BaseResponseData>(R.cart, body);
+    return httpPost<CartItem[]>(R.cart, body);
   },
   async deleteFromCart(id: string) {
     return httpDelete<BaseResponseData>(R.cart, { params: { id } });

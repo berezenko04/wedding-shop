@@ -4,14 +4,14 @@ import { Fragment } from "react/jsx-runtime";
 
 // components
 import CartItem from "../Item";
+import CartTotal from "../Total";
+import EmptyCart from "../Empty";
 
 // api
 import CartService from "@/api/cart/cart.service";
 
 // icons
 import { Close } from "@mui/icons-material";
-import CartTotal from "../Total";
-import EmptyCart from "../Empty";
 
 type CartProps = {
   isOpened: boolean;

@@ -18,7 +18,8 @@ export class CartController {
 
   @Post()
   async add(@User('id') userId: string, @Body() dto: AddToCartDto) {
-    return this.cartService.addToCart(userId, dto);
+    await this.cartService.addToCart(userId, dto);
+    return this.cartService.getCart(userId);
   }
 
   @Get()

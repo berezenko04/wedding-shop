@@ -34,7 +34,7 @@ export class CartService {
       create: { userId },
     });
 
-    const cartItem = await this.prisma.cartItem.upsert({
+    await this.prisma.cartItem.upsert({
       where: {
         cartId_productId_size: {
           cartId: cart.id,
@@ -52,8 +52,6 @@ export class CartService {
         size,
       },
     });
-
-    return cartItem;
   }
 
   async getCart(userId: string) {
