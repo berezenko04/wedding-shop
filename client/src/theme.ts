@@ -399,10 +399,8 @@ const theme = createTheme({
     MuiBadge: {
       styleOverrides: {
         badge: ({ theme }) => ({
-          width: 16,
-          height: 16,
-          fontSize: 10,
           color: theme.palette.common.white,
+          padding: "2px",
         }),
       },
     },

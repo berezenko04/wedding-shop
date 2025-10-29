@@ -23,7 +23,7 @@ const Header: React.FC = () => {
 
   const [isCartOpened, setIsCartOpened] = useState<boolean>(false);
 
-  const { data: cartItems = [] } = useQuery({
+  const { data: cart = [] } = useQuery({
     queryKey: ["cart"],
     queryFn: async () => await CartService.getAll(),
     staleTime: Infinity,
@@ -51,7 +51,7 @@ const Header: React.FC = () => {
                 <FavoriteBorderOutlined />
               </IconButton>
               <IconButton onClick={() => setIsCartOpened(true)}>
-                <Badge color="primary" badgeContent={cartItems.length}>
+                <Badge color="primary" badgeContent={cart.reduce((acc, i) => acc + i.quantity, 0)}>
                   <LocalMallOutlined />
                 </Badge>
               </IconButton>

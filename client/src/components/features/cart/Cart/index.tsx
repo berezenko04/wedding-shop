@@ -37,7 +37,9 @@ const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
       }}
     >
       <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={4} p={3}>
-        <Typography variant="h3">Cart {cart.length > 0 ? `(${cart.length})` : ""}</Typography>
+        <Typography variant="h3">
+          Cart {cart.length > 0 ? `(${cart.reduce((acc, i) => acc + i.quantity, 0)})` : ""}
+        </Typography>
         <IconButton onClick={handleClose}>
           <Close />
         </IconButton>
