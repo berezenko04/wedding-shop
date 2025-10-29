@@ -1,5 +1,6 @@
-import { Drawer, IconButton, Stack, Typography } from "@mui/material";
+import { Divider, Drawer, IconButton, Stack, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import { Fragment } from "react/jsx-runtime";
 
 // components
 import CartItem from "../Item";
@@ -35,14 +36,17 @@ const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
       }}
     >
       <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={4} p={3}>
-        <Typography variant="h3">Cart</Typography>
+        <Typography variant="h3">Cart ({data?.length})</Typography>
         <IconButton onClick={handleClose}>
           <Close />
         </IconButton>
       </Stack>
       <Stack px={3} pb={3}>
-        {data?.map((item) => (
-          <CartItem {...item} />
+        {data?.map((item, idx) => (
+          <Fragment key={item.id}>
+            <CartItem {...item} />
+            {idx !== data.length - 1 && <Divider />}
+          </Fragment>
         ))}
       </Stack>
     </Drawer>
