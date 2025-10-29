@@ -4,6 +4,7 @@ import { useState } from "react";
 // components
 import ProductPrice from "../Price";
 import ProductSizes from "../Sizes";
+import ProductDiscount from "../Discount";
 
 // types
 import { Sizes } from "@/types/enums.types";
@@ -29,11 +30,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ title, price, discount, descr
           {title}
         </Typography>
         <ProductPrice price={price} discount={discount} />
-        {discount && (
-          <Typography variant="medium" color="success.main">
-            {discount * 100}% off
-          </Typography>
-        )}
+        <ProductDiscount discount={discount} />
       </Stack>
       <Typography>{description}</Typography>
       <ProductSizes sizes={sizes} selectedSize={selectedSize} onSelectSize={setSelectedSize} />

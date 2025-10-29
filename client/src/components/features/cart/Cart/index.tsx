@@ -1,7 +1,11 @@
 import { Drawer, IconButton, Stack, Typography } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 
 // components
 import CartItem from "../Item";
+
+// api
+import CartService from "@/api/cart/cart.service";
 
 // icons
 import { Close } from "@mui/icons-material";
@@ -12,6 +16,11 @@ type CartProps = {
 };
 
 const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
+  const { data } = useQuery({
+    queryKey: ["cart"],
+    queryFn: async () => await CartService.getAll(),
+  });
+
   return (
     <Drawer
       anchor="right"
@@ -32,7 +41,9 @@ const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
         </IconButton>
       </Stack>
       <Stack px={3} pb={3}>
-        <CartItem />
+        {data?.map((item) => (
+          <CartItem {...item} />
+        ))}
       </Stack>
     </Drawer>
   );
