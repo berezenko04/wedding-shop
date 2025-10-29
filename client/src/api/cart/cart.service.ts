@@ -2,7 +2,6 @@ import { httpDelete, httpGet, httpPost } from "@/middlewares/axios.middleware";
 
 // types
 import { AddToCartBody, CartItem } from "./cart.types";
-import { BaseResponseData } from "@/types/base.types";
 
 const R = {
   cart: "/cart",
@@ -16,7 +15,7 @@ const CartService = {
     return httpPost<CartItem[]>(R.cart, body);
   },
   async deleteFromCart(id: string) {
-    return httpDelete<BaseResponseData>(R.cart, { params: { id } });
+    return httpDelete<CartItem[]>(R.cart, { params: { id } });
   },
 };
 

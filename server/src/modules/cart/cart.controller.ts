@@ -30,6 +30,6 @@ export class CartController {
   @Delete()
   async delete(@User('id') userId: string, @Query() dto: DeleteFromCartDto) {
     await this.cartService.deleteFromCart(userId, dto);
-    return { message: 'Item removed from cart' };
+    return this.cartService.getCart(userId);
   }
 }

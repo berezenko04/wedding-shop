@@ -43,8 +43,8 @@ const CartItem: React.FC<CartItemProps> = ({ id, size, quantity, product }) => {
   });
 
   const handleRemove = async () => {
-    await CartService.deleteFromCart(id);
-    queryClient.invalidateQueries({ queryKey: ["cart"] });
+    const result = await CartService.deleteFromCart(id);
+    queryClient.setQueryData(["cart"], result);
   };
 
   return (
