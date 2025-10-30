@@ -5,9 +5,9 @@ import { CreateReviewBody, GetAllReviews, ProductRatings } from "./reviews.types
 import { BaseResponseData, Pagination } from "@/types/base.types";
 
 const R = {
-  getByProduct: (id: string) => `/reviews/product/${id}`,
-  getRatingsByProduct: (id: string) => `/reviews/product/${id}/ratings`,
-  createReview: `/reviews`,
+  reviews: "/reviews",
+  getByProduct: (id: string) => `${R.reviews}/product/${id}`,
+  getRatingsByProduct: (id: string) => `${R.reviews}/product/${id}/ratings`,
 } as const;
 
 const ReviewsService = {
@@ -18,7 +18,7 @@ const ReviewsService = {
     return httpGet<ProductRatings>(R.getRatingsByProduct(id));
   },
   async createReview(body: CreateReviewBody) {
-    return httpPost<BaseResponseData>(R.createReview, body);
+    return httpPost<BaseResponseData>(R.reviews, body);
   },
 };
 

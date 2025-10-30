@@ -58,7 +58,6 @@ export class WishlistService {
               title: true,
               price: true,
               discount: true,
-              available: true,
             },
           },
         },

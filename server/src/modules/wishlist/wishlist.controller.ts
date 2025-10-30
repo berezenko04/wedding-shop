@@ -31,7 +31,7 @@ export class WishlistController {
     @Body('productId', new ParseUUIDPipe()) productId: string,
   ) {
     await this.wishlistService.add(userId, productId);
-    return { message: 'Added to wishlist' };
+    return this.wishlistService.get(userId, { page: 1, limit: 10 });
   }
 
   @Get()
@@ -50,6 +50,6 @@ export class WishlistController {
     @Param('id') wishlistItemId: string,
   ) {
     await this.wishlistService.remove(userId, wishlistItemId);
-    return { message: 'Product has been removed from wishlist' };
+    return this.wishlistService.get(userId, { page: 1, limit: 10 });
   }
 }
