@@ -25,7 +25,7 @@ const CatalogPage: React.FC = () => {
       </Stack>
       <Grid container spacing={4}>
         <Grid size={{ xs: 2 }}>
-          <Filters filters={filters} setFilter={setFilter} />
+          <Filters filters={filters} setFilter={setFilter} clearFilters={clearFilters} />
         </Grid>
         <Grid size={{ xs: 10 }}>
           <Stack gap={4}>
