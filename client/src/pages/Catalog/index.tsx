@@ -1,5 +1,6 @@
 import { Divider, Grid, Pagination, Stack, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 // components
 import EmptyCatalog from "@/components/features/catalog/Empty";
@@ -21,11 +22,17 @@ const CatalogPage: React.FC = () => {
 
   const pages = Math.ceil(total / PAGE_LIMIT);
 
-  const { data: wishlistedIds } = useQuery({
-    queryKey: ["checkWishlist", products],
+  const { data: wishlistedIds, refetch } = useQuery({
+    queryKey: ["checkWishlist"],
     queryFn: async () => await WishlistService.checkInWishlist({ ids: products.map((product) => product.id) }),
     enabled: !!products.length,
   });
+
+  useEffect(() => {
+    if (products.length) {
+      refetch();
+    }
+  }, [products, refetch]);
 
   return (
     <Stack gap={4}>
