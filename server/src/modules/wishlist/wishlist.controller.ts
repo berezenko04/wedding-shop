@@ -31,7 +31,7 @@ export class WishlistController {
     @Body('productId', new ParseUUIDPipe()) productId: string,
   ) {
     await this.wishlistService.add(userId, productId);
-    return this.wishlistService.get(userId, { page: 1, limit: 10 });
+    return this.wishlistService.get(userId, { page: 1, limit: 12 });
   }
 
   @Get()
@@ -45,11 +45,8 @@ export class WishlistController {
   }
 
   @Delete(':id')
-  async remove(
-    @User('id') userId: string,
-    @Param('id') wishlistItemId: string,
-  ) {
-    await this.wishlistService.remove(userId, wishlistItemId);
-    return this.wishlistService.get(userId, { page: 1, limit: 10 });
+  async remove(@User('id') userId: string, @Param('id') productId: string) {
+    await this.wishlistService.remove(userId, productId);
+    return this.wishlistService.get(userId, { page: 1, limit: 12 });
   }
 }

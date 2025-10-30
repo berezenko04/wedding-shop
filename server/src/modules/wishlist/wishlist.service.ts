@@ -32,10 +32,10 @@ export class WishlistService {
     }
   }
 
-  async remove(userId: string, wishlistItemId: string) {
+  async remove(userId: string, productId: string) {
     try {
       await this.prisma.wishlist.delete({
-        where: { id: wishlistItemId, userId },
+        where: { userId_productId: { userId, productId } },
       });
     } catch {
       throw new NotFoundException("Product is doesn't exist in wishlist");
