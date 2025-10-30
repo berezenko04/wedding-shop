@@ -68,4 +68,18 @@ export class WishlistService {
 
     return { wishlist, total };
   }
+
+  async check(userId: string, ids: string[]) {
+    const wishlistItems = await this.prisma.wishlist.findMany({
+      where: {
+        userId,
+        productId: { in: ids },
+      },
+      select: { productId: true },
+    });
+
+    const matchedIds = wishlistItems.map((item) => item.productId);
+
+    return [...matchedIds];
+  }
 }
