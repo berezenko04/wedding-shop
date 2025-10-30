@@ -13,7 +13,6 @@ import { Auth } from '../auth/decorators/auth.decorator';
 
 // dto
 import { PaginationDto } from 'src/common/dto/pagination.dto';
-import { CheckWishlistDto } from './dto/check-wishlist.dto';
 
 @Injectable()
 @Auth()
@@ -70,17 +69,17 @@ export class WishlistService {
     return { wishlist, total };
   }
 
-  async check(userId: string, dto: CheckWishlistDto) {
+  async check(userId: string, ids: string[]) {
     const wishlistItems = await this.prisma.wishlist.findMany({
       where: {
         userId,
-        productId: { in: dto.ids },
+        productId: { in: ids },
       },
       select: { productId: true },
     });
 
     const matchedIds = wishlistItems.map((item) => item.productId);
 
-    return { matchedIds };
+    return [...matchedIds];
   }
 }
