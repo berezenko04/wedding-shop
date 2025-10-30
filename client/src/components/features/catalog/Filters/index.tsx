@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 
 // components
 import FilterPrice from "./Price";
@@ -16,9 +16,10 @@ interface FiltersProps {
     sortBy: SortBy | "none";
   };
   setFilter: <K extends keyof FiltersProps["filters"]>(key: K, value: FiltersProps["filters"][K]) => void;
+  clearFilters: () => void;
 }
 
-const Filters: React.FC<FiltersProps> = ({ filters, setFilter }) => {
+const Filters: React.FC<FiltersProps> = ({ filters, setFilter, clearFilters }) => {
   return (
     <Stack gap={3}>
       <FilterPrice
@@ -27,6 +28,9 @@ const Filters: React.FC<FiltersProps> = ({ filters, setFilter }) => {
       />
       <FilterSize size={filters.size} setSize={(size) => setFilter("size", size)} />
       <FilterBySex sex={filters.sex} setSex={(sex) => setFilter("sex", sex)} />
+      <Button variant="outlined" color="primary" size="small" onClick={clearFilters}>
+        Clear Filters
+      </Button>
     </Stack>
   );
 };
