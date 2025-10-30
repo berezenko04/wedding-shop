@@ -1,7 +1,8 @@
-import { httpDelete, httpPost } from "@/middlewares/axios.middleware";
+import { httpDelete, httpGet, httpPost } from "@/middlewares/axios.middleware";
 
 // types
 import { AddToWishlistBody, CheckInWishlistBody, GetAllWishlist } from "./wishlist.types";
+import { Pagination } from "@/types/base.types";
 
 const R = {
   wishlist: "/wishlist",
@@ -9,7 +10,10 @@ const R = {
   removeFromWishlist: (id: string) => `${R.wishlist}/${id}`,
 } as const;
 
-const ReviewsService = {
+const WishlistService = {
+  async getAll(params: Pagination) {
+    return httpGet<GetAllWishlist>(R.wishlist, { params });
+  },
   async addToWishlist(body: AddToWishlistBody) {
     return httpPost<GetAllWishlist>(R.wishlist, body);
   },
@@ -21,4 +25,4 @@ const ReviewsService = {
   },
 };
 
-export default ReviewsService;
+export default WishlistService;
