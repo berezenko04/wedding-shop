@@ -17,6 +17,3 @@ export type GetAllWishlist = {
   total: number;
 };
 
-export type CheckInWishlistBody = {
-  ids: string[];
-};

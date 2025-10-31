@@ -9,18 +9,18 @@ import Searchbar from "./Searchbar";
 import CustomContainer from "@/components/ui/layout/CustomContainer";
 import Cart from "@/components/features/cart/Cart";
 
+// api
+import WishlistService from "@/api/wishlist/wishlist.service";
+import CartService from "@/api/cart/cart.service";
+
 // redux
 import { authSelector } from "@/redux/auth/auth.selectors";
 
-// api
-import CartService from "@/api/cart/cart.service";
-import WishlistService from "@/api/wishlist/wishlist.service";
+// types
+import { GetAllWishlist } from "@/api/wishlist/wishlist.types";
 
 // icons
 import { FavoriteBorderOutlined, LocalMallOutlined, PersonOutline, StorefrontOutlined } from "@mui/icons-material";
-
-// types
-import { GetAllWishlist } from "@/api/wishlist/wishlist.types";
 
 // constants
 import { PAGE_LIMIT } from "@/constants";
@@ -32,12 +32,12 @@ const Header: React.FC = () => {
 
   const { data: cart = [] } = useQuery({
     queryKey: ["cart"],
-    queryFn: async () => await CartService.getAll(),
-    staleTime: Infinity,
+    queryFn: CartService.getAll,
     enabled: isAuth,
+    staleTime: Infinity,
   });
 
-  const { data: wishlist } = useQuery<GetAllWishlist>({
+  const { data: wishlist = { wishlist: [], total: 0 } } = useQuery<GetAllWishlist>({
     queryKey: ["wishlist"],
     queryFn: async () => await WishlistService.getAll({ page: 1, limit: PAGE_LIMIT }),
     staleTime: Infinity,
@@ -63,7 +63,7 @@ const Header: React.FC = () => {
           {isAuth ? (
             <Stack flexDirection="row" alignItems="center" gap={0.5}>
               <IconButton href="/profile/wishlist">
-                <Badge color="primary" badgeContent={wishlist?.total}>
+                <Badge color="primary" badgeContent={wishlist.total}>
                   <FavoriteBorderOutlined />
                 </Badge>
               </IconButton>

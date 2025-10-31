@@ -1,7 +1,7 @@
 import { httpDelete, httpGet, httpPost } from "@/middlewares/axios.middleware";
 
 // types
-import { AddToWishlistBody, CheckInWishlistBody, GetAllWishlist } from "./wishlist.types";
+import { AddToWishlistBody, GetAllWishlist } from "./wishlist.types";
 import { Pagination } from "@/types/base.types";
 
 const R = {
@@ -20,8 +20,8 @@ const WishlistService = {
   async removeFromWishlist(id: string) {
     return httpDelete<GetAllWishlist>(R.removeFromWishlist(id));
   },
-  async checkInWishlist(body: CheckInWishlistBody) {
-    return httpPost<string[]>(R.check, body);
+  async checkInWishlist() {
+    return httpGet<string[]>(R.check);
   },
 };
 
