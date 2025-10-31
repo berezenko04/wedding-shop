@@ -12,7 +12,7 @@ const Socials: React.FC = () => {
             sx={{
               color: "grey.400",
               transition: "all .25s ease-in-out",
-              "&:hover": { color: "primary.main" },
+              "&:hover": { color: "common.white" },
             }}
           />
         </Link>
