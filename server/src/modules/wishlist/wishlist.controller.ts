@@ -14,7 +14,6 @@ import { WishlistService } from './wishlist.service';
 
 // dto
 import { PaginationDto } from 'src/common/dto/pagination.dto';
-import { CheckWishlistDto } from './dto/check-wishlist.dto';
 
 // decorators
 import { Auth } from '../auth/decorators/auth.decorator';
@@ -39,9 +38,9 @@ export class WishlistController {
     return this.wishlistService.get(userId, dto);
   }
 
-  @Post('check')
-  async check(@User('id') userId: string, @Body() dto: CheckWishlistDto) {
-    return this.wishlistService.check(userId, dto.ids);
+  @Get('check')
+  async check(@User('id') userId: string) {
+    return this.wishlistService.check(userId);
   }
 
   @Delete(':id')
