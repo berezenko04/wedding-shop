@@ -7,10 +7,10 @@ import PrimaryLayout from "./components/layouts/PrimaryLayout";
 import HomeLayout from "./components/layouts/HomeLayout";
 import AuthLayout from "./components/layouts/AuthLayout";
 import AppLayout from "./components/layouts/AppLayout";
+import ProfileLayout from "./components/layouts/ProfileLayout";
 
 // redux
 import { refresh } from "./redux/auth/auth.actions";
-import ProfileLayout from "./components/layouts/ProfileLayout";
 
 const RegisterPage = lazy(() => import("@/pages/auth/Register"));
 const LoginPage = lazy(() => import("@/pages/auth/Login"));
@@ -24,6 +24,8 @@ const HomePage = lazy(() => import("@/pages/Home"));
 const CatalogPage = lazy(() => import("@/pages/Catalog"));
 const CatalogProductPage = lazy(() => import("@/pages/CatalogProduct"));
 const NotFoundPage = lazy(() => import("@/pages/NotFound"));
+
+const AccountPage = lazy(() => import("@/pages/profile/Account"));
 
 function App() {
   const dispatch = useAppDispatch();
@@ -56,7 +58,7 @@ function App() {
             <Route path="*" element={<NotFoundPage />} />
 
             <Route element={<ProfileLayout />} path="/profile">
-              <Route path="account" />
+              <Route path="account" element={<AccountPage />} />
               <Route path="wishlist" />
               <Route path="settings" />
               <Route path="reviews" />
