@@ -1,6 +1,6 @@
 import { Badge, Box, Button, IconButton, Stack } from "@mui/material";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 // components
@@ -29,6 +29,7 @@ const Header: React.FC = () => {
   const { isAuth } = useSelector(authSelector);
 
   const [isCartOpened, setIsCartOpened] = useState<boolean>(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const { data: cart = [] } = useQuery({
     queryKey: ["cart"],
@@ -44,10 +45,31 @@ const Header: React.FC = () => {
     enabled: isAuth,
   });
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <Box component="header">
+    <Box
+      component="header"
+      position="sticky"
+      py={2}
+      sx={{
+        top: 0,
+        left: 0,
+        backgroundColor: "common.white",
+        zIndex: 100,
+        transition: "box-shadow 0.3s",
+        boxShadow: scrolled ? 2 : 0,
+      }}
+    >
       <CustomContainer>
-        <Stack component="header" flexDirection="row" gap={3} py={2} justifyContent="space-between" alignItems="center">
+        <Stack flexDirection="row" gap={3} justifyContent="space-between" alignItems="center">
           <Logo />
           <Button
             startIcon={<StorefrontOutlined />}
