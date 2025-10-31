@@ -14,7 +14,6 @@ import { WishlistService } from './wishlist.service';
 
 // dto
 import { PaginationDto } from 'src/common/dto/pagination.dto';
-import { CheckWishlistDto } from './dto/check-wishlist.dto';
 
 // decorators
 import { Auth } from '../auth/decorators/auth.decorator';
@@ -31,7 +30,7 @@ export class WishlistController {
     @Body('productId', new ParseUUIDPipe()) productId: string,
   ) {
     await this.wishlistService.add(userId, productId);
-    return { message: 'Added to wishlist' };
+    return this.wishlistService.get(userId, { page: 1, limit: 12 });
   }
 
   @Get()
@@ -39,17 +38,14 @@ export class WishlistController {
     return this.wishlistService.get(userId, dto);
   }
 
-  @Post('check')
-  async check(@User('id') userId: string, @Body() dto: CheckWishlistDto) {
-    return this.wishlistService.check(userId, dto.ids);
+  @Get('check')
+  async check(@User('id') userId: string) {
+    return this.wishlistService.check(userId);
   }
 
   @Delete(':id')
-  async remove(
-    @User('id') userId: string,
-    @Param('id') wishlistItemId: string,
-  ) {
-    await this.wishlistService.remove(userId, wishlistItemId);
-    return { message: 'Product has been removed from wishlist' };
+  async remove(@User('id') userId: string, @Param('id') productId: string) {
+    await this.wishlistService.remove(userId, productId);
+    return this.wishlistService.get(userId, { page: 1, limit: 12 });
   }
 }

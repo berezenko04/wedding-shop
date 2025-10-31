@@ -12,7 +12,7 @@ interface CardProps extends Product {
   variant?: "catalog" | "default";
 }
 
-const Card: React.FC<CardProps> = ({ posterUrl, title, price, slug, discount, variant = "default" }) => {
+const Card: React.FC<CardProps> = ({ id, posterUrl, title, price, slug, discount, variant = "default" }) => {
   return (
     <Stack gap={2} component={Link} href={`/catalog/${slug}`}>
       <Box position="relative" overflow="hidden" sx={{ height: 535 }}>
@@ -23,7 +23,7 @@ const Card: React.FC<CardProps> = ({ posterUrl, title, price, slug, discount, va
           sx={{ height: "100%", width: "100%", objectFit: "cover", objectPosition: "center", userSelect: "none" }}
         />
         {discount > 0 && <DiscountLabel discount={discount} />}
-        <AddToWishlistButton />
+        <AddToWishlistButton productId={id} />
       </Box>
 
       <Stack gap={1}>

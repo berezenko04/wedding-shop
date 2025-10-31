@@ -32,10 +32,10 @@ export class WishlistService {
     }
   }
 
-  async remove(userId: string, wishlistItemId: string) {
+  async remove(userId: string, productId: string) {
     try {
       await this.prisma.wishlist.delete({
-        where: { id: wishlistItemId, userId },
+        where: { userId_productId: { userId, productId } },
       });
     } catch {
       throw new NotFoundException("Product is doesn't exist in wishlist");
@@ -58,7 +58,6 @@ export class WishlistService {
               title: true,
               price: true,
               discount: true,
-              available: true,
             },
           },
         },
@@ -69,11 +68,10 @@ export class WishlistService {
     return { wishlist, total };
   }
 
-  async check(userId: string, ids: string[]) {
+  async check(userId: string) {
     const wishlistItems = await this.prisma.wishlist.findMany({
       where: {
         userId,
-        productId: { in: ids },
       },
       select: { productId: true },
     });
