@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 // api
 import WishlistService from "@/api/wishlist/wishlist.service";
@@ -12,11 +12,15 @@ import { Favorite, FavoriteBorderOutlined } from "@mui/icons-material";
 
 type AddToWishlistButtonProps = {
   productId: string;
-  isWishlisted: boolean;
 };
 
-const AddToWishlistButton: React.FC<AddToWishlistButtonProps> = ({ productId, isWishlisted }) => {
+const AddToWishlistButton: React.FC<AddToWishlistButtonProps> = ({ productId }) => {
   const queryClient = useQueryClient();
+
+  const { data: wishlistIds = [] } = useQuery<string[]>({
+    queryKey: ["wishlistCheck"],
+  });
+  const isWishlisted = wishlistIds.includes(productId);
 
   const mutation = useMutation({
     mutationFn: async (wishlisted: boolean) => {
@@ -29,7 +33,7 @@ const AddToWishlistButton: React.FC<AddToWishlistButtonProps> = ({ productId, is
 
     onSuccess: (data: GetAllWishlist) => {
       queryClient.setQueryData(["wishlist"], data);
-      queryClient.setQueryData<string[]>(["checkWishlist"], (prev) => {
+      queryClient.setQueryData<string[]>(["wishlistCheck"], (prev) => {
         if (!prev) return [];
         return isWishlisted ? prev.filter((id) => id !== productId) : [...prev, productId];
       });

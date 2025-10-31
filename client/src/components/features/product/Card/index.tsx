@@ -10,19 +10,9 @@ import { Product } from "@/api/products/products.types";
 
 interface CardProps extends Product {
   variant?: "catalog" | "default";
-  isWishlisted: boolean;
 }
 
-const Card: React.FC<CardProps> = ({
-  id,
-  posterUrl,
-  title,
-  isWishlisted,
-  price,
-  slug,
-  discount,
-  variant = "default",
-}) => {
+const Card: React.FC<CardProps> = ({ id, posterUrl, title, price, slug, discount, variant = "default" }) => {
   return (
     <Stack gap={2} component={Link} href={`/catalog/${slug}`}>
       <Box position="relative" overflow="hidden" sx={{ height: 535 }}>
@@ -33,7 +23,7 @@ const Card: React.FC<CardProps> = ({
           sx={{ height: "100%", width: "100%", objectFit: "cover", objectPosition: "center", userSelect: "none" }}
         />
         {discount > 0 && <DiscountLabel discount={discount} />}
-        <AddToWishlistButton productId={id} isWishlisted={isWishlisted} />
+        <AddToWishlistButton productId={id} />
       </Box>
 
       <Stack gap={1}>

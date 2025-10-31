@@ -1,15 +1,10 @@
 import { Divider, Grid, Pagination, Stack, Typography } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
 
 // components
 import EmptyCatalog from "@/components/features/catalog/Empty";
 import CatalogSort from "@/components/features/catalog/Sort";
 import ProductCard from "@/components/features/product/Card";
 import Filters from "@/components/features/catalog/Filters";
-
-// api
-import WishlistService from "@/api/wishlist/wishlist.service";
 
 // hooks
 import { useProducts } from "@/hooks/useProducts";
@@ -21,18 +16,6 @@ const CatalogPage: React.FC = () => {
   const { products, total, page, filters, clearFilters, setPage, setFilter } = useProducts({});
 
   const pages = Math.ceil(total / PAGE_LIMIT);
-
-  const { data: wishlistedIds, refetch } = useQuery({
-    queryKey: ["checkWishlist"],
-    queryFn: async () => await WishlistService.checkInWishlist({ ids: products.map((product) => product.id) }),
-    enabled: !!products.length,
-  });
-
-  useEffect(() => {
-    if (products.length) {
-      refetch();
-    }
-  }, [products, refetch]);
 
   return (
     <Stack gap={4}>
@@ -50,7 +33,7 @@ const CatalogPage: React.FC = () => {
               <Grid container spacing={4}>
                 {products.map((i) => (
                   <Grid key={i.id} size={{ xs: 4 }}>
-                    <ProductCard variant="catalog" isWishlisted={wishlistedIds?.includes(i.id) || false} {...i} />
+                    <ProductCard variant="catalog" {...i} />
                   </Grid>
                 ))}
               </Grid>
