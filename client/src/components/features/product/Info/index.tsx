@@ -6,15 +6,13 @@ import { useQueryClient } from "@tanstack/react-query";
 import ProductPrice from "../Price";
 import ProductSizes from "../Sizes";
 import ProductDiscount from "../Discount";
+import AddToWishlistButton from "@/components/ui/buttons/AddToWishlist";
 
 // api
 import CartService from "@/api/cart/cart.service";
 
 // types
 import { Sizes } from "@/types/enums.types";
-
-// icons
-import { FavoriteBorderOutlined } from "@mui/icons-material";
 
 type ProductInfoProps = {
   id: string;
@@ -50,9 +48,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ id, title, price, discount, d
         <Button variant="outlined" color="primary" fullWidth onClick={handleAddToBag}>
           Add to Bag
         </Button>
-        <Button variant="iconaryOutlined" color="grey" size="large">
-          <FavoriteBorderOutlined />
-        </Button>
+        <AddToWishlistButton productId={id} variant="productPage" />
       </Stack>
     </Stack>
   );

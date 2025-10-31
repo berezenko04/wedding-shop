@@ -12,9 +12,10 @@ import { Favorite, FavoriteBorderOutlined } from "@mui/icons-material";
 
 type AddToWishlistButtonProps = {
   productId: string;
+  variant?: "card" | "productPage";
 };
 
-const AddToWishlistButton: React.FC<AddToWishlistButtonProps> = ({ productId }) => {
+const AddToWishlistButton: React.FC<AddToWishlistButtonProps> = ({ productId, variant = "card" }) => {
   const queryClient = useQueryClient();
 
   const { data: wishlistIds = [] } = useQuery<string[]>({
@@ -46,12 +47,31 @@ const AddToWishlistButton: React.FC<AddToWishlistButtonProps> = ({ productId }) 
     mutation.mutate(isWishlisted);
   };
 
+  const buttonConfig = {
+    card: {
+      variant: "iconary" as const,
+      color: "white" as const,
+      size: "small" as const,
+      sx: { position: "absolute", zIndex: 1, top: 16, right: 16 },
+    },
+    productPage: {
+      variant: "iconaryOutlined" as const,
+      color: "grey" as const,
+      size: "large" as const,
+      sx: {},
+    },
+  } as const;
+
+  const config = buttonConfig[variant];
+
   return (
     <Button
       onClick={handleClick}
-      variant="iconary"
-      color="white"
-      sx={{ position: "absolute", zIndex: 1, top: 16, right: 16 }}
+      variant={config.variant}
+      color={config.color}
+      sx={config.sx}
+      size={config.size}
+      disabled={mutation.isPending}
     >
       {isWishlisted ? (
         <Favorite sx={(theme) => ({ color: `${theme.palette.primary.main} !important` })} />
