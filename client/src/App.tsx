@@ -7,6 +7,7 @@ import PrimaryLayout from "./components/layouts/PrimaryLayout";
 import HomeLayout from "./components/layouts/HomeLayout";
 import AuthLayout from "./components/layouts/AuthLayout";
 import AppLayout from "./components/layouts/AppLayout";
+import ProfileLayout from "./components/layouts/ProfileLayout";
 
 // redux
 import { refresh } from "./redux/auth/auth.actions";
@@ -23,6 +24,8 @@ const HomePage = lazy(() => import("@/pages/Home"));
 const CatalogPage = lazy(() => import("@/pages/Catalog"));
 const CatalogProductPage = lazy(() => import("@/pages/CatalogProduct"));
 const NotFoundPage = lazy(() => import("@/pages/NotFound"));
+
+const AccountPage = lazy(() => import("@/pages/profile/Account"));
 
 function App() {
   const dispatch = useAppDispatch();
@@ -53,17 +56,17 @@ function App() {
             <Route path="/catalog" element={<CatalogPage />} />
             <Route path="/catalog/:slug" element={<CatalogProductPage />} />
             <Route path="*" element={<NotFoundPage />} />
-          </Route>
-        </Route>
 
-        <Route path="/profile">
-          <Route path="account" />
-          <Route path="wishlist" />
-          <Route path="settings" />
-          <Route path="reviews" />
-          <Route path="orders" />
-          <Route path="shipping-address" />
-          <Route path="payment" />
+            <Route element={<ProfileLayout />} path="/profile">
+              <Route path="account" element={<AccountPage />} />
+              <Route path="wishlist" />
+              <Route path="settings" />
+              <Route path="reviews" />
+              <Route path="orders" />
+              <Route path="shipping-address" />
+              <Route path="payment" />
+            </Route>
+          </Route>
         </Route>
 
         <Route>
