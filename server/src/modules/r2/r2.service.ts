@@ -53,7 +53,7 @@ export class R2Service {
         }),
       );
 
-      const url = `${this.configService.get<string>('S3_API')}/${this.configService.get<string>('R2_BUCKET')}/${key}`;
+      const url = `${this.configService.get<string>('R2_PUBLIC')}/${key}`;
       return url;
     } catch (error) {
       console.error('❌ Upload failed full error:', error);
