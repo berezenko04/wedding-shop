@@ -105,22 +105,27 @@ export class ProductService {
 
     let product;
     try {
+      const uploadedPoster = await this.r2Service.uploadFromUrl(rest.posterUrl);
+
       product = await this.prisma.product.create({
-        data: { ...rest, slug: createSlug(rest.title) },
+        data: {
+          ...rest,
+          slug: createSlug(rest.title),
+          posterUrl: uploadedPoster,
+        },
       });
     } catch {
       throw new ConflictException("Product can't have the same slug");
     }
 
-    const uploadedScreenshots = await Promise.all(
-      (screenshots || []).map(async (url) => {
-        const uploaded = await this.r2Service.uploadFromUrl(url);
-        return uploaded.url; // <-- это ссылка на твой бакет
-      }),
-    );
+    if (screenshots && screenshots.length > 0) {
+      const uploadedScreenshots = await Promise.all(
+        screenshots.map(async (url) => {
+          const uploadedUrl = await this.r2Service.uploadFromUrl(url);
+          return uploadedUrl;
+        }),
+      );
 
-    // 2️⃣ Сохраняем новые URL в базе
-    if (uploadedScreenshots.length > 0) {
       await this.prisma.productImage.createMany({
         data: uploadedScreenshots.map((url) => ({
           productId: product.id,

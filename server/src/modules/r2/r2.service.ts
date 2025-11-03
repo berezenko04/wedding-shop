@@ -27,30 +27,37 @@ export class R2Service {
     });
   }
 
-  async uploadFromUrl(imageUrl: string): Promise<{ key: string; url: string }> {
+  async uploadFromUrl(imageUrl: string): Promise<string> {
     try {
       const response = await axios.get(imageUrl, {
         responseType: 'arraybuffer',
       });
       const buffer = Buffer.from(response.data);
-      const webpBuffer = await sharp(buffer).webp({ quality: 100 }).toBuffer();
+
+      const webpBuffer = await sharp(buffer)
+        .resize({
+          width: 800,
+          height: 1000,
+          fit: 'inside',
+        })
+        .webp({ quality: 95 })
+        .toBuffer();
       const key = `uploads/${uuidv4()}.webp`;
 
       await this.s3.send(
         new PutObjectCommand({
-          Bucket: this.bucket,
+          Bucket: this.configService.get<string>('R2_BUCKET'),
           Key: key,
           Body: webpBuffer,
           ContentType: 'image/webp',
         }),
       );
 
-      const url = `${this.configService.get<string>('S3_API')}/${key}`;
-
-      return { key, url };
+      const url = `${this.configService.get<string>('S3_API')}/${this.configService.get<string>('R2_BUCKET')}/${key}`;
+      return url;
     } catch (error) {
-      console.error('❌ Upload failed:', error.message);
-      throw new HttpException('Failed to upload image', HttpStatus.BAD_REQUEST);
+      console.error('❌ Upload failed full error:', error);
+      throw new HttpException(`Failed to upload image`, HttpStatus.BAD_REQUEST);
     }
   }
 }
