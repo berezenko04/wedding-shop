@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import EmptyCatalog from "@/components/features/catalog/Empty";
 import CatalogSort from "@/components/features/catalog/Sort";
 import ProductCard from "@/components/features/product/Card";
+import ProductCardSkeleton from "@/components/ui/loaders/skeletons/ProductCard";
 import Filters from "@/components/features/catalog/Filters";
 
 // hooks
@@ -73,7 +74,15 @@ const CatalogPage: React.FC = () => {
         </Grid>
         <Grid size={{ xs: 10 }}>
           <Stack gap={4}>
-            {total > 0 ? (
+            {isLoading ? (
+              <Grid container spacing={4}>
+                {Array.from({ length: 9 }).map((_, idx) => (
+                  <Grid key={idx} size={{ xs: 4 }}>
+                    <ProductCardSkeleton />
+                  </Grid>
+                ))}
+              </Grid>
+            ) : total > 0 ? (
               <Grid container spacing={4}>
                 {products.map((i) => (
                   <Grid key={i.id} size={{ xs: 4 }}>
