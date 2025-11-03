@@ -14,13 +14,12 @@ import { useProducts } from "@/hooks/useProducts";
 // types
 import type { Swiper } from "swiper/types";
 
-
 const Home: React.FC = () => {
   const bestsellersRef = useRef<Swiper | null>(null);
   const dressesRef = useRef<Swiper | null>(null);
   const suitsRef = useRef<Swiper | null>(null);
 
-  const { products } = useProducts();
+  const { products, isLoading } = useProducts();
 
   return (
     <Stack>
@@ -66,13 +65,13 @@ const Home: React.FC = () => {
         </Grid>
       </HomepageSection>
       <HomepageSection title="Bestsellers" isSwiper swiperRef={bestsellersRef}>
-        <ProductsSwiper data={products} swiperRef={bestsellersRef} />
+        <ProductsSwiper data={products} swiperRef={bestsellersRef} isLoading={isLoading} />
       </HomepageSection>
       <HomepageSection title="Dresses" isSwiper swiperRef={dressesRef}>
-        <ProductsSwiper data={products} swiperRef={dressesRef} />
+        <ProductsSwiper data={products} swiperRef={dressesRef} isLoading={isLoading} />
       </HomepageSection>
       <HomepageSection title="Suits" isSwiper swiperRef={suitsRef}>
-        <ProductsSwiper data={products} swiperRef={suitsRef} />
+        <ProductsSwiper data={products} swiperRef={suitsRef} isLoading={isLoading} />
       </HomepageSection>
       <HomepageCompanies />
     </Stack>
