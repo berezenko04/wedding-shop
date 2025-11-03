@@ -8,13 +8,10 @@ import ProductsService from "@/api/products/products.service";
 import type { GetAllProductParams, GetAllProducts } from "@/api/products/products.types";
 import type { Sex, Sizes, SortBy } from "@/types/enums.types";
 
-// data
-import { sortByCatalog } from "@/data/main";
-
 // constants
 import { PAGE_LIMIT } from "@/constants";
 
-interface Filters {
+export interface Filters {
   priceRange: [number, number];
   size: Sizes | null;
   sortBy: SortBy | "none";
@@ -24,25 +21,28 @@ interface Filters {
 export const useProducts = (initialParams: GetAllProductParams = {}) => {
   const [page, setPage] = useState<number>(initialParams.page ?? 1);
   const [filters, setFilters] = useState<Filters>({
-    priceRange: [0, 2000],
-    size: null,
-    sortBy: (initialParams.sortBy ?? sortByCatalog[0].value) as SortBy | "none",
-    sex: null,
+    priceRange: [Number(initialParams.minPrice) || 0, Number(initialParams.maxPrice) || 2000],
+    size: (initialParams.size as Sizes) ?? null,
+    sortBy: (initialParams.sortBy as SortBy) ?? "none",
+    sex: (initialParams.sex as Sex) ?? null,
   });
 
-  const params = useMemo(
-    () => ({
-      ...initialParams,
+  const params = useMemo(() => {
+    const base: Record<string, any> = {
       page,
       limit: initialParams.limit ?? PAGE_LIMIT,
       minPrice: filters.priceRange[0],
       maxPrice: filters.priceRange[1],
       size: filters.size ?? undefined,
       sex: filters.sex ?? undefined,
-      ...(filters.sortBy && filters.sortBy !== "none" ? { sortBy: filters.sortBy } : {}),
-    }),
-    [page, filters, initialParams]
-  );
+    };
+
+    if (filters.sortBy && filters.sortBy !== "none") {
+      base.sortBy = filters.sortBy;
+    }
+
+    return base;
+  }, [page, filters, initialParams.limit]);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["products", params],
@@ -50,13 +50,19 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
     placeholderData: (prev: GetAllProducts | undefined) => prev,
   });
 
-  const setFilter = <K extends keyof typeof filters>(key: K, value: (typeof filters)[K]) => {
+  const setFilter = <K extends keyof Filters>(key: K, value: Filters[K]) => {
     setPage(1);
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
   const clearFilters = () => {
-    setFilters({ priceRange: [0, 2000], size: null, sortBy: "none", sex: null });
+    setFilters({
+      priceRange: [0, 2000],
+      size: null,
+      sortBy: "none",
+      sex: null,
+    });
+    setPage(1);
   };
 
   return {
