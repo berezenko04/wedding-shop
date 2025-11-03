@@ -13,7 +13,7 @@ import Filters from "@/components/features/catalog/Filters";
 import { Filters as FiltersType, useProducts } from "@/hooks/useProducts";
 
 // types
-import { SortBy } from "@/types/enums.types";
+import { Sex, Sizes, SortBy } from "@/types/enums.types";
 
 // constants
 import { PAGE_LIMIT } from "@/constants";
@@ -23,30 +23,43 @@ const CatalogPage: React.FC = () => {
 
   const pageParam = Number(searchParams.get("page")) || 1;
   const sortByParam = (searchParams.get("sortBy") as SortBy) || "none";
+  const minPrice = Number(searchParams.get("minPrice")) || 0;
+  const maxPrice = Number(searchParams.get("maxPrice")) || 2000;
+  const size = (searchParams.get("size") as Sizes) || null;
+  const sex = (searchParams.get("sex") as Sex) || null;
 
   const { products, total, page, filters, clearFilters, setPage, setFilter, isLoading } = useProducts({
     page: pageParam,
     sortBy: sortByParam,
+    minPrice,
+    maxPrice,
+    size,
+    sex,
   });
 
   const pages = Math.ceil(total / PAGE_LIMIT);
 
-  const handleFilterChange = (key: keyof FiltersType, value: string | number) => {
-    setFilter(key, value);
-
+  const updateSearchParam = (key: string, value?: string | number | null) => {
     const updated = new URLSearchParams(searchParams);
-    updated.set(key, String(value));
-    updated.set("page", "1");
+
+    if (value === null || value === undefined || value === "none") {
+      updated.delete(key);
+    } else {
+      updated.set(key, String(value));
+    }
+
     setSearchParams(updated);
+  };
+
+  const handleFilterChange = (key: keyof FiltersType, value: any) => {
+    setFilter(key, value);
+    updateSearchParam(key, value);
+    updateSearchParam("page", 1);
   };
 
   const handlePageChange = (_: React.ChangeEvent<unknown>, newPage: number) => {
     setPage(newPage);
-
-    const updated = new URLSearchParams(searchParams);
-    updated.set("page", String(newPage));
-    setSearchParams(updated);
-
+    updateSearchParam("page", newPage);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -57,10 +70,18 @@ const CatalogPage: React.FC = () => {
 
   useEffect(() => {
     const params = new URLSearchParams();
+
     params.set("page", String(page));
-    params.set("sortBy", filters.sortBy);
+    if (filters.sortBy && filters.sortBy !== "none") params.set("sortBy", filters.sortBy);
+    if (filters.priceRange) {
+      params.set("minPrice", String(filters.priceRange[0]));
+      params.set("maxPrice", String(filters.priceRange[1]));
+    }
+    if (filters.size) params.set("size", filters.size);
+    if (filters.sex) params.set("sex", filters.sex);
+
     setSearchParams(params);
-  }, [filters.sortBy, page]);
+  }, [filters, setSearchParams, page]);
 
   return (
     <Stack gap={4}>
