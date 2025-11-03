@@ -30,8 +30,8 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
     sex: null,
   });
 
-  const params = useMemo(
-    () => ({
+  const params = useMemo(() => {
+    const base: Record<string, any> = {
       ...initialParams,
       page,
       limit: initialParams.limit ?? PAGE_LIMIT,
@@ -39,10 +39,18 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
       maxPrice: filters.priceRange[1],
       size: filters.size ?? undefined,
       sex: filters.sex ?? undefined,
-      ...(filters.sortBy && filters.sortBy !== "none" ? { sortBy: filters.sortBy } : {}),
-    }),
-    [page, filters, initialParams]
-  );
+    };
+
+    if (filters.sortBy && filters.sortBy !== "none") {
+      base.sortBy = filters.sortBy;
+    } else {
+      delete base.sortBy;
+    }
+
+    return base;
+  }, [page, filters, initialParams]);
+
+  console.log(filters.sortBy, params);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["products", params],
