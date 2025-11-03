@@ -14,7 +14,7 @@ import { sortByCatalog } from "@/data/main";
 // constants
 import { PAGE_LIMIT } from "@/constants";
 
-interface Filters {
+export interface Filters {
   priceRange: [number, number];
   size: Sizes | null;
   sortBy: SortBy | "none";
