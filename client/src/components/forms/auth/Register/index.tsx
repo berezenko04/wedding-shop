@@ -12,6 +12,7 @@ import AuthService from "@/api/auth/auth.service";
 
 type RegisterFormFields = {
   email: string;
+  fullName: string;
   password: string;
   repeatPassword: string;
 };
@@ -28,10 +29,12 @@ const RegisterForm: React.FC = () => {
   const password = watch("password");
 
   const onSubmit = async (formData: RegisterFormFields) => {
-    const { repeatPassword, ...data } = formData;
+    const { repeatPassword, fullName, ...data } = formData;
     void repeatPassword;
 
-    await AuthService.register(data);
+    const [firstName, lastName = ""] = fullName.trim().split(" ");
+
+    await AuthService.register({ ...data, firstName, lastName });
     toast.success("Registration successful");
     navigate("/login");
   };
@@ -58,6 +61,28 @@ const RegisterForm: React.FC = () => {
             })}
             error={!!errors.email}
             helperText={errors.email?.message}
+          />
+        </FormField>
+
+        <FormField label="Full Name">
+          <TextField
+            placeholder="Enter full name"
+            {...register("fullName", {
+              required: "Full name is required",
+              validate: (value) => {
+                const parts = value.trim().split(/\s+/);
+                if (parts.length < 2) return "Please enter both first and last name";
+                if (parts.some((p) => p.length < 2)) return "Each name must be at least 2 characters";
+                if (parts.some((p) => p.length > 32)) return "Each name must be no more than 32 characters";
+                return true;
+              },
+              pattern: {
+                value: /^[A-Za-zА-Яа-яЁёІіЇїЄє\s'-]+$/,
+                message: "Full name can only contain letters, spaces, hyphens, and apostrophes",
+              },
+            })}
+            error={!!errors.fullName}
+            helperText={errors.fullName?.message}
           />
         </FormField>
 
