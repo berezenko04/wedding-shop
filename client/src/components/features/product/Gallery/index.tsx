@@ -1,5 +1,6 @@
 import { Box, Stack } from "@mui/material";
 import { useState } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 type ProductGallery = {
   images: string[];
@@ -23,26 +24,25 @@ const ProductGallery: React.FC<ProductGallery> = ({ images }) => {
             })}
             onClick={() => setCurentImage(image)}
           >
-            <Box
-              component="img"
+            <LazyLoadImage
               src={image}
-              loading="lazy"
-              sx={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                objectPosition: "center",
-              }}
+              effect="blur"
+              width="100%"
+              height="100%"
+              style={{ objectPosition: "center", objectFit: "cover" }}
             />
           </Box>
         ))}
       </Stack>
-      <Box
-        component="img"
-        src={currentImage}
-        loading="lazy"
-        sx={{ width: 600, height: 800, objectFit: "cover", objectPosition: "center" }}
-      />
+      <Box sx={{ width: 600, height: 800 }}>
+        <LazyLoadImage
+          src={currentImage}
+          effect="blur"
+          width="100%"
+          height="100%"
+          style={{ objectPosition: "center", objectFit: "cover" }}
+        />
+      </Box>
     </Stack>
   );
 };
