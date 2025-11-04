@@ -25,11 +25,11 @@ export const privacyMenu = [
 ];
 
 export const profileMenu = [
-  { title: "Account", href: "/account", icon: PersonOutline },
-  { title: "Wish List", href: "/wishlist", icon: FavoriteBorder },
-  { title: "Settings", href: "/settings", icon: SettingsOutlined },
-  { title: "My Reviews", href: "/my-reviews", icon: RateReviewOutlined },
-  { title: "My Orders", href: "/my-orders", icon: ShoppingCartCheckoutOutlined },
-  { title: "Shipping Address", href: "/shipping-address", icon: RateReviewOutlined },
-  { title: "Payment", href: "/payment", icon: PaymentOutlined },
+  { title: "Account", href: "account", icon: PersonOutline },
+  { title: "Wish List", href: "wishlist", icon: FavoriteBorder },
+  { title: "Settings", href: "settings", icon: SettingsOutlined },
+  { title: "My Reviews", href: "my-reviews", icon: RateReviewOutlined },
+  { title: "My Orders", href: "my-orders", icon: ShoppingCartCheckoutOutlined },
+  { title: "Shipping Address", href: "shipping-address", icon: RateReviewOutlined },
+  { title: "Payment", href: "payment", icon: PaymentOutlined },
 ];
