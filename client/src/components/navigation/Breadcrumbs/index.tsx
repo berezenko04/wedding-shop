@@ -15,7 +15,9 @@ const Breadcrumbs: React.FC = () => {
     <Box py={2} sx={{ backgroundColor: "grey.50" }}>
       <CustomContainer>
         <MUIBreadcrumbs aria-label="breadcrumb" separator={<NavigateNext fontSize="small" />}>
-          <Link href="/">Home</Link>
+          <Link href="/" variant="underlined" color="grey.900">
+            Home
+          </Link>
           {pathnames.map((value, index) => {
             const to = `/${pathnames.slice(0, index + 1).join("/")}`;
             const isLast = index === pathnames.length - 1;
@@ -26,7 +28,7 @@ const Breadcrumbs: React.FC = () => {
                 {slug}
               </Typography>
             ) : (
-              <Link key={to} href={to}>
+              <Link key={to} href={to} variant="underlined" color="grey.900">
                 {slug}
               </Link>
             );
