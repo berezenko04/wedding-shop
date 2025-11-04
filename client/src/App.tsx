@@ -11,6 +11,8 @@ import ProfileLayout from "./components/layouts/ProfileLayout";
 
 // redux
 import { refresh } from "./redux/auth/auth.actions";
+import PrivateRoute from "./components/providers/PrivateRoute";
+import PublicRoute from "./components/providers/PublicRoute";
 
 const RegisterPage = lazy(() => import("@/pages/auth/Register"));
 const LoginPage = lazy(() => import("@/pages/auth/Login"));
@@ -37,14 +39,16 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<AuthLayout />}>
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/verify-otp" element={<VerifyOtpPage />} />
-          <Route path="/verify-otp-success" element={<VerifyOtpSuccessPage />} />
-          <Route path="/reset-password" element={<ResetPasswordPage />} />
-          <Route path="/reset-password-success" element={<ResetPasswordSuccessPage />} />
+        <Route element={<PublicRoute />}>
+          <Route element={<AuthLayout />}>
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/verify-otp" element={<VerifyOtpPage />} />
+            <Route path="/verify-otp-success" element={<VerifyOtpSuccessPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/reset-password-success" element={<ResetPasswordSuccessPage />} />
+          </Route>
         </Route>
 
         <Route element={<AppLayout />}>
@@ -57,14 +61,16 @@ function App() {
             <Route path="/catalog/:slug" element={<CatalogProductPage />} />
             <Route path="*" element={<NotFoundPage />} />
 
-            <Route element={<ProfileLayout />} path="/profile">
-              <Route path="account" element={<AccountPage />} />
-              <Route path="wishlist" />
-              <Route path="settings" />
-              <Route path="reviews" />
-              <Route path="orders" />
-              <Route path="shipping-address" />
-              <Route path="payment" />
+            <Route element={<PrivateRoute />}>
+              <Route element={<ProfileLayout />} path="/profile">
+                <Route path="account" element={<AccountPage />} />
+                <Route path="wishlist" />
+                <Route path="settings" />
+                <Route path="reviews" />
+                <Route path="orders" />
+                <Route path="shipping-address" />
+                <Route path="payment" />
+              </Route>
             </Route>
           </Route>
         </Route>
