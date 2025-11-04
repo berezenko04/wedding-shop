@@ -1,5 +1,4 @@
-import { Genders } from '@prisma/client';
-import { IsEnum, IsOptional, Length } from 'class-validator';
+import { IsOptional, Length } from 'class-validator';
 
 export class UpdateUserDto {
   @IsOptional()
@@ -13,8 +12,4 @@ export class UpdateUserDto {
     message: 'The last name must be between 2 and 32 characters',
   })
   lastName?: string;
-
-  @IsOptional()
-  @IsEnum(Genders)
-  sex?: Genders;
 }
