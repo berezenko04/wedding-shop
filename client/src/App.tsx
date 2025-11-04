@@ -63,7 +63,7 @@ function App() {
 
             <Route element={<PrivateRoute />}>
               <Route element={<ProfileLayout />} path="/profile">
-                <Route path="account" element={<AccountPage />} />
+                <Route path="" element={<AccountPage />} />
                 <Route path="wishlist" />
                 <Route path="settings" />
                 <Route path="reviews" />

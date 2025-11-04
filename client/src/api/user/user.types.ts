@@ -20,5 +20,4 @@ export type UserSession = {
 export type UpdateUserBody = {
   firstName: string;
   lastName: string;
-  sex: Sex;
 };
