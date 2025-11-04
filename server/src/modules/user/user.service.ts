@@ -18,7 +18,6 @@ export class UserService {
         email: true,
         firstName: true,
         lastName: true,
-        sex: true,
       },
     });
 

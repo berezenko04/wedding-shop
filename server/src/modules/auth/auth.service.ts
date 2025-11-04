@@ -88,7 +88,7 @@ export class AuthService {
   }
 
   async register(dto: RegisterDto) {
-    const { email, password } = dto;
+    const { email, password, firstName, lastName } = dto;
     this.logger.log(`Register attempt with email: ${email}`);
 
     const existingUser = await this.prisma.user.findUnique({
@@ -114,6 +114,8 @@ export class AuthService {
     const user = await this.prisma.user.create({
       data: {
         email,
+        firstName,
+        lastName,
         passwordHash,
       },
     });
