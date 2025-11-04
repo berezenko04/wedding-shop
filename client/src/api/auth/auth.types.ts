@@ -3,6 +3,8 @@ import { BaseResponseData } from "@/types/base.types";
 export type RegisterBody = {
   email: string;
   password: string;
+  firstName: string;
+  lastName: string;
 };
 
 export type LoginBody = RegisterBody;
