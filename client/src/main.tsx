@@ -8,6 +8,7 @@ import App from "./App.tsx";
 // styles
 import "swiper/css";
 import "swiper/css/navigation";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import "./global.css";
 
 // theme

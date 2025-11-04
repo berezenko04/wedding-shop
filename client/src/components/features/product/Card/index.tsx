@@ -1,4 +1,5 @@
 import { Box, Link, Stack, Typography } from "@mui/material";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 // components
 import DiscountLabel from "../DiscountLabel";
@@ -16,11 +17,12 @@ const Card: React.FC<CardProps> = ({ id, posterUrl, title, price, slug, discount
   return (
     <Stack gap={2} component={Link} href={`/catalog/${slug}`}>
       <Box position="relative" overflow="hidden" sx={{ height: 535 }}>
-        <Box
-          component="img"
+        <LazyLoadImage
           src={posterUrl}
-          loading="lazy"
-          sx={{ height: "100%", width: "100%", objectFit: "cover", objectPosition: "center", userSelect: "none" }}
+          effect="blur"
+          width="100%"
+          height="100%"
+          style={{ objectPosition: "center", objectFit: "cover" }}
         />
         {discount > 0 && <DiscountLabel discount={discount} />}
         <AddToWishlistButton productId={id} />
