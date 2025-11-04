@@ -55,12 +55,11 @@ enum Rating {
 }
 
 model User {
-  id           String   @id @default(uuid()) @db.Uuid
-  email        String   @unique
-  firstName    String?  @map("first_name")
-  lastName     String?  @map("last_name")
-  sex          Genders?
-  passwordHash String   @map("password_hash")
+  id            String                                  @id @default(uuid()) @db.Uuid
+  email         String                                  @unique
+  firstName     String            @map("first_name")
+  lastName      String            @map("last_name")
+  passwordHash  String            @map("password_hash")
 
   session       Session[]
   review        Review[]
@@ -68,19 +67,20 @@ model User {
   passwordReset PasswordReset[]
   wishlist      Wishlist[]
   order         Order[]
+  payment       Payment[]
   addresses     ShippingAddress[]
 
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  Payment   Payment[]
+  createdAt     DateTime          @map("created_at")    @default(now())
+  updatedAt     DateTime          @map("updated_at")    @updatedAt
+
 
   @@map("users")
 }
 
 model Session {
-  id           String   @id @default(uuid()) @db.Uuid
-  userId       String   @map("user_id") @db.Uuid
-  refreshToken String   @unique @map("refresh_token")
+  id           String                         @id @default(uuid()) @db.Uuid
+  userId       String   @map("user_id")       @db.Uuid
+  refreshToken String   @map("refresh_token") @unique
   ip           String?
   userAgent    String?  @map("user_agent")
   deviceType   String?  @map("device_type")
@@ -89,35 +89,35 @@ model Session {
   country      String?
   expiresAt    DateTime @map("expires_at")
 
-  user User @relation(fields: [userId], references: [id])
+  user         User     @relation(fields: [userId], references: [id])
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt    DateTime @map("created_at")    @default(now())
+  updatedAt    DateTime @map("updated_at")    @updatedAt
 
   @@index([userId])
   @@map("sessions")
 }
 
 model Product {
-  id          String  @id @default(uuid()) @db.Uuid
+  id          String                            @id @default(uuid()) @db.Uuid
   title       String
   description String
   sex         Genders
   slug        String
-  posterUrl   String  @map("poster_url")
+  posterUrl   String         @map("poster_url")
   price       Float
   discount    Float?
   available   Boolean
 
-  sizes     Sizes[]
-  review    Review[]
-  cartItem  CartItem[]
-  images    ProductImage[]
-  wishlist  Wishlist[]
-  orderItem OrderItem[]
+  sizes       Sizes[]
+  review      Review[]
+  cartItem    CartItem[]
+  images      ProductImage[]
+  wishlist    Wishlist[]
+  orderItem   OrderItem[]
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt   DateTime       @map("created_at") @default(now())
+  updatedAt   DateTime       @map("updated_at") @updatedAt
 
   @@unique([slug])
   @@index([available])
@@ -126,30 +126,30 @@ model Product {
 }
 
 model ProductImage {
-  id        String  @id @default(uuid()) @db.Uuid
-  productId String  @map("product_id") @db.Uuid
+  id        String                      @id @default(uuid()) @db.Uuid
+  productId String   @map("product_id") @db.Uuid
   url       String
   alt       String?
 
-  product Product @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
 
-  createdAt DateTime @default(now()) @map("created_at")
+  createdAt DateTime @map("created_at") @default(now())
 
   @@map("products_images")
 }
 
 model Review {
-  id        String @id @default(uuid()) @db.Uuid
-  userId    String @map("user_id") @db.Uuid
-  productId String @map("product_id") @db.Uuid
+  id        String                      @id @default(uuid()) @db.Uuid
+  userId    String   @map("user_id")    @db.Uuid
+  productId String   @map("product_id") @db.Uuid
   comment   String
   rating    Rating
 
-  user    User    @relation(fields: [userId], references: [id])
-  product Product @relation(fields: [productId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @map("created_at") @default(now())
+  updatedAt DateTime @map("updated_at") @updatedAt
 
   @@unique([userId, productId])
   @@index([productId])
@@ -157,46 +157,46 @@ model Review {
 }
 
 model Cart {
-  id     String     @id @default(uuid()) @db.Uuid
-  userId String     @map("user_id") @db.Uuid
-  items  CartItem[]
+  id        String                        @id @default(uuid()) @db.Uuid
+  userId    String     @map("user_id")    @db.Uuid
+  items     CartItem[]
 
-  user User @relation(fields: [userId], references: [id])
+  user      User       @relation(fields: [userId], references: [id])
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime   @map("created_at") @default(now())
+  updatedAt DateTime   @map("updated_at") @updatedAt
 
   @@unique([userId])
   @@map("cart")
 }
 
 model CartItem {
-  id        String @id @default(uuid()) @db.Uuid
-  cartId    String @map("cart_id") @db.Uuid
-  productId String @map("product_id") @db.Uuid
+  id        String                      @id @default(uuid()) @db.Uuid
+  cartId    String   @map("cart_id")    @db.Uuid
+  productId String   @map("product_id") @db.Uuid
   quantity  Int
   size      Sizes
 
-  product Product @relation(fields: [productId], references: [id])
-  cart    Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id])
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @map("created_at") @default(now())
+  updatedAt DateTime @map("updated_at") @updatedAt
 
   @@unique([cartId, productId, size])
   @@map("cart_items")
 }
 
 model PasswordReset {
-  id     String  @id @default(uuid()) @db.Uuid
-  userId String  @map("user_id") @db.Uuid
-  otp    String
-  used   Boolean @default(false)
+  id        String                      @id @default(uuid()) @db.Uuid
+  userId    String   @map("user_id")    @db.Uuid
+  otp       String
+  used      Boolean                     @default(false)
 
-  user User @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @map("created_at") @default(now())
+  updatedAt DateTime @map("updated_at") @updatedAt
   expiresAt DateTime @map("expires_at")
 
   @@index([userId])
@@ -204,14 +204,14 @@ model PasswordReset {
 }
 
 model Wishlist {
-  id        String @id @default(uuid()) @db.Uuid
-  userId    String @map("user_id") @db.Uuid
-  productId String @map("product_id") @db.Uuid
+  id        String                      @id @default(uuid()) @db.Uuid
+  userId    String   @map("user_id")    @db.Uuid
+  productId String   @map("product_id") @db.Uuid
 
-  user    User    @relation(fields: [userId], references: [id])
-  product Product @relation(fields: [productId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
 
-  createdAt DateTime @default(now()) @map("created_at")
+  createdAt DateTime @map("created_at") @default(now())
 
   @@unique([userId, productId])
   @@index([productId])
@@ -219,37 +219,37 @@ model Wishlist {
 }
 
 model Order {
-  id              String           @id @default(uuid()) @db.Uuid
-  userId          String           @map("user_id") @db.Uuid
-  orderNumber     Int              @default(autoincrement()) @map("order_number")
+  id              String                                    @id @default(uuid()) @db.Uuid
+  userId          String           @map("user_id")          @db.Uuid
+  orderNumber     Int              @map("order_number")     @default(autoincrement())
   shippingAddress String           @map("shipping_address")
   trackingNumber  String           @map("tracking_number")
   shippingMethod  ShippingMethods  @map("shipping_method")
   paymentMethod   PaymentMethods   @map("payment_method")
-  status          ShipmentStatuses @default(DELIVERED)
+  status          ShipmentStatuses                          @default(DELIVERED)
 
-  user  User        @relation(fields: [userId], references: [id])
-  items OrderItem[]
+  user            User             @relation(fields: [userId], references: [id])
+  items           OrderItem[]
 
-  createdAt DateTime @default(now()) @map("created_at")
+  createdAt       DateTime         @map("created_at")       @default(now())
 
   @@index([userId])
   @@map("orders")
 }
 
 model OrderItem {
-  id        String @id @default(uuid()) @db.Uuid
-  productId String @map("product_id") @db.Uuid
-  orderId   String @map("order_id") @db.Uuid
+  id        String                      @id @default(uuid()) @db.Uuid
+  productId String   @map("product_id") @db.Uuid
+  orderId   String   @map("order_id")   @db.Uuid
   quantity  Int
   price     Float
   discount  Float?
   size      Sizes
 
-  product Product @relation(fields: [productId], references: [id])
-  order   Order   @relation(fields: [orderId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+  order     Order    @relation(fields: [orderId], references: [id])
 
-  createdAt DateTime @default(now()) @map("created_at")
+  createdAt DateTime @map("created_at") @default(now())
 
   @@unique([orderId, productId, size])
   @@index([productId])
@@ -257,11 +257,11 @@ model OrderItem {
 }
 
 model Log {
-  id        String   @id @default(uuid()) @db.Uuid
-  timestamp DateTime @default(now())
+  id        String                      @id @default(uuid()) @db.Uuid
+  timestamp DateTime                    @default(now())
   level     LogLevel
   action    String
-  userId    String?  @map("user_id") @db.Uuid
+  userId    String?  @map("user_id")    @db.Uuid
   ip        String?
   userAgent String?  @map("user_agent")
   status    String?
@@ -275,20 +275,20 @@ model Log {
 }
 
 model ShippingAddress {
-  id      String  @id @default(uuid()) @db.Uuid
+  id      String                  @id @default(uuid()) @db.Uuid
   userId  String  @map("user_id") @db.Uuid
   address String
   primary Boolean
 
-  user User @relation(fields: [userId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
 
   @@index([userId])
   @@map("shipping_addresses")
 }
 
 model Payment {
-  id         String         @id @default(uuid()) @db.Uuid
-  userId     String         @map("user_id") @db.Uuid
+  id         String                             @id @default(uuid()) @db.Uuid
+  userId     String         @map("user_id")     @db.Uuid
   method     PaymentMethods
   primary    Boolean
   email      String?
@@ -297,7 +297,7 @@ model Payment {
   cardCvv    String?        @map("card_cvv")
   cardHolder String?        @map("card_holder")
 
-  user User @relation(fields: [userId], references: [id])
+  user       User           @relation(fields: [userId], references: [id])
 
   @@index([userId])
   @@map("payment_methods")
