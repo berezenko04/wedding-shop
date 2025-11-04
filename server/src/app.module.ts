@@ -21,6 +21,7 @@ import { WishlistModule } from './modules/wishlist/wishlist.module';
 import { OrderModule } from './modules/order/order.module';
 import { AddressModule } from './modules/address/address.module';
 import { PaymentModule } from './modules/payment/payment.module';
+import { R2Module } from './modules/r2/r2.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { PaymentModule } from './modules/payment/payment.module';
     OrderModule,
     AddressModule,
     PaymentModule,
+    R2Module,
   ],
   controllers: [],
   providers: [

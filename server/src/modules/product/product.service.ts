@@ -7,6 +7,7 @@ import { Prisma } from '@prisma/client';
 
 // services
 import { PrismaService } from 'src/prisma/prisma.service';
+import { R2Service } from '../r2/r2.service';
 
 // dto
 import { GetAllProductsDto } from './dto/get-all-products.dto';
@@ -20,7 +21,10 @@ import { createSlug } from 'src/utils/createSlug';
 
 @Injectable()
 export class ProductService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly r2Service: R2Service,
+    private readonly prisma: PrismaService,
+  ) {}
 
   async all(dto: GetAllProductsDto) {
     const { page, limit, minPrice, maxPrice, size, sortBy, sex } = dto;
@@ -99,21 +103,37 @@ export class ProductService {
   async create(dto: CreateProductDto) {
     const { screenshots, ...rest } = dto;
 
-    let result;
-
+    let product;
     try {
-      result = await this.prisma.product.create({
-        data: { ...rest, slug: createSlug(rest.title) },
+      const uploadedPoster = await this.r2Service.uploadFromUrl(rest.posterUrl);
+
+      product = await this.prisma.product.create({
+        data: {
+          ...rest,
+          slug: createSlug(rest.title),
+          posterUrl: uploadedPoster,
+        },
       });
     } catch {
       throw new ConflictException("Product can't have the same slug");
     }
 
-    await this.prisma.productImage.createMany({
-      data: screenshots.map((url) => ({
-        productId: result.id,
-        url,
-      })),
-    });
+    if (screenshots && screenshots.length > 0) {
+      const uploadedScreenshots = await Promise.all(
+        screenshots.map(async (url) => {
+          const uploadedUrl = await this.r2Service.uploadFromUrl(url);
+          return uploadedUrl;
+        }),
+      );
+
+      await this.prisma.productImage.createMany({
+        data: uploadedScreenshots.map((url) => ({
+          productId: product.id,
+          url,
+        })),
+      });
+    }
+
+    return product;
   }
 }

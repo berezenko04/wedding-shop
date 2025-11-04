@@ -24,7 +24,7 @@ export class CreateProductDto {
   title: string;
 
   @IsString()
-  @Length(10, 256)
+  @Length(10, 1024)
   description: string;
 
   @IsBoolean()
