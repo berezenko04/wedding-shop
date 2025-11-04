@@ -11,7 +11,7 @@ import UserService from "@/api/user/user.service";
 
 // types
 import { Sex } from "@/types/enums.types";
-import { User, UpdateUserBody } from "@/api/user/user.types";
+import { User } from "@/api/user/user.types";
 
 type UpdateUserFormFields = {
   firstName: string;
@@ -38,7 +38,7 @@ const UpdateUserForm: React.FC = () => {
 
   const onSubmit = async (data: UpdateUserFormFields) => {
     try {
-      const updatedUser = await UserService.updateUser(data as UpdateUserBody);
+      const updatedUser = await UserService.updateUser(data);
       queryClient.setQueryData<User>(["user"], updatedUser);
       toast.success("Profile updated successfully");
     } catch {
