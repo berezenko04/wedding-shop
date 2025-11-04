@@ -25,7 +25,7 @@ export const privacyMenu = [
 ];
 
 export const profileMenu = [
-  { title: "Account", href: "account", icon: PersonOutline },
+  { title: "Account", href: "", icon: PersonOutline },
   { title: "Wish List", href: "wishlist", icon: FavoriteBorder },
   { title: "Settings", href: "settings", icon: SettingsOutlined },
   { title: "My Reviews", href: "my-reviews", icon: RateReviewOutlined },
