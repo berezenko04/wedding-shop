@@ -14,10 +14,11 @@ import { GetAllProductsDto } from './dto/get-all-products.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 
 // types
-import { ProductsSortBy } from 'src/types/enums';
+// import { ProductsSortBy } from 'src/types/enums';
 
 // utils
 import { createSlug } from 'src/utils/createSlug';
+import { ProductsSortBy } from 'src/types/enums';
 
 @Injectable()
 export class ProductService {
@@ -45,14 +46,57 @@ export class ProductService {
       where.sex = sex;
     }
 
-    let orderBy: any = {};
+    const normalizedSort = (sortBy ? String(sortBy) : '')
+      .toLowerCase()
+      .replace('-', '_') as ProductsSortBy;
 
+    if (
+      normalizedSort === ProductsSortBy.PRICE_ASC ||
+      normalizedSort === ProductsSortBy.PRICE_DESC
+    ) {
+      const [allMatching, total] = await this.prisma.$transaction([
+        this.prisma.product.findMany({
+          where,
+          select: {
+            id: true,
+            posterUrl: true,
+            title: true,
+            price: true,
+            slug: true,
+            discount: true,
+            available: true,
+          },
+        }),
+        this.prisma.product.count({ where }),
+      ]);
+
+      const toFinalPrice = (p: { price: number; discount: number | null }) => {
+        if (!p.discount || p.discount <= 0) return p.price;
+        return p.price * (1 - p.discount);
+      };
+
+      allMatching.sort((a, b) => {
+        const ap = toFinalPrice(a);
+        const bp = toFinalPrice(b);
+        return normalizedSort === ProductsSortBy.PRICE_ASC ? ap - bp : bp - ap;
+      });
+
+      const offset = (page - 1) * limit;
+      const paginated = allMatching.slice(offset, offset + limit);
+
+      return { data: paginated, total };
+    }
+
+    let orderBy: any = {};
     switch (sortBy) {
       case ProductsSortBy.PRICE_ASC:
         orderBy = { price: 'asc' };
         break;
       case ProductsSortBy.PRICE_DESC:
         orderBy = { price: 'desc' };
+        break;
+      default:
+        orderBy = { id: 'desc' };
         break;
     }
 
