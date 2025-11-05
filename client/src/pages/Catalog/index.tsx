@@ -1,19 +1,20 @@
-import { Divider, Grid, Pagination, Stack, Typography } from "@mui/material";
+import { Button, Grid, Stack, Typography } from "@mui/material";
 import { useSearchParams } from "react-router";
 import { useEffect } from "react";
 
 // components
-import EmptyCatalog from "@/components/features/catalog/Empty";
 import CatalogSort from "@/components/features/catalog/Sort";
-import ProductCard from "@/components/features/product/Card";
-import ProductCardSkeleton from "@/components/ui/loaders/skeletons/ProductCard";
 import Filters from "@/components/features/catalog/Filters";
+import ProductsGridLayout from "@/components/ui/layout/ProductsLayout";
 
 // hooks
 import { Filters as FiltersType, useProducts } from "@/hooks/useProducts";
 
 // types
 import { Sex, Sizes, SortBy } from "@/types/enums.types";
+
+// icons
+import { SearchOff } from "@mui/icons-material";
 
 // constants
 import { PAGE_LIMIT } from "@/constants";
@@ -36,8 +37,6 @@ const CatalogPage: React.FC = () => {
     size,
     sex,
   });
-
-  const pages = Math.ceil(total / PAGE_LIMIT);
 
   const updateSearchParam = (key: string, value?: string | number | null) => {
     const updated = new URLSearchParams(searchParams);
@@ -94,34 +93,22 @@ const CatalogPage: React.FC = () => {
           <Filters filters={filters} setFilter={handleFilterChange} clearFilters={handleClearFilters} />
         </Grid>
         <Grid size={{ xs: 10 }}>
-          <Stack gap={4}>
-            {isLoading ? (
-              <Grid container spacing={4}>
-                {Array.from({ length: 9 }).map((_, idx) => (
-                  <Grid key={idx} size={{ xs: 4 }}>
-                    <ProductCardSkeleton />
-                  </Grid>
-                ))}
-              </Grid>
-            ) : total > 0 ? (
-              <Grid container spacing={4}>
-                {products.map((i) => (
-                  <Grid key={i.id} size={{ xs: 4 }}>
-                    <ProductCard variant="catalog" {...i} />
-                  </Grid>
-                ))}
-              </Grid>
-            ) : (
-              <EmptyCatalog onClearFilters={handleClearFilters} />
-            )}
-
-            {pages > 1 && (
-              <>
-                <Divider />
-                <Pagination count={pages} page={page} onChange={handlePageChange} />
-              </>
-            )}
-          </Stack>
+          <ProductsGridLayout
+            isLoading={isLoading}
+            items={products}
+            total={total}
+            pagesTotal={Math.ceil(total / PAGE_LIMIT)}
+            page={page}
+            onPageChange={handlePageChange}
+            emptyStateTitle="Nothing found for your request"
+            emptyStateDescription="Your search did not match any results. Try clearing the filters"
+            emptyStateIcon={SearchOff}
+            emptyStateAdditional={
+              <Button variant="outlined" color="grey" size="small" onClick={handleClearFilters}>
+                Clear Filters
+              </Button>
+            }
+          />
         </Grid>
       </Grid>
     </Stack>
