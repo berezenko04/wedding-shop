@@ -15,6 +15,9 @@ import WishlistService from "@/api/wishlist/wishlist.service";
 // types
 import { GetAllWishlist } from "@/api/wishlist/wishlist.types";
 
+// icons
+import { BookmarkRemoveOutlined } from "@mui/icons-material";
+
 // constants
 import { PAGE_LIMIT } from "@/constants";
 
@@ -39,6 +42,12 @@ const WishlistPage: React.FC = () => {
         isLoading={isLoading}
         items={wishlist.wishlist.map((i) => ({ ...i.product }))}
         total={wishlist.total}
+        pagesTotal={Math.ceil(wishlist.total / PAGE_LIMIT)}
+        page={page}
+        onPageChange={(_, val) => setPage(val)}
+        emptyStateTitle="Nothing found for your request"
+        emptyStateDescription="Your search did not match any results. Try clearing the filters"
+        emptyStateIcon={BookmarkRemoveOutlined}
       />
     </Stack>
   );
