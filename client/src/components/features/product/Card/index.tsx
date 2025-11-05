@@ -24,7 +24,7 @@ const Card: React.FC<CardProps> = ({ id, posterUrl, title, price, slug, discount
           height="100%"
           style={{ objectPosition: "center", objectFit: "cover" }}
         />
-        {discount > 0 && <DiscountLabel discount={discount} />}
+        {discount && discount > 0 && <DiscountLabel discount={discount} />}
         <AddToWishlistButton productId={id} />
       </Box>
 
@@ -33,7 +33,7 @@ const Card: React.FC<CardProps> = ({ id, posterUrl, title, price, slug, discount
           <Typography variant="medium">{title}</Typography>
           {variant === "default" && (
             <Typography variant="medium" color="common.black">
-              {(price - price * discount).toFixed(2)} USD
+              {(price - price * (discount ?? 0)).toFixed(2)} USD
             </Typography>
           )}
         </Stack>
