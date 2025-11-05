@@ -1,7 +1,7 @@
 import { Badge, Box, Button, IconButton, Stack } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 // components
 import Logo from "../Logo";
@@ -10,8 +10,8 @@ import CustomContainer from "@/components/ui/layout/CustomContainer";
 import Cart from "@/components/features/cart/Cart";
 
 // api
-import WishlistService from "@/api/wishlist/wishlist.service";
 import CartService from "@/api/cart/cart.service";
+import WishlistService from "@/api/wishlist/wishlist.service";
 
 // redux
 import { authSelector } from "@/redux/auth/auth.selectors";
@@ -22,11 +22,17 @@ import { GetAllWishlist } from "@/api/wishlist/wishlist.types";
 // icons
 import { FavoriteBorderOutlined, LocalMallOutlined, PersonOutline, StorefrontOutlined } from "@mui/icons-material";
 
+// constants
+import { PAGE_LIMIT } from "@/constants";
+
 const Header: React.FC = () => {
+  const queryClient = useQueryClient();
   const { isAuth } = useSelector(authSelector);
 
   const [isCartOpened, setIsCartOpened] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const isWishlistPage = location.pathname.startsWith("/profile/wishlist");
 
   const { data: cart = [] } = useQuery({
     queryKey: ["cart"],
@@ -35,12 +41,14 @@ const Header: React.FC = () => {
     staleTime: Infinity,
   });
 
-  const { data: wishlistTotal } = useQuery<GetAllWishlist, Error, number>({
-    queryKey: ["wishlist", "header"],
-    queryFn: async () => await WishlistService.getAll({}),
-    select: (res) => res.total ?? 0,
-    staleTime: Infinity,
-    enabled: isAuth,
+  const { data: wishlistTotal = 0 } = useQuery<GetAllWishlist, Error, number>({
+    queryKey: ["wishlist", { page: 1, limit: PAGE_LIMIT }],
+    queryFn: () => WishlistService.getAll({ page: 1, limit: PAGE_LIMIT }),
+    select: (r) => r.total ?? 0,
+    enabled: isAuth && !isWishlistPage,
+    placeholderData: () =>
+      queryClient.getQueryData<GetAllWishlist>(["wishlist", { page: 1, limit: PAGE_LIMIT }])?.total ?? 0,
+    staleTime: 60_000,
   });
 
   useEffect(() => {
