@@ -6,8 +6,7 @@ export type Product = {
   posterUrl: string;
   title: string;
   price: number;
-  discount: number;
-  available: boolean;
+  discount: number | null;
   slug: string;
 };
 

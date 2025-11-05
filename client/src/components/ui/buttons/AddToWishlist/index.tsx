@@ -10,6 +10,9 @@ import { GetAllWishlist } from "@/api/wishlist/wishlist.types";
 // icons
 import { Favorite, FavoriteBorderOutlined } from "@mui/icons-material";
 
+// constants
+import { PAGE_LIMIT } from "@/constants";
+
 type AddToWishlistButtonProps = {
   productId: string;
   variant?: "card" | "productPage";
@@ -33,7 +36,7 @@ const AddToWishlistButton: React.FC<AddToWishlistButtonProps> = ({ productId, va
     },
 
     onSuccess: (data: GetAllWishlist) => {
-      queryClient.setQueryData(["wishlist"], data);
+      queryClient.setQueryData(["wishlist", { page: 1, limit: PAGE_LIMIT }], data);
       queryClient.setQueryData<string[]>(["wishlistCheck"], (prev) => {
         if (!prev) return [];
         return isWishlisted ? prev.filter((id) => id !== productId) : [...prev, productId];

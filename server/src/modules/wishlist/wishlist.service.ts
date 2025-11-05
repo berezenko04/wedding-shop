@@ -54,10 +54,12 @@ export class WishlistService {
           id: true,
           product: {
             select: {
+              id: true,
               posterUrl: true,
               title: true,
               price: true,
               discount: true,
+              slug: true,
             },
           },
         },

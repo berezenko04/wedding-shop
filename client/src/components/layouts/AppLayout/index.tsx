@@ -9,6 +9,9 @@ import UserService from "@/api/user/user.service";
 // redux
 import { authSelector } from "@/redux/auth/auth.selectors";
 
+// constants
+import { PAGE_LIMIT } from "@/constants";
+
 export const AppLayout = () => {
   const { isAuth } = useSelector(authSelector);
 
@@ -16,6 +19,14 @@ export const AppLayout = () => {
     queryKey: ["user"],
     queryFn: UserService.getMe,
     enabled: isAuth,
+  });
+
+  useQuery({
+    queryKey: ["wishlist", { page: 1, limit: PAGE_LIMIT }],
+    queryFn: () => WishlistService.getAll({ page: 1, limit: PAGE_LIMIT }),
+    enabled: isAuth,
+    staleTime: 60000,
+    refetchOnWindowFocus: false,
   });
 
   useQuery({

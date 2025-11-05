@@ -1,7 +1,7 @@
 import { Badge, Box, Button, IconButton, Stack } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 // components
 import Logo from "../Logo";
@@ -10,8 +10,8 @@ import CustomContainer from "@/components/ui/layout/CustomContainer";
 import Cart from "@/components/features/cart/Cart";
 
 // api
-import WishlistService from "@/api/wishlist/wishlist.service";
 import CartService from "@/api/cart/cart.service";
+import WishlistService from "@/api/wishlist/wishlist.service";
 
 // redux
 import { authSelector } from "@/redux/auth/auth.selectors";
@@ -26,6 +26,7 @@ import { FavoriteBorderOutlined, LocalMallOutlined, PersonOutline, StorefrontOut
 import { PAGE_LIMIT } from "@/constants";
 
 const Header: React.FC = () => {
+  const queryClient = useQueryClient();
   const { isAuth } = useSelector(authSelector);
 
   const [isCartOpened, setIsCartOpened] = useState<boolean>(false);
@@ -38,10 +39,16 @@ const Header: React.FC = () => {
     staleTime: Infinity,
   });
 
-  const { data: wishlist = { wishlist: [], total: 0 } } = useQuery<GetAllWishlist>({
-    queryKey: ["wishlist"],
-    queryFn: async () => await WishlistService.getAll({ page: 1, limit: PAGE_LIMIT }),
-    staleTime: Infinity,
+  const { data: wishlistTotal = 0 } = useQuery<GetAllWishlist, Error, number>({
+    queryKey: ["wishlist", { page: 1, limit: PAGE_LIMIT }],
+    queryFn: () => WishlistService.getAll({ page: 1, limit: PAGE_LIMIT }),
+    select: (res) => res.total ?? 0,
+    placeholderData: () =>
+      queryClient.getQueryData<GetAllWishlist>(["wishlist", { page: 1, limit: PAGE_LIMIT }]) ?? {
+        wishlist: [],
+        total: 0,
+      },
+    staleTime: 60000,
     enabled: isAuth,
   });
 
@@ -85,7 +92,7 @@ const Header: React.FC = () => {
           {isAuth ? (
             <Stack flexDirection="row" alignItems="center" gap={0.5}>
               <IconButton href="/profile/wishlist">
-                <Badge color="primary" badgeContent={wishlist.total}>
+                <Badge color="primary" badgeContent={wishlistTotal}>
                   <FavoriteBorderOutlined />
                 </Badge>
               </IconButton>
