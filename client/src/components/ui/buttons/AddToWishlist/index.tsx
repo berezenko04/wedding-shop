@@ -33,7 +33,7 @@ const AddToWishlistButton: React.FC<AddToWishlistButtonProps> = ({ productId, va
     },
 
     onSuccess: (data: GetAllWishlist) => {
-      queryClient.setQueryData(["wishlist"], data);
+      queryClient.setQueryData(["wishlist", "header"], data);
       queryClient.setQueryData<string[]>(["wishlistCheck"], (prev) => {
         if (!prev) return [];
         return isWishlisted ? prev.filter((id) => id !== productId) : [...prev, productId];
