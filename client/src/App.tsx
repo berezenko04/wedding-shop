@@ -28,6 +28,7 @@ const CatalogProductPage = lazy(() => import("@/pages/CatalogProduct"));
 const NotFoundPage = lazy(() => import("@/pages/NotFound"));
 
 const AccountPage = lazy(() => import("@/pages/profile/Account"));
+const WishlistPage = lazy(() => import("@/pages/profile/Wishlist"));
 
 function App() {
   const dispatch = useAppDispatch();
@@ -64,7 +65,7 @@ function App() {
             <Route element={<PrivateRoute />}>
               <Route element={<ProfileLayout />} path="/profile">
                 <Route path="" element={<AccountPage />} />
-                <Route path="wishlist" />
+                <Route path="wishlist" element={<WishlistPage />} />
                 <Route path="settings" />
                 <Route path="reviews" />
                 <Route path="orders" />

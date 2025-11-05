@@ -26,8 +26,6 @@ const WishlistPage: React.FC = () => {
     enabled: isAuth,
   });
 
-  console.log(wishlist);
-
   return (
     <Grid container>
       {isLoading ? (
@@ -42,7 +40,7 @@ const WishlistPage: React.FC = () => {
         <Grid container spacing={4}>
           {wishlist.wishlist.map((i) => (
             <Grid key={i.id} size={{ xs: 4 }}>
-              <ProductCard variant="catalog" {...i} />
+              <ProductCard variant="catalog" {...i.product} />
             </Grid>
           ))}
         </Grid>

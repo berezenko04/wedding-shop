@@ -7,7 +7,6 @@ export type Product = {
   title: string;
   price: number;
   discount: number;
-  available: boolean;
   slug: string;
 };
 
