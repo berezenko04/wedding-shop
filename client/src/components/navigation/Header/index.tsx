@@ -32,8 +32,6 @@ const Header: React.FC = () => {
   const [isCartOpened, setIsCartOpened] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const isWishlistPage = location.pathname.startsWith("/profile/wishlist");
-
   const { data: cart = [] } = useQuery({
     queryKey: ["cart"],
     queryFn: CartService.getAll,
@@ -44,11 +42,14 @@ const Header: React.FC = () => {
   const { data: wishlistTotal = 0 } = useQuery<GetAllWishlist, Error, number>({
     queryKey: ["wishlist", { page: 1, limit: PAGE_LIMIT }],
     queryFn: () => WishlistService.getAll({ page: 1, limit: PAGE_LIMIT }),
-    select: (r) => r.total ?? 0,
-    enabled: isAuth && !isWishlistPage,
+    select: (res) => res.total ?? 0,
     placeholderData: () =>
-      queryClient.getQueryData<GetAllWishlist>(["wishlist", { page: 1, limit: PAGE_LIMIT }])?.total ?? 0,
-    staleTime: 60_000,
+      queryClient.getQueryData<GetAllWishlist>(["wishlist", { page: 1, limit: PAGE_LIMIT }]) ?? {
+        wishlist: [],
+        total: 0,
+      },
+    staleTime: 60000,
+    enabled: isAuth,
   });
 
   useEffect(() => {

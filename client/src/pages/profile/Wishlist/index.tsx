@@ -1,11 +1,10 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Grid, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 
 // components
-import ProductCard from "@/components/features/product/Card";
-import ProductCardSkeleton from "@/components/ui/loaders/skeletons/ProductCard";
+import ProductsGridLayout from "@/components/ui/layout/ProductsLayout";
 
 // redux
 import { authSelector } from "@/redux/auth/auth.selectors";
@@ -36,26 +35,11 @@ const WishlistPage: React.FC = () => {
   return (
     <Stack gap={4} sx={{ width: "100%" }}>
       <Typography variant="h3">Wish list ({wishlist.total})</Typography>
-      {isLoading ? (
-        <Grid container spacing={4}>
-          {Array.from({ length: 9 }).map((_, idx) => (
-            <Grid key={idx} size={{ xs: 4 }}>
-              <ProductCardSkeleton />
-            </Grid>
-          ))}
-        </Grid>
-      ) : wishlist.total > 0 ? (
-        <Grid container spacing={4}>
-          {wishlist.wishlist.map((i) => (
-            <Grid key={i.id} size={{ xs: 4 }}>
-              <ProductCard variant="catalog" {...i.product} />
-            </Grid>
-          ))}
-        </Grid>
-      ) : (
-        <></>
-        // <EmptyCatalog onClearFilters={handleClearFilters} />
-      )}
+      <ProductsGridLayout
+        isLoading={isLoading}
+        items={wishlist.wishlist.map((i) => ({ ...i.product }))}
+        total={wishlist.total}
+      />
     </Stack>
   );
 };
