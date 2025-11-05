@@ -10,7 +10,7 @@ const ProfileMenu: React.FC = () => {
   return (
     <Stack gap={0.5}>
       {profileMenu.map(({ title, href, icon: Icon }, idx) => {
-        const isActive = location.pathname.includes(href);
+        const isActive = location.pathname === `/profile/${href}`;
 
         return (
           <Link

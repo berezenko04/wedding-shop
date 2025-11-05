@@ -10,13 +10,11 @@ import FormField from "@/components/ui/layout/FormField";
 import UserService from "@/api/user/user.service";
 
 // types
-import { Sex } from "@/types/enums.types";
 import { User } from "@/api/user/user.types";
 
 type UpdateUserFormFields = {
   firstName: string;
   lastName: string;
-  sex: Sex;
 };
 
 const UpdateUserForm: React.FC = () => {
@@ -32,7 +30,6 @@ const UpdateUserForm: React.FC = () => {
     defaultValues: {
       firstName: user?.firstName || "",
       lastName: user?.lastName || "",
-      sex: user?.sex || Sex.MALE,
     },
   });
 
