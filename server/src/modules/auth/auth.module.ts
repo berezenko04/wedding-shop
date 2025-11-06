@@ -9,6 +9,7 @@ import { LogService } from 'src/common/logging/log.service';
 
 // modules
 import { MailModule } from '../mailer/mailer.module';
+import { GeoModule } from '../geo/geo.module';
 
 // controllers
 import { AuthController } from './auth.controller';
@@ -18,6 +19,7 @@ import { AuthController } from './auth.controller';
   imports: [
     PassportModule,
     MailModule,
+    GeoModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
