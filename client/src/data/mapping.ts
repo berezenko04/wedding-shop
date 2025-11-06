@@ -1,4 +1,8 @@
+// types
 import { Rating } from "@/types/enums.types";
+
+// icons
+import { DesktopWindowsOutlined, PhoneAndroidOutlined, TabletMacOutlined } from "@mui/icons-material";
 
 export const ratingToNumber = {
   [Rating.ONE]: 1,
@@ -14,4 +18,10 @@ export const numberToRating = {
   3: Rating.THREE,
   4: Rating.FOUR,
   5: Rating.FIVE,
+};
+
+export const sessionIconsMap = {
+  desktop: DesktopWindowsOutlined,
+  mobile: PhoneAndroidOutlined,
+  tablet: TabletMacOutlined,
 };

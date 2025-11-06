@@ -29,6 +29,7 @@ const NotFoundPage = lazy(() => import("@/pages/NotFound"));
 
 const AccountPage = lazy(() => import("@/pages/profile/Account"));
 const WishlistPage = lazy(() => import("@/pages/profile/Wishlist"));
+const SettingsPage = lazy(() => import("@/pages/profile/Settings"));
 
 function App() {
   const dispatch = useAppDispatch();
@@ -66,7 +67,7 @@ function App() {
               <Route element={<ProfileLayout />} path="/profile">
                 <Route path="" element={<AccountPage />} />
                 <Route path="wishlist" element={<WishlistPage />} />
-                <Route path="settings" />
+                <Route path="settings" element={<SettingsPage />} />
                 <Route path="reviews" />
                 <Route path="orders" />
                 <Route path="shipping-address" />
