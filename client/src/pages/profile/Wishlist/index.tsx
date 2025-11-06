@@ -45,8 +45,8 @@ const WishlistPage: React.FC = () => {
         pagesTotal={Math.ceil(wishlist.total / PAGE_LIMIT)}
         page={page}
         onPageChange={(_, val) => setPage(val)}
-        emptyStateTitle="Nothing found for your request"
-        emptyStateDescription="Your search did not match any results. Try clearing the filters"
+        emptyStateTitle="Your wishlist is empty"
+        emptyStateDescription="Items you add to your wishlist will appear here. Explore the catalog and tap the heart to save favorites."
         emptyStateIcon={BookmarkRemoveOutlined}
       />
     </Stack>
