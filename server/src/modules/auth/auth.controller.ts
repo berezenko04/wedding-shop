@@ -14,6 +14,7 @@ import { Request, Response } from 'express';
 
 // services
 import { AuthService } from './auth.service';
+import { GeoService } from '../geo/geo.service';
 
 // dto
 import { RegisterDto } from './dto/register.dto';
@@ -37,6 +38,7 @@ export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly configService: ConfigService,
+    private readonly geoService: GeoService,
   ) {}
 
   @Post('register')
@@ -69,6 +71,7 @@ export class AuthController {
       os,
       deviceType,
       browser,
+      country: (await this.geoService.getCountryByIp(ip)) ?? 'Unknown',
       expiresAt: new Date(
         Date.now() +
           parseInt(this.configService.get<string>('JWT_REFRESH_EXPIRY')!),

@@ -11,6 +11,9 @@ const R = {
   forgotPassword: "/auth/forgot-password",
   verifyOtp: "/auth/verify-otp",
   resetPassword: "/auth/reset-password",
+  logout: "/auth/logout",
+  logoutAnotherSession: (id: string) => `${R.logout}/${id}`,
+  logoutAll: "/auth/logout-all",
 } as const;
 
 const AuthService = {
@@ -36,6 +39,18 @@ const AuthService = {
 
   async resetPassword(body: ResetPasswordBody) {
     return httpPost<BaseResponseData>(R.resetPassword, body);
+  },
+
+  async logout() {
+    return httpPost<BaseResponseData>(R.logout);
+  },
+
+  async logoutAnotherSession(id: string) {
+    return httpPost<BaseResponseData>(R.logoutAnotherSession(id));
+  },
+
+  async logoutAll() {
+    return httpPost<BaseResponseData>(R.logoutAll);
   },
 };
 

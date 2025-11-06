@@ -13,6 +13,10 @@ export class CreateSessionDto {
 
   @IsOptional()
   @IsString()
+  country: string;
+
+  @IsOptional()
+  @IsString()
   userAgent?: string;
 
   @IsOptional()
