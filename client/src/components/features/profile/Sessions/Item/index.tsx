@@ -1,12 +1,18 @@
 import { IconButton, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
 import { useAppDispatch } from "@/redux/store";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+
+// services
+import AuthService from "@/api/auth/auth.service";
 
 // redux
 import { logout } from "@/redux/auth/auth.actions";
 
 // types
 import { UserSession } from "@/api/user/user.types";
+import { BaseResponseData } from "@/types/base.types";
 
 // icons
 import { DeleteOutline } from "@mui/icons-material";
@@ -17,16 +23,27 @@ import { sessionIconsMap } from "@/data/mapping";
 const Session: React.FC<UserSession> = ({ id, deviceType, isCurrent, country, os, createdAt }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
 
   const getIcon = () => {
     const Icon = sessionIconsMap[deviceType ?? "desktop"] ?? sessionIconsMap.desktop;
     return <Icon sx={{ width: { xs: 40 }, height: "auto", color: "text.secondary" }} />;
   };
 
+  const deleteSessionMutation = useMutation({
+    mutationFn: (sessionId: string) => AuthService.logoutAnotherSession(sessionId),
+    onSuccess: (result: BaseResponseData, sessionId: string) => {
+      toast.success(result.message);
+      queryClient.setQueryData(["sessions"], (old: UserSession[] = []) => old.filter((s) => s.id !== sessionId));
+    },
+  });
+
   const handleLogout = async () => {
     if (isCurrent) {
       dispatch(logout());
       navigate("/");
+    } else {
+      deleteSessionMutation.mutate(id);
     }
   };
 

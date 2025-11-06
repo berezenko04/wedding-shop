@@ -22,20 +22,22 @@ const Sessions: React.FC = () => {
         <Session {...sessions.find((i) => i.isCurrent)!} />
       </Stack>
       {sessions.length > 1 && (
-        <Stack gap={2}>
-          <Typography variant="medium" textTransform="uppercase" fontSize={24}>
-            Other Devices
-          </Typography>
-          {sessions
-            .filter((i) => !i.isCurrent)
-            .map((session) => (
-              <Session {...session} />
-            ))}
-        </Stack>
+        <>
+          <Stack gap={2}>
+            <Typography variant="medium" textTransform="uppercase" fontSize={24}>
+              Other Devices
+            </Typography>
+            {sessions
+              .filter((i) => !i.isCurrent)
+              .map((session) => (
+                <Session {...session} />
+              ))}
+          </Stack>
+          <Button variant="outlined" color="grey" size="small" sx={{ width: "max-content" }}>
+            Log out all devices without current
+          </Button>
+        </>
       )}
-      <Button variant="outlined" color="grey" size="small" sx={{ width: "max-content" }}>
-        Log out all devices without current
-      </Button>
     </Stack>
   );
 };
