@@ -1,4 +1,9 @@
 import { IconButton, Stack, Typography } from "@mui/material";
+import { useNavigate } from "react-router";
+import { useAppDispatch } from "@/redux/store";
+
+// redux
+import { logout } from "@/redux/auth/auth.actions";
 
 // types
 import { UserSession } from "@/api/user/user.types";
@@ -9,10 +14,20 @@ import { DeleteOutline } from "@mui/icons-material";
 // mapping
 import { sessionIconsMap } from "@/data/mapping";
 
-const Session: React.FC<UserSession> = ({ id, deviceType, country, os, createdAt }) => {
+const Session: React.FC<UserSession> = ({ id, deviceType, isCurrent, country, os, createdAt }) => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const getIcon = () => {
     const Icon = sessionIconsMap[deviceType ?? "desktop"] ?? sessionIconsMap.desktop;
     return <Icon sx={{ width: { xs: 40 }, height: "auto", color: "text.secondary" }} />;
+  };
+
+  const handleLogout = async () => {
+    if (isCurrent) {
+      dispatch(logout());
+      navigate("/");
+    }
   };
 
   return (
@@ -34,7 +49,7 @@ const Session: React.FC<UserSession> = ({ id, deviceType, country, os, createdAt
           <Typography>Session started on: {new Date(createdAt).toLocaleDateString("en-GB")}</Typography>
         </Stack>
       </Stack>
-      <IconButton color="error">
+      <IconButton color="error" onClick={handleLogout}>
         <DeleteOutline />
       </IconButton>
     </Stack>

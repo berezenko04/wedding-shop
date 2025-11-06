@@ -33,3 +33,17 @@ export const refresh = createAsyncThunk<boolean, void, { rejectValue: { message:
     }
   }
 );
+
+export const logout = createAsyncThunk<boolean, void, { rejectValue: { message: string } }>(
+  "auth/logout",
+  async (_, { rejectWithValue }) => {
+    try {
+      await AuthService.logout();
+      return false;
+    } catch (err: any) {
+      return rejectWithValue({
+        message: err.message || "Unknown error",
+      });
+    }
+  }
+);
