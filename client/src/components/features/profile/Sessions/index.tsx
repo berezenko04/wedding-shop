@@ -1,16 +1,32 @@
 import { Button, Stack, Typography } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 // components
 import Session from "./Item";
 
 // api
 import UserService from "@/api/user/user.service";
+import AuthService from "@/api/auth/auth.service";
+
+// types
+import { UserSession } from "@/api/user/user.types";
+import { BaseResponseData } from "@/types/base.types";
 
 const Sessions: React.FC = () => {
+  const queryClient = useQueryClient();
+
   const { data: sessions = [] } = useQuery({
     queryKey: ["sessions"],
     queryFn: UserService.getSessions,
+  });
+
+  const logoutAllMutation = useMutation({
+    mutationFn: AuthService.logoutAll,
+    onSuccess: (result: BaseResponseData) => {
+      toast.success(result.message);
+      queryClient.setQueryData(["sessions"], (old: UserSession[] = []) => old.filter((s) => s.isCurrent === true));
+    },
   });
 
   return (
@@ -33,7 +49,13 @@ const Sessions: React.FC = () => {
                 <Session {...session} />
               ))}
           </Stack>
-          <Button variant="outlined" color="grey" size="small" sx={{ width: "max-content" }}>
+          <Button
+            variant="outlined"
+            color="grey"
+            size="small"
+            sx={{ width: "max-content" }}
+            onClick={() => logoutAllMutation.mutate()}
+          >
             Log out all devices without current
           </Button>
         </>

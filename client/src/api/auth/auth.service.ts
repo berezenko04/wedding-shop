@@ -48,6 +48,10 @@ const AuthService = {
   async logoutAnotherSession(id: string) {
     return httpPost<BaseResponseData>(R.logoutAnotherSession(id));
   },
+
+  async logoutAll() {
+    return httpPost<BaseResponseData>(R.logoutAll);
+  },
 };
 
 export default AuthService;

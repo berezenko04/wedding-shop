@@ -30,7 +30,7 @@ const Session: React.FC<UserSession> = ({ id, deviceType, isCurrent, country, os
     return <Icon sx={{ width: { xs: 40 }, height: "auto", color: "text.secondary" }} />;
   };
 
-  const deleteSessionMutation = useMutation({
+  const logoutSessionMutation = useMutation({
     mutationFn: (sessionId: string) => AuthService.logoutAnotherSession(sessionId),
     onSuccess: (result: BaseResponseData, sessionId: string) => {
       toast.success(result.message);
@@ -43,7 +43,7 @@ const Session: React.FC<UserSession> = ({ id, deviceType, isCurrent, country, os
       dispatch(logout());
       navigate("/");
     } else {
-      deleteSessionMutation.mutate(id);
+      logoutSessionMutation.mutate(id);
     }
   };
 
