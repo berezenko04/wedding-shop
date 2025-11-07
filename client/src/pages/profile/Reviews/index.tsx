@@ -37,7 +37,12 @@ const ReviewsPage: React.FC = () => {
       {isLoading ? (
         <></>
       ) : reviews.total > 0 ? (
-        reviews.reviews.map((review) => <ReviewsItem key={review.id} variant="profile" {...review} />)
+        reviews.reviews.map((review, idx) => (
+          <>
+            <ReviewsItem key={review.id} variant="profile" {...review} />
+            {idx + 1 !== reviews.reviews.length && <Divider />}
+          </>
+        ))
       ) : (
         <EmptyState
           icon={StarHalf}
