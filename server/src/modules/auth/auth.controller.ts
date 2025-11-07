@@ -159,7 +159,7 @@ export class AuthController {
 
   @Post('change-password')
   @Auth()
-  @Throttle({ default: { limit: 3, ttl: 180000 } })
+  @Throttle({ default: { limit: 5, ttl: 90000 } })
   async changePassword(
     @User('id') userId: string,
     @Body() dto: ChangePasswordDto,

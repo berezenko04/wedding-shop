@@ -22,3 +22,8 @@ export type ResetPasswordBody = {
   resetToken: string;
   password: string;
 };
+
+export type ChangePasswordBody = {
+  oldPassword: string;
+  newPassword: string;
+};
