@@ -84,7 +84,7 @@ export class ReviewService {
         orderBy: { createdAt: 'desc' },
         select: {
           id: true,
-          user: { select: { id: true, email: true } },
+          user: { select: { firstName: true, lastName: true } },
           comment: true,
           rating: true,
           createdAt: true,
@@ -119,8 +119,8 @@ export class ReviewService {
           createdAt: true,
           user: {
             select: {
-              id: true,
-              email: true,
+              firstName: true,
+              lastName: true,
             },
           },
           product: {

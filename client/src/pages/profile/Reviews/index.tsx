@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Divider, Pagination, Stack, Typography } from "@mui/material";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 // components
 import ReviewsItem from "@/components/features/product/Reviews/Item";
@@ -20,7 +20,6 @@ import { StarHalf } from "@mui/icons-material";
 import { REVIEWS_LIMIT } from "@/constants";
 
 const ReviewsPage: React.FC = () => {
-  const queryClient = useQueryClient();
   const { isAuth } = useSelector(authSelector);
   const [page, setPage] = useState<number>(1);
 
@@ -38,7 +37,7 @@ const ReviewsPage: React.FC = () => {
       {isLoading ? (
         <></>
       ) : reviews.total > 0 ? (
-        reviews.reviews.map((review) => <ReviewsItem key={review.id} {...review} />)
+        reviews.reviews.map((review) => <ReviewsItem key={review.id} variant="profile" {...review} />)
       ) : (
         <EmptyState
           icon={StarHalf}

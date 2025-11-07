@@ -1,4 +1,4 @@
-import { Avatar, Rating, Stack, Typography } from "@mui/material";
+import { Avatar, Link, Rating, Stack, Typography } from "@mui/material";
 
 // types
 import { Review } from "@/api/reviews/reviews.types";
@@ -33,7 +33,11 @@ const ReviewsItem: React.FC<ReviewsItemProps> = ({
           <Typography>{user?.email}</Typography>
         </Stack>
       </Stack>
-      <Typography></Typography>
+      {variant === "profile" && (
+        <Link href={`/catalog/${product.slug}`} color="grey" variant="underlined">
+          Good: {product.title}
+        </Link>
+      )}
       <Typography>{comment}</Typography>
       <Typography color="grey.300" fontStyle="italic">
         Published at: {formattedDate}
