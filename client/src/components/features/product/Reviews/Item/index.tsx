@@ -18,10 +18,10 @@ const ReviewsItem: React.FC<ReviewsItemProps> = ({ rating, user, createdAt, comm
   return (
     <Stack gap={2}>
       <Stack flexDirection="row" gap={2}>
-        <Avatar sx={{ width: 48, height: 48 }}>{user.email.slice(0, 2).toUpperCase()}</Avatar>
+        <Avatar sx={{ width: 48, height: 48 }}>{user?.email?.slice(0, 2).toUpperCase()}</Avatar>
         <Stack>
           <Rating readOnly value={ratingToNumber[rating]} />
-          <Typography>{user.email}</Typography>
+          <Typography>{user?.email}</Typography>
         </Stack>
       </Stack>
       <Typography>{comment}</Typography>

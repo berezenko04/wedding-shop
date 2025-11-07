@@ -5,12 +5,16 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 // components
 import ReviewsItem from "@/components/features/product/Reviews/Item";
+import EmptyState from "@/components/ui/EmptyState";
 
 // api
 import ReviewsService from "@/api/reviews/reviews.service";
 
 // redux
 import { authSelector } from "@/redux/auth/auth.selectors";
+
+// icons
+import { StarHalf } from "@mui/icons-material";
 
 // constants
 import { REVIEWS_LIMIT } from "@/constants";
@@ -29,9 +33,17 @@ const ReviewsPage: React.FC = () => {
   return (
     <Stack gap={4} sx={{ width: "100%" }}>
       <Typography variant="h3">Reviews ({reviews.total})</Typography>
-      {reviews.reviews.map((review) => (
-        <ReviewsItem key={review.id} {...review} />
-      ))}
+      {isLoading ? (
+        <></>
+      ) : reviews.total > 0 ? (
+        reviews.reviews.map((review) => <ReviewsItem key={review.id} {...review} />)
+      ) : (
+        <EmptyState
+          icon={StarHalf}
+          title="You haven't left any reviews yet"
+          description="Reviews you write will appear here. Share your experience with other shoppers once you've tried our products."
+        />
+      )}
     </Stack>
   );
 };
