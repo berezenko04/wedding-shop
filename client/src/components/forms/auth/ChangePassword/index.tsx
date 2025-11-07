@@ -1,8 +1,12 @@
 import { Button, Stack, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 // components
 import FormField from "@/components/ui/layout/FormField";
+
+// api
+import AuthService from "@/api/auth/auth.service";
 
 type ChangePasswordFormFields = {
   oldPassword: string;
@@ -15,20 +19,21 @@ const ChangePasswordForm: React.FC = () => {
     handleSubmit,
     register,
     watch,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<ChangePasswordFormFields>();
 
   const password = watch("newPassword");
 
   const onSubmit = async (data: ChangePasswordFormFields) => {
-    // const result = await dispatch(login(data));
-    // if (login.rejected.match(result)) return;
-    // navigate("/");
+    const result = await AuthService.changePassword(data);
+    reset();
+    toast.success(result.message);
   };
 
   return (
     <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ gap: 2 }}>
-      <FormField label="Old Password">
+      <FormField label="Old Password" labelFontSize={16}>
         <TextField
           placeholder="****************"
           type="password"
@@ -40,7 +45,7 @@ const ChangePasswordForm: React.FC = () => {
         />
       </FormField>
 
-      <FormField label="New Password">
+      <FormField label="New Password" labelFontSize={16}>
         <TextField
           placeholder="****************"
           type="password"
@@ -53,7 +58,7 @@ const ChangePasswordForm: React.FC = () => {
         />
       </FormField>
 
-      <FormField label="Repeat New Password">
+      <FormField label="Repeat New Password" labelFontSize={16}>
         <TextField
           placeholder="****************"
           type="password"
@@ -70,7 +75,7 @@ const ChangePasswordForm: React.FC = () => {
         <Button type="submit" variant="contained" size="small" disabled={isSubmitting}>
           Change Password
         </Button>
-        <Button type="button" variant="contained" color="grey" size="small">
+        <Button href="/forgot-password" type="button" variant="outlined" color="grey" size="small">
           Forgot Password
         </Button>
       </Stack>

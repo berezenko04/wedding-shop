@@ -1,13 +1,21 @@
 import { httpPost } from "@/middlewares/axios.middleware";
 
 // types
-import { LoginBody, RegisterBody, ResetPasswordBody, VerifyOtpBody, VerifyOtpResponse } from "./auth.types";
+import {
+  ChangePasswordBody,
+  LoginBody,
+  RegisterBody,
+  ResetPasswordBody,
+  VerifyOtpBody,
+  VerifyOtpResponse,
+} from "./auth.types";
 import { BaseResponseData } from "@/types/base.types";
 
 const R = {
   register: "/auth/register",
   login: "/auth/login",
   refresh: "/auth/refresh",
+  changePasword: "/auth/change-password",
   forgotPassword: "/auth/forgot-password",
   verifyOtp: "/auth/verify-otp",
   resetPassword: "/auth/reset-password",
@@ -27,6 +35,10 @@ const AuthService = {
 
   async refresh() {
     return httpPost<void>(R.refresh);
+  },
+
+  async changePassword(body: ChangePasswordBody) {
+    return httpPost<BaseResponseData>(R.changePasword, body);
   },
 
   async sendForgotPasswordOtp(email: string) {
