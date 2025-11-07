@@ -14,6 +14,7 @@ import * as bcrypt from 'bcrypt';
 // services
 import { PrismaService } from 'src/prisma/prisma.service';
 import { LogService } from 'src/common/logging/log.service';
+import { UserService } from '../user/user.service';
 
 // dto
 import { CreateSessionDto } from './dto/create-session.dto';
@@ -21,6 +22,7 @@ import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { VerifyOtpDto } from './dto/verify-otp.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -32,6 +34,7 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly logService: LogService,
     private readonly mailerService: MailerService,
+    private readonly userService: UserService,
   ) {}
 
   async validateUser(email: string, password: string) {
@@ -263,6 +266,48 @@ export class AuthService {
     });
 
     return this.createResetToken(user.id);
+  }
+
+  async changePassword(userId: string, dto: ChangePasswordDto) {
+    this.logger.log(`Change Password attempt: ${userId}`);
+
+    await this.userService.get(userId);
+
+    const userData = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { passwordHash: true },
+    });
+
+    const isPasswordValid = await bcrypt.compare(
+      dto.oldPassword,
+      userData!.passwordHash,
+    );
+
+    if (!isPasswordValid) {
+      await this.logService.write({
+        level: 'SECURITY',
+        action: 'auth.changePassword',
+        status: 'fail',
+        message: 'Invalid credentials',
+        userId,
+      });
+      throw new UnauthorizedException("Current password doesn't match");
+    }
+
+    const newPasswordHash = await bcrypt.hash(dto.newPassword, 10);
+
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { passwordHash: newPasswordHash },
+    });
+
+    this.logger.log(`Change password success: ${userId}`);
+    await this.logService.write({
+      level: 'INFO',
+      action: 'auth.changePassword',
+      userId,
+      status: 'success',
+    });
   }
 
   async resetPassword(dto: ResetPasswordDto) {
