@@ -3,8 +3,8 @@ import { Rating } from "@/types/enums.types";
 export type Review = {
   id: string;
   user: {
-    id: string;
-    email: string;
+    firstName: string;
+    lastName: string;
   };
   product: {
     title: string;

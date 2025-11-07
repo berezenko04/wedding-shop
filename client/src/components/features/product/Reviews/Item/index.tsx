@@ -27,16 +27,21 @@ const ReviewsItem: React.FC<ReviewsItemProps> = ({
   return (
     <Stack gap={2}>
       <Stack flexDirection="row" gap={2}>
-        <Avatar sx={{ width: 48, height: 48 }}>{user?.email?.slice(0, 2).toUpperCase()}</Avatar>
+        <Avatar sx={{ width: 48, height: 48 }}>{user?.firstName?.slice(0, 2).toUpperCase()}</Avatar>
         <Stack>
           <Rating readOnly value={ratingToNumber[rating]} />
-          <Typography>{user?.email}</Typography>
+          <Typography>
+            {user.firstName} {user.lastName}
+          </Typography>
         </Stack>
       </Stack>
       {variant === "profile" && (
-        <Link href={`/catalog/${product.slug}`} color="grey" variant="underlined">
-          Good: {product.title}
-        </Link>
+        <Typography>
+          Good:&nbsp;
+          <Link href={`/catalog/${product.slug}`} variant="underlined" color="grey.500">
+            {product.title}
+          </Link>
+        </Typography>
       )}
       <Typography>{comment}</Typography>
       <Typography color="grey.300" fontStyle="italic">
