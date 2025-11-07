@@ -6,9 +6,18 @@ import { Review } from "@/api/reviews/reviews.types";
 // mapping
 import { ratingToNumber } from "@/data/mapping";
 
-type ReviewsItemProps = Review & {};
+type ReviewsItemProps = Review & {
+  variant?: "product" | "profile";
+};
 
-const ReviewsItem: React.FC<ReviewsItemProps> = ({ rating, user, createdAt, comment }) => {
+const ReviewsItem: React.FC<ReviewsItemProps> = ({
+  rating,
+  user,
+  createdAt,
+  product,
+  variant = "product",
+  comment,
+}) => {
   const formattedDate = new Date(createdAt).toLocaleDateString("en-GB", {
     day: "2-digit",
     month: "2-digit",
@@ -24,6 +33,7 @@ const ReviewsItem: React.FC<ReviewsItemProps> = ({ rating, user, createdAt, comm
           <Typography>{user?.email}</Typography>
         </Stack>
       </Stack>
+      <Typography></Typography>
       <Typography>{comment}</Typography>
       <Typography color="grey.300" fontStyle="italic">
         Published at: {formattedDate}

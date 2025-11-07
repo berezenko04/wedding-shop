@@ -6,6 +6,10 @@ export type Review = {
     id: string;
     email: string;
   };
+  product: {
+    title: string;
+    slug: string;
+  };
   comment: string;
   rating: Rating;
   createdAt: Date;

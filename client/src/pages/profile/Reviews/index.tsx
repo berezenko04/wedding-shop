@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Stack, Typography } from "@mui/material";
+import { Divider, Pagination, Stack, Typography } from "@mui/material";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 // components
@@ -30,6 +30,8 @@ const ReviewsPage: React.FC = () => {
     enabled: isAuth,
   });
 
+  const pages = Math.ceil(reviews.total / REVIEWS_LIMIT);
+
   return (
     <Stack gap={4} sx={{ width: "100%" }}>
       <Typography variant="h3">Reviews ({reviews.total})</Typography>
@@ -43,6 +45,13 @@ const ReviewsPage: React.FC = () => {
           title="You haven't left any reviews yet"
           description="Reviews you write will appear here. Share your experience with other shoppers once you've tried our products."
         />
+      )}
+
+      {pages > 1 && (
+        <>
+          <Divider />
+          <Pagination page={page} count={pages} onChange={(_, p) => setPage(p)} />
+        </>
       )}
     </Stack>
   );
