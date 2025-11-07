@@ -28,8 +28,8 @@ export const profileMenu = [
   { title: "Account", href: "", icon: PersonOutline },
   { title: "Wish List", href: "wishlist", icon: FavoriteBorder },
   { title: "Settings", href: "settings", icon: SettingsOutlined },
-  { title: "My Reviews", href: "my-reviews", icon: RateReviewOutlined },
-  { title: "My Orders", href: "my-orders", icon: ShoppingCartCheckoutOutlined },
+  { title: "My Reviews", href: "reviews", icon: RateReviewOutlined },
+  { title: "My Orders", href: "orders", icon: ShoppingCartCheckoutOutlined },
   { title: "Shipping Address", href: "shipping-address", icon: RateReviewOutlined },
   { title: "Payment", href: "payment", icon: PaymentOutlined },
 ];
