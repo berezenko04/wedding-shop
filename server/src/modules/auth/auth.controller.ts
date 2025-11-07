@@ -32,6 +32,7 @@ import { Auth } from './decorators/auth.decorator';
 
 // utils
 import { getDeviceInfo } from 'src/utils/getDeviceInfo';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -154,6 +155,17 @@ export class AuthController {
   async resetPassword(@Body() dto: ResetPasswordDto) {
     await this.authService.resetPassword(dto);
     return { message: 'Password was reset is successfully' };
+  }
+
+  @Post('change-password')
+  @Auth()
+  @Throttle({ default: { limit: 3, ttl: 180000 } })
+  async changePassword(
+    @User('id') userId: string,
+    @Body() dto: ChangePasswordDto,
+  ) {
+    await this.authService.changePassword(userId, dto);
+    return { message: 'Password has been successfully changed' };
   }
 
   @Post('logout')
