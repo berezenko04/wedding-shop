@@ -294,6 +294,15 @@ const theme = createTheme({
             },
           }),
         },
+        {
+          props: { color: "grey.500" },
+          style: ({ theme }) => ({
+            color: theme.palette.grey[500],
+            "&:hover": {
+              color: theme.palette.common.black,
+            },
+          }),
+        },
       ],
     },
     MuiOutlinedInput: {

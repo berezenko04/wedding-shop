@@ -12,9 +12,6 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 
-// utils
-import { maskEmail } from 'src/utils/maskEmail';
-
 @Injectable()
 export class ReviewService {
   constructor(
@@ -84,7 +81,7 @@ export class ReviewService {
         orderBy: { createdAt: 'desc' },
         select: {
           id: true,
-          user: { select: { id: true, email: true } },
+          user: { select: { firstName: true, lastName: true } },
           comment: true,
           rating: true,
           createdAt: true,
@@ -93,15 +90,7 @@ export class ReviewService {
       this.prisma.review.count({ where: { productId } }),
     ]);
 
-    const maskedReviews = reviews.map((review) => ({
-      ...review,
-      user: {
-        ...review.user,
-        email: maskEmail(review.user.email),
-      },
-    }));
-
-    return { reviews: maskedReviews, total };
+    return { reviews, total };
   }
 
   async getMineReviews(userId: string, dto: PaginationDto) {
@@ -112,7 +101,24 @@ export class ReviewService {
         skip: (page - 1) * limit,
         take: limit,
         where: { userId },
-        select: { id: true, comment: true, rating: true },
+        select: {
+          id: true,
+          comment: true,
+          rating: true,
+          createdAt: true,
+          user: {
+            select: {
+              firstName: true,
+              lastName: true,
+            },
+          },
+          product: {
+            select: {
+              title: true,
+              slug: true,
+            },
+          },
+        },
       }),
       this.prisma.review.count({ where: { userId } }),
     ]);

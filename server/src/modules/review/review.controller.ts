@@ -51,10 +51,10 @@ export class ReviewController {
   }
 
   @Auth()
-  @Delete()
+  @Delete(':id')
   async delete(
     @User('id') userId: string,
-    @Query('id', new ParseUUIDPipe()) reviewId: string,
+    @Param('id', new ParseUUIDPipe()) reviewId: string,
   ) {
     await this.reviewService.deleteReview(userId, reviewId);
     return { message: 'Review is deleted' };
