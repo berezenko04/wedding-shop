@@ -22,6 +22,14 @@ const Addresses: React.FC = () => {
     queryFn: ShippingService.getAll,
   });
 
+  const handleClose = () => {
+    setIsCreateModalOpened(false);
+  };
+
+  const handleOpen = () => {
+    setIsCreateModalOpened(true);
+  };
+
   return (
     <Stack gap={2}>
       {addresses.length > 0 ? (
@@ -31,26 +39,28 @@ const Addresses: React.FC = () => {
           title="No shipping address saved"
           description="Checkout faster by saving a shipping address"
           buttonText="Add Shipping Address"
-          onClick={() => setIsCreateModalOpened(true)}
+          onClick={handleOpen}
         />
       )}
-      <Button
-        startIcon={<Add />}
-        variant="outlined"
-        color="grey"
-        size="small"
-        sx={{ width: "max-content" }}
-        onClick={() => setIsCreateModalOpened(true)}
-      >
-        Add Shipping Address
-      </Button>
+      {addresses.length < 3 && (
+        <Button
+          startIcon={<Add />}
+          variant="outlined"
+          color="grey"
+          size="small"
+          sx={{ width: "max-content" }}
+          onClick={handleOpen}
+        >
+          Add Shipping Address
+        </Button>
+      )}
       <CustomModal
         maxWidth={580}
         title="Add Shipping Address"
         open={isCreateModalOpened}
-        onClose={() => setIsCreateModalOpened(false)}
+        onClose={handleClose}
       >
-        <CreateShippingAddressForm />
+        <CreateShippingAddressForm afterSubmit={handleClose} />
       </CustomModal>
     </Stack>
   );

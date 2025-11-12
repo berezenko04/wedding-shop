@@ -1,12 +1,17 @@
 import { IconButton, Stack, Typography } from "@mui/material";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 // components
 import PrimaryMark from "@/components/features/profile/PrimaryMark";
 import OutlinedBlock from "@/components/ui/layout/OutlinedBlock";
 
+// api
+import ShippingService from "@/api/shipping/shipping.service";
+
 // types
 import { ShippingAddress } from "@/api/shipping/shipping.types";
+import { BaseResponseData } from "@/types/base.types";
 import { User } from "@/api/user/user.types";
 
 // icons
@@ -16,6 +21,16 @@ const Address: React.FC<ShippingAddress> = ({ id, address, primary }) => {
   const queryClient = useQueryClient();
 
   const user = queryClient.getQueryData<User>(["user"]);
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => ShippingService.delete(id),
+    onSuccess: (result: BaseResponseData, id: string) => {
+      toast.success(result.message);
+      queryClient.setQueryData(["shipping"], (old: ShippingAddress[] = []) =>
+        old.filter((s) => s.id !== id)
+      );
+    },
+  });
 
   return (
     <OutlinedBlock>
@@ -36,7 +51,7 @@ const Address: React.FC<ShippingAddress> = ({ id, address, primary }) => {
             <IconButton>
               <EditOutlined />
             </IconButton>
-            <IconButton color="error">
+            <IconButton color="error" onClick={() => deleteMutation.mutate(id)}>
               <DeleteOutline />
             </IconButton>
           </Stack>

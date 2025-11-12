@@ -15,7 +15,11 @@ type CreateShippingAddressFormFields = {
   primary: boolean;
 };
 
-const CreateShippingAddressForm: React.FC = () => {
+type CreateShippingAddressFormProps = {
+  afterSubmit: () => void;
+};
+
+const CreateShippingAddressForm: React.FC<CreateShippingAddressFormProps> = ({ afterSubmit }) => {
   const queryClient = useQueryClient();
 
   const {
@@ -32,6 +36,7 @@ const CreateShippingAddressForm: React.FC = () => {
     });
     reset();
     queryClient.setQueryData(["shipping"], result);
+    afterSubmit();
   };
 
   return (
