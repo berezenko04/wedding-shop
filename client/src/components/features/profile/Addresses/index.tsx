@@ -9,10 +9,13 @@ import EmptyState from "../EmptyState";
 import ShippingService from "@/api/shipping/shipping.service";
 
 const Addresses: React.FC = () => {
-  const { data: addresses = [] } = useQuery({ queryKey: ["shipping"], queryFn: ShippingService.getAll });
+  const { data: addresses = [] } = useQuery({
+    queryKey: ["shipping"],
+    queryFn: ShippingService.getAll,
+  });
 
   return (
-    <Stack>
+    <Stack gap={2}>
       {addresses.length > 0 ? (
         addresses.map((address) => <Address {...address} />)
       ) : (

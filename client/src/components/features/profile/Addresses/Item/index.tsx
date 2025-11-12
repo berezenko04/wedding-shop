@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { IconButton, Stack, Typography } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 
 // components
@@ -9,6 +9,9 @@ import OutlinedBlock from "@/components/ui/layout/OutlinedBlock";
 import { ShippingAddress } from "@/api/shipping/shipping.types";
 import { User } from "@/api/user/user.types";
 
+// icons
+import { DeleteOutline, EditOutlined } from "@mui/icons-material";
+
 const Address: React.FC<ShippingAddress> = ({ id, address, primary }) => {
   const queryClient = useQueryClient();
 
@@ -16,7 +19,7 @@ const Address: React.FC<ShippingAddress> = ({ id, address, primary }) => {
 
   return (
     <OutlinedBlock>
-      <Stack>
+      <Stack flexDirection="row" justifyContent="space-between" gap={4} alignItems="flex-start">
         <Stack gap={1}>
           <Typography variant="medium" fontSize={20} textTransform="uppercase">
             Shipping Address
@@ -27,7 +30,17 @@ const Address: React.FC<ShippingAddress> = ({ id, address, primary }) => {
           <Typography>{address}</Typography>
           <Typography>{user?.email}</Typography>
         </Stack>
-        <Stack>{primary && <PrimaryMark />}</Stack>
+        <Stack flexDirection="row" alignItems="center" gap={2}>
+          {primary && <PrimaryMark />}
+          <Stack flexDirection="row" alignItems="center" gap={0.5}>
+            <IconButton>
+              <EditOutlined />
+            </IconButton>
+            <IconButton color="error">
+              <DeleteOutline />
+            </IconButton>
+          </Stack>
+        </Stack>
       </Stack>
     </OutlinedBlock>
   );
