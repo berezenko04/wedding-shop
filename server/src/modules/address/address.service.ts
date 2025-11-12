@@ -77,8 +77,14 @@ export class AddressService {
   }
 
   async delete(userId: string, addressId: string) {
-    await this.get(userId, addressId);
+    const targetAddress = await this.get(userId, addressId);
 
+    const addresses = await this.all(userId);
+
+     if (targetAddress.primary && addresses.length > 1) {
+      throw new BadRequestException('You must set another address as primary before deleting this one');
+    }
+    
     await this.prisma.shippingAddress.delete({
       where: { id: addressId, userId },
     });
