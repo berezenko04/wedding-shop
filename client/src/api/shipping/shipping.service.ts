@@ -1,20 +1,33 @@
-import { httpGet } from "@/middlewares/axios.middleware";
+import { httpDelete, httpGet, httpPatch, httpPost } from "@/middlewares/axios.middleware";
 
 // types
-import { CreateAddressBody, UpdateAddressBody } from "./shipping.types";
+import { CreateAddressBody, ShippingAddress, UpdateAddressBody } from "./shipping.types";
 import { BaseResponseData } from "@/types/base.types";
 
 const R = {
   address: "/address",
+  byIdAddress: (id: string) => `${R.address}/${id}`,
 } as const;
 
 const ShippingService = {
   async create(body: CreateAddressBody) {
-    return httpGet<BaseResponseData>(R.address, body);
+    return httpPost<BaseResponseData>(R.address, body);
   },
 
   async update(body: UpdateAddressBody) {
-    return httpGet<BaseResponseData>(R.address, body);
+    return httpPatch<BaseResponseData>(R.address, body);
+  },
+
+  async delete(id: string) {
+    return httpDelete<BaseResponseData>(R.byIdAddress(id));
+  },
+
+  async getAll() {
+    return httpGet<ShippingAddress[]>(R.address);
+  },
+
+  async get(id: string) {
+    return httpGet<ShippingAddress>(R.byIdAddress(id));
   },
 };
 

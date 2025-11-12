@@ -6,3 +6,9 @@ export type CreateAddressBody = {
 export type UpdateAddressBody = CreateAddressBody & {
   addressId: string;
 };
+
+export type ShippingAddress = {
+  id: string;
+  address: string;
+  primary: boolean;
+};
