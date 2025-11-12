@@ -44,6 +44,7 @@ export class AddressService {
   async all(userId: string) {
     return this.prisma.shippingAddress.findMany({
       where: { userId },
+      orderBy: { primary: 'desc' },
       select: { id: true, address: true, primary: true },
     });
   }
