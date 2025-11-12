@@ -7,7 +7,6 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
-  Query,
 } from '@nestjs/common';
 
 // services
@@ -29,7 +28,7 @@ export class AddressController {
   @Post()
   async create(@User('id') userId: string, @Body() dto: CreateAddressDto) {
     await this.addressService.create(userId, dto);
-    return { message: 'Address is created' };
+    return this.all(userId);
   }
 
   @Get()
@@ -48,11 +47,14 @@ export class AddressController {
   @Patch()
   async update(@User('id') userId: string, @Body() dto: UpdateAddressDto) {
     await this.addressService.update(userId, dto);
-    return { message: 'Address was successfully updated' };
+    return this.addressService.all(userId);
   }
 
-  @Delete()
-  async delete(@User('id') userId: string, @Query('id') addressId: string) {
+  @Delete(':id')
+  async delete(
+    @User('id') userId: string,
+    @Param('id', new ParseUUIDPipe()) addressId: string,
+  ) {
     await this.addressService.delete(userId, addressId);
     return { message: 'Address was successfully deleted' };
   }
