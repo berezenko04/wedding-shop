@@ -28,7 +28,7 @@ export class AddressController {
   @Post()
   async create(@User('id') userId: string, @Body() dto: CreateAddressDto) {
     await this.addressService.create(userId, dto);
-    return { message: 'Address is created' };
+    return this.all(userId);
   }
 
   @Get()

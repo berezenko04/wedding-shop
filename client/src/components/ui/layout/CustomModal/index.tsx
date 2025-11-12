@@ -39,14 +39,13 @@ const CustomModal: React.FC<TCustomModalProps> = ({ title, maxWidth, children, .
               flexGrow: 1,
               overflowY: "auto",
               minHeight: 0,
-              p: 1,
             }}
           >
             {children}
           </Box>
-          <Button startIcon={<Clear />} variant="outlined" color="grey" size="small">
+          {/* <Button startIcon={<Clear />} variant="outlined" color="grey" size="small">
             Close
-          </Button>
+          </Button> */}
         </Stack>
       </Fade>
     </Modal>

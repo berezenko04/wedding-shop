@@ -6,6 +6,7 @@ import { useState } from "react";
 import Address from "./Item";
 import EmptyState from "../EmptyState";
 import CustomModal from "@/components/ui/layout/CustomModal";
+import CreateShippingAddressForm from "@/components/forms/profile/CreateShippingAddress";
 
 // api
 import ShippingService from "@/api/shipping/shipping.service";
@@ -43,8 +44,13 @@ const Addresses: React.FC = () => {
       >
         Add Shipping Address
       </Button>
-      <CustomModal maxWidth={580} title="Add Shipping Address" open={isCreateModalOpened}>
-        <></>
+      <CustomModal
+        maxWidth={580}
+        title="Add Shipping Address"
+        open={isCreateModalOpened}
+        onClose={() => setIsCreateModalOpened(false)}
+      >
+        <CreateShippingAddressForm />
       </CustomModal>
     </Stack>
   );
