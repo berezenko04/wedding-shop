@@ -6,7 +6,7 @@ import { useState } from "react";
 import Address from "./Item";
 import EmptyState from "../EmptyState";
 import CustomModal from "@/components/ui/layout/CustomModal";
-import CreateShippingAddressForm from "@/components/forms/profile/CreateShippingAddress";
+import ShippingAddressForm from "@/components/forms/profile/ShippingAddress";
 
 // api
 import ShippingService from "@/api/shipping/shipping.service";
@@ -42,7 +42,7 @@ const Addresses: React.FC = () => {
           onClick={handleOpen}
         />
       )}
-      {addresses.length < 3 && (
+      {addresses.length < 3 && addresses.length > 0 && (
         <Button
           startIcon={<Add />}
           variant="outlined"
@@ -60,7 +60,7 @@ const Addresses: React.FC = () => {
         open={isCreateModalOpened}
         onClose={handleClose}
       >
-        <CreateShippingAddressForm afterSubmit={handleClose} />
+        <ShippingAddressForm mode="create" afterSubmit={handleClose} />
       </CustomModal>
     </Stack>
   );

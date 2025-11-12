@@ -47,7 +47,7 @@ export class AddressController {
   @Patch()
   async update(@User('id') userId: string, @Body() dto: UpdateAddressDto) {
     await this.addressService.update(userId, dto);
-    return { message: 'Address was successfully updated' };
+    return this.addressService.all(userId);
   }
 
   @Delete(':id')

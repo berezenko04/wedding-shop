@@ -11,11 +11,11 @@ const R = {
 
 const ShippingService = {
   async create(body: CreateAddressBody) {
-    return httpPost<BaseResponseData>(R.address, body);
+    return httpPost<ShippingAddress[]>(R.address, body);
   },
 
   async update(body: UpdateAddressBody) {
-    return httpPatch<BaseResponseData>(R.address, body);
+    return httpPatch<ShippingAddress[]>(R.address, body);
   },
 
   async delete(id: string) {

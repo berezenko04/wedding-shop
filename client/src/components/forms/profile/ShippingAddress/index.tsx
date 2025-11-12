@@ -8,18 +8,26 @@ import FormField from "@/components/ui/layout/FormField";
 // api
 import ShippingService from "@/api/shipping/shipping.service";
 
-type CreateShippingAddressFormFields = {
+type ShippingAddressFormFields = {
   country: string;
   city: string;
   address: string;
   primary: boolean;
 };
 
-type CreateShippingAddressFormProps = {
+type ShippingAddressFormProps = {
+  mode: "create" | "update";
+  defaultValues?: Partial<ShippingAddressFormFields>;
+  addressId?: string;
   afterSubmit: () => void;
 };
 
-const CreateShippingAddressForm: React.FC<CreateShippingAddressFormProps> = ({ afterSubmit }) => {
+const ShippingAddressForm: React.FC<ShippingAddressFormProps> = ({
+  mode,
+  defaultValues,
+  afterSubmit,
+  addressId,
+}) => {
   const queryClient = useQueryClient();
 
   const {
@@ -27,13 +35,27 @@ const CreateShippingAddressForm: React.FC<CreateShippingAddressFormProps> = ({ a
     register,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<CreateShippingAddressFormFields>();
+  } = useForm<ShippingAddressFormFields>({
+    defaultValues,
+  });
 
-  const onSubmit = async ({ city, country, address, primary }: CreateShippingAddressFormFields) => {
-    const result = await ShippingService.create({
-      address: `${country}, ${city}, ${address}`,
-      primary,
-    });
+  const onSubmit = async ({ city, country, address, primary }: ShippingAddressFormFields) => {
+    const formattedAddress = `${country}, ${city}, ${address}`;
+    let result;
+
+    if (mode === "create") {
+      result = await ShippingService.create({
+        address: formattedAddress,
+        primary: primary,
+      });
+    } else if (mode === "update" && addressId) {
+      result = await ShippingService.update({
+        addressId,
+        address: formattedAddress,
+        primary,
+      });
+    }
+
     reset();
     queryClient.setQueryData(["shipping"], result);
     afterSubmit();
@@ -99,10 +121,10 @@ const CreateShippingAddressForm: React.FC<CreateShippingAddressFormProps> = ({ a
       </FormField>
 
       <Button type="submit" variant="contained" size="small" disabled={isSubmitting}>
-        Add Shipping address
+        {mode === "create" ? "Add" : "Edit"} Shipping Address
       </Button>
     </Stack>
   );
 };
 
-export default CreateShippingAddressForm;
+export default ShippingAddressForm;

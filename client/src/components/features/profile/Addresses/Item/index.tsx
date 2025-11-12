@@ -1,10 +1,13 @@
 import { IconButton, Stack, Typography } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 // components
 import PrimaryMark from "@/components/features/profile/PrimaryMark";
 import OutlinedBlock from "@/components/ui/layout/OutlinedBlock";
+import ShippingAddressForm from "@/components/forms/profile/ShippingAddress";
+import CustomModal from "@/components/ui/layout/CustomModal";
 
 // api
 import ShippingService from "@/api/shipping/shipping.service";
@@ -17,10 +20,13 @@ import { User } from "@/api/user/user.types";
 // icons
 import { DeleteOutline, EditOutlined } from "@mui/icons-material";
 
-const Address: React.FC<ShippingAddress> = ({ id, address, primary }) => {
+const Address: React.FC<ShippingAddress> = ({ id, address: rawAddress, primary }) => {
+  const [isUpdateModalOpened, setIsUpdateModalOpened] = useState<boolean>(false);
+
   const queryClient = useQueryClient();
 
   const user = queryClient.getQueryData<User>(["user"]);
+  const [country, city, address] = rawAddress.split(", ");
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => ShippingService.delete(id),
@@ -32,6 +38,10 @@ const Address: React.FC<ShippingAddress> = ({ id, address, primary }) => {
     },
   });
 
+  const handleClose = () => {
+    setIsUpdateModalOpened(false);
+  };
+
   return (
     <OutlinedBlock>
       <Stack flexDirection="row" justifyContent="space-between" gap={4} alignItems="flex-start">
@@ -42,13 +52,13 @@ const Address: React.FC<ShippingAddress> = ({ id, address, primary }) => {
           <Typography>
             {user?.firstName} {user?.lastName}
           </Typography>
-          <Typography>{address}</Typography>
+          <Typography>{rawAddress}</Typography>
           <Typography>{user?.email}</Typography>
         </Stack>
         <Stack flexDirection="row" alignItems="center" gap={2}>
           {primary && <PrimaryMark />}
           <Stack flexDirection="row" alignItems="center" gap={0.5}>
-            <IconButton>
+            <IconButton onClick={() => setIsUpdateModalOpened(true)}>
               <EditOutlined />
             </IconButton>
             <IconButton color="error" onClick={() => deleteMutation.mutate(id)}>
@@ -57,6 +67,19 @@ const Address: React.FC<ShippingAddress> = ({ id, address, primary }) => {
           </Stack>
         </Stack>
       </Stack>
+      <CustomModal
+        title="Edit Shipping Address"
+        maxWidth={580}
+        open={isUpdateModalOpened}
+        onClose={handleClose}
+      >
+        <ShippingAddressForm
+          mode="update"
+          defaultValues={{ country, city, address, primary }}
+          addressId={id}
+          afterSubmit={handleClose}
+        />
+      </CustomModal>
     </OutlinedBlock>
   );
 };
