@@ -49,14 +49,16 @@ export class AddressService {
   }
 
   async get(userId: string, addressId: string) {
-    try {
-      return this.prisma.shippingAddress.findUnique({
-        where: { id: addressId, userId },
-        select: { address: true, primary: true },
-      });
-    } catch {
+    const address = await this.prisma.shippingAddress.findUnique({
+      where: { id: addressId, userId },
+      select: { address: true, primary: true },
+    });
+
+    if (!address) {
       throw new NotFoundException('Address is not found');
     }
+
+    return address;
   }
 
   async update(userId: string, dto: UpdateAddressDto) {

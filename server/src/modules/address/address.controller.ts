@@ -7,7 +7,6 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
-  Query,
 } from '@nestjs/common';
 
 // services
@@ -51,8 +50,11 @@ export class AddressController {
     return { message: 'Address was successfully updated' };
   }
 
-  @Delete()
-  async delete(@User('id') userId: string, @Query('id') addressId: string) {
+  @Delete(':id')
+  async delete(
+    @User('id') userId: string,
+    @Param('id', new ParseUUIDPipe()) addressId: string,
+  ) {
     await this.addressService.delete(userId, addressId);
     return { message: 'Address was successfully deleted' };
   }
