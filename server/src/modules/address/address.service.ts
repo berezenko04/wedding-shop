@@ -29,15 +29,26 @@ export class AddressService {
       where: { userId, primary: true },
     });
 
-    if (hasPrimary) {
-      await this.prisma.shippingAddress.update({
-        where: { id: hasPrimary.id },
-        data: { primary: false },
-      });
+    let primary = false;
+
+    if (dto.primary) {
+      if (hasPrimary) {
+        await this.prisma.shippingAddress.update({
+          where: { id: hasPrimary.id },
+          data: { primary: false },
+        });
+      }
+      primary = true;
+    } else if (!hasPrimary) {
+      primary = true;
     }
 
     return this.prisma.shippingAddress.create({
-      data: { userId, address: dto.address, primary: true },
+      data: {
+        userId,
+        address: dto.address,
+        primary,
+      },
     });
   }
 
@@ -64,17 +75,41 @@ export class AddressService {
 
   async update(userId: string, dto: UpdateAddressDto) {
     const { addressId, address, primary } = dto;
-    await this.get(userId, addressId);
 
-    try {
-      await this.prisma.shippingAddress.update({
-        where: { id: addressId, userId },
-        data: { primary, address },
+    const current = await this.get(userId, addressId);
+
+    if (primary === false && current.primary) {
+      const otherPrimary = await this.prisma.shippingAddress.findFirst({
+        where: { userId, primary: true, NOT: { id: addressId } },
       });
-    } catch {
-      throw new ConflictException('You are already have a primary address');
+
+      if (!otherPrimary) {
+        throw new BadRequestException(
+          "Cannot remove primary flag from the only primary address"
+        );
+      }
     }
+
+    if (primary) {
+      return this.prisma.$transaction(async (prisma) => {
+        await prisma.shippingAddress.updateMany({
+          where: { userId, primary: true, NOT: { id: addressId } },
+          data: { primary: false },
+        });
+
+        return prisma.shippingAddress.update({
+          where: { id: addressId, userId },
+          data: { primary: true, address },
+        });
+      });
+    }
+
+    return this.prisma.shippingAddress.update({
+      where: { id: addressId, userId },
+      data: { primary, address },
+    });
   }
+
 
   async delete(userId: string, addressId: string) {
     const targetAddress = await this.get(userId, addressId);

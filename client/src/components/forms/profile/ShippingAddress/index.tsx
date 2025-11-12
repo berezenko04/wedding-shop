@@ -1,6 +1,6 @@
-import { Button, Stack, TextField } from "@mui/material";
+import { Button, Checkbox, FormControlLabel, Stack, TextField } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 // components
 import FormField from "@/components/ui/layout/FormField";
@@ -34,6 +34,7 @@ const ShippingAddressForm: React.FC<ShippingAddressFormProps> = ({
     handleSubmit,
     register,
     reset,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<ShippingAddressFormFields>({
     defaultValues,
@@ -43,10 +44,12 @@ const ShippingAddressForm: React.FC<ShippingAddressFormProps> = ({
     const formattedAddress = `${country}, ${city}, ${address}`;
     let result;
 
+    console.log(primary);
+
     if (mode === "create") {
       result = await ShippingService.create({
         address: formattedAddress,
-        primary: primary,
+        primary,
       });
     } else if (mode === "update" && addressId) {
       result = await ShippingService.update({
@@ -119,6 +122,17 @@ const ShippingAddressForm: React.FC<ShippingAddressFormProps> = ({
           helperText={errors.address?.message}
         />
       </FormField>
+
+      <Controller
+        control={control}
+        name="primary"
+        render={({ field }) => (
+          <FormControlLabel
+            control={<Checkbox {...field} checked={field.value} />}
+            label="Is primary address"
+          />
+        )}
+      />
 
       <Button type="submit" variant="contained" size="small" disabled={isSubmitting}>
         {mode === "create" ? "Add" : "Edit"} Shipping Address
