@@ -1,4 +1,4 @@
-import { Breadcrumbs as MUIBreadcrumbs, Link, Typography, Box, capitalize } from "@mui/material";
+import { Breadcrumbs as MUIBreadcrumbs, Link, Typography, Box } from "@mui/material";
 import { useLocation } from "react-router-dom";
 
 // components
