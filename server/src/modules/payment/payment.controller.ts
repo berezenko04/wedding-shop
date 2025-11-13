@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Patch,
   Post,
   Query,
@@ -36,11 +37,6 @@ export class PaymentController {
     return this.paymentService.all(userId);
   }
 
-  @Get(':id')
-  async get(@User('id') userId: string, @Param('id') paymentId: string) {
-    return this.paymentService.get(userId, paymentId);
-  }
-
   @Patch()
   async update(@User('id') userId: string, @Body() dto: UpdatePaymentDto) {
     await this.paymentService.update(userId, dto);
@@ -48,7 +44,7 @@ export class PaymentController {
   }
 
   @Delete()
-  async delete(@User('id') userId: string, @Query('id') paymentId: string) {
+  async delete(@User('id') userId: string, @Param('id', new ParseUUIDPipe()) paymentId: string) {
     await this.paymentService.delete(userId, paymentId);
     return { message: 'Payment method was removed' };
   }
