@@ -7,6 +7,9 @@ import CustomContainer from "@/components/ui/layout/CustomContainer";
 // icons
 import { NavigateNext } from "@mui/icons-material";
 
+// utils
+import { formatBreadcrumb } from "@/utils/formatBreadcrumb";
+
 const Breadcrumbs: React.FC = () => {
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((x) => x);
@@ -21,7 +24,7 @@ const Breadcrumbs: React.FC = () => {
           {pathnames.map((value, index) => {
             const to = `/${pathnames.slice(0, index + 1).join("/")}`;
             const isLast = index === pathnames.length - 1;
-            const slug = capitalize(decodeURIComponent(value));
+            const slug = formatBreadcrumb(value);
 
             return isLast ? (
               <Typography key={to} color="grey.900">
