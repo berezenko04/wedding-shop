@@ -24,11 +24,7 @@ const ShippingService = {
 
   async getAll() {
     return httpGet<ShippingAddress[]>(R.address);
-  },
-
-  async get(id: string) {
-    return httpGet<ShippingAddress>(R.byIdAddress(id));
-  },
+  }
 };
 
 export default ShippingService;

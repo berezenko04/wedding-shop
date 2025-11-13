@@ -32,3 +32,9 @@ export enum Rating {
   FOUR = "FOUR",
   FIVE = "FIVE",
 }
+
+export enum PaymentMethods {
+  PAYPAL = "Paypal",
+  CARD = "Card",
+  AMAZON = "Amazon"
+}

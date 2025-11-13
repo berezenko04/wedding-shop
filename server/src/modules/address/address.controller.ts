@@ -36,14 +36,6 @@ export class AddressController {
     return this.addressService.all(userId);
   }
 
-  @Get(':id')
-  async get(
-    @User('id') userId: string,
-    @Param('id', new ParseUUIDPipe()) addressId: string,
-  ) {
-    return this.addressService.get(userId, addressId);
-  }
-
   @Patch()
   async update(@User('id') userId: string, @Body() dto: UpdateAddressDto) {
     await this.addressService.update(userId, dto);
