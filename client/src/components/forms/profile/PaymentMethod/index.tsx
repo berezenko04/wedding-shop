@@ -1,18 +1,27 @@
-import { Button, Checkbox, FormControlLabel, Grid, Stack, TextField } from "@mui/material";
+import { Button, Checkbox, FormControlLabel, Grid, RadioGroup, Stack, TextField } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
 
 // components
 import FormField from "@/components/ui/layout/FormField";
+import PaymentMethodItem from "@/components/features/profile/PaymentMethodItem";
 
 // api
 import ShippingService from "@/api/shipping/shipping.service";
 
+// types
+import { PaymentMethods } from "@/types/enums.types";
+
+// data
+import { paymentMethodsList } from "@/data/main";
+
 type PaymentMethodFormFields = {
-  country: string;
-  city: string;
-  address: string;
-  primary: boolean;
+  paymentMethod: PaymentMethods;
+  email: string;
+  cardNumber: string;
+  cardExp: string;
+  cardCvv: string;
+  cardHolder: string;
 };
 
 type PaymentMethodFormProps = {
@@ -32,7 +41,7 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValu
     control,
     formState: { errors, isSubmitting },
   } = useForm<PaymentMethodFormFields>({
-    defaultValues,
+    defaultValues: { paymentMethod: PaymentMethods.PAYPAL, ...defaultValues },
   });
 
   const onSubmit = async ({ city, country, address, primary }: PaymentMethodFormFields) => {
@@ -59,9 +68,22 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValu
 
   return (
     <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ gap: 2, width: "100%" }}>
-      <Grid container>
-        <Grid size={{ xs: 6 }}></Grid>
-        <Grid size={{ xs: 6 }}>
+      <Grid container spacing={4}>
+        <Grid size={{ xs: 4 }}>
+          <Controller
+            control={control}
+            name="paymentMethod"
+            rules={{ required: "Please select payment method" }}
+            render={({ field }) => (
+              <RadioGroup value={field.value} onChange={(e) => field.onChange(e.target.value)} sx={{ gap: 1 }}>
+                {paymentMethodsList.map((i) => (
+                  <PaymentMethodItem key={i.value} {...i} />
+                ))}
+              </RadioGroup>
+            )}
+          />
+        </Grid>
+        <Grid size={{ xs: 8 }}>
           <FormField label="Country" labelFontSize={16}>
             <TextField
               placeholder="Enter your country"
