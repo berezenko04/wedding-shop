@@ -6,14 +6,13 @@ import { useState } from "react";
 import PaymentMethod from "./Item";
 import EmptyState from "../EmptyState";
 import CustomModal from "@/components/ui/layout/CustomModal";
-import ShippingAddressForm from "@/components/forms/profile/ShippingAddress";
+import PaymentMethodForm from "@/components/forms/profile/PaymentMethod";
 
 // api
 import PaymentService from "@/api/payment/payment.service";
 
 // icons
 import { Add } from "@mui/icons-material";
-import PaymentMethodForm from "@/components/forms/profile/PaymentMethod";
 
 const PaymentMethods: React.FC = () => {
   const [isAddModalOpened, setIsAddModalOpened] = useState<boolean>(false);
@@ -55,7 +54,7 @@ const PaymentMethods: React.FC = () => {
           Add Payment Method
         </Button>
       )}
-      <CustomModal maxWidth={1000} title="Add Payment Method" open={isAddModalOpened} onClose={handleClose}>
+      <CustomModal maxWidth={1100} title="Add Payment Method" open={isAddModalOpened} onClose={handleClose}>
         <PaymentMethodForm mode="create" afterSubmit={handleClose} />
       </CustomModal>
     </Stack>

@@ -1,4 +1,4 @@
-import { Button, Checkbox, FormControlLabel, Grid, RadioGroup, Stack, TextField } from "@mui/material";
+import { Button, Checkbox, FormControlLabel, Grid, RadioGroup, Stack, TextField, Typography } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
 
@@ -7,7 +7,7 @@ import FormField from "@/components/ui/layout/FormField";
 import PaymentMethodItem from "@/components/features/profile/PaymentMethodItem";
 
 // api
-import ShippingService from "@/api/shipping/shipping.service";
+import PaymentService from "@/api/payment/payment.service";
 
 // types
 import { PaymentMethods } from "@/types/enums.types";
@@ -16,53 +16,43 @@ import { PaymentMethods } from "@/types/enums.types";
 import { paymentMethodsList } from "@/data/main";
 
 type PaymentMethodFormFields = {
-  paymentMethod: PaymentMethods;
-  email: string;
-  cardNumber: string;
-  cardExp: string;
-  cardCvv: string;
-  cardHolder: string;
+  method: PaymentMethods;
+  primary: boolean;
+  email?: string;
+  cardNumber?: string;
+  cardExp?: string;
+  cardCvv?: string;
+  cardHolder?: string;
 };
 
 type PaymentMethodFormProps = {
   mode: "create" | "update";
   defaultValues?: Partial<PaymentMethodFormFields>;
-  addressId?: string;
+  paymentId?: string;
   afterSubmit: () => void;
 };
 
-const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValues, afterSubmit, addressId }) => {
+const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValues, afterSubmit, paymentId }) => {
   const queryClient = useQueryClient();
 
   const {
     handleSubmit,
     register,
     reset,
+    watch,
     control,
     formState: { errors, isSubmitting },
   } = useForm<PaymentMethodFormFields>({
-    defaultValues: { paymentMethod: PaymentMethods.PAYPAL, ...defaultValues },
+    defaultValues: { method: PaymentMethods.PAYPAL, ...defaultValues },
   });
 
-  const onSubmit = async ({ city, country, address, primary }: PaymentMethodFormFields) => {
-    const formattedAddress = `${country}, ${city}, ${address}`;
-    let result;
+  const method = watch("method");
 
-    if (mode === "create") {
-      result = await ShippingService.create({
-        address: formattedAddress,
-        primary,
-      });
-    } else if (mode === "update" && addressId) {
-      result = await ShippingService.update({
-        addressId,
-        address: formattedAddress,
-        primary,
-      });
-    }
+  const onSubmit = async (data: PaymentMethodFormFields) => {
+    const result = await PaymentService.create(data);
 
     reset();
-    queryClient.setQueryData(["shipping"], result);
+    queryClient.setQueryData(["payment"], result);
     afterSubmit();
   };
 
@@ -70,85 +60,122 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValu
     <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ gap: 2, width: "100%" }}>
       <Grid container spacing={4}>
         <Grid size={{ xs: 4 }}>
-          <Controller
-            control={control}
-            name="paymentMethod"
-            rules={{ required: "Please select payment method" }}
-            render={({ field }) => (
-              <RadioGroup value={field.value} onChange={(e) => field.onChange(e.target.value)} sx={{ gap: 1 }}>
-                {paymentMethodsList.map((i) => (
-                  <PaymentMethodItem key={i.value} {...i} />
-                ))}
-              </RadioGroup>
-            )}
-          />
+          <Stack gap={2}>
+            <Typography variant="medium" textTransform="uppercase">
+              Payment Methods
+            </Typography>
+            <Controller
+              control={control}
+              name="method"
+              rules={{ required: "Please select payment method" }}
+              render={({ field }) => (
+                <RadioGroup value={field.value} onChange={(e) => field.onChange(e.target.value)} sx={{ gap: 1 }}>
+                  {paymentMethodsList.map((i) => (
+                    <PaymentMethodItem key={i.value} {...i} />
+                  ))}
+                </RadioGroup>
+              )}
+            />
+          </Stack>
         </Grid>
-        <Grid size={{ xs: 8 }}>
-          <FormField label="Country" labelFontSize={16}>
-            <TextField
-              placeholder="Enter your country"
-              {...register("country", {
-                required: "Country is required",
-                minLength: { value: 3, message: "Country name must be at least 3 characters" },
-                maxLength: { value: 40, message: "Country name must be at most 40 characters" },
-                pattern: {
-                  value: /^[A-Za-zА-Яа-яёЁ\s'-]+$/,
-                  message: "Country name can only contain letters, spaces, hyphens, and apostrophes",
-                },
-              })}
-              error={!!errors.country}
-              helperText={errors.country?.message}
-            />
-          </FormField>
+        <Grid size={{ xs: 8 }} sx={{ maxWidth: 560, width: "100%", mx: "auto" }}>
+          <Stack gap={2}>
+            {method === PaymentMethods.CARD ? (
+              <>
+                <FormField label="Card Number">
+                  <TextField
+                    placeholder="**** **** **** ****"
+                    {...register("cardNumber", {
+                      required: "Card number is required",
+                      pattern: {
+                        value: /^\d{13,19}$/,
+                        message: "Invalid card number",
+                      },
+                    })}
+                    error={!!errors.cardNumber}
+                    helperText={errors.cardNumber?.message}
+                  />
+                </FormField>
 
-          <FormField label="City" labelFontSize={16}>
-            <TextField
-              placeholder="Enter your city"
-              {...register("city", {
-                required: "City is required",
-                minLength: { value: 2, message: "City name must be at least 2 characters" },
-                maxLength: { value: 40, message: "City name must be at most 40 characters" },
-                pattern: {
-                  value: /^[A-Za-zА-Яа-яёЁ\s'-]+$/,
-                  message: "City name can only contain letters, spaces, hyphens, and apostrophes",
-                },
-              })}
-              error={!!errors.city}
-              helperText={errors.city?.message}
-            />
-          </FormField>
+                <Stack flexDirection="row" alignItems="center" gap={2}>
+                  <FormField label="Card Expiry">
+                    <TextField
+                      placeholder="12/28"
+                      {...register("cardExp", {
+                        required: "Expiration date is required",
+                        pattern: {
+                          value: /^(0[1-9]|1[0-2])\/\d{2}$/,
+                          message: "Card expiration must be in MM/YY format",
+                        },
+                      })}
+                      error={!!errors.cardExp}
+                      helperText={errors.cardExp?.message}
+                    />
+                  </FormField>
 
-          <FormField label="Address" labelFontSize={16}>
-            <TextField
-              placeholder="Enter your address"
-              {...register("address", {
-                required: "Address is required",
-                minLength: { value: 5, message: "Address must be at least 5 characters" },
-                maxLength: { value: 100, message: "Address must be at most 100 characters" },
-                pattern: {
-                  value: /^[A-Za-zА-Яа-яёЁ0-9\s.,'/-]+$/,
-                  message: "Address can only contain letters, numbers, spaces, commas, dots, hyphens, and slashes",
-                },
-              })}
-              error={!!errors.address}
-              helperText={errors.address?.message}
-            />
-          </FormField>
+                  <FormField label="CVV">
+                    <TextField
+                      placeholder="***"
+                      {...register("cardCvv", {
+                        required: "CVV is required",
+                        pattern: {
+                          value: /^\d{3,4}$/,
+                          message: "CVV must be 3 or 4 digits",
+                        },
+                      })}
+                      error={!!errors.cardCvv}
+                      helperText={errors.cardCvv?.message}
+                    />
+                  </FormField>
+                </Stack>
 
-          <Controller
-            control={control}
-            name="primary"
-            render={({ field }) => (
-              <FormControlLabel
-                control={<Checkbox {...field} checked={field.value} />}
-                label="Is primary payment method"
-              />
+                <FormField label="Card Holder">
+                  <TextField
+                    placeholder="John Johnson"
+                    {...register("cardHolder", {
+                      required: "Card holder name is required",
+                      pattern: {
+                        value: /^[A-Za-z]+ [A-Za-z]+$/,
+                        message: "Name must contain first and last name (letters only)",
+                      },
+                    })}
+                    error={!!errors.cardHolder}
+                    helperText={errors.cardHolder?.message}
+                  />
+                </FormField>
+              </>
+            ) : (
+              <FormField label="Email" labelFontSize={16}>
+                <TextField
+                  placeholder="Enter email"
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "Invalid email address",
+                    },
+                  })}
+                  error={!!errors.email}
+                  helperText={errors.email?.message}
+                />
+              </FormField>
             )}
-          />
 
-          <Button type="submit" variant="contained" size="small" disabled={isSubmitting}>
-            {mode === "create" ? "Add" : "Edit"} Shipping Address
-          </Button>
+            <Controller
+              control={control}
+              name="primary"
+              render={({ field }) => (
+                <FormControlLabel
+                  control={<Checkbox {...field} checked={field.value} />}
+                  label="Is primary payment method"
+                />
+              )}
+            />
+
+            <Button type="submit" variant="contained" size="small" disabled={isSubmitting}>
+              {mode === "create" ? "Add" : "Edit"} Payment Method
+            </Button>
+          </Stack>
         </Grid>
       </Grid>
     </Stack>
