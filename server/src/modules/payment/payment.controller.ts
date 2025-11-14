@@ -43,7 +43,7 @@ export class PaymentController {
     return { messasge: 'Payment method was updated' };
   }
 
-  @Delete()
+  @Delete(':id')
   async delete(@User('id') userId: string, @Param('id', new ParseUUIDPipe()) paymentId: string) {
     await this.paymentService.delete(userId, paymentId);
     return { message: 'Payment method was removed' };

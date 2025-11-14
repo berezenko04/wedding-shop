@@ -9,25 +9,26 @@ import CustomModal from "@/components/ui/layout/CustomModal";
 import ShippingAddressForm from "@/components/forms/profile/ShippingAddress";
 
 // api
-import ShippingService from "@/api/shipping/shipping.service";
+import PaymentService from "@/api/payment/payment.service";
 
 // icons
 import { Add } from "@mui/icons-material";
+import PaymentMethodForm from "@/components/forms/profile/PaymentMethod";
 
 const PaymentMethods: React.FC = () => {
-  const [isCreateModalOpened, setIsCreateModalOpened] = useState<boolean>(false);
+  const [isAddModalOpened, setIsAddModalOpened] = useState<boolean>(false);
 
   const { data: payment = [] } = useQuery({
-    queryKey: ["shipping"],
-    queryFn: ShippingService.getAll,
+    queryKey: ["payment"],
+    queryFn: PaymentService.getAll,
   });
 
   const handleClose = () => {
-    setIsCreateModalOpened(false);
+    setIsAddModalOpened(false);
   };
 
   const handleOpen = () => {
-    setIsCreateModalOpened(true);
+    setIsAddModalOpened(true);
   };
 
   return (
@@ -51,16 +52,11 @@ const PaymentMethods: React.FC = () => {
           sx={{ width: "max-content" }}
           onClick={handleOpen}
         >
-          Add Shipping Address
+          Add Payment Method
         </Button>
       )}
-      <CustomModal
-        maxWidth={580}
-        title="Add Shipping Address"
-        open={isCreateModalOpened}
-        onClose={handleClose}
-      >
-        <ShippingAddressForm mode="create" afterSubmit={handleClose} />
+      <CustomModal maxWidth={1000} title="Add Payment Method" open={isAddModalOpened} onClose={handleClose}>
+        <PaymentMethodForm mode="create" afterSubmit={handleClose} />
       </CustomModal>
     </Stack>
   );
