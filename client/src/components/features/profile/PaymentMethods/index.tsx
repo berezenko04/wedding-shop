@@ -54,7 +54,7 @@ const PaymentMethods: React.FC = () => {
           Add Payment Method
         </Button>
       )}
-      <CustomModal maxWidth={1100} title="Add Payment Method" open={isAddModalOpened} onClose={handleClose}>
+      <CustomModal maxWidth={600} title="Add Payment Method" open={isAddModalOpened} onClose={handleClose}>
         <PaymentMethodForm mode="create" afterSubmit={handleClose} />
       </CustomModal>
     </Stack>

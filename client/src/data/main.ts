@@ -25,5 +25,5 @@ export const sexOptionsFilter: PickerItemType<Sex>[] = [
 export const paymentMethodsList = [
   { label: "Paypal", value: PaymentMethods.PAYPAL, images: ["paypal.png"] },
   { label: "Amazon", value: PaymentMethods.AMAZON, images: ["amazon.png"] },
-  { label: "Card", value: PaymentMethods.CARD, images: ["mastercard.png", "visa.png"] },
+  { label: "Card", value: PaymentMethods.CARD, images: ["visa.png"] },
 ];

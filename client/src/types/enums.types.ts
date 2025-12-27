@@ -34,7 +34,7 @@ export enum Rating {
 }
 
 export enum PaymentMethods {
-  PAYPAL = "Paypal",
-  CARD = "Card",
-  AMAZON = "Amazon"
+  PAYPAL = "PAYPAL",
+  CARD = "CARD",
+  AMAZON = "AMAZON"
 }
