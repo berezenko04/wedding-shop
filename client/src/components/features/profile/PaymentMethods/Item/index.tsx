@@ -6,8 +6,6 @@ import toast from "react-hot-toast";
 // components
 import PrimaryMark from "@/components/features/profile/PrimaryMark";
 import OutlinedBlock from "@/components/ui/layout/OutlinedBlock";
-import ShippingAddressForm from "@/components/forms/profile/ShippingAddress";
-import CustomModal from "@/components/ui/layout/CustomModal";
 
 // api
 import PaymentService from "@/api/payment/payment.service";
@@ -23,7 +21,7 @@ import { DeleteOutline, EditOutlined } from "@mui/icons-material";
 // data
 import { paymentMethodsList } from "@/data/main";
 
-const PaymentMethod: React.FC<PaymentMethod> = ({ id, method, email, cardExp, cardNumber, primary }) => {
+const PaymentMethod: React.FC<PaymentMethod> = ({ id, method, email, last4, cardHolder, createdAt, primary }) => {
   const [isUpdateModalOpened, setIsUpdateModalOpened] = useState<boolean>(false);
 
   const imgUrl = paymentMethodsList.find((i) => i.value === method)?.images[0];
@@ -61,9 +59,13 @@ const PaymentMethod: React.FC<PaymentMethod> = ({ id, method, email, cardExp, ca
           </Stack>
           <Stack>
             <Typography variant="medium" fontSize={20} textTransform="uppercase">
-              {isCard ? `${method} ${cardNumber}` : email}
+              {isCard ? `${method} ****${last4}` : email}
             </Typography>
-            <Typography>{isCard ? `Expires on ${cardExp}` : "Connected on 27 Dec 2026"}</Typography>
+            <Typography>
+              {isCard
+                ? `Card Holder: ${cardHolder}`
+                : `Connected on ${new Date(createdAt).toLocaleDateString("en-GB")}`}
+            </Typography>
           </Stack>
         </Stack>
         <Stack flexDirection="row" alignItems="center" gap={2}>
@@ -78,14 +80,6 @@ const PaymentMethod: React.FC<PaymentMethod> = ({ id, method, email, cardExp, ca
           </Stack>
         </Stack>
       </Stack>
-      {/* <CustomModal title="Edit Shipping Address" maxWidth={580} open={isUpdateModalOpened} onClose={handleClose}>
-        <ShippingAddressForm
-          mode="update"
-          defaultValues={{ country, city, address, primary }}
-          addressId={id}
-          afterSubmit={handleClose}
-        />
-      </CustomModal> */}
     </OutlinedBlock>
   );
 };

@@ -4,6 +4,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
+import * as cardValidator from 'card-validator';
+
 // services
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -19,7 +21,17 @@ export class PaymentService {
   constructor(private readonly prisma: PrismaService) {}
 
   async add(userId: string, dto: AddPaymentDto) {
-    const { primary, method } = dto;
+    const { primary, method, cardNumber } = dto;
+
+    let cardIssuer: string | null = null;
+    let last4: string | null = null;
+
+    if (method === PaymentMethods.CARD && cardNumber) {
+      const validation = cardValidator.number(cardNumber);
+
+      cardIssuer = validation.card?.type ?? null;
+      last4 = cardNumber.slice(-4);
+    }
 
     const existingPayments = await this.prisma.payment.findMany({
       where: { userId },
@@ -59,16 +71,20 @@ export class PaymentService {
 
       return tx.payment.create({
         data: {
-          ...dto,
           userId,
+          method: dto.method,
           primary: isFirst ? true : primary,
+          email: dto.email,
+          cardIssuer,
+          cardHolder: dto.cardHolder,
+          last4,
         },
       });
     });
   }
 
   async all(userId: string) {
-    const methods = await this.prisma.payment.findMany({
+    return this.prisma.payment.findMany({
       where: { userId },
       select: {
         id: true,
@@ -76,21 +92,10 @@ export class PaymentService {
         method: true,
         email: true,
         cardIssuer: true,
-        cardExp: true,
-        cardNumber: true,
+        cardHolder: true,
+        last4: true,
         createdAt: true,
       },
-    });
-
-    return methods.map(({ cardNumber, ...rest }) => {
-      if (!cardNumber) {
-        return { ...rest, cardNumber };
-      }
-
-      return {
-        ...rest,
-        cardNumber: `****${cardNumber?.slice(-4)}`,
-      };
     });
   }
 
