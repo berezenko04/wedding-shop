@@ -72,6 +72,7 @@ export class PaymentService {
       where: { userId },
       select: {
         id: true,
+        primary: true,
         method: true,
         email: true,
         cardExp: true,

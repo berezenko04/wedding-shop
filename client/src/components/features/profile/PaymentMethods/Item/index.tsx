@@ -13,7 +13,6 @@ import CustomModal from "@/components/ui/layout/CustomModal";
 import PaymentService from "@/api/payment/payment.service";
 
 // types
-import { ShippingAddress } from "@/api/shipping/shipping.types";
 import { BaseResponseData } from "@/types/base.types";
 import { PaymentMethod } from "@/api/payment/payment.types";
 import { PaymentMethods } from "@/types/enums.types";
@@ -23,7 +22,6 @@ import { DeleteOutline, EditOutlined } from "@mui/icons-material";
 
 // data
 import { paymentMethodsList } from "@/data/main";
-
 
 const PaymentMethod: React.FC<PaymentMethod> = ({ id, method, email, cardExp, cardNumber, primary }) => {
   const [isUpdateModalOpened, setIsUpdateModalOpened] = useState<boolean>(false);
@@ -37,7 +35,7 @@ const PaymentMethod: React.FC<PaymentMethod> = ({ id, method, email, cardExp, ca
     mutationFn: (id: string) => PaymentService.delete(id),
     onSuccess: (result: BaseResponseData, id: string) => {
       toast.success(result.message);
-      queryClient.setQueryData(["shipping"], (old: ShippingAddress[] = []) => old.filter((s) => s.id !== id));
+      queryClient.setQueryData(["payment"], (old: PaymentMethod[] = []) => old.filter((s) => s.id !== id));
     },
   });
 
