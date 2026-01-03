@@ -10,7 +10,7 @@ import ShippingAddressForm from "@/components/forms/profile/ShippingAddress";
 import CustomModal from "@/components/ui/layout/CustomModal";
 
 // api
-import ShippingService from "@/api/shipping/shipping.service";
+import PaymentService from "@/api/payment/payment.service";
 
 // types
 import { ShippingAddress } from "@/api/shipping/shipping.types";
@@ -24,6 +24,7 @@ import { DeleteOutline, EditOutlined } from "@mui/icons-material";
 // data
 import { paymentMethodsList } from "@/data/main";
 
+
 const PaymentMethod: React.FC<PaymentMethod> = ({ id, method, email, cardExp, cardNumber, primary }) => {
   const [isUpdateModalOpened, setIsUpdateModalOpened] = useState<boolean>(false);
 
@@ -33,7 +34,7 @@ const PaymentMethod: React.FC<PaymentMethod> = ({ id, method, email, cardExp, ca
   const queryClient = useQueryClient();
 
   const deleteMutation = useMutation({
-    mutationFn: (id: string) => ShippingService.delete(id),
+    mutationFn: (id: string) => PaymentService.delete(id),
     onSuccess: (result: BaseResponseData, id: string) => {
       toast.success(result.message);
       queryClient.setQueryData(["shipping"], (old: ShippingAddress[] = []) => old.filter((s) => s.id !== id));
