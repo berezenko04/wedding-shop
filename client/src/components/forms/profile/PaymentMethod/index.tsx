@@ -100,6 +100,7 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValu
               <FormField label="CVV">
                 <TextField
                   placeholder="***"
+                  type="password"
                   {...register("cardCvv", {
                     required: "CVV is required",
                     pattern: {

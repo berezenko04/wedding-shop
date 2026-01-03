@@ -68,8 +68,26 @@ export class PaymentService {
   }
 
   async all(userId: string) {
-    return this.prisma.payment.findMany({
+    const methods = await this.prisma.payment.findMany({
       where: { userId },
+      select: {
+        id: true,
+        method: true,
+        email: true,
+        cardExp: true,
+        cardNumber: true,
+      },
+    });
+
+    return methods.map(({ cardNumber, ...rest }) => {
+      if (!cardNumber) {
+        return { ...rest, cardNumber };
+      }
+
+      return {
+        ...rest,
+        cardNumber: `****${cardNumber?.slice(-4)}`,
+      };
     });
   }
 

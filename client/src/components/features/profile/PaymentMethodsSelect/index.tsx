@@ -22,7 +22,7 @@ const PaymentMethodsList: React.FC<PaymentMethodsListProps> = ({ value, onChange
           return (
             <Stack sx={{ flexDirection: "row", alignItems: "center", gap: 1.5 }}>
               <Box component="img" src={`/payment/${selectedMethod?.images[0]}`} />
-              <Typography>{selectedMethod?.label}</Typography>
+              <Typography textTransform="none">{selectedMethod?.label}</Typography>
             </Stack>
           );
         }}
@@ -32,7 +32,7 @@ const PaymentMethodsList: React.FC<PaymentMethodsListProps> = ({ value, onChange
             <ListItemIcon sx={{ display: "flex", justifyContent: "center" }}>
               <Box component="img" src={`/payment/${option.images[0]}`} />
             </ListItemIcon>
-            <ListItemText primary={option.label} sx={{ ml: 1 }} />
+            <ListItemText sx={{ textTransform: "none", ml: 1 }} primary={option.label} />
           </MenuItem>
         ))}
       </Select>

@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url  = env("DATABASE_URL")
 }
 
 enum LogLevel {
@@ -281,6 +281,9 @@ model ShippingAddress {
 
   user User @relation(fields: [userId], references: [id])
 
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
   @@index([userId])
   @@map("shipping_addresses")
 }
@@ -297,6 +300,9 @@ model Payment {
   cardHolder String?        @map("card_holder")
 
   user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   @@index([userId])
   @@map("payment_methods")

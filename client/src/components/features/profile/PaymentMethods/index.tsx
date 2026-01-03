@@ -33,7 +33,7 @@ const PaymentMethods: React.FC = () => {
   return (
     <Stack gap={2}>
       {payment.length > 0 ? (
-        payment.map((address) => <PaymentMethod {...address} />)
+        payment.map((method) => <PaymentMethod {...method} />)
       ) : (
         <EmptyState
           title="No payment method saved"

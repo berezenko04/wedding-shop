@@ -90,6 +90,7 @@ const theme = createTheme({
           style: ({ theme }) => ({
             fontSize: 20,
             fontWeight: 500,
+            lineHeight: "24px",
             color: theme.palette.grey[700],
           }),
         },
