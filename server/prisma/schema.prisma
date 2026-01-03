@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url  = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 enum LogLevel {
@@ -294,6 +294,7 @@ model Payment {
   method     PaymentMethods
   primary    Boolean
   email      String?
+  cardIssuer String?        @map("card_issuer")
   cardNumber String?        @map("card_number")
   cardExp    String?        @map("card_exp")
   cardCvv    String?        @map("card_cvv")
