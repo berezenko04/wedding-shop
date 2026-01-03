@@ -75,8 +75,10 @@ export class PaymentService {
         primary: true,
         method: true,
         email: true,
+        cardIssuer: true,
         cardExp: true,
         cardNumber: true,
+        createdAt: true,
       },
     });
 

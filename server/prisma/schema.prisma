@@ -295,9 +295,7 @@ model Payment {
   primary    Boolean
   email      String?
   cardIssuer String?        @map("card_issuer")
-  cardNumber String?        @map("card_number")
-  cardExp    String?        @map("card_exp")
-  cardCvv    String?        @map("card_cvv")
+  last4      String?        @map("card_number")
   cardHolder String?        @map("card_holder")
 
   user User @relation(fields: [userId], references: [id])
