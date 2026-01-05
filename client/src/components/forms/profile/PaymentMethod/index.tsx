@@ -1,6 +1,7 @@
 import { Button, Checkbox, FormControlLabel, Stack, TextField } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
+import { useHookFormMask } from "use-mask-input";
 
 // components
 import FormField from "@/components/ui/layout/FormField";
@@ -40,8 +41,10 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValu
     control,
     formState: { errors, isSubmitting },
   } = useForm<PaymentMethodFormFields>({
-    defaultValues: { method: PaymentMethods.PAYPAL, ...defaultValues },
+    defaultValues: { method: PaymentMethods.PAYPAL, ...defaultValues, primary: false },
   });
+
+  const registerWithMask = useHookFormMask(register);
 
   const method = watch("method");
 
@@ -55,7 +58,7 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValu
 
   return (
     <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ gap: 2, width: "100%" }}>
-      <FormField label="Payment Method" labelFontSize={16}>
+      <FormField label="Payment Method">
         <Controller
           name="method"
           control={control}
@@ -69,23 +72,23 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValu
             <FormField label="Card Number">
               <TextField
                 placeholder="**** **** **** ****"
-                {...register("cardNumber", {
+                inputMode="numeric"
+                {...registerWithMask("cardNumber", "9999 9999 9999 9999", {
+                  placeholder: "*",
                   required: "Card number is required",
-                  pattern: {
-                    value: /^\d{13,19}$/,
-                    message: "Invalid card number",
-                  },
+                  validate: (v) => (v.replace(/\s/g, "").match(/^\d{13,19}$/) ? true : "Invalid card number"),
                 })}
                 error={!!errors.cardNumber}
                 helperText={errors.cardNumber?.message}
               />
             </FormField>
 
-            <Stack flexDirection="row" alignItems="center" gap={2}>
+            <Stack flexDirection="row" alignItems="flex-start" gap={2}>
               <FormField label="Card Expiry">
                 <TextField
                   placeholder="12/28"
-                  {...register("cardExp", {
+                  inputMode="numeric"
+                  {...registerWithMask("cardExp", "99/99", {
                     required: "Expiration date is required",
                     pattern: {
                       value: /^(0[1-9]|1[0-2])\/\d{2}$/,
@@ -97,10 +100,11 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValu
                 />
               </FormField>
 
-              <FormField label="CVV">
+              <FormField label="CVV / CVC">
                 <TextField
                   placeholder="***"
                   type="password"
+                  slotProps={{ htmlInput: { maxLength: 4, pattern: "[0-9]*" } }}
                   {...register("cardCvv", {
                     required: "CVV is required",
                     pattern: {
