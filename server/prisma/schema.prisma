@@ -95,6 +95,7 @@ model Session {
 model Category {
   id   String @id @default(uuid()) @db.Uuid
   name String
+  slug String @unique
 
   products Product[]
 
