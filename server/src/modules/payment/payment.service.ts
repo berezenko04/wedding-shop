@@ -114,11 +114,33 @@ export class PaymentService {
 
     await this.get(userId, paymentId);
 
-    await this.prisma.$transaction(async (tx) => {
-      await tx.payment.updateMany({
-        where: { userId, primary: true, id: { not: paymentId } },
-        data: { primary: false },
+    if (primary === false) {
+      const primaryCount = await this.prisma.payment.count({
+        where: {
+          userId,
+          primary: true,
+        },
       });
+
+      if (primaryCount === 1) {
+        throw new BadRequestException(
+          'At least one primary payment method is required',
+        );
+      }
+    }
+
+    await this.prisma.$transaction(async (tx) => {
+      if (primary === true) {
+        await tx.payment.updateMany({
+          where: {
+            userId,
+            primary: true,
+            id: { not: paymentId },
+          },
+          data: { primary: false },
+        });
+      }
+
       await tx.payment.update({
         where: { id: paymentId },
         data: { primary },

@@ -64,7 +64,7 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValu
 
   return (
     <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ gap: 2, width: "100%" }}>
-      <FormField label="Payment Method" labelFontSize={16}>
+      <FormField label={mode === "create" ? "Payment Method" : "Payment Method (Preview Only)"} labelFontSize={16}>
         <Controller
           name="method"
           control={control}
