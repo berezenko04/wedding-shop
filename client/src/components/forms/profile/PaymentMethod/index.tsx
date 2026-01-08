@@ -41,7 +41,7 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValu
     control,
     formState: { errors, isSubmitting },
   } = useForm<PaymentMethodFormFields>({
-    defaultValues: { method: PaymentMethods.PAYPAL, ...defaultValues, primary: false },
+    defaultValues: { method: PaymentMethods.PAYPAL, primary: false, ...defaultValues },
   });
 
   const registerWithMask = useHookFormMask(register);
@@ -49,7 +49,13 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValu
   const method = watch("method");
 
   const onSubmit = async (data: PaymentMethodFormFields) => {
-    const result = await PaymentService.create(data);
+    let result;
+
+    if (mode === "update" && paymentId) {
+      result = await PaymentService.update({ paymentId, primary: data.primary });
+    } else {
+      result = await PaymentService.create(data);
+    }
 
     reset();
     queryClient.setQueryData(["payment"], result);
@@ -58,97 +64,101 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValu
 
   return (
     <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ gap: 2, width: "100%" }}>
-      <FormField label="Payment Method">
+      <FormField label="Payment Method" labelFontSize={16}>
         <Controller
           name="method"
           control={control}
           rules={{ required: "Please select payment method" }}
-          render={({ field }) => <PaymentMethodsList value={field.value} onChange={field.onChange} />}
+          render={({ field }) => (
+            <PaymentMethodsList value={field.value} onChange={field.onChange} readOnly={mode === "update"} />
+          )}
         />
       </FormField>
+
       <Stack gap={2}>
-        {method === PaymentMethods.CARD ? (
-          <>
-            <FormField label="Card Number">
-              <TextField
-                placeholder="**** **** **** ****"
-                inputMode="numeric"
-                {...registerWithMask("cardNumber", "9999 9999 9999 9999", {
-                  placeholder: "*",
-                  required: "Card number is required",
-                  validate: (v) => (v.replace(/\s/g, "").match(/^\d{13,19}$/) ? true : "Invalid card number"),
-                })}
-                error={!!errors.cardNumber}
-                helperText={errors.cardNumber?.message}
-              />
-            </FormField>
-
-            <Stack flexDirection="row" alignItems="flex-start" gap={2}>
-              <FormField label="Card Expiry">
+        {mode === "create" &&
+          (method === PaymentMethods.CARD ? (
+            <>
+              <FormField label="Card Number" labelFontSize={16}>
                 <TextField
-                  placeholder="12/28"
+                  placeholder="**** **** **** ****"
                   inputMode="numeric"
-                  {...registerWithMask("cardExp", "99/99", {
-                    required: "Expiration date is required",
-                    pattern: {
-                      value: /^(0[1-9]|1[0-2])\/\d{2}$/,
-                      message: "Card expiration must be in MM/YY format",
-                    },
+                  {...registerWithMask("cardNumber", "9999 9999 9999 9999", {
+                    placeholder: "*",
+                    required: "Card number is required",
+                    validate: (v) => (v.replace(/\s/g, "").match(/^\d{13,19}$/) ? true : "Invalid card number"),
                   })}
-                  error={!!errors.cardExp}
-                  helperText={errors.cardExp?.message}
+                  error={!!errors.cardNumber}
+                  helperText={errors.cardNumber?.message}
                 />
               </FormField>
 
-              <FormField label="CVV / CVC">
+              <Stack flexDirection="row" alignItems="flex-start" gap={2}>
+                <FormField label="Card Expiry" labelFontSize={16}>
+                  <TextField
+                    placeholder="12/28"
+                    inputMode="numeric"
+                    {...registerWithMask("cardExp", "99/99", {
+                      required: "Expiration date is required",
+                      pattern: {
+                        value: /^(0[1-9]|1[0-2])\/\d{2}$/,
+                        message: "Card expiration must be in MM/YY format",
+                      },
+                    })}
+                    error={!!errors.cardExp}
+                    helperText={errors.cardExp?.message}
+                  />
+                </FormField>
+
+                <FormField label="CVV / CVC" labelFontSize={16}>
+                  <TextField
+                    placeholder="***"
+                    type="password"
+                    slotProps={{ htmlInput: { maxLength: 4, pattern: "[0-9]*" } }}
+                    {...register("cardCvv", {
+                      required: "CVV is required",
+                      pattern: {
+                        value: /^\d{3,4}$/,
+                        message: "CVV must be 3 or 4 digits",
+                      },
+                    })}
+                    error={!!errors.cardCvv}
+                    helperText={errors.cardCvv?.message}
+                  />
+                </FormField>
+              </Stack>
+
+              <FormField label="Card Holder" labelFontSize={16}>
                 <TextField
-                  placeholder="***"
-                  type="password"
-                  slotProps={{ htmlInput: { maxLength: 4, pattern: "[0-9]*" } }}
-                  {...register("cardCvv", {
-                    required: "CVV is required",
+                  placeholder="John Johnson"
+                  {...register("cardHolder", {
+                    required: "Card holder name is required",
                     pattern: {
-                      value: /^\d{3,4}$/,
-                      message: "CVV must be 3 or 4 digits",
+                      value: /^[A-Za-z]+ [A-Za-z]+$/,
+                      message: "Name must contain first and last name (letters only)",
                     },
                   })}
-                  error={!!errors.cardCvv}
-                  helperText={errors.cardCvv?.message}
+                  error={!!errors.cardHolder}
+                  helperText={errors.cardHolder?.message}
                 />
               </FormField>
-            </Stack>
-
-            <FormField label="Card Holder">
+            </>
+          ) : (
+            <FormField label="Email" labelFontSize={16}>
               <TextField
-                placeholder="John Johnson"
-                {...register("cardHolder", {
-                  required: "Card holder name is required",
+                placeholder="Enter email"
+                {...register("email", {
+                  required: "Email is required",
                   pattern: {
-                    value: /^[A-Za-z]+ [A-Za-z]+$/,
-                    message: "Name must contain first and last name (letters only)",
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Invalid email address",
                   },
                 })}
-                error={!!errors.cardHolder}
-                helperText={errors.cardHolder?.message}
+                error={!!errors.email}
+                helperText={errors.email?.message}
               />
             </FormField>
-          </>
-        ) : (
-          <FormField label="Email" labelFontSize={16}>
-            <TextField
-              placeholder="Enter email"
-              {...register("email", {
-                required: "Email is required",
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                  message: "Invalid email address",
-                },
-              })}
-              error={!!errors.email}
-              helperText={errors.email?.message}
-            />
-          </FormField>
-        )}
+          ))}
 
         <Controller
           control={control}

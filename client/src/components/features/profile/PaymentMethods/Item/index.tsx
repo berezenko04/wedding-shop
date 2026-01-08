@@ -20,6 +20,8 @@ import { DeleteOutline, EditOutlined } from "@mui/icons-material";
 
 // data
 import { paymentMethodsList } from "@/data/main";
+import CustomModal from "@/components/ui/layout/CustomModal";
+import PaymentMethodForm from "@/components/forms/profile/PaymentMethod";
 
 const PaymentMethod: React.FC<PaymentMethod> = ({ id, method, email, last4, cardHolder, createdAt, primary }) => {
   const [isUpdateModalOpened, setIsUpdateModalOpened] = useState<boolean>(false);
@@ -80,6 +82,9 @@ const PaymentMethod: React.FC<PaymentMethod> = ({ id, method, email, last4, card
           </Stack>
         </Stack>
       </Stack>
+      <CustomModal title="Edit Payment Method" maxWidth={580} open={isUpdateModalOpened} onClose={handleClose}>
+        <PaymentMethodForm mode="update" defaultValues={{ primary, method }} paymentId={id} afterSubmit={handleClose} />
+      </CustomModal>
     </OutlinedBlock>
   );
 };

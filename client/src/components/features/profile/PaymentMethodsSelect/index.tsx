@@ -9,14 +9,16 @@ import { paymentMethodsList } from "@/data/main";
 type PaymentMethodsListProps = {
   value: PaymentMethods;
   onChange: (i: PaymentMethods) => void;
+  readOnly?: boolean;
 };
 
-const PaymentMethodsList: React.FC<PaymentMethodsListProps> = ({ value, onChange }) => {
+const PaymentMethodsList: React.FC<PaymentMethodsListProps> = ({ value, onChange, readOnly }) => {
   return (
     <FormControl fullWidth>
       <Select
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        readOnly={readOnly}
         renderValue={(selected) => {
           const selectedMethod = paymentMethodsList.find((m) => m.value === selected);
           return (

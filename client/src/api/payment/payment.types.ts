@@ -10,6 +10,11 @@ export type AddPaymentMethod = Omit<PaymentMethod, "id"> & {
   cardHolder?: string;
 };
 
+export type UpdatePaymentMethod = {
+  paymentId: string;
+  primary: boolean;
+};
+
 export type PaymentMethod = {
   id: string;
   method: PaymentMethods;
