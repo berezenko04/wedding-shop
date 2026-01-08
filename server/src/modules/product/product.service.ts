@@ -28,7 +28,7 @@ export class ProductService {
   ) {}
 
   async all(dto: GetAllProductsDto) {
-    const { page, limit, minPrice, maxPrice, size, sortBy, sex } = dto;
+    const { page, limit, minPrice, maxPrice, size, sortBy, category } = dto;
 
     const where: Prisma.ProductWhereInput = {};
 
@@ -42,8 +42,10 @@ export class ProductService {
       where.sizes = { has: size };
     }
 
-    if (sex) {
-      where.sex = sex;
+    if (category) {
+      where.category = {
+        slug: category,
+      };
     }
 
     const normalizedSort = (sortBy ? String(sortBy) : '')
