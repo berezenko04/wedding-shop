@@ -33,7 +33,7 @@ export class AddPaymentDto {
   email?: string;
 
   @ValidateIf((o) => o.method === PaymentMethods.CARD)
-  @IsCreditCard()
+  @IsCreditCard({ message: 'Invalid card number' })
   cardNumber?: string;
 
   @ValidateIf((o) => o.method === PaymentMethods.CARD)

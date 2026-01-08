@@ -1,7 +1,4 @@
-import { Box, Button, Fade, Modal, Stack, Typography, type ModalProps } from "@mui/material";
-
-// icons
-import { Clear } from "@mui/icons-material";
+import { Box, Fade, Modal, Stack, Typography, type ModalProps } from "@mui/material";
 
 type TCustomModalProps = ModalProps & {
   children: React.ReactNode;
@@ -30,7 +27,7 @@ const CustomModal: React.FC<TCustomModalProps> = ({ title, maxWidth, children, .
             padding: 3,
           }}
         >
-          <Typography variant="medium" textAlign="center" fontSize={20} textTransform="uppercase">
+          <Typography variant="medium" textAlign="center" fontSize={24} textTransform="uppercase">
             {title}
           </Typography>
           <Box
@@ -43,9 +40,6 @@ const CustomModal: React.FC<TCustomModalProps> = ({ title, maxWidth, children, .
           >
             {children}
           </Box>
-          {/* <Button startIcon={<Clear />} variant="outlined" color="grey" size="small">
-            Close
-          </Button> */}
         </Stack>
       </Fade>
     </Modal>

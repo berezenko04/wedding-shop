@@ -4,9 +4,9 @@ import {
   Delete,
   Get,
   Param,
+  ParseUUIDPipe,
   Patch,
   Post,
-  Query,
 } from '@nestjs/common';
 
 // services
@@ -28,7 +28,7 @@ export class PaymentController {
   @Post()
   async add(@User('id') userId: string, @Body() dto: AddPaymentDto) {
     await this.paymentService.add(userId, dto);
-    return { message: 'Payment method has been successfully added' };
+    return this.all(userId);
   }
 
   @Get()
@@ -36,19 +36,17 @@ export class PaymentController {
     return this.paymentService.all(userId);
   }
 
-  @Get(':id')
-  async get(@User('id') userId: string, @Param('id') paymentId: string) {
-    return this.paymentService.get(userId, paymentId);
-  }
-
   @Patch()
   async update(@User('id') userId: string, @Body() dto: UpdatePaymentDto) {
     await this.paymentService.update(userId, dto);
-    return { messasge: 'Payment method was updated' };
+    return this.all(userId);
   }
 
-  @Delete()
-  async delete(@User('id') userId: string, @Query('id') paymentId: string) {
+  @Delete(':id')
+  async delete(
+    @User('id') userId: string,
+    @Param('id', new ParseUUIDPipe()) paymentId: string,
+  ) {
     await this.paymentService.delete(userId, paymentId);
     return { message: 'Payment method was removed' };
   }

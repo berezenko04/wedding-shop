@@ -4,6 +4,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 
+import * as cardValidator from 'card-validator';
+
 // services
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -19,7 +21,17 @@ export class PaymentService {
   constructor(private readonly prisma: PrismaService) {}
 
   async add(userId: string, dto: AddPaymentDto) {
-    const { primary, method } = dto;
+    const { primary, method, cardNumber } = dto;
+
+    let cardIssuer: string | null = null;
+    let last4: string | null = null;
+
+    if (method === PaymentMethods.CARD && cardNumber) {
+      const validation = cardValidator.number(cardNumber);
+
+      cardIssuer = validation.card?.type ?? null;
+      last4 = cardNumber.slice(-4);
+    }
 
     const existingPayments = await this.prisma.payment.findMany({
       where: { userId },
@@ -59,9 +71,13 @@ export class PaymentService {
 
       return tx.payment.create({
         data: {
-          ...dto,
           userId,
+          method: dto.method,
           primary: isFirst ? true : primary,
+          email: dto.email,
+          cardIssuer,
+          cardHolder: dto.cardHolder,
+          last4,
         },
       });
     });
@@ -70,6 +86,16 @@ export class PaymentService {
   async all(userId: string) {
     return this.prisma.payment.findMany({
       where: { userId },
+      select: {
+        id: true,
+        primary: true,
+        method: true,
+        email: true,
+        cardIssuer: true,
+        cardHolder: true,
+        last4: true,
+        createdAt: true,
+      },
     });
   }
 
@@ -88,11 +114,33 @@ export class PaymentService {
 
     await this.get(userId, paymentId);
 
-    await this.prisma.$transaction(async (tx) => {
-      await tx.payment.updateMany({
-        where: { userId, primary: true, id: { not: paymentId } },
-        data: { primary: false },
+    if (primary === false) {
+      const primaryCount = await this.prisma.payment.count({
+        where: {
+          userId,
+          primary: true,
+        },
       });
+
+      if (primaryCount === 1) {
+        throw new BadRequestException(
+          'At least one primary payment method is required',
+        );
+      }
+    }
+
+    await this.prisma.$transaction(async (tx) => {
+      if (primary === true) {
+        await tx.payment.updateMany({
+          where: {
+            userId,
+            primary: true,
+            id: { not: paymentId },
+          },
+          data: { primary: false },
+        });
+      }
+
       await tx.payment.update({
         where: { id: paymentId },
         data: { primary },

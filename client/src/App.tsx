@@ -32,6 +32,7 @@ const WishlistPage = lazy(() => import("@/pages/profile/Wishlist"));
 const SettingsPage = lazy(() => import("@/pages/profile/Settings"));
 const ReviewsPage = lazy(() => import("@/pages/profile/Reviews"));
 const ShippingPage = lazy(() => import("@/pages/profile/Shipping"));
+const PaymentPage = lazy(() => import("@/pages/profile/Payment"));
 
 function App() {
   const dispatch = useAppDispatch();
@@ -73,7 +74,7 @@ function App() {
                 <Route path="reviews" element={<ReviewsPage />} />
                 <Route path="orders" />
                 <Route path="shipping-address" element={<ShippingPage />} />
-                <Route path="payment" />
+                <Route path="payment" element={<PaymentPage />} />
               </Route>
             </Route>
           </Route>
