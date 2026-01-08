@@ -14,11 +14,10 @@ import { GetAllProductsDto } from './dto/get-all-products.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 
 // types
-// import { ProductsSortBy } from 'src/types/enums';
+import { ProductsSortBy } from 'src/types/enums';
 
 // utils
 import { createSlug } from 'src/utils/createSlug';
-import { ProductsSortBy } from 'src/types/enums';
 
 @Injectable()
 export class ProductService {

@@ -22,6 +22,7 @@ import { OrderModule } from './modules/order/order.module';
 import { AddressModule } from './modules/address/address.module';
 import { PaymentModule } from './modules/payment/payment.module';
 import { R2Module } from './modules/r2/r2.module';
+import { CategoriesModule } from './modules/categories/categories.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { R2Module } from './modules/r2/r2.module';
     AddressModule,
     PaymentModule,
     R2Module,
+    CategoriesModule,
   ],
   controllers: [],
   providers: [
