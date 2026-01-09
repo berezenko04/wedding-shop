@@ -3,16 +3,16 @@ import { Button, Stack } from "@mui/material";
 // components
 import FilterPrice from "./Price";
 import FilterSize from "./Size";
-import FilterBySex from "./Sex";
+import FilterByCategory from "./Category";
 
 // types
-import { Sex, Sizes, SortBy } from "@/types/enums.types";
+import { Sizes, SortBy } from "@/types/enums.types";
 
 interface FiltersProps {
   filters: {
     priceRange: [number, number];
     size: Sizes | null;
-    sex: Sex | null;
+    category: string | null;
     sortBy: SortBy | "none";
   };
   setFilter: <K extends keyof FiltersProps["filters"]>(key: K, value: FiltersProps["filters"][K]) => void;
@@ -27,7 +27,7 @@ const Filters: React.FC<FiltersProps> = ({ filters, setFilter, clearFilters }) =
         setPriceRange={(priceRange) => setFilter("priceRange", priceRange)}
       />
       <FilterSize size={filters.size} setSize={(size) => setFilter("size", size)} />
-      <FilterBySex sex={filters.sex} setSex={(sex) => setFilter("sex", sex)} />
+      <FilterByCategory category={filters.category} setCategory={(category) => setFilter("category", category)} />
       <Button variant="outlined" color="primary" size="small" onClick={clearFilters}>
         Clear Filters
       </Button>
