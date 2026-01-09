@@ -26,10 +26,10 @@ export class CategoriesService {
     });
   }
 
-  async create(userId: string, dto: CreateCategoryDto) {
-    if (userId !== this.configService.getOrThrow<string>('ADMIN_UUID')) {
+  async create(dto: CreateCategoryDto) {
+    if (this.configService.getOrThrow<string>('NODE_ENV') === 'production') {
       throw new ForbiddenException(
-        'You do not have permission to delete categories',
+        'You do not have permission to create categories',
       );
     }
 
@@ -49,8 +49,8 @@ export class CategoriesService {
     }
   }
 
-  async remove(userId: string, categoryId: string) {
-    if (userId !== this.configService.getOrThrow<string>('ADMIN_UUID')) {
+  async remove(categoryId: string) {
+    if (this.configService.getOrThrow<string>('NODE_ENV') === 'production') {
       throw new ForbiddenException(
         'You do not have permission to delete categories',
       );
