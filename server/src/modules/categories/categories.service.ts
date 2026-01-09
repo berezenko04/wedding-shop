@@ -23,6 +23,10 @@ export class CategoriesService {
   async all() {
     return this.prisma.category.findMany({
       orderBy: { name: 'asc' },
+      select: {
+        name: true,
+        slug: true,
+      },
     });
   }
 
