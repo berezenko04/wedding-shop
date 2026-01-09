@@ -31,7 +31,7 @@ const Home: React.FC = () => {
               height={730}
               imgSrc="/categories-dresses.webp"
               linkText="Dresses"
-              linkHref="/catalog?sex=female"
+              linkHref="/catalog?category=dresses"
             />
           </Grid>
           <Grid size={{ xs: 6 }}>
@@ -39,7 +39,7 @@ const Home: React.FC = () => {
               height={730}
               imgSrc="/categories-suits.webp"
               linkText="Suits"
-              linkHref="/catalog?sex=male"
+              linkHref="/catalog?category=suits"
             />
           </Grid>
         </Grid>
@@ -51,7 +51,7 @@ const Home: React.FC = () => {
               height={480}
               imgSrc="/clothing-for-her.webp"
               linkText="For her"
-              linkHref="/catalog?sex=female"
+              linkHref="/catalog?category=dresses"
             />
           </Grid>
           <Grid size={{ xs: 6 }}>
@@ -59,7 +59,7 @@ const Home: React.FC = () => {
               height={480}
               imgSrc="/clothing-for-him.webp"
               linkText="For him"
-              linkHref="/catalog?sex=male"
+              linkHref="/catalog?category=suits"
             />
           </Grid>
         </Grid>
