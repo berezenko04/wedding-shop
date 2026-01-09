@@ -6,7 +6,7 @@ import ProductsService from "@/api/products/products.service";
 
 // types
 import type { GetAllProductParams, GetAllProducts } from "@/api/products/products.types";
-import type { Sex, Sizes, SortBy } from "@/types/enums.types";
+import type { Sizes, SortBy } from "@/types/enums.types";
 
 // constants
 import { PAGE_LIMIT } from "@/constants";
@@ -15,7 +15,7 @@ export interface Filters {
   priceRange: [number, number];
   size: Sizes | null;
   sortBy: SortBy | "none";
-  sex: Sex | null;
+  category: string | null;
 }
 
 export const useProducts = (initialParams: GetAllProductParams = {}) => {
@@ -24,7 +24,7 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
     priceRange: [Number(initialParams.minPrice) || 0, Number(initialParams.maxPrice) || 2000],
     size: (initialParams.size as Sizes) ?? null,
     sortBy: (initialParams.sortBy as SortBy) ?? "none",
-    sex: (initialParams.sex as Sex) ?? null,
+    category: initialParams.category ?? null,
   });
 
   const params = useMemo(() => {
@@ -34,7 +34,7 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
       minPrice: filters.priceRange[0],
       maxPrice: filters.priceRange[1],
       size: filters.size ?? undefined,
-      sex: filters.sex ?? undefined,
+      sex: filters.category ?? undefined,
     };
 
     if (filters.sortBy && filters.sortBy !== "none") {
@@ -60,7 +60,7 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
       priceRange: [0, 2000],
       size: null,
       sortBy: "none",
-      sex: null,
+      category: null,
     });
     setPage(1);
   };
