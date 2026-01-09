@@ -21,12 +21,14 @@ export class CategoriesController {
   @Auth()
   @Post()
   async create(@Body() dto: CreateCategoryDto) {
-    return this.categoriesService.create(dto);
+    await this.categoriesService.create(dto);
+    return { message: `Category successfully created` };
   }
 
   @Auth()
   @Delete(':id')
   async remove(@Param('id') categoryId: string) {
-    return this.categoriesService.remove(categoryId);
+    await this.categoriesService.remove(categoryId);
+    return { message: `Category with id = ${categoryId} successfully deleted` };
   }
 }

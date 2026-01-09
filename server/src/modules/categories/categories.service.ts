@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   ForbiddenException,
   Injectable,
@@ -38,7 +39,7 @@ export class CategoriesService {
     }
 
     try {
-      return await this.prisma.category.create({
+      await this.prisma.category.create({
         data: dto,
       });
     } catch (err) {
@@ -60,6 +61,13 @@ export class CategoriesService {
       );
     }
 
-    return this.prisma.category.delete({ where: { id: categoryId } });
+    try {
+      await this.prisma.category.delete({ where: { id: categoryId } });
+    } catch (err) {
+      if (err instanceof Prisma.PrismaClientKnownRequestError) {
+        throw new BadRequestException("Category with this id doesn't exist");
+      }
+      throw new InternalServerErrorException('Failed to delete category');
+    }
   }
 }
