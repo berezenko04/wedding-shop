@@ -118,7 +118,7 @@ model Product {
   categoryId String   @map("category_id") @db.Uuid
   category   Category @relation(fields: [categoryId], references: [id])
 
-  sizes     Sizes[]
+  sizes     Sizes[]        @default([])
   review    Review[]
   cartItem  CartItem[]
   images    ProductImage[]

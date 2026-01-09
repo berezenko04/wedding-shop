@@ -1,6 +1,7 @@
 import {
   ConflictException,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
@@ -159,8 +160,14 @@ export class ProductService {
           posterUrl: uploadedPoster,
         },
       });
-    } catch {
-      throw new ConflictException("Product can't have the same slug");
+    } catch (err) {
+      if (err instanceof Prisma.PrismaClientKnownRequestError) {
+        if (err.code === 'P2002') {
+          throw new ConflictException('Product with this slug already exists');
+        }
+      }
+
+      throw new InternalServerErrorException('Failed to create product');
     }
 
     if (screenshots && screenshots.length > 0) {
