@@ -1,7 +1,6 @@
 import {
   BadRequestException,
   ConflictException,
-  ForbiddenException,
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
@@ -9,17 +8,13 @@ import { Prisma } from '@prisma/client';
 
 // service
 import { PrismaService } from 'src/prisma/prisma.service';
-import { ConfigService } from '@nestjs/config';
 
 // dto
 import { CreateCategoryDto } from './dto/create-category.dto';
 
 @Injectable()
 export class CategoriesService {
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly configService: ConfigService,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async all() {
     return this.prisma.category.findMany({
@@ -32,12 +27,6 @@ export class CategoriesService {
   }
 
   async create(dto: CreateCategoryDto) {
-    if (this.configService.getOrThrow<string>('NODE_ENV') === 'production') {
-      throw new ForbiddenException(
-        'You do not have permission to create categories',
-      );
-    }
-
     try {
       await this.prisma.category.create({
         data: dto,
@@ -55,12 +44,6 @@ export class CategoriesService {
   }
 
   async remove(categoryId: string) {
-    if (this.configService.getOrThrow<string>('NODE_ENV') === 'production') {
-      throw new ForbiddenException(
-        'You do not have permission to delete categories',
-      );
-    }
-
     try {
       await this.prisma.category.delete({ where: { id: categoryId } });
     } catch (err) {

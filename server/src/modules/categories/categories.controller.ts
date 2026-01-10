@@ -8,6 +8,7 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 
 // decorators
 import { Auth } from '../auth/decorators/auth.decorator';
+import { DevOnly } from 'src/common/decorators/dev-only.decorator';
 
 @Controller('categories')
 export class CategoriesController {
@@ -18,6 +19,7 @@ export class CategoriesController {
     return this.categoriesService.all();
   }
 
+  @DevOnly()
   @Auth()
   @Post()
   async create(@Body() dto: CreateCategoryDto) {
@@ -25,6 +27,7 @@ export class CategoriesController {
     return { message: `Category successfully created` };
   }
 
+  @DevOnly()
   @Auth()
   @Delete(':id')
   async remove(@Param('id') categoryId: string) {
