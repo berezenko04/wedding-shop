@@ -1,6 +1,7 @@
 import {
   ConflictException,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
@@ -14,11 +15,10 @@ import { GetAllProductsDto } from './dto/get-all-products.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 
 // types
-// import { ProductsSortBy } from 'src/types/enums';
+import { ProductsSortBy } from 'src/types/enums';
 
 // utils
 import { createSlug } from 'src/utils/createSlug';
-import { ProductsSortBy } from 'src/types/enums';
 
 @Injectable()
 export class ProductService {
@@ -28,7 +28,7 @@ export class ProductService {
   ) {}
 
   async all(dto: GetAllProductsDto) {
-    const { page, limit, minPrice, maxPrice, size, sortBy, sex } = dto;
+    const { page, limit, minPrice, maxPrice, size, sortBy, category } = dto;
 
     const where: Prisma.ProductWhereInput = {};
 
@@ -42,8 +42,10 @@ export class ProductService {
       where.sizes = { has: size };
     }
 
-    if (sex) {
-      where.sex = sex;
+    if (category) {
+      where.category = {
+        slug: category,
+      };
     }
 
     const normalizedSort = (sortBy ? String(sortBy) : '')
@@ -158,8 +160,14 @@ export class ProductService {
           posterUrl: uploadedPoster,
         },
       });
-    } catch {
-      throw new ConflictException("Product can't have the same slug");
+    } catch (err) {
+      if (err instanceof Prisma.PrismaClientKnownRequestError) {
+        if (err.code === 'P2002') {
+          throw new ConflictException('Product with this slug already exists');
+        }
+      }
+
+      throw new InternalServerErrorException('Failed to create product');
     }
 
     if (screenshots && screenshots.length > 0) {

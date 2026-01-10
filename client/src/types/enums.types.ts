@@ -20,11 +20,6 @@ export enum SortBy {
   PRICE_DESC = "price_desc",
 }
 
-export enum Sex {
-  MALE = "male",
-  FEMALE = "female",
-}
-
 export enum Rating {
   ONE = "ONE",
   TWO = "TWO",

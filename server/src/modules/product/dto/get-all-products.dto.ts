@@ -1,5 +1,13 @@
-import { Genders, Sizes } from '@prisma/client';
-import { IsEnum, IsInt, IsOptional, Max, Min } from 'class-validator';
+import { Sizes } from '@prisma/client';
+import {
+  IsEnum,
+  IsInt,
+  IsOptional,
+  IsString,
+  IsUUID,
+  Max,
+  Min,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 
 // dto
@@ -29,11 +37,11 @@ export class GetAllProductsDto extends PaginationDto {
   @IsEnum(ProductsSortBy)
   sortBy?: ProductsSortBy;
 
-  @IsEnum(Sizes)
   @IsOptional()
+  @IsEnum(Sizes)
   size?: Sizes;
 
   @IsOptional()
-  @IsEnum(Genders)
-  sex?: Genders;
+  @IsString()
+  category?: string;
 }

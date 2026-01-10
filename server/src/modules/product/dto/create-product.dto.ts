@@ -1,4 +1,4 @@
-import { Genders, Sizes } from '@prisma/client';
+import { Sizes } from '@prisma/client';
 import {
   ArrayNotEmpty,
   IsArray,
@@ -10,12 +10,16 @@ import {
   IsPositive,
   IsString,
   IsUrl,
+  IsUUID,
   Length,
   Max,
   Min,
 } from 'class-validator';
 
 export class CreateProductDto {
+  @IsUUID()
+  categoryId: string;
+
   @IsUrl()
   posterUrl: string;
 
@@ -40,11 +44,10 @@ export class CreateProductDto {
   @Max(1)
   discount?: number | null;
 
-  @IsEnum(Genders)
-  sex: Genders;
-
+  @IsOptional()
+  @IsArray()
   @IsEnum(Sizes, { each: true })
-  sizes: Sizes[];
+  sizes?: Sizes[];
 
   @IsArray()
   @ArrayNotEmpty()

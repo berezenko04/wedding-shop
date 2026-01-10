@@ -22,6 +22,8 @@ import { OrderModule } from './modules/order/order.module';
 import { AddressModule } from './modules/address/address.module';
 import { PaymentModule } from './modules/payment/payment.module';
 import { R2Module } from './modules/r2/r2.module';
+import { CategoriesModule } from './modules/categories/categories.module';
+import { DevOnlyGuard } from './common/guards/dev-only.guard';
 
 @Module({
   imports: [
@@ -46,6 +48,7 @@ import { R2Module } from './modules/r2/r2.module';
     AddressModule,
     PaymentModule,
     R2Module,
+    CategoriesModule,
   ],
   controllers: [],
   providers: [
@@ -57,6 +60,10 @@ import { R2Module } from './modules/r2/r2.module';
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: DevOnlyGuard,
     },
   ],
 })

@@ -11,7 +11,7 @@ import ProductsGridLayout from "@/components/ui/layout/ProductsLayout";
 import { Filters as FiltersType, useProducts } from "@/hooks/useProducts";
 
 // types
-import { Sex, Sizes, SortBy } from "@/types/enums.types";
+import { Sizes, SortBy } from "@/types/enums.types";
 
 // icons
 import { SearchOff } from "@mui/icons-material";
@@ -27,7 +27,7 @@ const CatalogPage: React.FC = () => {
   const minPrice = Number(searchParams.get("minPrice")) || 0;
   const maxPrice = Number(searchParams.get("maxPrice")) || 2000;
   const size = (searchParams.get("size") as Sizes) || null;
-  const sex = (searchParams.get("sex") as Sex) || null;
+  const category = searchParams.get("category") || null;
 
   const { products, total, page, filters, clearFilters, setPage, setFilter, isLoading } = useProducts({
     page: pageParam,
@@ -35,7 +35,7 @@ const CatalogPage: React.FC = () => {
     minPrice,
     maxPrice,
     size,
-    sex,
+    category,
   });
 
   const updateSearchParam = (key: string, value?: string | number | null) => {
@@ -77,7 +77,7 @@ const CatalogPage: React.FC = () => {
       params.set("maxPrice", String(filters.priceRange[1]));
     }
     if (filters.size) params.set("size", filters.size);
-    if (filters.sex) params.set("sex", filters.sex);
+    if (filters.category) params.set("category", filters.category);
 
     setSearchParams(params);
   }, [filters, setSearchParams, page]);

@@ -13,6 +13,7 @@ import { ProductService } from './product.service';
 
 // decorators
 import { Auth } from '../auth/decorators/auth.decorator';
+import { DevOnly } from 'src/common/decorators/dev-only.decorator';
 
 // dto
 import { GetAllProductsDto } from './dto/get-all-products.dto';
@@ -37,8 +38,9 @@ export class ProductController {
     return this.productService.get(productId);
   }
 
-  @Post()
+  @DevOnly()
   @Auth()
+  @Post()
   async create(@Body() dto: CreateProductDto) {
     await this.productService.create(dto);
     return { message: 'Product has been successfully added' };
