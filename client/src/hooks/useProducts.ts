@@ -34,7 +34,7 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
       minPrice: filters.priceRange[0],
       maxPrice: filters.priceRange[1],
       size: filters.size ?? undefined,
-      sex: filters.category ?? undefined,
+      category: filters.category ?? undefined,
     };
 
     if (filters.sortBy && filters.sortBy !== "none") {
