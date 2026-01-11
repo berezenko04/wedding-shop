@@ -15,11 +15,37 @@ import { useProducts } from "@/hooks/useProducts";
 import type { Swiper } from "swiper/types";
 
 const Home: React.FC = () => {
-  const bestsellersRef = useRef<Swiper | null>(null);
   const dressesRef = useRef<Swiper | null>(null);
   const suitsRef = useRef<Swiper | null>(null);
+  const accessoriesRef = useRef<Swiper | null>(null);
 
-  const { products, isLoading } = useProducts();
+  const { products: dresses, isLoading: dressesLoading } = useProducts({ category: "dresses" });
+  const { products: suits, isLoading: suitsLoading } = useProducts({ category: "suits" });
+  const { products: accessories, isLoading: accessoriesLoading } = useProducts({ category: "accessories" });
+
+  const swiperSections = [
+    {
+      key: "dresses",
+      title: "Dresses",
+      data: dresses,
+      isLoading: dressesLoading,
+      ref: dressesRef,
+    },
+    {
+      key: "suits",
+      title: "Suits",
+      data: suits,
+      isLoading: suitsLoading,
+      ref: suitsRef,
+    },
+    {
+      key: "accesories",
+      title: "Accessories",
+      data: accessories,
+      isLoading: accessoriesLoading,
+      ref: accessoriesRef,
+    },
+  ] as const;
 
   return (
     <Stack>
@@ -71,15 +97,11 @@ const Home: React.FC = () => {
           </Grid>
         </Box>
       </HomepageSection>
-      <HomepageSection title="Bestsellers" isSwiper swiperRef={bestsellersRef}>
-        <ProductsSwiper data={products} swiperRef={bestsellersRef} isLoading={isLoading} />
-      </HomepageSection>
-      <HomepageSection title="Dresses" isSwiper swiperRef={dressesRef}>
-        <ProductsSwiper data={products} swiperRef={dressesRef} isLoading={isLoading} />
-      </HomepageSection>
-      <HomepageSection title="Suits" isSwiper swiperRef={suitsRef}>
-        <ProductsSwiper data={products} swiperRef={suitsRef} isLoading={isLoading} />
-      </HomepageSection>
+      {swiperSections.map(({ key, title, data, isLoading, ref }) => (
+        <HomepageSection key={key} title={title} isSwiper swiperRef={ref}>
+          <ProductsSwiper data={data} swiperRef={ref} isLoading={isLoading} />
+        </HomepageSection>
+      ))}
       <HomepageCompanies />
     </Stack>
   );
