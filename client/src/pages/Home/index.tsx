@@ -1,4 +1,4 @@
-import { Grid, Stack } from "@mui/material";
+import { Box, Grid, Stack } from "@mui/material";
 import { useRef } from "react";
 
 // components
@@ -15,64 +15,93 @@ import { useProducts } from "@/hooks/useProducts";
 import type { Swiper } from "swiper/types";
 
 const Home: React.FC = () => {
-  const bestsellersRef = useRef<Swiper | null>(null);
   const dressesRef = useRef<Swiper | null>(null);
   const suitsRef = useRef<Swiper | null>(null);
+  const accessoriesRef = useRef<Swiper | null>(null);
 
-  const { products, isLoading } = useProducts();
+  const { products: dresses, isLoading: dressesLoading } = useProducts({ category: "dresses" });
+  const { products: suits, isLoading: suitsLoading } = useProducts({ category: "suits" });
+  const { products: accessories, isLoading: accessoriesLoading } = useProducts({ category: "accessories" });
+
+  const swiperSections = [
+    {
+      key: "dresses",
+      title: "Dresses",
+      data: dresses,
+      isLoading: dressesLoading,
+      ref: dressesRef,
+    },
+    {
+      key: "suits",
+      title: "Suits",
+      data: suits,
+      isLoading: suitsLoading,
+      ref: suitsRef,
+    },
+    {
+      key: "accesories",
+      title: "Accessories",
+      data: accessories,
+      isLoading: accessoriesLoading,
+      ref: accessoriesRef,
+    },
+  ] as const;
 
   return (
     <Stack>
       <HomepageBanner />
       <HomepageSection title="Our categories">
-        <Grid container spacing={4}>
-          <Grid size={{ xs: 6 }}>
-            <ImageWithButton
-              height={730}
-              imgSrc="/categories-dresses.webp"
-              linkText="Dresses"
-              linkHref="/catalog?category=dresses"
-            />
+        <Box sx={{ height: 750 }}>
+          <Grid container spacing={4} sx={{ height: "100%" }}>
+            <Grid size={{ xs: 6 }} sx={{ height: "100%" }}>
+              <ImageWithButton
+                imgSrc="/categories-dresses.webp"
+                linkText="Dresses"
+                linkHref="/catalog?category=dresses"
+              />
+            </Grid>
+
+            <Grid size={{ xs: 6 }} sx={{ height: "100%" }}>
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateRows: "1fr 1fr",
+                  gap: 4,
+                  height: "100%",
+                }}
+              >
+                <ImageWithButton imgSrc="/categories-suits.webp" linkText="Suits" linkHref="/catalog?category=suits" />
+                <ImageWithButton
+                  imgSrc="/categories-accessories.webp"
+                  linkText="Accessories"
+                  linkHref="/catalog?category=accessories"
+                />
+              </Box>
+            </Grid>
           </Grid>
-          <Grid size={{ xs: 6 }}>
-            <ImageWithButton
-              height={730}
-              imgSrc="/categories-suits.webp"
-              linkText="Suits"
-              linkHref="/catalog?category=suits"
-            />
-          </Grid>
-        </Grid>
+        </Box>
       </HomepageSection>
       <HomepageSection title="Clothing">
-        <Grid container spacing={4}>
-          <Grid size={{ xs: 6 }}>
-            <ImageWithButton
-              height={480}
-              imgSrc="/clothing-for-her.webp"
-              linkText="For her"
-              linkHref="/catalog?category=dresses"
-            />
+        <Box sx={{ height: 450 }}>
+          <Grid container spacing={4} sx={{ height: "100%" }}>
+            <Grid size={{ xs: 6 }} sx={{ height: "100%" }}>
+              <ImageWithButton
+                imgSrc="/clothing-for-her.webp"
+                linkText="For her"
+                linkHref="/catalog?category=dresses"
+              />
+            </Grid>
+            <Grid size={{ xs: 6 }} sx={{ height: "100%" }}>
+              <ImageWithButton imgSrc="/clothing-for-him.webp" linkText="For him" linkHref="/catalog?category=suits" />
+            </Grid>
           </Grid>
-          <Grid size={{ xs: 6 }}>
-            <ImageWithButton
-              height={480}
-              imgSrc="/clothing-for-him.webp"
-              linkText="For him"
-              linkHref="/catalog?category=suits"
-            />
-          </Grid>
-        </Grid>
+        </Box>
       </HomepageSection>
-      <HomepageSection title="Bestsellers" isSwiper swiperRef={bestsellersRef}>
-        <ProductsSwiper data={products} swiperRef={bestsellersRef} isLoading={isLoading} />
-      </HomepageSection>
-      <HomepageSection title="Dresses" isSwiper swiperRef={dressesRef}>
-        <ProductsSwiper data={products} swiperRef={dressesRef} isLoading={isLoading} />
-      </HomepageSection>
-      <HomepageSection title="Suits" isSwiper swiperRef={suitsRef}>
-        <ProductsSwiper data={products} swiperRef={suitsRef} isLoading={isLoading} />
-      </HomepageSection>
+      {swiperSections.map(({ key, title, data, isLoading, ref }) => (
+        <HomepageSection key={key} title={title} isSwiper swiperRef={ref}>
+          <ProductsSwiper data={data} swiperRef={ref} isLoading={isLoading} />
+        </HomepageSection>
+      ))}
       <HomepageCompanies />
     </Stack>
   );
