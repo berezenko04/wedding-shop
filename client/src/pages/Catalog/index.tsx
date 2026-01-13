@@ -27,7 +27,7 @@ const CatalogPage: React.FC = () => {
   const minPrice = Number(searchParams.get("minPrice")) || 0;
   const maxPrice = Number(searchParams.get("maxPrice")) || 2000;
   const size = (searchParams.get("size") as Sizes) || null;
-  const category = searchParams.get("category") || null;
+  const category = searchParams.get("category") || undefined;
 
   const { products, total, page, filters, clearFilters, setPage, setFilter, isLoading } = useProducts({
     page: pageParam,

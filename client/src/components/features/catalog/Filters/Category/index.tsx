@@ -20,7 +20,7 @@ const FilterByCategory: React.FC<FilterByCategoryProps> = ({ category, setCatego
         columns={2}
         value={category}
         onChange={setCategory}
-        items={categories?.map((c) => ({ label: c.name, value: c.id })) || []}
+        items={categories?.map((c) => ({ label: c.name, value: c.slug })) || []}
       />
     </FilterItem>
   );
