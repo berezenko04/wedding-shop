@@ -21,6 +21,7 @@ const FilterByCategory: React.FC<FilterByCategoryProps> = ({ category, setCatego
         value={category}
         onChange={setCategory}
         items={categories?.map((c) => ({ label: c.name, value: c.slug })) || []}
+        isFullLengthLast
       />
     </FilterItem>
   );
