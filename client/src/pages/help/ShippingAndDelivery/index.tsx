@@ -3,7 +3,7 @@ import { Stack, Typography, Divider } from "@mui/material";
 const ShippingAndDelivery = () => {
   return (
     <Stack spacing={4}>
-      <Typography variant="h3" fontWeight={600}>
+      <Typography variant="h3">
         Shipping & Delivery
       </Typography>
 
@@ -44,14 +44,6 @@ const ShippingAndDelivery = () => {
           Once your order is shipped, a tracking number will be sent via email. Tracking information may take up to 24
           hours to update.
         </Typography>
-      </Stack>
-
-      <Divider />
-
-      <Stack spacing={1}>
-        <Typography variant="h6">📩 Contact</Typography>
-        <Typography>If you have any questions regarding shipping or delivery, contact us at:</Typography>
-        <Typography fontWeight={500}>help@sandrela.xyz</Typography>
       </Stack>
     </Stack>
   );
