@@ -34,6 +34,8 @@ const ReviewsPage = lazy(() => import("@/pages/profile/Reviews"));
 const ShippingPage = lazy(() => import("@/pages/profile/Shipping"));
 const PaymentPage = lazy(() => import("@/pages/profile/Payment"));
 
+const ShippingAndDeliveryPage = lazy(() => import("@/pages/help/ShippingAndDelivery"));
+
 function App() {
   const dispatch = useAppDispatch();
 
@@ -65,6 +67,8 @@ function App() {
             <Route path="/catalog" element={<CatalogPage />} />
             <Route path="/catalog/:slug" element={<CatalogProductPage />} />
             <Route path="*" element={<NotFoundPage />} />
+
+            <Route path="/shipping-and-delivery" element={<ShippingAndDeliveryPage />} />
 
             <Route element={<PrivateRoute />}>
               <Route element={<ProfileLayout />} path="/profile">
