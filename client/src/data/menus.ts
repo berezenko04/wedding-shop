@@ -8,7 +8,7 @@ import {
 } from "@mui/icons-material";
 
 export const footerHelpMenu = [
-  { title: "Shipping and Delivery", href: "#" },
+  { title: "Shipping and Delivery", href: "/shipping-and-delivery" },
   { title: "Returns", href: "#" },
   { title: "Payment Options", href: "#" },
   { title: "Contact Us", href: "#" },

@@ -68,9 +68,7 @@ function App() {
             <Route path="/catalog/:slug" element={<CatalogProductPage />} />
             <Route path="*" element={<NotFoundPage />} />
 
-            <Route path="/help">
-              <Route path="shipping-and-delivery" element={<ShippingAndDeliveryPage />} />
-            </Route>
+            <Route path="/shipping-and-delivery" element={<ShippingAndDeliveryPage />} />
 
             <Route element={<PrivateRoute />}>
               <Route element={<ProfileLayout />} path="/profile">
