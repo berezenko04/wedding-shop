@@ -2,7 +2,7 @@ import { Stack, Typography, Divider } from "@mui/material";
 
 const Returns = () => {
   return (
-    <Stack spacing={3}>
+    <Stack spacing={4}>
       <Typography variant="h3">Returns & Refunds</Typography>
 
       <Stack spacing={1}>
