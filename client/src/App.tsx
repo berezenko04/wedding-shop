@@ -38,6 +38,7 @@ const ShippingAndDeliveryPage = lazy(() => import("@/pages/help/ShippingAndDeliv
 const ReturnsPage = lazy(() => import("@/pages/help/Returns"));
 const PaymentOptionsPage = lazy(() => import("@/pages/help/PaymentOptions"));
 const ContactUsPage = lazy(() => import("@/pages/help/ContactUs"));
+const TermsOfUsePage = lazy(() => import("@/pages/help/TermsOfUse"));
 
 function App() {
   const dispatch = useAppDispatch();
@@ -75,6 +76,7 @@ function App() {
             <Route path="/returns" element={<ReturnsPage />} />
             <Route path="/payment-options" element={<PaymentOptionsPage />} />
             <Route path="/contact-us" element={<ContactUsPage />} />
+            <Route path="/terms-of-use" element={<TermsOfUsePage />} />
 
             <Route element={<PrivateRoute />}>
               <Route element={<ProfileLayout />} path="/profile">
