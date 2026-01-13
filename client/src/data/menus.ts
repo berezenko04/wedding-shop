@@ -10,7 +10,7 @@ import {
 export const footerHelpMenu = [
   { title: "Shipping and Delivery", href: "/shipping-and-delivery" },
   { title: "Returns", href: "/returns" },
-  { title: "Payment Options", href: "#" },
+  { title: "Payment Options", href: "/payment-options" },
   { title: "Contact Us", href: "#" },
 ];
 
