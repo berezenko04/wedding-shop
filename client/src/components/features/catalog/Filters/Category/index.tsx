@@ -1,6 +1,11 @@
+import { useQuery } from "@tanstack/react-query";
+
 // components
 import Picker from "@/components/ui/Picker";
 import FilterItem from "../FilterItem";
+
+// api
+import CategoriesService from "@/api/categories/categories.service";
 
 export type FilterByCategoryProps = {
   category: string | null;
@@ -8,9 +13,16 @@ export type FilterByCategoryProps = {
 };
 
 const FilterByCategory: React.FC<FilterByCategoryProps> = ({ category, setCategory }) => {
+  const { data: categories } = useQuery({ queryKey: ["categories"], queryFn: CategoriesService.getAll });
   return (
     <FilterItem title="By category">
-      <Picker columns={2} value={category} onChange={setCategory} items={[]} />
+      <Picker
+        columns={2}
+        value={category}
+        onChange={setCategory}
+        items={categories?.map((c) => ({ label: c.name, value: c.slug })) || []}
+        isFullLengthLast
+      />
     </FilterItem>
   );
 };

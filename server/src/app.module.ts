@@ -35,7 +35,7 @@ import { DevOnlyGuard } from './common/guards/dev-only.guard';
         '.env',
       ],
     }),
-    ThrottlerModule.forRoot({ throttlers: [{ ttl: 60000, limit: 100 }] }),
+    ThrottlerModule.forRoot({ throttlers: [{ ttl: 60000, limit: 10000 }] }),
     PrismaModule,
     AuthModule,
     UserModule,
