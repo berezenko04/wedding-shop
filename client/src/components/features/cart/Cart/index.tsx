@@ -1,6 +1,7 @@
 import { Button, Divider, Drawer, IconButton, Stack, Typography } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
 import { Fragment } from "react/jsx-runtime";
+import { useNavigate } from "react-router";
 
 // components
 import CartItem from "../Item";
@@ -20,8 +21,14 @@ type CartProps = {
 
 const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const cart = queryClient.getQueryData<CartItemType[]>(["cart"]) || [];
+
+  const handleClickCheckout = () => {
+    navigate("/checkout");
+    handleClose();
+  };
 
   return (
     <Drawer
@@ -86,7 +93,7 @@ const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
                 discount: item.product.discount,
               }))}
             />
-            <Button variant="contained" color="primary" size="small">
+            <Button variant="contained" color="primary" size="small" onClick={handleClickCheckout}>
               Checkout
             </Button>
           </Stack>
