@@ -25,6 +25,7 @@ const ResetPasswordSuccessPage = lazy(() => import("@/pages/auth/ResetPasswordSu
 const HomePage = lazy(() => import("@/pages/Home"));
 const CatalogPage = lazy(() => import("@/pages/Catalog"));
 const CatalogProductPage = lazy(() => import("@/pages/CatalogProduct"));
+const CheckoutPage = lazy(() => import("@/pages/Checkout"));
 const NotFoundPage = lazy(() => import("@/pages/NotFound"));
 
 const AccountPage = lazy(() => import("@/pages/profile/Account"));
@@ -81,6 +82,7 @@ function App() {
             <Route path="/privacy-and-policy" element={<PrivacyAndPolicyPage />} />
 
             <Route element={<PrivateRoute />}>
+              <Route element={<CheckoutPage />} path="/checkout" />
               <Route element={<ProfileLayout />} path="/profile">
                 <Route path="" element={<AccountPage />} />
                 <Route path="wishlist" element={<WishlistPage />} />
