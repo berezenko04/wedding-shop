@@ -1,18 +1,18 @@
-import { Button, Divider, Drawer, IconButton, Stack, Typography } from "@mui/material";
-import { useQueryClient } from "@tanstack/react-query";
-import { Fragment } from "react/jsx-runtime";
-import { useNavigate } from "react-router";
+import { Button, Divider, Drawer, IconButton, Stack, Typography } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
+import { Fragment } from 'react/jsx-runtime';
+import { useNavigate } from 'react-router';
 
 // components
-import CartItem from "../Item";
-import CartTotal from "../Total";
-import EmptyCart from "../Empty";
+import CartItem from '../Item';
+import CartTotal from '../Total';
+import EmptyCart from '../Empty';
 
-// types
-import { CartItem as CartItemType } from "@/api/cart/cart.types";
+// typesp
+import { CartItem as CartItemType } from '@/api/cart/cart.types';
 
 // icons
-import { Close } from "@mui/icons-material";
+import { Close } from '@mui/icons-material';
 
 type CartProps = {
   isOpened: boolean;
@@ -23,10 +23,10 @@ const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const cart = queryClient.getQueryData<CartItemType[]>(["cart"]) || [];
+  const cart = queryClient.getQueryData<CartItemType[]>(['cart']) || [];
 
   const handleClickCheckout = () => {
-    navigate("/checkout");
+    navigate('/checkout');
     handleClose();
   };
 
@@ -39,15 +39,15 @@ const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
         paper: {
           sx: {
             width: 580,
-            height: "100vh",
-            maxHeight: "100vh",
+            height: '100vh',
+            maxHeight: '100vh',
           },
         },
       }}
     >
       <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={4} p={3}>
         <Typography variant="h3">
-          Cart {cart.length > 0 ? `(${cart.reduce((acc, i) => acc + i.quantity, 0)})` : ""}
+          Cart {cart.length > 0 ? `(${cart.reduce((acc, i) => acc + i.quantity, 0)})` : ''}
         </Typography>
         <IconButton onClick={handleClose}>
           <Close />
@@ -59,20 +59,20 @@ const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
             px={3}
             flex={1}
             sx={(theme) => ({
-              overflowY: "auto",
-              "&::-webkit-scrollbar": {
+              overflowY: 'auto',
+              '&::-webkit-scrollbar': {
                 width: 32,
                 height: 32,
               },
 
-              "&::-webkit-scrollbar-thumb": {
+              '&::-webkit-scrollbar-thumb': {
                 backgroundColor: theme.palette.primary.main,
-                border: "12px solid transparent",
-                backgroundClip: "content-box",
+                border: '12px solid transparent',
+                backgroundClip: 'content-box',
               },
 
-              "&::-webkit-scrollbar-button": {
-                display: "none",
+              '&::-webkit-scrollbar-button': {
+                display: 'none',
                 height: 0,
                 width: 0,
               },

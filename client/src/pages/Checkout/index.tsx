@@ -1,10 +1,17 @@
-import { Stack } from "@mui/material";
+import { Grid } from '@mui/material';
 
 // components
-import CheckoutCart from "@/components/features/checkout/Cart";
+import CheckoutCart from '@/components/features/checkout/Cart';
 
 const Checkout: React.FC = () => {
-  return <Stack><CheckoutCart/></Stack>;
+  return (
+    <Grid container>
+      <Grid size={{ xs: 8 }}></Grid>
+      <Grid size={{ xs: 4 }}>
+        <CheckoutCart />
+      </Grid>
+    </Grid>
+  );
 };
 
 export default Checkout;
