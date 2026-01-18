@@ -1,4 +1,4 @@
-import { Stack, Typography } from '@mui/material'
+import { Divider, Stack, Typography } from '@mui/material'
 import { useQueryClient } from '@tanstack/react-query'
 
 // components
@@ -7,9 +7,6 @@ import CartItem from './Item'
 
 // types
 import { CartItem as CartItemType } from '@/api/cart/cart.types'
-
-
-
 
 const CheckoutCart: React.FC = () => {
     const queryClient = useQueryClient();
@@ -24,7 +21,10 @@ const CheckoutCart: React.FC = () => {
                 </Stack>
                 <Stack>
                     {cart.map((c) => (
-                        <CartItem {...c} />
+                        <>
+                            <CartItem {...c} />
+                            <Divider sx={{ mt: 3 }} />
+                        </>
                     ))}
                 </Stack>
                 <Stack gap={1}>
