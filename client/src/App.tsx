@@ -39,6 +39,7 @@ const ReturnsPage = lazy(() => import("@/pages/help/Returns"));
 const PaymentOptionsPage = lazy(() => import("@/pages/help/PaymentOptions"));
 const ContactUsPage = lazy(() => import("@/pages/help/ContactUs"));
 const TermsOfUsePage = lazy(() => import("@/pages/help/TermsOfUse"));
+const PrivacyAndPolicyPage = lazy(() => import("@/pages/help/PrivacyAndPolicy"));
 
 function App() {
   const dispatch = useAppDispatch();
@@ -77,6 +78,7 @@ function App() {
             <Route path="/payment-options" element={<PaymentOptionsPage />} />
             <Route path="/contact-us" element={<ContactUsPage />} />
             <Route path="/terms-of-use" element={<TermsOfUsePage />} />
+            <Route path="/privacy-and-policy" element={<PrivacyAndPolicyPage />} />
 
             <Route element={<PrivateRoute />}>
               <Route element={<ProfileLayout />} path="/profile">
