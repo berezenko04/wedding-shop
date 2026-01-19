@@ -3,6 +3,7 @@ import { Grid, Stack, Typography } from '@mui/material';
 // components
 import CheckoutCart from '@/components/features/checkout/Cart';
 import ShippingAddress from '@/components/features/checkout/ShippingAddress';
+import PaymentMethod from '@/components/features/checkout/PaymentMethod';
 
 const Checkout: React.FC = () => {
   return (
@@ -12,6 +13,7 @@ const Checkout: React.FC = () => {
         <Grid size={{ xs: 7 }}>
           <Stack gap={3}>
             <ShippingAddress />
+            <PaymentMethod />
           </Stack>
         </Grid>
         <Grid size={{ xs: 5 }}>
