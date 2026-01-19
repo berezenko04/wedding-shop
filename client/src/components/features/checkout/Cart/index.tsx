@@ -23,11 +23,9 @@ const CheckoutCart: React.FC = () => {
   return (
     <OutlinedBlock flex={1} maxHeight="80vh">
       <Stack gap={4} flex={1}>
-        <Stack>
-          <Typography variant="medium" textTransform="uppercase">
-            Cart
-          </Typography>
-        </Stack>
+        <Typography variant="medium" textTransform="uppercase">
+          Cart
+        </Typography>
         <Stack flex={1}>
           {cart.map((c) => (
             <>
