@@ -29,7 +29,7 @@ const CheckoutForm: React.FC = () => {
     mode: 'onChange',
     defaultValues: {
       paymentMethodId: '',
-      shippingAddressId: '',
+      shippingAddressId: primaryAddress?.id,
       shippingMethod: 'COURIER',
     },
   });
