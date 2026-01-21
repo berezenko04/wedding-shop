@@ -23,12 +23,21 @@ const CheckoutForm: React.FC = () => {
     control,
     handleSubmit,
     reset,
+    watch,
     formState: { isSubmitting },
   } = useForm<CheckoutFormFields>({
+    mode: 'onChange',
     defaultValues: {
+      paymentMethodId: '',
+      shippingAddressId: '',
       shippingMethod: 'COURIER',
     },
   });
+
+  const paymentMethodId = watch('paymentMethodId');
+  const shippingAddressId = watch('shippingAddressId');
+
+  const isDisabled = isSubmitting || !paymentMethodId || !shippingAddressId;
 
   const onSubmit = async (data: CheckoutFormFields) => {
     // try {
@@ -42,10 +51,11 @@ const CheckoutForm: React.FC = () => {
       <ShippingAddress address={primaryAddress?.address} />
       <Controller
         name="paymentMethodId"
+        rules={{ required: true }}
         control={control}
         render={({ field }) => <PaymentMethod paymentMethod={field.value} onChange={field.onChange} />}
       />
-      <Button color="primary" variant="contained" size="small" type="submit" disabled={isSubmitting}>
+      <Button color="primary" variant="contained" size="small" type="submit" disabled={isDisabled}>
         Place Order
       </Button>
     </Stack>
