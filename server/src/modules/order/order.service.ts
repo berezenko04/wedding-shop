@@ -64,6 +64,7 @@ export class OrderService {
       quantity: item.quantity,
       price: item.product.price,
       size: item.size,
+      discount: item.product.discount,
     }));
 
     await this.prisma.orderItem.createMany({ data: orderItemsData });
