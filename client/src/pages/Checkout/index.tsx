@@ -2,8 +2,7 @@ import { Grid, Stack, Typography } from '@mui/material';
 
 // components
 import CheckoutCart from '@/components/features/checkout/Cart';
-import ShippingAddress from '@/components/features/checkout/ShippingAddress';
-import PaymentMethod from '@/components/features/checkout/PaymentMethod';
+import CheckoutForm from '@/components/forms/Checkout';
 
 const Checkout: React.FC = () => {
   return (
@@ -11,10 +10,7 @@ const Checkout: React.FC = () => {
       <Typography variant="h3">Checkout</Typography>
       <Grid container spacing={3}>
         <Grid size={{ xs: 7 }}>
-          <Stack gap={3}>
-            <ShippingAddress />
-            <PaymentMethod />
-          </Stack>
+          <CheckoutForm />
         </Grid>
         <Grid size={{ xs: 5 }}>
           <CheckoutCart />

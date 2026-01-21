@@ -3,8 +3,19 @@ import { Stack, Typography } from '@mui/material';
 // components
 import OutlinedBlock from '@/components/ui/layout/OutlinedBlock';
 import EditButton from '@/components/ui/buttons/Edit';
+import Picker from '@/components/ui/Picker';
 
-const PaymentMethod: React.FC = () => {
+// hooks
+import { useUserPaymentMethods } from '@/hooks/useUserPaymentMethods';
+
+type PaymentMethodProps = {
+  paymentMethod: string;
+  onChange: (i: string | null) => void;
+};
+
+const PaymentMethod: React.FC<PaymentMethodProps> = ({ paymentMethod, onChange }) => {
+  const { data: paymentMethods } = useUserPaymentMethods();
+
   return (
     <OutlinedBlock sx={{ gap: 2 }}>
       <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={4}>
@@ -14,7 +25,11 @@ const PaymentMethod: React.FC = () => {
         <EditButton href="/profile/payment" />
       </Stack>
       <Stack gap={1}>
-        
+        <Picker
+          items={paymentMethods?.map((i) => ({ value: i.id, label: i.method }))}
+          value={paymentMethod}
+          onChange={onChange}
+        />
       </Stack>
     </OutlinedBlock>
   );
