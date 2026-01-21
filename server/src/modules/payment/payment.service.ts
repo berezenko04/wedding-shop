@@ -100,13 +100,15 @@ export class PaymentService {
   }
 
   async get(userId: string, paymentId: string) {
-    try {
-      return this.prisma.payment.findUnique({
-        where: { id: paymentId, userId },
-      });
-    } catch {
+    const method = await this.prisma.payment.findUnique({
+      where: { id: paymentId, userId },
+    });
+
+    if (!method) {
       throw new NotFoundException('Payment method is not found');
     }
+
+    return method;
   }
 
   async update(userId: string, dto: UpdatePaymentDto) {
