@@ -5,19 +5,17 @@ import { useQueryClient } from '@tanstack/react-query';
 import OutlinedBlock from '@/components/ui/layout/OutlinedBlock';
 import EditButton from '@/components/ui/buttons/Edit';
 
-// hooks
-import { useUserShippingAddresses } from '@/hooks/useUserShippingAddresses';
-
-//
+// types
 import { User } from '@/api/user/user.types';
 
-const ShippingAddress: React.FC = () => {
+type ShippingAddressProps = {
+  address?: string;
+};
+
+const ShippingAddress: React.FC<ShippingAddressProps> = ({ address }) => {
   const queryClient = useQueryClient();
 
-  const { data: addresses } = useUserShippingAddresses();
   const user = queryClient.getQueryData<User>(['user']);
-
-  const primaryAddress = addresses?.find((address) => address.primary);
 
   return (
     <OutlinedBlock sx={{ gap: 2 }}>
@@ -31,8 +29,7 @@ const ShippingAddress: React.FC = () => {
         <Typography>
           {user?.firstName} {user?.lastName}
         </Typography>
-        <Typography>{primaryAddress?.address}</Typography>
-        <Typography>{user?.email}</Typography>
+        <Typography>{address}</Typography>
       </Stack>
     </OutlinedBlock>
   );

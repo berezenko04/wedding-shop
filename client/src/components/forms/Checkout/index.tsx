@@ -1,10 +1,12 @@
 import { Button, Stack } from '@mui/material';
-import { useForm } from 'react-hook-form';
-import { useQueryClient } from '@tanstack/react-query';
+import { Controller, useForm } from 'react-hook-form';
 
 // components
 import ShippingAddress from '@/components/features/checkout/ShippingAddress';
 import PaymentMethod from '@/components/features/checkout/PaymentMethod';
+
+// hooks
+import { useUserShippingAddresses } from '@/hooks/useUserShippingAddresses';
 
 type CheckoutFormFields = {
   paymentMethodId: string;
@@ -13,7 +15,9 @@ type CheckoutFormFields = {
 };
 
 const CheckoutForm: React.FC = () => {
-  const queryClient = useQueryClient();
+  const { data: addresses } = useUserShippingAddresses();
+
+  const primaryAddress = addresses?.find((address) => address.primary);
 
   const {
     control,
@@ -22,12 +26,9 @@ const CheckoutForm: React.FC = () => {
     formState: { isSubmitting },
   } = useForm<CheckoutFormFields>({
     defaultValues: {
-      rating: null,
-      comment: '',
+      shippingMethod: 'COURIER',
     },
   });
-
-  const isDisabled = isSubmitting;
 
   const onSubmit = async (data: CheckoutFormFields) => {
     // try {
@@ -38,17 +39,14 @@ const CheckoutForm: React.FC = () => {
 
   return (
     <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)} p={2} gap={3}>
-      <ShippingAddress />
-      <PaymentMethod />
-      <Button
-        color="primary"
-        variant="contained"
-        size="small"
-        type="submit"
-        disabled={isDisabled}
-        sx={{ alignSelf: 'flex-end' }}
-      >
-        Send
+      <ShippingAddress address={primaryAddress?.address} />
+      <Controller
+        name="paymentMethodId"
+        control={control}
+        render={({ field }) => <PaymentMethod paymentMethod={field.value} onChange={field.onChange} />}
+      />
+      <Button color="primary" variant="contained" size="small" type="submit" disabled={isSubmitting}>
+        Place Order
       </Button>
     </Stack>
   );
