@@ -40,14 +40,15 @@ const CheckoutForm: React.FC = () => {
   const isDisabled = isSubmitting || !paymentMethodId || !shippingAddressId;
 
   const onSubmit = async (data: CheckoutFormFields) => {
-    // try {
-    // } finally {
-    //   reset();
-    // }
+    try {
+      console.log(data);
+    } finally {
+      reset();
+    }
   };
 
   return (
-    <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)} p={2} gap={3}>
+    <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)} gap={3}>
       <ShippingAddress address={primaryAddress?.address} />
       <Controller
         name="paymentMethodId"

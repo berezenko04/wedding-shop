@@ -27,6 +27,8 @@ const PaymentMethod: React.FC<PaymentMethodProps> = ({ paymentMethod, onChange }
       {paymentMethods ? (
         <Stack gap={1}>
           <Picker
+            showRadio
+            size="large"
             items={paymentMethods?.map((i) => ({ value: i.id, label: i.method }))}
             value={paymentMethod}
             onChange={onChange}
