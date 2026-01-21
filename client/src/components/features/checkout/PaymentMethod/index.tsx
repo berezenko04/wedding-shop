@@ -24,13 +24,17 @@ const PaymentMethod: React.FC<PaymentMethodProps> = ({ paymentMethod, onChange }
         </Typography>
         <EditButton href="/profile/payment" />
       </Stack>
-      <Stack gap={1}>
-        <Picker
-          items={paymentMethods?.map((i) => ({ value: i.id, label: i.method }))}
-          value={paymentMethod}
-          onChange={onChange}
-        />
-      </Stack>
+      {paymentMethods ? (
+        <Stack gap={1}>
+          <Picker
+            items={paymentMethods?.map((i) => ({ value: i.id, label: i.method }))}
+            value={paymentMethod}
+            onChange={onChange}
+          />
+        </Stack>
+      ) : (
+        <></>
+      )}
     </OutlinedBlock>
   );
 };
