@@ -41,10 +41,6 @@ const CheckoutCart: React.FC = () => {
             <Typography>Total</Typography>
             <Typography>{total.toFixed(2)} USD</Typography>
           </Stack>
-          {/* <Stack flexDirection="row" justifyContent="space-between" gap={4}>
-            <Typography>Discount</Typography>
-            <Typography>20%</Typography>
-          </Stack> */}
           <Stack flexDirection="row" justifyContent="space-between" gap={4}>
             <Typography>Delivery</Typography>
             <Typography>{DELIVERY_COST} USD</Typography>
