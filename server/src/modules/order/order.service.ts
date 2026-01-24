@@ -70,6 +70,8 @@ export class OrderService {
     await this.prisma.orderItem.createMany({ data: orderItemsData });
 
     await this.prisma.cart.delete({ where: { userId } });
+
+    return { orderNumber: order.orderNumber };
   }
 
   async all(userId: string, dto: PaginationDto) {

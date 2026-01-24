@@ -28,8 +28,7 @@ export class OrderController {
 
   @Post()
   async create(@User('id') userId: string, @Body() dto: CreateOrderDto) {
-    await this.orderService.create(userId, dto);
-    return { message: 'Order is created' };
+    return this.orderService.create(userId, dto);
   }
 
   @Get()

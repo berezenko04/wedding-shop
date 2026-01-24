@@ -1,6 +1,21 @@
 import { Box, Button, Grid, Stack, Typography } from '@mui/material';
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router';
 
 const CheckoutSuccessPage: React.FC = () => {
+  const navigate = useNavigate();
+  const { state } = useLocation();
+
+  useEffect(() => {
+    if (!state?.orderNumber) {
+      navigate('/', { replace: true });
+    }
+  }, [state, navigate]);
+
+  if (!state?.orderNumber) {
+    return null;
+  }
+
   return (
     <Grid container spacing={4}>
       <Grid size={{ xs: 6 }}>
@@ -12,7 +27,7 @@ const CheckoutSuccessPage: React.FC = () => {
       </Grid>
       <Grid size={{ xs: 6 }} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Stack gap={4}>
-          <Typography variant="h3">Order #1</Typography>
+          <Typography variant="h3">Order #{state.orderNumber}</Typography>
           <Typography
             variant="h1"
             sx={(theme) => ({

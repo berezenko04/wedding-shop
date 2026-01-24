@@ -6,6 +6,10 @@ export type CreateOrderBody = {
   paymentMethodId: string;
 };
 
+export type CreateOrderResponse = {
+  orderNumber: string;
+};
+
 export type Order = {
   id: string;
   orderNumber: number;

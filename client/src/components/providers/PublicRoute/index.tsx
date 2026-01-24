@@ -1,14 +1,14 @@
-import { Navigate, Outlet } from "react-router";
-import { useSelector } from "react-redux";
+import { Navigate, Outlet } from 'react-router';
+import { useSelector } from 'react-redux';
 
 // redux
-import { authSelector } from "@/redux/auth/auth.selectors";
+import { authSelector } from '@/redux/auth/auth.selectors';
 
 const PublicRoute = () => {
   const { isAuth } = useSelector(authSelector);
 
   if (isAuth) {
-    return <Navigate to="/" />;
+    return <Navigate replace to="/" />;
   }
 
   return <Outlet />;
