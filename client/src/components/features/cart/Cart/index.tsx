@@ -56,7 +56,7 @@ const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
       </Stack>
       {cart.length > 0 ? (
         <>
-          <CustomScrollContainer sx={{ px: 3 }}>
+          <CustomScrollContainer sx={{ px: 3, flex: 1 }}>
             {cart.map((item, idx) => (
               <Fragment key={item.id}>
                 <CartItem {...item} />
