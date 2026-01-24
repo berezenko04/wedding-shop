@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router';
 import CartItem from '../Item';
 import CartTotal from '../Total';
 import EmptyCart from '../Empty';
+import CustomScrollContainer from '@/components/ui/layout/CustomScrollContainer';
 
 // typesp
 import { CartItem as CartItemType } from '@/api/cart/cart.types';
@@ -55,36 +56,14 @@ const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
       </Stack>
       {cart.length > 0 ? (
         <>
-          <Stack
-            px={3}
-            flex={1}
-            sx={(theme) => ({
-              overflowY: 'auto',
-              '&::-webkit-scrollbar': {
-                width: 32,
-                height: 32,
-              },
-
-              '&::-webkit-scrollbar-thumb': {
-                backgroundColor: theme.palette.primary.main,
-                border: '12px solid transparent',
-                backgroundClip: 'content-box',
-              },
-
-              '&::-webkit-scrollbar-button': {
-                display: 'none',
-                height: 0,
-                width: 0,
-              },
-            })}
-          >
+          <CustomScrollContainer sx={{ px: 3 }}>
             {cart.map((item, idx) => (
               <Fragment key={item.id}>
                 <CartItem {...item} />
                 {idx !== cart.length - 1 && <Divider />}
               </Fragment>
             ))}
-          </Stack>
+          </CustomScrollContainer>
           <Stack p={3} gap={3}>
             <CartTotal
               items={cart.map((item) => ({
