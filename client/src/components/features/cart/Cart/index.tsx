@@ -1,5 +1,4 @@
 import { Button, Divider, Drawer, IconButton, Stack, Typography } from '@mui/material';
-import { useQueryClient } from '@tanstack/react-query';
 import { Fragment } from 'react/jsx-runtime';
 import { useNavigate } from 'react-router';
 
@@ -9,11 +8,9 @@ import CartTotal from '../Total';
 import EmptyCart from '../Empty';
 import CustomScrollContainer from '@/components/ui/layout/CustomScrollContainer';
 
-// typesp
-import { CartItem as CartItemType } from '@/api/cart/cart.types';
-
 // icons
 import { Close } from '@mui/icons-material';
+import { useCart } from '@/hooks/useCart';
 
 type CartProps = {
   isOpened: boolean;
@@ -21,10 +18,9 @@ type CartProps = {
 };
 
 const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const cart = queryClient.getQueryData<CartItemType[]>(['cart']) || [];
+  const { data: cart = [] } = useCart();
 
   const handleClickCheckout = () => {
     navigate('/checkout');

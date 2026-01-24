@@ -1,21 +1,18 @@
 import { Divider, Stack, Typography } from '@mui/material';
-import { useQueryClient } from '@tanstack/react-query';
 
 // components
 import OutlinedBlock from '@/components/ui/layout/OutlinedBlock';
 import CustomScrollContainer from '@/components/ui/layout/CustomScrollContainer';
 import CartItem from './Item';
 
-// types
-import { CartItem as CartItemType } from '@/api/cart/cart.types';
+// hooks
+import { useCart } from '@/hooks/useCart';
 
 // constants
 import { DELIVERY_COST } from '@/constants';
 
 const CheckoutCart: React.FC = () => {
-  const queryClient = useQueryClient();
-
-  const cart = queryClient.getQueryData<CartItemType[]>(['cart']) || [];
+  const { data: cart = [] } = useCart();
 
   const total = cart.reduce(
     (acc, item) => acc + item.product.price * (1 - (item?.product.discount ?? 0)) * item.quantity,
