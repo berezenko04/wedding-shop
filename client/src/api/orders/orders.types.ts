@@ -21,6 +21,8 @@ export type Order = {
   shippingAddress: string;
   shippingMethod: string;
   trackingNumber: string;
+  subtotal: number;
+  shipmentCost: number;
   paymentMethod: PaymentMethods;
   createdAt: Date;
   items: OrderItem[];

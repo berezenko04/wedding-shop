@@ -91,7 +91,18 @@ export class OrderService {
         where: { userId },
         include: {
           items: {
-            include: { product: { select: { posterUrl: true, title: true } } },
+            select: {
+              quantity: true,
+              price: true,
+              discount: true,
+              size: true,
+              product: {
+                select: {
+                  posterUrl: true,
+                  title: true,
+                },
+              },
+            },
           },
         },
       }),
