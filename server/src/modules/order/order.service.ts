@@ -48,6 +48,12 @@ export class OrderService {
       shippingAddressId,
     );
 
+    const subtotal = cart.items.reduce(
+      (acc, i) =>
+        acc + i.product.price * (1 - (i.product.discount ?? 0)) * i.quantity,
+      0,
+    );
+
     const order = await this.prisma.order.create({
       data: {
         userId,
@@ -55,6 +61,7 @@ export class OrderService {
         shippingMethod,
         trackingNumber: generateTrackingNumber(),
         paymentMethod: method,
+        subtotal,
       },
     });
 

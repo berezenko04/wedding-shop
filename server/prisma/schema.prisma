@@ -228,14 +228,17 @@ model Wishlist {
 }
 
 model Order {
-  id              String           @id @default(uuid()) @db.Uuid
-  userId          String           @map("user_id") @db.Uuid
-  orderNumber     Int              @default(autoincrement()) @map("order_number")
-  shippingAddress String           @map("shipping_address")
-  trackingNumber  String           @map("tracking_number")
-  shippingMethod  ShippingMethods  @map("shipping_method")
-  paymentMethod   PaymentMethods   @map("payment_method")
-  status          ShipmentStatuses @default(DELIVERED)
+  id              String          @id @default(uuid()) @db.Uuid
+  userId          String          @map("user_id") @db.Uuid
+  orderNumber     Int             @default(autoincrement()) @map("order_number")
+  shippingAddress String          @map("shipping_address")
+  trackingNumber  String          @map("tracking_number")
+  subtotal        Float
+  shipmentCost    Float           @default(20) @map("shipment_cost")
+  shippingMethod  ShippingMethods @map("shipping_method")
+  paymentMethod   PaymentMethods  @map("payment_method")
+
+  status ShipmentStatuses @default(DELIVERED)
 
   user  User        @relation(fields: [userId], references: [id])
   items OrderItem[]
