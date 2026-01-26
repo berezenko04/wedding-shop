@@ -89,24 +89,9 @@ export class OrderService {
         skip: (page - 1) * limit,
         take: limit,
         where: { userId },
-        select: {
-          id: true,
-          orderNumber: true,
-          shippingAddress: true,
-          shippingMethod: true,
-          trackingNumber: true,
-          paymentMethod: true,
-          createdAt: true,
+        include: {
           items: {
-            select: {
-              quantity: true,
-              price: true,
-              discount: true,
-              size: true,
-              product: {
-                select: { posterUrl: true, title: true },
-              },
-            },
+            include: { product: { select: { posterUrl: true, title: true } } },
           },
         },
       }),
