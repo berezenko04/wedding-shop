@@ -187,7 +187,7 @@ const theme = createTheme({
         {
           props: { variant: 'iconaryOutlined', color: 'grey' },
           style: ({ theme }) => ({
-            border: `1px solid ${theme.palette.grey[200]}`,
+            border: `1px solid ${theme.palette.grey[100]}`,
 
             '&:hover': {
               backgroundColor: theme.palette.grey[100],

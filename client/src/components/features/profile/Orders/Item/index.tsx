@@ -4,18 +4,23 @@ import { Stack, TableCell, TableRow } from '@mui/material';
 import ChipShipped from '@/components/ui/chips/ChipShipped';
 import DownloadButton from '@/components/ui/buttons/Download';
 import PrintButton from '@/components/ui/buttons/Print';
+import ExpandButton from '@/components/ui/buttons/Expand';
 
 // types
 import { Order } from '@/api/orders/orders.types';
 
-const Order: React.FC<Order> = ({ orderNumber, createdAt, items }) => {
+const Order: React.FC<Order> = ({ orderNumber, subtotal, shipmentCost, createdAt, items }) => {
+  const grandTotal = (subtotal + shipmentCost).toFixed(2);
+
   return (
     <TableRow>
-      <TableCell />
+      <TableCell>
+        <ExpandButton />
+      </TableCell>
       <TableCell>#{orderNumber}</TableCell>
       <TableCell>{new Date(createdAt).toLocaleDateString('en-GB')}</TableCell>
       <TableCell>{items.length}</TableCell>
-      <TableCell>{(2).toFixed(2)} USD</TableCell>
+      <TableCell>{grandTotal} USD</TableCell>
       <TableCell>
         <ChipShipped />
       </TableCell>
