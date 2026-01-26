@@ -1,7 +1,7 @@
 import { httpGet, httpPost } from '@/middlewares/axios.middleware';
 
 // types
-import { CreateOrderBody, CreateOrderResponse, Order } from './orders.types';
+import { CreateOrderBody, CreateOrderResponse, GetAllOrdersResponse } from './orders.types';
 
 const R = {
   orders: '/orders',
@@ -10,7 +10,7 @@ const R = {
 
 const OrdersService = {
   async getAll() {
-    return httpGet<Order[]>(R.orders);
+    return httpGet<GetAllOrdersResponse>(R.orders);
   },
   async getCsv(id: string) {
     return httpGet<string>(R.ordersCsv(id));

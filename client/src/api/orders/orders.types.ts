@@ -10,6 +10,11 @@ export type CreateOrderResponse = {
   orderNumber: string;
 };
 
+export type GetAllOrdersResponse = {
+  orders: Order[];
+  total: number;
+};
+
 export type Order = {
   id: string;
   orderNumber: number;

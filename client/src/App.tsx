@@ -9,10 +9,12 @@ import AuthLayout from './components/layouts/AuthLayout';
 import AppLayout from './components/layouts/AppLayout';
 import ProfileLayout from './components/layouts/ProfileLayout';
 
-// redux
-import { refresh } from './redux/auth/auth.actions';
+// providers
 import PrivateRoute from './components/providers/PrivateRoute';
 import PublicRoute from './components/providers/PublicRoute';
+
+// redux
+import { refresh } from './redux/auth/auth.actions';
 
 const RegisterPage = lazy(() => import('@/pages/auth/Register'));
 const LoginPage = lazy(() => import('@/pages/auth/Login'));
@@ -33,6 +35,7 @@ const AccountPage = lazy(() => import('@/pages/profile/Account'));
 const WishlistPage = lazy(() => import('@/pages/profile/Wishlist'));
 const SettingsPage = lazy(() => import('@/pages/profile/Settings'));
 const ReviewsPage = lazy(() => import('@/pages/profile/Reviews'));
+const OrdersPage = lazy(() => import('@/pages/profile/Orders'));
 const ShippingPage = lazy(() => import('@/pages/profile/Shipping'));
 const PaymentPage = lazy(() => import('@/pages/profile/Payment'));
 
@@ -91,7 +94,7 @@ function App() {
                 <Route path="wishlist" element={<WishlistPage />} />
                 <Route path="settings" element={<SettingsPage />} />
                 <Route path="reviews" element={<ReviewsPage />} />
-                <Route path="orders" />
+                <Route path="orders" element={<OrdersPage />} />
                 <Route path="shipping-address" element={<ShippingPage />} />
                 <Route path="payment" element={<PaymentPage />} />
               </Route>
