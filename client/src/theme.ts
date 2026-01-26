@@ -414,6 +414,20 @@ const theme = createTheme({
         }),
       },
     },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          borderRadius: 0,
+        },
+        sizeMedium: {
+          fontSize: 16,
+        },
+        colorSuccess: ({ theme }) => ({
+          backgroundColor: theme.palette.success[100],
+          color: theme.palette.success.main,
+        }),
+      },
+    },
   },
 });
 
