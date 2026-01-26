@@ -1,21 +1,18 @@
 import { Stack, Typography } from '@mui/material';
-import { useQueryClient } from '@tanstack/react-query';
 
 // components
 import OutlinedBlock from '@/components/ui/layout/OutlinedBlock';
 import EditButton from '@/components/ui/buttons/Edit';
 
-// types
-import { User } from '@/api/user/user.types';
+// hooks
+import { useUser } from '@/hooks/useUser';
 
 type ShippingAddressProps = {
   address?: string;
 };
 
 const ShippingAddress: React.FC<ShippingAddressProps> = ({ address }) => {
-  const queryClient = useQueryClient();
-
-  const user = queryClient.getQueryData<User>(['user']);
+  const { data: user } = useUser();
 
   return (
     <OutlinedBlock sx={{ gap: 2 }}>

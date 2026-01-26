@@ -1,40 +1,38 @@
-import { IconButton, Stack, Typography } from "@mui/material";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
-import toast from "react-hot-toast";
+import { IconButton, Stack, Typography } from '@mui/material';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 // components
-import PrimaryMark from "@/components/features/profile/PrimaryMark";
-import OutlinedBlock from "@/components/ui/layout/OutlinedBlock";
-import ShippingAddressForm from "@/components/forms/profile/ShippingAddress";
-import CustomModal from "@/components/ui/layout/CustomModal";
+import PrimaryMark from '@/components/features/profile/PrimaryMark';
+import OutlinedBlock from '@/components/ui/layout/OutlinedBlock';
+import ShippingAddressForm from '@/components/forms/profile/ShippingAddress';
+import CustomModal from '@/components/ui/layout/CustomModal';
 
 // api
-import ShippingService from "@/api/shipping/shipping.service";
+import ShippingService from '@/api/shipping/shipping.service';
 
 // types
-import { ShippingAddress } from "@/api/shipping/shipping.types";
-import { BaseResponseData } from "@/types/base.types";
-import { User } from "@/api/user/user.types";
+import { ShippingAddress } from '@/api/shipping/shipping.types';
+import { BaseResponseData } from '@/types/base.types';
 
 // icons
-import { DeleteOutline, EditOutlined } from "@mui/icons-material";
+import { DeleteOutline, EditOutlined } from '@mui/icons-material';
+import { useUser } from '@/hooks/useUser';
 
 const Address: React.FC<ShippingAddress> = ({ id, address: rawAddress, primary }) => {
   const [isUpdateModalOpened, setIsUpdateModalOpened] = useState<boolean>(false);
 
   const queryClient = useQueryClient();
 
-  const user = queryClient.getQueryData<User>(["user"]);
-  const [country, city, address] = rawAddress.split(", ");
+  const { data: user } = useUser();
+  const [country, city, address] = rawAddress.split(', ');
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => ShippingService.delete(id),
     onSuccess: (result: BaseResponseData, id: string) => {
       toast.success(result.message);
-      queryClient.setQueryData(["shipping"], (old: ShippingAddress[] = []) =>
-        old.filter((s) => s.id !== id)
-      );
+      queryClient.setQueryData(['shipping'], (old: ShippingAddress[] = []) => old.filter((s) => s.id !== id));
     },
   });
 
@@ -67,12 +65,7 @@ const Address: React.FC<ShippingAddress> = ({ id, address: rawAddress, primary }
           </Stack>
         </Stack>
       </Stack>
-      <CustomModal
-        title="Edit Shipping Address"
-        maxWidth={580}
-        open={isUpdateModalOpened}
-        onClose={handleClose}
-      >
+      <CustomModal title="Edit Shipping Address" maxWidth={580} open={isUpdateModalOpened} onClose={handleClose}>
         <ShippingAddressForm
           mode="update"
           defaultValues={{ country, city, address, primary }}
