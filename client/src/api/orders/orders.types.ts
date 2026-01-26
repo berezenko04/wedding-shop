@@ -1,0 +1,33 @@
+import { PaymentMethods, Sizes } from '@/types/enums.types';
+
+export type CreateOrderBody = {
+  shippingAddressId: string;
+  shippingMethod: string;
+  paymentMethodId: string;
+};
+
+export type CreateOrderResponse = {
+  orderNumber: string;
+};
+
+export type Order = {
+  id: string;
+  orderNumber: number;
+  shippingAddress: string;
+  shippingMethod: string;
+  trackingNumber: string;
+  paymentMethod: PaymentMethods;
+  createdAt: Date;
+  items: OrderItem[];
+};
+
+export type OrderItem = {
+  quantity: number;
+  price: number;
+  discount: number | null;
+  size: Sizes;
+  product: {
+    posterUrl: string;
+    title: string;
+  };
+};

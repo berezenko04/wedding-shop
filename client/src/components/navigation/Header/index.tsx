@@ -1,29 +1,31 @@
-import { Badge, Box, Button, IconButton, Stack } from "@mui/material";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Badge, Box, Button, IconButton, Stack } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 // components
-import Logo from "../Logo";
-import Searchbar from "./Searchbar";
-import CustomContainer from "@/components/ui/layout/CustomContainer";
-import Cart from "@/components/features/cart/Cart";
+import Logo from '../Logo';
+import Searchbar from './Searchbar';
+import CustomContainer from '@/components/ui/layout/CustomContainer';
+import Cart from '@/components/features/cart/Cart';
+
+// hooks
+import { useCart } from '@/hooks/useCart';
 
 // api
-import CartService from "@/api/cart/cart.service";
-import WishlistService from "@/api/wishlist/wishlist.service";
+import WishlistService from '@/api/wishlist/wishlist.service';
 
 // redux
-import { authSelector } from "@/redux/auth/auth.selectors";
+import { authSelector } from '@/redux/auth/auth.selectors';
 
 // types
-import { GetAllWishlist } from "@/api/wishlist/wishlist.types";
+import { GetAllWishlist } from '@/api/wishlist/wishlist.types';
 
 // icons
-import { FavoriteBorderOutlined, LocalMallOutlined, PersonOutline, StorefrontOutlined } from "@mui/icons-material";
+import { FavoriteBorderOutlined, LocalMallOutlined, PersonOutline, StorefrontOutlined } from '@mui/icons-material';
 
 // constants
-import { PAGE_LIMIT } from "@/constants";
+import { PAGE_LIMIT } from '@/constants';
 
 const Header: React.FC = () => {
   const queryClient = useQueryClient();
@@ -32,19 +34,14 @@ const Header: React.FC = () => {
   const [isCartOpened, setIsCartOpened] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const { data: cart = [] } = useQuery({
-    queryKey: ["cart"],
-    queryFn: CartService.getAll,
-    enabled: isAuth,
-    staleTime: Infinity,
-  });
+  const { data: cart = [] } = useCart();
 
   const { data: wishlistTotal = 0 } = useQuery<GetAllWishlist, Error, number>({
-    queryKey: ["wishlist", { page: 1, limit: PAGE_LIMIT }],
+    queryKey: ['wishlist', { page: 1, limit: PAGE_LIMIT }],
     queryFn: () => WishlistService.getAll({ page: 1, limit: PAGE_LIMIT }),
     select: (res) => res.total ?? 0,
     placeholderData: () =>
-      queryClient.getQueryData<GetAllWishlist>(["wishlist", { page: 1, limit: PAGE_LIMIT }]) ?? {
+      queryClient.getQueryData<GetAllWishlist>(['wishlist', { page: 1, limit: PAGE_LIMIT }]) ?? {
         wishlist: [],
         total: 0,
       },
@@ -57,8 +54,8 @@ const Header: React.FC = () => {
       setScrolled(window.scrollY > 0);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
@@ -69,9 +66,9 @@ const Header: React.FC = () => {
       sx={{
         top: 0,
         left: 0,
-        backgroundColor: "common.white",
+        backgroundColor: 'common.white',
         zIndex: 100,
-        transition: "box-shadow 0.3s",
+        transition: 'box-shadow 0.3s',
         boxShadow: scrolled ? 2 : 0,
       }}
     >
@@ -84,7 +81,7 @@ const Header: React.FC = () => {
             color="grey"
             variant="outlined"
             href="/catalog"
-            sx={{ textTransform: "none" }}
+            sx={{ textTransform: 'none' }}
           >
             Catalog
           </Button>

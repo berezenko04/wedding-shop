@@ -1,13 +1,13 @@
-import { PaymentMethods, ShippingMethods } from '@prisma/client';
-import { IsEnum, IsString } from 'class-validator';
+import { ShippingMethods } from '@prisma/client';
+import { IsEnum, IsUUID } from 'class-validator';
 
 export class CreateOrderDto {
-  @IsString()
-  shippingAddress: string;
+  @IsUUID()
+  shippingAddressId: string;
 
   @IsEnum(ShippingMethods)
   shippingMethod: ShippingMethods;
 
-  @IsEnum(PaymentMethods)
-  paymentMethod: PaymentMethods;
+  @IsUUID()
+  paymentMethodId: string;
 }

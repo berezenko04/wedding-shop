@@ -1,26 +1,22 @@
-import { useQuery } from "@tanstack/react-query";
-import { Button, Stack } from "@mui/material";
-import { useState } from "react";
+import { Button, Stack } from '@mui/material';
+import { useState } from 'react';
 
 // components
-import PaymentMethod from "./Item";
-import EmptyState from "../EmptyState";
-import CustomModal from "@/components/ui/layout/CustomModal";
-import PaymentMethodForm from "@/components/forms/profile/PaymentMethod";
+import PaymentMethod from './Item';
+import EmptyState from '../EmptyState';
+import CustomModal from '@/components/ui/layout/CustomModal';
+import PaymentMethodForm from '@/components/forms/profile/PaymentMethod';
 
-// api
-import PaymentService from "@/api/payment/payment.service";
+// hooks
+import { useUserPaymentMethods } from '@/hooks/useUserPaymentMethods';
 
 // icons
-import { Add } from "@mui/icons-material";
+import { Add } from '@mui/icons-material';
 
 const PaymentMethods: React.FC = () => {
   const [isAddModalOpened, setIsAddModalOpened] = useState<boolean>(false);
 
-  const { data: payment = [] } = useQuery({
-    queryKey: ["payment"],
-    queryFn: PaymentService.getAll,
-  });
+  const { data: payment = [] } = useUserPaymentMethods();
 
   const handleClose = () => {
     setIsAddModalOpened(false);
@@ -48,7 +44,7 @@ const PaymentMethods: React.FC = () => {
           variant="outlined"
           color="grey"
           size="small"
-          sx={{ width: "max-content" }}
+          sx={{ width: 'max-content' }}
           onClick={handleOpen}
         >
           Add Payment Method

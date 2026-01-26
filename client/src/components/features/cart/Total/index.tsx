@@ -11,7 +11,7 @@ const CartTotal: React.FC<CartTotalProps> = ({ items }) => {
         Total
       </Typography>
       <Typography fontSize={24} variant="medium">
-        {items.reduce((acc, item) => acc + item.price * (1 - (item?.discount ?? 0)) * item.quantity, 0)} USD
+        {items.reduce((acc, item) => acc + item.price * (1 - (item?.discount ?? 0)) * item.quantity, 0).toFixed(2)} USD
       </Typography>
     </Stack>
   );

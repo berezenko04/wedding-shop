@@ -1,36 +1,36 @@
-import { alpha, createTheme } from "@mui/material";
+import { alpha, createTheme } from '@mui/material';
 
 // providers
-import { LinkBehavior } from "./components/providers/LinkBehavior";
+import { LinkBehavior } from './components/providers/LinkBehavior';
 
 // icons
-import { KeyboardArrowDown } from "@mui/icons-material";
+import { KeyboardArrowDown } from '@mui/icons-material';
 
 const theme = createTheme({
   palette: {
-    primary: { main: "#ED7222", 300: "#F6B87B", 50: "#FEF7EE" },
-    success: { main: "#12B76A", 100: "#C2E9D1" },
-    error: { main: "#F04438" },
+    primary: { main: '#ED7222', 300: '#F6B87B', 50: '#FEF7EE' },
+    success: { main: '#12B76A', 100: '#C2E9D1' },
+    error: { main: '#F04438' },
     blue: {
-      800: "#444A58",
-      200: "#BCBCFF",
+      800: '#444A58',
+      200: '#BCBCFF',
     },
     yellow: {
-      500: "#FFCE15",
+      500: '#FFCE15',
     },
     grey: {
-      800: "#383838",
-      700: "#434343",
-      500: "#686868",
-      400: "#818181",
-      300: "#A4A4A4",
-      200: "#C8C8C8",
-      100: "#E3E3E3",
-      50: "#F7F7F7",
+      800: '#383838',
+      700: '#434343',
+      500: '#686868',
+      400: '#818181',
+      300: '#A4A4A4',
+      200: '#C8C8C8',
+      100: '#E3E3E3',
+      50: '#F7F7F7',
     },
     common: {
-      white: "#FFFFFF",
-      black: "#121212",
+      white: '#FFFFFF',
+      black: '#121212',
     },
   },
   typography: {
@@ -40,13 +40,13 @@ const theme = createTheme({
     MuiCssBaseline: {
       styleOverrides: {
         html: {
-          height: "100%",
+          height: '100%',
         },
         body: {
-          height: "100%",
+          height: '100%',
         },
-        "#root": {
-          height: "100%",
+        '#root': {
+          height: '100%',
         },
       },
     },
@@ -58,11 +58,11 @@ const theme = createTheme({
     MuiTypography: {
       styleOverrides: {
         root: ({ theme }) => ({
-          "&.MuiTypography-h1, &.MuiTypography-h2, &.MuiTypography-h3, &.MuiTypography-h4, &.MuiTypography-h5, &.MuiTypography-h6":
+          '&.MuiTypography-h1, &.MuiTypography-h2, &.MuiTypography-h3, &.MuiTypography-h4, &.MuiTypography-h5, &.MuiTypography-h6':
             {
               fontFamily: `"Placid Armor", serif`,
               color: theme.palette.grey[700],
-              textTransform: "uppercase",
+              textTransform: 'uppercase',
               fontWeight: 500,
             },
         }),
@@ -80,17 +80,17 @@ const theme = createTheme({
         },
         body1: ({ theme }) => ({
           fontSize: 16,
-          lineHeight: "24px",
+          lineHeight: '24px',
           color: theme.palette.grey[500],
         }),
       },
       variants: [
         {
-          props: { variant: "medium" },
+          props: { variant: 'medium' },
           style: ({ theme }) => ({
             fontSize: 20,
             fontWeight: 500,
-            lineHeight: "24px",
+            lineHeight: '24px',
             color: theme.palette.grey[700],
           }),
         },
@@ -104,44 +104,44 @@ const theme = createTheme({
         root: {
           fontWeight: 500,
           fontSize: 16,
-          lineHeight: "24px",
+          lineHeight: '24px',
           borderRadius: 0,
-          boxShadow: "none",
-          whiteSpace: "nowrap",
-          minWidth: "max-content",
+          boxShadow: 'none',
+          whiteSpace: 'nowrap',
+          minWidth: 'max-content',
 
           svg: {
             width: 24,
             height: 24,
           },
 
-          "&:hover": {
-            boxShadow: "none",
+          '&:hover': {
+            boxShadow: 'none',
           },
         },
         containedPrimary: ({ theme }) => ({
           color: theme.palette.common.white,
         }),
         sizeMedium: {
-          padding: "16px 32px",
+          padding: '16px 32px',
           height: 56,
         },
         sizeSmall: {
-          padding: "8px 16px",
+          padding: '8px 16px',
           height: 40,
         },
       },
       variants: [
         {
-          props: { variant: "iconary" },
+          props: { variant: 'iconary' },
           style: ({ theme }) => ({
             width: 40,
             height: 40,
             minWidth: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: "100%",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: '100%',
             padding: 0,
 
             svg: {
@@ -152,14 +152,14 @@ const theme = createTheme({
           }),
         },
         {
-          props: { variant: "iconaryOutlined" },
+          props: { variant: 'iconaryOutlined' },
           style: ({ theme }) => ({
             width: 40,
             height: 40,
             minWidth: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
             padding: 0,
 
             svg: {
@@ -170,14 +170,14 @@ const theme = createTheme({
           }),
         },
         {
-          props: { variant: "iconary", size: "large" },
+          props: { variant: 'iconary', size: 'large' },
           style: {
             width: 56,
             height: 56,
           },
         },
         {
-          props: { variant: "iconaryOutlined", size: "large" },
+          props: { variant: 'iconaryOutlined', size: 'large' },
           style: {
             flexShrink: 0,
             width: 56,
@@ -185,69 +185,69 @@ const theme = createTheme({
           },
         },
         {
-          props: { variant: "iconaryOutlined", color: "grey" },
+          props: { variant: 'iconaryOutlined', color: 'grey' },
           style: ({ theme }) => ({
             border: `1px solid ${theme.palette.grey[200]}`,
 
-            "&:hover": {
+            '&:hover': {
               backgroundColor: theme.palette.grey[100],
             },
           }),
         },
         {
-          props: { variant: "iconary", color: "white" },
+          props: { variant: 'iconary', color: 'white' },
           style: ({ theme }) => ({
             backgroundColor: theme.palette.common.white,
 
-            "&:hover": {
+            '&:hover': {
               backgroundColor: theme.palette.grey[100],
               borderColor: theme.palette.grey[200],
             },
           }),
         },
         {
-          props: { variant: "iconary", color: "grey" },
+          props: { variant: 'iconary', color: 'grey' },
           style: ({ theme }) => ({
             backgroundColor: theme.palette.grey[50],
 
-            "&:hover": {
+            '&:hover': {
               backgroundColor: theme.palette.grey[100],
               borderColor: theme.palette.grey[200],
             },
           }),
         },
         {
-          props: { color: "grey" },
+          props: { color: 'grey' },
           style: ({ theme }) => ({
             color: theme.palette.grey[500],
-            "&:hover": { backgroundColor: theme.palette.grey[50] },
+            '&:hover': { backgroundColor: theme.palette.grey[50] },
           }),
         },
         {
-          props: { variant: "outlined", color: "grey" },
+          props: { variant: 'outlined', color: 'grey' },
           style: ({ theme }) => ({
             border: `1px solid ${theme.palette.grey[200]}`,
             backgroundColor: theme.palette.grey[50],
 
-            "&:hover": {
+            '&:hover': {
               backgroundColor: theme.palette.grey[100],
             },
           }),
         },
         {
-          props: { color: "white" },
+          props: { color: 'white' },
           style: ({ theme }) => ({
             color: theme.palette.common.white,
           }),
         },
         {
-          props: { variant: "outlined", color: "white" },
+          props: { variant: 'outlined', color: 'white' },
           style: ({ theme }) => ({
             fontSize: 24,
             border: `1px solid ${theme.palette.common.white}`,
-            backgroundColor: "transparent",
+            backgroundColor: 'transparent',
 
-            "&:hover": {
+            '&:hover': {
               backgroundColor: alpha(theme.palette.common.white, 0.4),
             },
           }),
@@ -257,19 +257,19 @@ const theme = createTheme({
     MuiLink: {
       defaultProps: {
         component: LinkBehavior,
-        underline: "none",
+        underline: 'none',
       },
       styleOverrides: {
         root: {
-          transition: "all 0.2s ease",
+          transition: 'all 0.2s ease',
         },
       },
       variants: [
         {
-          props: { color: "primary" },
+          props: { color: 'primary' },
           style: ({ theme }) => ({
             color: theme.palette.primary.main,
-            "&:hover": {
+            '&:hover': {
               color: theme.palette.primary.dark,
             },
           }),
@@ -281,25 +281,25 @@ const theme = createTheme({
         //   }),
         // },
         {
-          props: { variant: "underlined" },
+          props: { variant: 'underlined' },
           style: {
-            textDecoration: "underline",
+            textDecoration: 'underline',
           },
         },
         {
-          props: { color: "grey" },
+          props: { color: 'grey' },
           style: ({ theme }) => ({
             color: theme.palette.grey[400],
-            "&:hover": {
+            '&:hover': {
               color: theme.palette.common.white,
             },
           }),
         },
         {
-          props: { color: "grey.500" },
+          props: { color: 'grey.500' },
           style: ({ theme }) => ({
             color: theme.palette.grey[500],
-            "&:hover": {
+            '&:hover': {
               color: theme.palette.common.black,
             },
           }),
@@ -311,26 +311,26 @@ const theme = createTheme({
         root: ({ theme }) => ({
           borderRadius: 0,
           height: 40,
-          boxSizing: "border-box",
+          boxSizing: 'border-box',
 
-          "& .MuiInputAdornment-root svg": {
+          '& .MuiInputAdornment-root svg': {
             color: theme.palette.grey[400],
           },
 
-          "&.MuiInputBase-multiline": {
-            height: "100%",
-            border: "none",
+          '&.MuiInputBase-multiline': {
+            height: '100%',
+            border: 'none',
             padding: 0,
           },
         }),
 
         input: ({ theme }) => ({
-          padding: "10px 14px",
-          height: "100%",
-          boxSizing: "border-box",
+          padding: '10px 14px',
+          height: '100%',
+          boxSizing: 'border-box',
           color: theme.palette.text.primary,
 
-          "&::placeholder": {
+          '&::placeholder': {
             color: theme.palette.grey[400],
             opacity: 1,
           },
@@ -346,7 +346,7 @@ const theme = createTheme({
           color: theme.palette.grey[700],
         }),
         select: ({ theme }) => ({
-          textTransform: "uppercase",
+          textTransform: 'uppercase',
           fontWeight: 500,
           color: theme.palette.grey[700],
         }),
@@ -356,14 +356,14 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           fontWeight: 500,
-          textTransform: "uppercase",
+          textTransform: 'uppercase',
         },
       },
     },
     MuiPagination: {
       styleOverrides: {
         root: {
-          alignSelf: "center",
+          alignSelf: 'center',
         },
       },
     },
@@ -380,22 +380,22 @@ const theme = createTheme({
           fontSize: 14,
           fontWeight: 500,
 
-          "&:not(:first-of-type)": {
-            marginLeft: "-1px",
+          '&:not(:first-of-type)': {
+            marginLeft: '-1px',
           },
 
-          "&.Mui-selected": {
+          '&.Mui-selected': {
             backgroundColor: theme.palette.grey[50],
           },
 
-          "&:hover": {
+          '&:hover': {
             backgroundColor: theme.palette.grey[100],
           },
         }),
         ellipsis: {
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         },
       },
     },
@@ -410,7 +410,7 @@ const theme = createTheme({
       styleOverrides: {
         badge: ({ theme }) => ({
           color: theme.palette.common.white,
-          padding: "2px",
+          padding: '2px',
         }),
       },
     },

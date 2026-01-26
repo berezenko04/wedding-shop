@@ -1,16 +1,19 @@
-import { Button, Stack, TextField } from "@mui/material";
-import { useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { Button, Stack, TextField } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 // components
-import FormField from "@/components/ui/layout/FormField";
+import FormField from '@/components/ui/layout/FormField';
 
 // api
-import UserService from "@/api/user/user.service";
+import UserService from '@/api/user/user.service';
+
+// hooks
+import { useUser } from '@/hooks/useUser';
 
 // types
-import { User } from "@/api/user/user.types";
+import { User } from '@/api/user/user.types';
 
 type UpdateUserFormFields = {
   firstName: string;
@@ -20,7 +23,7 @@ type UpdateUserFormFields = {
 const UpdateUserForm: React.FC = () => {
   const queryClient = useQueryClient();
 
-  const user = queryClient.getQueryData<User>(["user"]);
+  const { data: user } = useUser();
 
   const {
     handleSubmit,
@@ -28,36 +31,36 @@ const UpdateUserForm: React.FC = () => {
     formState: { errors, isSubmitting },
   } = useForm<UpdateUserFormFields>({
     defaultValues: {
-      firstName: user?.firstName || "",
-      lastName: user?.lastName || "",
+      firstName: user?.firstName || '',
+      lastName: user?.lastName || '',
     },
   });
 
   const onSubmit = async (data: UpdateUserFormFields) => {
     try {
       const updatedUser = await UserService.updateUser(data);
-      queryClient.setQueryData<User>(["user"], updatedUser);
-      toast.success("Profile updated successfully");
+      queryClient.setQueryData<User>(['user'], updatedUser);
+      toast.success('Profile updated successfully');
     } catch {
-      toast.error("Failed to update profile");
+      toast.error('Failed to update profile');
     }
   };
 
   return (
-    <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ gap: 2, maxWidth: 800, width: "100%" }}>
+    <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ gap: 2, maxWidth: 800, width: '100%' }}>
       <FormField label="Email" labelFontSize={16}>
         <TextField placeholder="Enter email" slotProps={{ input: { readOnly: true } }} value={user?.email} />
       </FormField>
       <FormField label="First Name" labelFontSize={16}>
         <TextField
           placeholder="Enter your first name"
-          {...register("firstName", {
-            required: "First name is required",
-            minLength: { value: 2, message: "First name is too short (minimum 2 characters)" },
-            maxLength: { value: 50, message: "First name is too long (maximum 50 characters)" },
+          {...register('firstName', {
+            required: 'First name is required',
+            minLength: { value: 2, message: 'First name is too short (minimum 2 characters)' },
+            maxLength: { value: 50, message: 'First name is too long (maximum 50 characters)' },
             pattern: {
               value: /^[A-Za-zА-Яа-я\s'-]+$/,
-              message: "First name can only contain letters, spaces, hyphens, and apostrophes",
+              message: 'First name can only contain letters, spaces, hyphens, and apostrophes',
             },
           })}
           error={!!errors.firstName}
@@ -67,13 +70,13 @@ const UpdateUserForm: React.FC = () => {
       <FormField label="Last Name" labelFontSize={16}>
         <TextField
           placeholder="Enter your last name"
-          {...register("lastName", {
-            required: "Last name is required",
-            minLength: { value: 2, message: "Last name is too short (minimum 2 characters)" },
-            maxLength: { value: 50, message: "Last name is too long (maximum 50 characters)" },
+          {...register('lastName', {
+            required: 'Last name is required',
+            minLength: { value: 2, message: 'Last name is too short (minimum 2 characters)' },
+            maxLength: { value: 50, message: 'Last name is too long (maximum 50 characters)' },
             pattern: {
               value: /^[A-Za-zА-Яа-я\s'-]+$/,
-              message: "Last name can only contain letters, spaces, hyphens, and apostrophes",
+              message: 'Last name can only contain letters, spaces, hyphens, and apostrophes',
             },
           })}
           error={!!errors.lastName}
@@ -81,7 +84,7 @@ const UpdateUserForm: React.FC = () => {
         />
       </FormField>
 
-      <Button type="submit" variant="contained" size="small" disabled={isSubmitting} sx={{ maxWidth: "max-content" }}>
+      <Button type="submit" variant="contained" size="small" disabled={isSubmitting} sx={{ maxWidth: 'max-content' }}>
         Save Profile
       </Button>
     </Stack>

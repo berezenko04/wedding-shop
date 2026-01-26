@@ -7,6 +7,8 @@ import { Parser } from 'json2csv';
 
 // services
 import { PrismaService } from 'src/prisma/prisma.service';
+import { PaymentService } from '../payment/payment.service';
+import { AddressService } from '../address/address.service';
 
 // dto
 import { CreateOrderDto } from './dto/create-order.dto';
@@ -17,10 +19,14 @@ import { generateTrackingNumber } from 'src/utils/generateTrackingNumber';
 
 @Injectable()
 export class OrderService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly paymentService: PaymentService,
+    private readonly addressService: AddressService,
+  ) {}
 
   async create(userId: string, dto: CreateOrderDto) {
-    const { shippingAddress, shippingMethod, paymentMethod } = dto;
+    const { shippingAddressId, shippingMethod, paymentMethodId } = dto;
 
     const cart = await this.prisma.cart.findUnique({
       where: { userId },
@@ -35,13 +41,20 @@ export class OrderService {
       throw new BadRequestException('Cart is empty');
     }
 
+    const { method } = await this.paymentService.get(userId, paymentMethodId);
+
+    const { address } = await this.addressService.get(
+      userId,
+      shippingAddressId,
+    );
+
     const order = await this.prisma.order.create({
       data: {
         userId,
-        shippingAddress,
+        shippingAddress: address,
         shippingMethod,
         trackingNumber: generateTrackingNumber(),
-        paymentMethod,
+        paymentMethod: method,
       },
     });
 
@@ -51,11 +64,14 @@ export class OrderService {
       quantity: item.quantity,
       price: item.product.price,
       size: item.size,
+      discount: item.product.discount,
     }));
 
     await this.prisma.orderItem.createMany({ data: orderItemsData });
 
     await this.prisma.cart.delete({ where: { userId } });
+
+    return { orderNumber: order.orderNumber };
   }
 
   async all(userId: string, dto: PaginationDto) {
