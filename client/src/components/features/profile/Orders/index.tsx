@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Stack } from '@mui/material';
+import { Table, TableCell, TableHead, TableRow } from '@mui/material';
 
 // components
 import Order from './Item';
@@ -13,14 +13,23 @@ const Orders: React.FC = () => {
     queryFn: OrdersService.getAll,
   });
 
-  console.log(orders);
-
   return (
-    <Stack>
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell />
+          <TableCell>Order ID</TableCell>
+          <TableCell>Date</TableCell>
+          <TableCell>Items</TableCell>
+          <TableCell>Total Amount</TableCell>
+          <TableCell>Status</TableCell>
+          <TableCell>Action</TableCell>
+        </TableRow>
+      </TableHead>
       {orders?.orders.map((order) => (
-        <Order />
+        <Order {...order} />
       ))}
-    </Stack>
+    </Table>
   );
 };
 

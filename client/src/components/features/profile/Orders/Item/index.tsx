@@ -1,16 +1,23 @@
-import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
+import { TableCell, TableRow } from '@mui/material';
 
-const Order: React.FC = () => {
+// components
+import ChipShipped from '@/components/ui/chips/ChipShipped';
+
+// types
+import { Order } from '@/api/orders/orders.types';
+
+const Order: React.FC<Order> = ({ orderNumber, createdAt, items }) => {
   return (
-    <Accordion>
-      <AccordionSummary>
-        <Typography component="span">Accordion 1</Typography>
-      </AccordionSummary>
-      <AccordionDetails>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo
-        lobortis eget.
-      </AccordionDetails>
-    </Accordion>
+    <TableRow>
+      <TableCell />
+      <TableCell>#{orderNumber}</TableCell>
+      <TableCell>{new Date(createdAt).toLocaleDateString('en-GB')}</TableCell>
+      <TableCell>{items.length}</TableCell>
+      <TableCell>{(2).toFixed(2)} USD</TableCell>
+      <TableCell>
+        <ChipShipped />
+      </TableCell>
+    </TableRow>
   );
 };
 
