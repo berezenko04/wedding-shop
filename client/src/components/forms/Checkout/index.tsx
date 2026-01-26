@@ -2,6 +2,7 @@ import { Button, Stack } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
 // components
 import ShippingAddress from '@/components/features/checkout/ShippingAddress';
@@ -56,6 +57,15 @@ const CheckoutForm: React.FC = () => {
       reset();
     }
   };
+
+  useEffect(() => {
+    if (primaryAddress?.id) {
+      reset((prev) => ({
+        ...prev,
+        shippingAddressId: primaryAddress.id,
+      }));
+    }
+  }, [primaryAddress?.id, reset]);
 
   return (
     <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)} gap={3}>
