@@ -428,6 +428,31 @@ const theme = createTheme({
         }),
       },
     },
+    MuiTableCell: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          fontSize: 16,
+          borderColor: theme.palette.grey[50],
+        }),
+        body: ({ theme }) => ({
+          color: theme.palette.grey[500],
+        }),
+        head: ({ theme }) => ({
+          fontSize: 16,
+          textTransform: 'uppercase',
+          color: theme.palette.grey[700],
+          backgroundColor: theme.palette.grey[50],
+          fontWeight: 500,
+        }),
+      },
+    },
+    MuiTable: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          border: `1px solid ${theme.palette.grey[50]}`,
+        }),
+      },
+    },
   },
 });
 

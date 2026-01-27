@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Table, TableCell, TableHead, TableRow } from '@mui/material';
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 
 // components
 import Order from './Item';
@@ -26,9 +26,11 @@ const Orders: React.FC = () => {
           <TableCell>Action</TableCell>
         </TableRow>
       </TableHead>
-      {orders?.orders.map((order) => (
-        <Order {...order} />
-      ))}
+      <TableBody>
+        {orders?.orders.map((order) => (
+          <Order {...order} />
+        ))}
+      </TableBody>
     </Table>
   );
 };
