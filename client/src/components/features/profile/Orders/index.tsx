@@ -17,13 +17,15 @@ const Orders: React.FC = () => {
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell />
-          <TableCell>Order ID</TableCell>
-          <TableCell>Date</TableCell>
-          <TableCell>Items</TableCell>
-          <TableCell>Total Amount</TableCell>
-          <TableCell>Status</TableCell>
-          <TableCell>Action</TableCell>
+          <TableCell sx={{ width: 40 }} />
+          <TableCell sx={{ minWidth: 140 }}>Order ID</TableCell>
+          <TableCell sx={{ minWidth: 160 }}>Date</TableCell>
+          <TableCell sx={{ minWidth: 50 }}>Items</TableCell>
+          <TableCell sx={{ minWidth: 60 }}>Total Amount</TableCell>
+          <TableCell sx={{ minWidth: 60 }}>Status</TableCell>
+          <TableCell sx={{ minWidth: 90 }} align="right">
+            Action
+          </TableCell>
         </TableRow>
       </TableHead>
       <TableBody>

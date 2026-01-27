@@ -25,7 +25,7 @@ const Order: React.FC<Order> = ({ orderNumber, subtotal, shipmentCost, createdAt
         <ChipShipped />
       </TableCell>
       <TableCell>
-        <Stack flexDirection="row" alignItems="center" gap={0.5}>
+        <Stack flexDirection="row" alignItems="center" justifyContent="flex-end" gap={0.5}>
           <PrintButton />
           <DownloadButton />
         </Stack>
