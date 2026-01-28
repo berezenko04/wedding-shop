@@ -13,7 +13,7 @@ const OrdersService = {
     return httpGet<GetAllOrdersResponse>(R.orders);
   },
   async getCsv(id: string) {
-    return httpGet<string>(R.ordersCsv(id));
+    return httpGet<string>(R.ordersCsv(id), { responseType: 'blob' });
   },
   async createOrder(body: CreateOrderBody) {
     return httpPost<CreateOrderResponse>(R.orders, body);
