@@ -92,6 +92,7 @@ export class OrderService {
         include: {
           items: {
             select: {
+              id: true,
               quantity: true,
               price: true,
               discount: true,

@@ -14,6 +14,7 @@ import OrdersService from '@/api/orders/orders.service';
 // types
 import { Order } from '@/api/orders/orders.types';
 import ProductsTable from './ProductsTable';
+import OrderTotal from './Total';
 
 const Order: React.FC<Order> = ({
   id,
@@ -28,7 +29,7 @@ const Order: React.FC<Order> = ({
 }) => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
 
-  const grandTotal = (subtotal + shipmentCost).toFixed(2);
+  const grandTotal = subtotal + shipmentCost;
 
   const exportCsv = async () => {
     const data = await OrdersService.getCsv(id);
@@ -59,7 +60,7 @@ const Order: React.FC<Order> = ({
         <TableCell>#{orderNumber}</TableCell>
         <TableCell>{new Date(createdAt).toLocaleDateString('en-GB')}</TableCell>
         <TableCell>{items.length}</TableCell>
-        <TableCell>{grandTotal} USD</TableCell>
+        <TableCell>{grandTotal.toFixed(2)} USD</TableCell>
         <TableCell>
           <ChipShipped />
         </TableCell>
@@ -80,6 +81,7 @@ const Order: React.FC<Order> = ({
                 trackingNumber={trackingNumber}
               />
               <ProductsTable items={items} />
+              <OrderTotal subtotal={subtotal} shipmentCost={shipmentCost} grandTotal={grandTotal} />
             </Stack>
           </Collapse>
         </TableCell>

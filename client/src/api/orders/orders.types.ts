@@ -29,6 +29,7 @@ export type Order = {
 };
 
 export type OrderItem = {
+  id: string;
   quantity: number;
   price: number;
   discount: number | null;

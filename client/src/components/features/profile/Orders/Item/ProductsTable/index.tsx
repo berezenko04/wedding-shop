@@ -29,8 +29,8 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ items }) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {items.map(({ product, size, quantity, price, discount }) => (
-          <TableRow>
+        {items.map(({ id, product, size, quantity, price, discount }) => (
+          <TableRow key={id}>
             <TableCell>
               <Stack flexDirection="row" alignItems="flex-start" gap={2}>
                 <Box component="img" src={product.posterUrl} sx={{ width: 64, height: 64, objectFit: 'cover' }} />
