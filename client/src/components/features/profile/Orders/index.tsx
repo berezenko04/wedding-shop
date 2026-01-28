@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { Table, TableBody, TableCell, TableCellProps, TableHead, TableRow } from '@mui/material';
 
 // components
 import Order from './Item';
@@ -13,19 +13,25 @@ const Orders: React.FC = () => {
     queryFn: OrdersService.getAll,
   });
 
+  const columns = [
+    { sx: { width: 40 }, title: '' },
+    { sx: { minWidth: 140 }, title: 'Order ID' },
+    { sx: { minWidth: 160 }, title: 'Date' },
+    { sx: { minWidth: 50 }, title: 'Items' },
+    { sx: { minWidth: 60 }, title: 'Total Amount' },
+    { sx: { minWidth: 60 }, title: 'Status' },
+    { sx: { minWidth: 90 }, title: 'Action', align: 'right' },
+  ];
+
   return (
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell sx={{ width: 40 }} />
-          <TableCell sx={{ minWidth: 140 }}>Order ID</TableCell>
-          <TableCell sx={{ minWidth: 160 }}>Date</TableCell>
-          <TableCell sx={{ minWidth: 50 }}>Items</TableCell>
-          <TableCell sx={{ minWidth: 60 }}>Total Amount</TableCell>
-          <TableCell sx={{ minWidth: 60 }}>Status</TableCell>
-          <TableCell sx={{ minWidth: 90 }} align="right">
-            Action
-          </TableCell>
+          {columns.map(({ sx, title, align }) => (
+            <TableCell sx={sx} align={(align as TableCellProps['align']) ?? 'left'}>
+              {title}
+            </TableCell>
+          ))}
         </TableRow>
       </TableHead>
       <TableBody>
