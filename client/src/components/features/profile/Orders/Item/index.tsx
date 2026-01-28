@@ -13,6 +13,7 @@ import OrdersService from '@/api/orders/orders.service';
 
 // types
 import { Order } from '@/api/orders/orders.types';
+import ProductsTable from './ProductsTable';
 
 const Order: React.FC<Order> = ({
   id,
@@ -70,20 +71,15 @@ const Order: React.FC<Order> = ({
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell colSpan={7}>
+        <TableCell colSpan={7} sx={{ p: 0 }}>
           <Collapse in={isOpened} timeout="auto" unmountOnExit>
-            <Stack>
+            <Stack sx={{ p: 2, gap: 3 }}>
               <ShippingInfoTable
                 shippingAddress={shippingAddress}
                 paymentMethod={paymentMethod}
                 trackingNumber={trackingNumber}
               />
-              {/* <div>Items:</div>
-              {items.map((item) => (
-                <div key={1}>
-                  {item.price} × {item.quantity}
-                </div>
-              ))} */}
+              <ProductsTable items={items} />
             </Stack>
           </Collapse>
         </TableCell>
