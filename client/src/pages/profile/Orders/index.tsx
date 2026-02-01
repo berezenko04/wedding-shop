@@ -1,12 +1,39 @@
-import { Stack, Typography } from '@mui/material';
+import { Button, Stack, Typography } from '@mui/material';
 
 // components
 import Orders from '@/components/features/profile/Orders';
 
+// api
+import OrdersService from '@/api/orders/orders.service';
+
+// hooks
+import { useFileDownload } from '@/hooks/useFileDownload';
+
+// icons
+import { FileDownloadOutlined } from '@mui/icons-material';
+
 const OrdersPage: React.FC = () => {
+  const download = useFileDownload();
+
+  const exportAllToCsv = async () => {
+    const data = await OrdersService.getAllCsv();
+    download(data, `orders.csv`, 'text/csv;charset=utf-8;');
+  };
+
   return (
     <Stack gap={2}>
-      <Typography variant="h3">Orders</Typography>
+      <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={4}>
+        <Typography variant="h3">Orders</Typography>
+        <Button
+          variant="outlined"
+          color="grey"
+          size="small"
+          endIcon={<FileDownloadOutlined />}
+          onClick={exportAllToCsv}
+        >
+          Download CSV
+        </Button>
+      </Stack>
       <Orders />
     </Stack>
   );

@@ -14,6 +14,9 @@ import OrderTotal from './Total';
 // api
 import OrdersService from '@/api/orders/orders.service';
 
+// hooks
+import { useFileDownload } from '@/hooks/useFileDownload';
+
 // types
 import { Order } from '@/api/orders/orders.types';
 
@@ -30,6 +33,7 @@ const Order: React.FC<Order> = ({
 }) => {
   const contentRef = useRef<HTMLTableRowElement>(null);
   const reactToPrintFn = useReactToPrint({ contentRef });
+  const download = useFileDownload();
 
   const [isOpened, setIsOpened] = useState<boolean>(false);
 
@@ -37,22 +41,7 @@ const Order: React.FC<Order> = ({
 
   const exportCsv = async () => {
     const data = await OrdersService.getCsv(id);
-
-    const blob = new Blob([data], {
-      type: 'text/csv;charset=utf-8;',
-    });
-
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement('a');
-
-    link.href = url;
-    link.download = `order-#${orderNumber}-${createdAt}.csv`;
-
-    document.body.appendChild(link);
-    link.click();
-
-    link.remove();
-    window.URL.revokeObjectURL(url);
+    download(data, `order-#${orderNumber}-${createdAt}.csv`, 'text/csv;charset=utf-8;');
   };
 
   return (

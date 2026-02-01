@@ -153,4 +153,57 @@ export class OrderService {
 
     return csv;
   }
+
+  async exportAllToCsv(userId: string) {
+    const orders = await this.prisma.order.findMany({
+      where: { userId },
+      select: {
+        orderNumber: true,
+        createdAt: true,
+        items: {
+          select: {
+            quantity: true,
+            price: true,
+            discount: true,
+            size: true,
+            product: {
+              select: {
+                title: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!orders.length) {
+      throw new NotFoundException('Orders not found');
+    }
+
+    const rows = orders.flatMap((order) =>
+      order.items.map((item) => ({
+        orderNumber: order.orderNumber,
+        createdAt: order.createdAt.toISOString(),
+        title: item.product.title,
+        quantity: item.quantity,
+        price: item.price,
+        discount: item.discount ?? 0,
+        size: item.size,
+      })),
+    );
+
+    const parser = new Parser({
+      fields: [
+        'orderNumber',
+        'createdAt',
+        'title',
+        'quantity',
+        'price',
+        'discount',
+        'size',
+      ],
+    });
+
+    return parser.parse(rows);
+  }
 }

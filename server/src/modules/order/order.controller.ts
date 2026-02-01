@@ -46,10 +46,18 @@ export class OrderController {
     const csv = await this.orderService.exportToCsv(userId, orderId);
 
     res.setHeader('Content-Type', 'text/csv');
-    res.setHeader(
-      'Content-Disposition',
-      `attachment; filename=order-${orderId}.csv`,
-    );
+    res.send(csv);
+  }
+
+  @Get('csv')
+  async exportAllToCsv(
+    @Res({ passthrough: true }) res: Response,
+    @User('id')
+    userId: string,
+  ) {
+    const csv = await this.orderService.exportAllToCsv(userId);
+
+    res.setHeader('Content-Type', 'text/csv');
     res.send(csv);
   }
 }
