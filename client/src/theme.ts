@@ -376,7 +376,7 @@ const theme = createTheme({
           margin: 0,
           color: theme.palette.grey[700],
           backgroundColor: theme.palette.common.white,
-          border: `1px solid ${theme.palette.grey[200]}`,
+          border: `1px solid ${theme.palette.grey[100]}`,
           fontSize: 14,
           fontWeight: 500,
 

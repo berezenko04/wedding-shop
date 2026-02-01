@@ -2,6 +2,7 @@ import { httpGet, httpPost } from '@/middlewares/axios.middleware';
 
 // types
 import { CreateOrderBody, CreateOrderResponse, GetAllOrdersResponse } from './orders.types';
+import { Pagination } from '@/types/base.types';
 
 const R = {
   orders: '/orders',
@@ -9,8 +10,8 @@ const R = {
 } as const;
 
 const OrdersService = {
-  async getAll() {
-    return httpGet<GetAllOrdersResponse>(R.orders);
+  async getAll(params: Pagination) {
+    return httpGet<GetAllOrdersResponse>(R.orders, { params });
   },
   async getCsv(id: string) {
     return httpGet<string>(R.ordersCsv(id), { responseType: 'blob' });
