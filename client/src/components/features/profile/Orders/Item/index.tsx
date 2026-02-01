@@ -1,5 +1,6 @@
 import { Collapse, Stack, TableCell, TableRow } from '@mui/material';
-import { useState } from 'react';
+import { useReactToPrint } from 'react-to-print';
+import { useRef, useState } from 'react';
 
 // components
 import ChipShipped from '@/components/ui/chips/ChipShipped';
@@ -7,14 +8,14 @@ import DownloadButton from '@/components/ui/buttons/Download';
 import PrintButton from '@/components/ui/buttons/Print';
 import ExpandButton from '@/components/ui/buttons/Expand';
 import ShippingInfoTable from './ShippingInfoTable';
+import ProductsTable from './ProductsTable';
+import OrderTotal from './Total';
 
 // api
 import OrdersService from '@/api/orders/orders.service';
 
 // types
 import { Order } from '@/api/orders/orders.types';
-import ProductsTable from './ProductsTable';
-import OrderTotal from './Total';
 
 const Order: React.FC<Order> = ({
   id,
@@ -27,6 +28,9 @@ const Order: React.FC<Order> = ({
   createdAt,
   items,
 }) => {
+  const contentRef = useRef<HTMLTableRowElement>(null);
+  const reactToPrintFn = useReactToPrint({ contentRef });
+
   const [isOpened, setIsOpened] = useState<boolean>(false);
 
   const grandTotal = subtotal + shipmentCost;
@@ -53,9 +57,9 @@ const Order: React.FC<Order> = ({
 
   return (
     <>
-      <TableRow hover sx={{ cursor: 'pointer' }} onClick={() => setIsOpened((prev) => !prev)}>
+      <TableRow sx={{ '.MuiTableCell-root': { borderBottom: 0 } }}>
         <TableCell>
-          <ExpandButton />
+          <ExpandButton onClick={() => setIsOpened((prev) => !prev)} />
         </TableCell>
         <TableCell>#{orderNumber}</TableCell>
         <TableCell>{new Date(createdAt).toLocaleDateString('en-GB')}</TableCell>
@@ -66,12 +70,12 @@ const Order: React.FC<Order> = ({
         </TableCell>
         <TableCell>
           <Stack flexDirection="row" alignItems="center" justifyContent="flex-end" gap={0.5}>
-            <PrintButton />
+            <PrintButton onClick={reactToPrintFn} />
             <DownloadButton onClick={exportCsv} />
           </Stack>
         </TableCell>
       </TableRow>
-      <TableRow>
+      <TableRow ref={contentRef}>
         <TableCell colSpan={7} sx={{ p: 0 }}>
           <Collapse in={isOpened} timeout="auto" unmountOnExit>
             <Stack sx={{ p: 2, gap: 3 }}>
