@@ -4,12 +4,16 @@ import { Pagination, Stack, Table, TableBody, TableCell, TableCellProps, TableHe
 
 // components
 import Order from './Item';
+import EmptyState from '@/components/ui/EmptyState';
 
 // api
 import OrdersService from '@/api/orders/orders.service';
 
 // constants
 import { PAGE_LIMIT } from '@/constants';
+
+// icons
+import { RemoveShoppingCartOutlined } from '@mui/icons-material';
 
 const Orders: React.FC = () => {
   const [page, setPage] = useState<number>(1);
@@ -33,23 +37,33 @@ const Orders: React.FC = () => {
 
   return (
     <Stack gap={3}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            {columns.map(({ sx, title, align }) => (
-              <TableCell sx={sx} align={(align as TableCellProps['align']) ?? 'left'}>
-                {title}
-              </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {orders?.orders.map((order) => (
-            <Order {...order} />
-          ))}
-        </TableBody>
-      </Table>
-      {pages > 1 && <Pagination page={page} count={pages} onChange={(_, val) => setPage(val)} />}
+      {orders && orders?.total > 0 ? (
+        <>
+          <Table>
+            <TableHead>
+              <TableRow>
+                {columns.map(({ sx, title, align }) => (
+                  <TableCell sx={sx} align={(align as TableCellProps['align']) ?? 'left'}>
+                    {title}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {orders?.orders.map((order) => (
+                <Order {...order} />
+              ))}
+            </TableBody>
+          </Table>
+          {pages > 1 && <Pagination page={page} count={pages} onChange={(_, val) => setPage(val)} />}
+        </>
+      ) : (
+        <EmptyState
+          title="Your orders is empty"
+          description="Your orders will appear here once you make a purchase."
+          icon={RemoveShoppingCartOutlined}
+        />
+      )}
     </Stack>
   );
 };
