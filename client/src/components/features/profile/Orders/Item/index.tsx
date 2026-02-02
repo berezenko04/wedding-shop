@@ -1,4 +1,4 @@
-import { Collapse, Stack, TableCell, TableRow } from '@mui/material';
+import { Box, Collapse, Stack, TableCell, TableRow } from '@mui/material';
 import { useReactToPrint } from 'react-to-print';
 import { useRef, useState } from 'react';
 
@@ -31,7 +31,7 @@ const Order: React.FC<Order> = ({
   createdAt,
   items,
 }) => {
-  const contentRef = useRef<HTMLTableRowElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const reactToPrintFn = useReactToPrint({ contentRef });
   const download = useFileDownload();
 
@@ -64,7 +64,7 @@ const Order: React.FC<Order> = ({
           </Stack>
         </TableCell>
       </TableRow>
-      <TableRow ref={contentRef}>
+      <TableRow>
         <TableCell colSpan={7} sx={{ p: 0 }}>
           <Collapse in={isOpened} timeout="auto" unmountOnExit>
             <Stack sx={{ p: 2, gap: 3 }}>
@@ -79,6 +79,19 @@ const Order: React.FC<Order> = ({
           </Collapse>
         </TableCell>
       </TableRow>
+      <Box sx={{ display: 'none' }}>
+        <Box ref={contentRef}>
+          <Stack sx={{ p: 2, gap: 3 }}>
+            <ShippingInfoTable
+              shippingAddress={shippingAddress}
+              paymentMethod={paymentMethod}
+              trackingNumber={trackingNumber}
+            />
+            <ProductsTable items={items} />
+            <OrderTotal subtotal={subtotal} shipmentCost={shipmentCost} grandTotal={grandTotal} />
+          </Stack>
+        </Box>
+      </Box>
     </>
   );
 };
