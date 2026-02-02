@@ -1,0 +1,67 @@
+import { useState } from 'react';
+import { Pagination, Stack, Table, TableBody, TableCell, TableCellProps, TableHead, TableRow } from '@mui/material';
+
+// components
+import Order from './Item';
+import EmptyState from '@/components/ui/EmptyState';
+
+// hooks
+import { useOrders } from '@/hooks/useOrders';
+
+// constants
+import { PAGE_LIMIT } from '@/constants';
+
+// icons
+import { RemoveShoppingCartOutlined } from '@mui/icons-material';
+
+const Orders: React.FC = () => {
+  const [page, setPage] = useState<number>(1);
+
+  const { data: orders } = useOrders(page);
+
+  const pages = orders?.total ? Math.ceil(orders.total / PAGE_LIMIT) : 0;
+
+  const columns = [
+    { sx: { width: 40 }, title: '' },
+    { sx: { minWidth: 140 }, title: 'Order ID' },
+    { sx: { minWidth: 160 }, title: 'Date' },
+    { sx: { minWidth: 50 }, title: 'Items' },
+    { sx: { minWidth: 60 }, title: 'Total Amount' },
+    { sx: { minWidth: 60 }, title: 'Status' },
+    { sx: { minWidth: 90 }, title: 'Action', align: 'right' },
+  ];
+
+  return (
+    <Stack gap={3}>
+      {orders && orders?.total > 0 ? (
+        <>
+          <Table>
+            <TableHead>
+              <TableRow>
+                {columns.map(({ sx, title, align }) => (
+                  <TableCell sx={sx} align={(align as TableCellProps['align']) ?? 'left'}>
+                    {title}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {orders?.orders.map((order) => (
+                <Order {...order} />
+              ))}
+            </TableBody>
+          </Table>
+          {pages > 1 && <Pagination page={page} count={pages} onChange={(_, val) => setPage(val)} />}
+        </>
+      ) : (
+        <EmptyState
+          title="Your orders is empty"
+          description="Your orders will appear here once you make a purchase."
+          icon={RemoveShoppingCartOutlined}
+        />
+      )}
+    </Stack>
+  );
+};
+
+export default Orders;

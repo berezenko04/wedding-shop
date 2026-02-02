@@ -48,6 +48,12 @@ export class OrderService {
       shippingAddressId,
     );
 
+    const subtotal = cart.items.reduce(
+      (acc, i) =>
+        acc + i.product.price * (1 - (i.product.discount ?? 0)) * i.quantity,
+      0,
+    );
+
     const order = await this.prisma.order.create({
       data: {
         userId,
@@ -55,6 +61,7 @@ export class OrderService {
         shippingMethod,
         trackingNumber: generateTrackingNumber(),
         paymentMethod: method,
+        subtotal,
       },
     });
 
@@ -82,22 +89,19 @@ export class OrderService {
         skip: (page - 1) * limit,
         take: limit,
         where: { userId },
-        select: {
-          id: true,
-          orderNumber: true,
-          shippingAddress: true,
-          shippingMethod: true,
-          trackingNumber: true,
-          paymentMethod: true,
-          createdAt: true,
+        include: {
           items: {
             select: {
+              id: true,
               quantity: true,
               price: true,
               discount: true,
               size: true,
               product: {
-                select: { posterUrl: true, title: true },
+                select: {
+                  posterUrl: true,
+                  title: true,
+                },
               },
             },
           },
@@ -148,5 +152,58 @@ export class OrderService {
     );
 
     return csv;
+  }
+
+  async exportAllToCsv(userId: string) {
+    const orders = await this.prisma.order.findMany({
+      where: { userId },
+      select: {
+        orderNumber: true,
+        createdAt: true,
+        items: {
+          select: {
+            quantity: true,
+            price: true,
+            discount: true,
+            size: true,
+            product: {
+              select: {
+                title: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!orders.length) {
+      throw new NotFoundException('Orders not found');
+    }
+
+    const rows = orders.flatMap((order) =>
+      order.items.map((item) => ({
+        orderNumber: order.orderNumber,
+        createdAt: order.createdAt.toISOString(),
+        title: item.product.title,
+        quantity: item.quantity,
+        price: item.price,
+        discount: item.discount ?? 0,
+        size: item.size,
+      })),
+    );
+
+    const parser = new Parser({
+      fields: [
+        'orderNumber',
+        'createdAt',
+        'title',
+        'quantity',
+        'price',
+        'discount',
+        'size',
+      ],
+    });
+
+    return parser.parse(rows);
   }
 }

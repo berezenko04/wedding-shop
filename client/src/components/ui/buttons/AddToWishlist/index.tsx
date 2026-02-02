@@ -24,6 +24,7 @@ const AddToWishlistButton: React.FC<AddToWishlistButtonProps> = ({ productId, va
   const { data: wishlistIds = [] } = useQuery<string[]>({
     queryKey: ["wishlistCheck"],
   });
+  
   const isWishlisted = wishlistIds.includes(productId);
 
   const mutation = useMutation({

@@ -187,7 +187,7 @@ const theme = createTheme({
         {
           props: { variant: 'iconaryOutlined', color: 'grey' },
           style: ({ theme }) => ({
-            border: `1px solid ${theme.palette.grey[200]}`,
+            border: `1px solid ${theme.palette.grey[100]}`,
 
             '&:hover': {
               backgroundColor: theme.palette.grey[100],
@@ -376,7 +376,7 @@ const theme = createTheme({
           margin: 0,
           color: theme.palette.grey[700],
           backgroundColor: theme.palette.common.white,
-          border: `1px solid ${theme.palette.grey[200]}`,
+          border: `1px solid ${theme.palette.grey[100]}`,
           fontSize: 14,
           fontWeight: 500,
 
@@ -411,6 +411,45 @@ const theme = createTheme({
         badge: ({ theme }) => ({
           color: theme.palette.common.white,
           padding: '2px',
+        }),
+      },
+    },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          borderRadius: 0,
+        },
+        sizeMedium: {
+          fontSize: 16,
+        },
+        colorSuccess: ({ theme }) => ({
+          backgroundColor: theme.palette.success[100],
+          color: theme.palette.success.main,
+        }),
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          fontSize: 16,
+          borderColor: theme.palette.grey[50],
+        }),
+        body: ({ theme }) => ({
+          color: theme.palette.grey[500],
+        }),
+        head: ({ theme }) => ({
+          fontSize: 16,
+          textTransform: 'uppercase',
+          color: theme.palette.grey[700],
+          backgroundColor: theme.palette.grey[50],
+          fontWeight: 500,
+        }),
+      },
+    },
+    MuiTable: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          border: `1px solid ${theme.palette.grey[50]}`,
         }),
       },
     },
