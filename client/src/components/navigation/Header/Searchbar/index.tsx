@@ -2,22 +2,35 @@ import { Autocomplete, InputAdornment, TextField } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// api
+import ProductsService from '@/api/products/products.service';
+
+// types
+import { SearchResult } from '@/api/products/products.types';
+
 // icons
 import { SearchOutlined } from '@mui/icons-material';
-
-type SearchOption = {
-  label: string;
-  path: string;
-  type: 'suggestion' | 'history';
-};
 
 const Searchbar: React.FC = () => {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState('');
+  const [options, setOptions] = useState<SearchResult[]>([]);
 
-  const handleChange = (_: React.SyntheticEvent, newValue: string | SearchOption | null) => {
+  const handleInputChange = async (_: any, value: string) => {
+    setInputValue(value);
+
+    if (!value.trim()) {
+      setOptions([]);
+      return;
+    }
+
+    const data = await ProductsService.search(value);
+    setOptions(data || []);
+  };
+
+  const handleChange = async (_: React.SyntheticEvent, newValue: SearchResult | string | null) => {
     if (newValue && typeof newValue !== 'string') {
-      navigate(newValue.path);
+      navigate(`/catalog/${newValue.slug}`);
     }
   };
 
@@ -26,28 +39,26 @@ const Searchbar: React.FC = () => {
       fullWidth
       freeSolo
       groupBy={(option) => (option.type === 'history' ? 'History' : 'Suggestions')}
-      options={[]}
+      options={options}
       getOptionLabel={(option) => {
         if (typeof option === 'string') return option;
-        return option.label;
+        return option.title;
       }}
       inputValue={inputValue}
-      onInputChange={(_, newInputValue) => setInputValue(newInputValue)}
+      onInputChange={handleInputChange}
       onChange={handleChange}
       renderInput={(params) => (
         <TextField
           {...params}
           size="small"
           placeholder="Search something..."
-          slotProps={{
-            input: {
-              ...params.InputProps,
-              startAdornment: (
-                <InputAdornment position="start" sx={{ pl: 1 }}>
-                  <SearchOutlined />
-                </InputAdornment>
-              ),
-            },
+          InputProps={{
+            ...params.InputProps,
+            startAdornment: (
+              <InputAdornment position="start" sx={{ pl: 1 }}>
+                <SearchOutlined />
+              </InputAdornment>
+            ),
           }}
         />
       )}
