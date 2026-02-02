@@ -47,7 +47,7 @@ const UpdateUserForm: React.FC = () => {
   };
 
   return (
-    <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ gap: 2, maxWidth: 800, width: '100%' }}>
+    <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ gap: 2, maxWidth: 600, width: '100%' }}>
       <FormField label="Email" labelFontSize={16}>
         <TextField placeholder="Enter email" slotProps={{ input: { readOnly: true } }} value={user?.email} />
       </FormField>

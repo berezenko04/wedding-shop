@@ -1,4 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Pagination, Stack, Table, TableBody, TableCell, TableCellProps, TableHead, TableRow } from '@mui/material';
 
@@ -6,8 +5,8 @@ import { Pagination, Stack, Table, TableBody, TableCell, TableCellProps, TableHe
 import Order from './Item';
 import EmptyState from '@/components/ui/EmptyState';
 
-// api
-import OrdersService from '@/api/orders/orders.service';
+// hooks
+import { useOrders } from '@/hooks/useOrders';
 
 // constants
 import { PAGE_LIMIT } from '@/constants';
@@ -18,10 +17,7 @@ import { RemoveShoppingCartOutlined } from '@mui/icons-material';
 const Orders: React.FC = () => {
   const [page, setPage] = useState<number>(1);
 
-  const { data: orders } = useQuery({
-    queryKey: ['orders', page],
-    queryFn: async () => OrdersService.getAll({ page, limit: PAGE_LIMIT }),
-  });
+  const { data: orders } = useOrders(page);
 
   const pages = orders?.total ? Math.ceil(orders.total / PAGE_LIMIT) : 0;
 

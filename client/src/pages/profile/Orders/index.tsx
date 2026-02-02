@@ -8,12 +8,14 @@ import OrdersService from '@/api/orders/orders.service';
 
 // hooks
 import { useFileDownload } from '@/hooks/useFileDownload';
+import { useOrders } from '@/hooks/useOrders';
 
 // icons
 import { FileDownloadOutlined } from '@mui/icons-material';
 
 const OrdersPage: React.FC = () => {
   const download = useFileDownload();
+  const { data: orders } = useOrders();
 
   const exportAllToCsv = async () => {
     const data = await OrdersService.getAllCsv();
@@ -30,6 +32,7 @@ const OrdersPage: React.FC = () => {
           size="small"
           endIcon={<FileDownloadOutlined />}
           onClick={exportAllToCsv}
+          disabled={orders?.total === 0}
         >
           Download CSV
         </Button>
