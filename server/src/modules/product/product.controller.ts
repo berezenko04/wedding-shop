@@ -28,6 +28,11 @@ export class ProductController {
     return this.productService.all(dto);
   }
 
+  @Get('search')
+  async search(@Query('text') text: string) {
+    return this.productService.search({ text });
+  }
+
   @Get('by-slug/:slug')
   async getBySlug(@Param('slug') slug: string) {
     return this.productService.getBySlug(slug);

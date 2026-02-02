@@ -25,7 +25,7 @@ const FilterPrice: React.FC<FilterPriceProps> = ({ priceRange, setPriceRange }) 
   };
 
   return (
-    <FilterItem title="At a Price">
+    <FilterItem title="By Price">
       <Box>
         <Box mx={0.75}>
           <Slider
