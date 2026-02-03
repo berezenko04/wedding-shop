@@ -3,7 +3,7 @@ import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import debounce from 'lodash.debounce';
 
 // components
-import SearchOption from './Item';
+import SearchOption from './Block/Item';
 
 // api
 import ProductsService from '@/api/products/products.service';
@@ -31,7 +31,7 @@ const Searchbar: React.FC = () => {
         } else {
           setOptions([]);
         }
-      }, 400),
+      }, 500),
     [],
   );
 
@@ -57,9 +57,21 @@ const Searchbar: React.FC = () => {
     setOptions([]);
   };
 
-  const clearHistory = () => {
+  const handleClearHistory = () => {
     localStorage.setItem('searchHistory', '[]');
     setHistory([]);
+  };
+
+  const handleClearHistoryItem = (slug: string) => {
+    const history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+
+    localStorage.setItem('searchHistory', JSON.stringify(history.filter((h: SearchResult) => h.slug !== slug)));
+    setHistory((prev) => prev.filter((h) => h.slug !== slug));
+  };
+
+  const updateHistory = () => {
+    const updated = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+    setHistory(updated);
   };
 
   useEffect(() => {
@@ -122,7 +134,9 @@ const Searchbar: React.FC = () => {
             </Typography>
             <Stack>
               {options.length > 0 ? (
-                options.map((o) => <SearchOption afterClick={handleClose} variant="result" {...o} />)
+                options.map((o) => (
+                  <SearchOption afterClick={handleClose} updateHistory={updateHistory} variant="result" {...o} />
+                ))
               ) : (
                 <Typography sx={{ px: 2 }}>No search results</Typography>
               )}
@@ -135,7 +149,7 @@ const Searchbar: React.FC = () => {
               </Typography>
               {history.length > 0 && (
                 <Typography
-                  onClick={clearHistory}
+                  onClick={handleClearHistory}
                   sx={{
                     color: 'grey.300',
                     cursor: 'pointer',
@@ -149,7 +163,15 @@ const Searchbar: React.FC = () => {
             </Stack>
             <Stack>
               {history.length > 0 ? (
-                history.map((o) => <SearchOption afterClick={handleClose} variant="history" {...o} />)
+                history.map((o) => (
+                  <SearchOption
+                    afterClick={handleClose}
+                    handleClear={handleClearHistoryItem}
+                    updateHistory={updateHistory}
+                    variant="history"
+                    {...o}
+                  />
+                ))
               ) : (
                 <Typography sx={{ px: 2 }}>History is empty</Typography>
               )}

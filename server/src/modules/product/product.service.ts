@@ -200,12 +200,16 @@ export class ProductService {
       where: {
         title: {
           contains: text,
-          mode: 'insensitive',
+          mode: 'default',
         },
       },
       select: {
         title: true,
         slug: true,
+      },
+      take: 7,
+      orderBy: {
+        title: 'asc',
       },
     });
   }
