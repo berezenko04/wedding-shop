@@ -1,6 +1,9 @@
-import { Autocomplete, InputAdornment, TextField } from '@mui/material';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Box, Collapse, IconButton, InputAdornment, Stack, TextField, Typography } from '@mui/material';
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
+import debounce from 'lodash.debounce';
+
+// components
+import SearchOption from './Item';
 
 // api
 import ProductsService from '@/api/products/products.service';
@@ -9,60 +12,152 @@ import ProductsService from '@/api/products/products.service';
 import { SearchResult } from '@/api/products/products.types';
 
 // icons
-import { SearchOutlined } from '@mui/icons-material';
+import { Close, SearchOutlined } from '@mui/icons-material';
 
 const Searchbar: React.FC = () => {
-  const navigate = useNavigate();
-  const [inputValue, setInputValue] = useState('');
+  const [isListOpened, setIsListOpened] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [options, setOptions] = useState<SearchResult[]>([]);
+  const [history, setHistory] = useState<SearchResult[]>([]);
 
-  const handleInputChange = async (_: any, value: string) => {
-    setInputValue(value);
+  const popupRef = useRef<HTMLDivElement>(null);
 
-    if (!value.trim()) {
-      setOptions([]);
+  const debouncedSearch = useMemo(
+    () =>
+      debounce(async (query: string) => {
+        if (query.length > 1) {
+          const data = await ProductsService.search(query);
+          setOptions(data);
+        } else {
+          setOptions([]);
+        }
+      }, 400),
+    [],
+  );
+
+  const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setSearchQuery(val);
+    debouncedSearch(val);
+  };
+
+  const handleClose = () => {
+    setIsListOpened(false);
+  };
+
+  const handleBlur = (e: React.FocusEvent) => {
+    if (popupRef.current && popupRef.current.contains(e.relatedTarget as Node)) {
       return;
     }
-
-    const data = await ProductsService.search(value);
-    setOptions(data || []);
+    handleClose();
   };
 
-  const handleChange = async (_: React.SyntheticEvent, newValue: SearchResult | string | null) => {
-    if (newValue && typeof newValue !== 'string') {
-      navigate(`/catalog/${newValue.slug}`);
-    }
+  const handleClear = () => {
+    setSearchQuery('');
+    setOptions([]);
   };
+
+  const clearHistory = () => {
+    localStorage.setItem('searchHistory', '[]');
+    setHistory([]);
+  };
+
+  useEffect(() => {
+    setHistory(JSON.parse(localStorage.getItem('searchHistory') || '[]'));
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
 
   return (
-    <Autocomplete
-      fullWidth
-      freeSolo
-      groupBy={(option) => (option.type === 'history' ? 'History' : 'Suggestions')}
-      options={options}
-      getOptionLabel={(option) => {
-        if (typeof option === 'string') return option;
-        return option.title;
-      }}
-      inputValue={inputValue}
-      onInputChange={handleInputChange}
-      onChange={handleChange}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          size="small"
-          placeholder="Search something..."
-          InputProps={{
-            ...params.InputProps,
+    <Box sx={{ position: 'relative', width: '100%' }}>
+      <TextField
+        fullWidth
+        size="small"
+        placeholder="Search something..."
+        value={searchQuery}
+        onChange={handleChange}
+        onFocus={() => setIsListOpened(true)}
+        onBlur={handleBlur}
+        slotProps={{
+          input: {
             startAdornment: (
-              <InputAdornment position="start" sx={{ pl: 1 }}>
+              <InputAdornment position="start">
                 <SearchOutlined />
               </InputAdornment>
             ),
+            ...(searchQuery.length > 1 && {
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton size="small" onClick={handleClear}>
+                    <Close fontSize="small" />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }),
+          },
+        }}
+      />
+      <Collapse in={isListOpened} timeout="auto" unmountOnExit>
+        <Stack
+          ref={popupRef}
+          onMouseDown={(e) => e.preventDefault()}
+          sx={{
+            py: 2,
+            backgroundColor: 'common.white',
+            position: 'absolute',
+            width: '100%',
+            gap: 2,
+            maxHeight: 400,
+            overflowY: 'auto',
+            boxShadow: 1,
           }}
-        />
-      )}
-    />
+        >
+          <Stack gap={0.5}>
+            <Typography variant="medium" textTransform="uppercase" fontSize={16} sx={{ px: 2 }}>
+              Search Results
+            </Typography>
+            <Stack>
+              {options.length > 0 ? (
+                options.map((o) => <SearchOption afterClick={handleClose} variant="result" {...o} />)
+              ) : (
+                <Typography sx={{ px: 2 }}>No search results</Typography>
+              )}
+            </Stack>
+          </Stack>
+          <Stack gap={0.5}>
+            <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={1} sx={{ px: 2 }}>
+              <Typography variant="medium" textTransform="uppercase" fontSize={16}>
+                Search History
+              </Typography>
+              {history.length > 0 && (
+                <Typography
+                  onClick={clearHistory}
+                  sx={{
+                    color: 'grey.300',
+                    cursor: 'pointer',
+                    transition: 'all 0.25s ease-in-out',
+                    '&:hover': { color: 'grey.800' },
+                  }}
+                >
+                  Clear History
+                </Typography>
+              )}
+            </Stack>
+            <Stack>
+              {history.length > 0 ? (
+                history.map((o) => <SearchOption afterClick={handleClose} variant="history" {...o} />)
+              ) : (
+                <Typography sx={{ px: 2 }}>History is empty</Typography>
+              )}
+            </Stack>
+          </Stack>
+        </Stack>
+      </Collapse>
+    </Box>
   );
 };
 
