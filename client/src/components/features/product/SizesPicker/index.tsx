@@ -1,10 +1,10 @@
-import { Grid, Stack } from "@mui/material";
+import { Grid, Stack } from '@mui/material';
 
 // components
-import PickerItem from "@/components/ui/Picker/Item";
+import PickerItem from '@/components/ui/Picker/Item';
 
 // types
-import { Sizes } from "@/types/enums.types";
+import { Sizes } from '@/types/enums.types';
 
 type SizesPickerProps = {
   initialItems: Sizes[];
@@ -24,6 +24,7 @@ const SizesPicker: React.FC<SizesPickerProps> = ({ initialItems, items, selected
         {initialItems?.map((size) => (
           <Grid key={size} size={{ xs: 12 / 5 }}>
             <PickerItem
+              size="small"
               value={size}
               isSelected={selectedSize === size}
               disabled={!items.includes(size)}

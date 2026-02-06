@@ -1,10 +1,10 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack, Typography } from '@mui/material';
 
 // components
-import SizesPicker from "../SizesPicker";
+import SizesPicker from '../SizesPicker';
 
 // types
-import { Sizes } from "@/types/enums.types";
+import { Sizes } from '@/types/enums.types';
 
 type ProductSizesProps = {
   sizes: Sizes[];
