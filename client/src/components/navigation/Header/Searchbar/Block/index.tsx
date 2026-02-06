@@ -10,10 +10,19 @@ type SearchbarBlockProps = {
   title: string;
   variant: 'result' | 'history';
   options: SearchResult[];
-  onClearHistory: () => void;
+  onClearHistory?: () => void;
+  onClearHistoryItem?: (s: string) => void;
+  afterClickOption: () => void;
 };
 
-const SearchbarBlock: React.FC<SearchbarBlockProps> = ({ title, variant, options, onClearHistory }) => {
+const SearchbarBlock: React.FC<SearchbarBlockProps> = ({
+  title,
+  variant,
+  options,
+  onClearHistory,
+  onClearHistoryItem,
+  afterClickOption,
+}) => {
   return (
     <Stack gap={0.5}>
       <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={1} sx={{ px: 2 }}>
@@ -37,13 +46,7 @@ const SearchbarBlock: React.FC<SearchbarBlockProps> = ({ title, variant, options
       <Stack>
         {options.length > 0 ? (
           options.map((o) => (
-            <SearchOption
-              afterClick={handleClose}
-              handleClear={handleClearHistoryItem}
-              updateHistory={updateHistory}
-              variant={variant}
-              {...o}
-            />
+            <SearchOption afterClick={afterClickOption} handleClear={onClearHistoryItem} variant={variant} {...o} />
           ))
         ) : (
           <Typography sx={{ px: 2 }}>History is empty</Typography>

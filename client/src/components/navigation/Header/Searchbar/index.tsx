@@ -1,12 +1,15 @@
-import { Box, Collapse, IconButton, InputAdornment, Stack, TextField, Typography } from '@mui/material';
+import { Box, Collapse, IconButton, InputAdornment, Stack, TextField } from '@mui/material';
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import debounce from 'lodash.debounce';
 
 // components
-import SearchOption from './Block/Item';
+import SearchbarBlock from './Block';
 
 // api
 import ProductsService from '@/api/products/products.service';
+
+// utils
+import { getHistoryLS, setHistoryLS } from '@/utils/searchLS';
 
 // types
 import { SearchResult } from '@/api/products/products.types';
@@ -20,6 +23,7 @@ const Searchbar: React.FC = () => {
   const [options, setOptions] = useState<SearchResult[]>([]);
   const [history, setHistory] = useState<SearchResult[]>([]);
 
+  const inputRef = useRef<HTMLInputElement>(null);
   const popupRef = useRef<HTMLDivElement>(null);
 
   const debouncedSearch = useMemo(
@@ -41,15 +45,9 @@ const Searchbar: React.FC = () => {
     debouncedSearch(val);
   };
 
-  const handleClose = () => {
-    setIsListOpened(false);
-  };
-
   const handleBlur = (e: React.FocusEvent) => {
-    if (popupRef.current && popupRef.current.contains(e.relatedTarget as Node)) {
-      return;
-    }
-    handleClose();
+    const isInsidePopup = popupRef.current?.contains(e.relatedTarget as Node);
+    if (!isInsidePopup) setIsListOpened(false);
   };
 
   const handleClear = () => {
@@ -57,26 +55,29 @@ const Searchbar: React.FC = () => {
     setOptions([]);
   };
 
+  const handleClose = () => {
+    setIsListOpened(false);
+    handleClear();
+    inputRef.current?.blur();
+  };
+
   const handleClearHistory = () => {
-    localStorage.setItem('searchHistory', '[]');
+    setHistoryLS([]);
     setHistory([]);
   };
 
   const handleClearHistoryItem = (slug: string) => {
-    const history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
-
-    localStorage.setItem('searchHistory', JSON.stringify(history.filter((h: SearchResult) => h.slug !== slug)));
-    setHistory((prev) => prev.filter((h) => h.slug !== slug));
-  };
-
-  const updateHistory = () => {
-    const updated = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+    const history = getHistoryLS();
+    const updated = history.filter((h) => h.slug !== slug);
+    setHistoryLS(updated);
     setHistory(updated);
   };
 
   useEffect(() => {
-    setHistory(JSON.parse(localStorage.getItem('searchHistory') || '[]'));
-  }, []);
+    if (isListOpened) {
+      setHistory(getHistoryLS());
+    }
+  }, [isListOpened]);
 
   useEffect(() => {
     return () => {
@@ -87,6 +88,7 @@ const Searchbar: React.FC = () => {
   return (
     <Box sx={{ position: 'relative', width: '100%' }}>
       <TextField
+        inputRef={inputRef}
         fullWidth
         size="small"
         placeholder="Search something..."
@@ -128,55 +130,15 @@ const Searchbar: React.FC = () => {
             boxShadow: 1,
           }}
         >
-          <Stack gap={0.5}>
-            <Typography variant="medium" textTransform="uppercase" fontSize={16} sx={{ px: 2 }}>
-              Search Results
-            </Typography>
-            <Stack>
-              {options.length > 0 ? (
-                options.map((o) => (
-                  <SearchOption afterClick={handleClose} updateHistory={updateHistory} variant="result" {...o} />
-                ))
-              ) : (
-                <Typography sx={{ px: 2 }}>No search results</Typography>
-              )}
-            </Stack>
-          </Stack>
-          <Stack gap={0.5}>
-            <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={1} sx={{ px: 2 }}>
-              <Typography variant="medium" textTransform="uppercase" fontSize={16}>
-                Search History
-              </Typography>
-              {history.length > 0 && (
-                <Typography
-                  onClick={handleClearHistory}
-                  sx={{
-                    color: 'grey.300',
-                    cursor: 'pointer',
-                    transition: 'all 0.25s ease-in-out',
-                    '&:hover': { color: 'grey.800' },
-                  }}
-                >
-                  Clear History
-                </Typography>
-              )}
-            </Stack>
-            <Stack>
-              {history.length > 0 ? (
-                history.map((o) => (
-                  <SearchOption
-                    afterClick={handleClose}
-                    handleClear={handleClearHistoryItem}
-                    updateHistory={updateHistory}
-                    variant="history"
-                    {...o}
-                  />
-                ))
-              ) : (
-                <Typography sx={{ px: 2 }}>History is empty</Typography>
-              )}
-            </Stack>
-          </Stack>
+          <SearchbarBlock title="Search Results" options={options} variant="result" afterClickOption={handleClose} />
+          <SearchbarBlock
+            title="Search History"
+            options={history}
+            variant="history"
+            afterClickOption={handleClose}
+            onClearHistory={handleClearHistory}
+            onClearHistoryItem={handleClearHistoryItem}
+          />
         </Stack>
       </Collapse>
     </Box>

@@ -7,7 +7,6 @@ import { SearchResult } from '@/api/products/products.types';
 type SearchOptionProps = SearchResult & {
   afterClick: () => void;
   handleClear?: (s: string) => void;
-  updateHistory: () => void;
   variant: 'result' | 'history';
 };
 
@@ -17,7 +16,6 @@ const SearchOption: React.FC<SearchOptionProps> = ({
   variant,
   afterClick,
   handleClear,
-  updateHistory,
 }) => {
   const navigate = useNavigate();
 
@@ -25,7 +23,6 @@ const SearchOption: React.FC<SearchOptionProps> = ({
     const history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
     const updatedHistory = [{ title, slug }, ...history.filter((h: SearchResult) => h.slug !== slug)].slice(0, 5);
     localStorage.setItem('searchHistory', JSON.stringify(updatedHistory));
-    updateHistory();
 
     navigate(`/catalog/${slug}`);
     afterClick();
