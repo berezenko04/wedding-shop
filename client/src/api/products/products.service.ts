@@ -1,10 +1,11 @@
-import { httpGet } from "@/middlewares/axios.middleware";
+import { httpGet } from '@/middlewares/axios.middleware';
 
 // types
-import { GetAllProductParams, GetAllProducts, ProductExtended } from "./products.types";
+import { GetAllProductParams, GetAllProducts, ProductExtended, SearchResult } from './products.types';
 
 const R = {
-  products: "/products",
+  products: '/products',
+  search: '/products/search',
   getBySlug: (slug: string) => `${R.products}/by-slug/${slug}`,
 } as const;
 
@@ -15,6 +16,10 @@ const ProductsService = {
 
   async get(slug: string) {
     return httpGet<ProductExtended>(R.getBySlug(slug));
+  },
+
+  async search(text: string) {
+    return httpGet<SearchResult[]>(R.search, { params: { text } });
   },
 };
 

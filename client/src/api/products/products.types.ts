@@ -1,5 +1,5 @@
-import { Pagination } from "@/types/base.types";
-import { Sizes, SortBy } from "@/types/enums.types";
+import { Pagination } from '@/types/base.types';
+import { Sizes, SortBy } from '@/types/enums.types';
 
 export type Product = {
   id: string;
@@ -33,4 +33,9 @@ export type GetAllProductParams = Pagination & {
   category?: string;
   minPrice?: number;
   maxPrice?: number;
+};
+
+export type SearchResult = {
+  title: string;
+  slug: string;
 };

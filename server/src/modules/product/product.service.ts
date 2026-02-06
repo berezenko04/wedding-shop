@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   InternalServerErrorException,
@@ -13,6 +14,7 @@ import { R2Service } from '../r2/r2.service';
 // dto
 import { GetAllProductsDto } from './dto/get-all-products.dto';
 import { CreateProductDto } from './dto/create-product.dto';
+import { SearchDto } from './dto/search-dto';
 
 // types
 import { ProductsSortBy } from 'src/types/enums';
@@ -187,5 +189,28 @@ export class ProductService {
     }
 
     return product;
+  }
+
+  async search({ text }: SearchDto) {
+    if (!text) {
+      throw new BadRequestException('Search request is empty');
+    }
+
+    return this.prisma.product.findMany({
+      where: {
+        title: {
+          contains: text,
+          mode: 'default',
+        },
+      },
+      select: {
+        title: true,
+        slug: true,
+      },
+      take: 7,
+      orderBy: {
+        title: 'asc',
+      },
+    });
   }
 }
