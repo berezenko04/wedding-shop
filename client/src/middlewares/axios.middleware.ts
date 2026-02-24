@@ -30,19 +30,16 @@ instance.interceptors.response.use(
         await AuthService.refresh();
         return instance.request(originalRequest);
       } catch (err) {
-        // try {
-        //   await AuthService.logout();
-        // } catch {}
         return Promise.reject(normalizeAxiosError(err));
       }
     }
 
     if (originalRequest?.url?.includes("/auth/refresh")) {
-      return Promise.reject(error);
+      return Promise.reject(normalizeAxiosError(error));
     }
 
     return Promise.reject(normalizeAxiosError(error));
-  }
+  },
 );
 
 export async function httpGet<T>(url: string, config?: any): Promise<T> {
