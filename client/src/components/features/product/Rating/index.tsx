@@ -34,7 +34,7 @@ const ProductRating: React.FC<ProductRatingProps> = ({ productId }) => {
       <Typography variant="h3">Rating & Reviews</Typography>
       <Stack flexDirection="row" alignItems="center" gap={8}>
         <Stack>
-          <Typography fontSize={64} variant="medium">
+          <Typography fontSize={64} lineHeight="100%" variant="medium">
             {ratings.averageRating.toFixed(1)}
           </Typography>
           <Stack gap={1}>
