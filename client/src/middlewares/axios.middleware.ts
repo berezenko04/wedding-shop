@@ -30,15 +30,15 @@ instance.interceptors.response.use(
         await AuthService.refresh();
         return instance.request(originalRequest);
       } catch (err) {
+        AuthService.logout();
+        window.location.href = "/login";
         return Promise.reject(normalizeAxiosError(err));
       }
     }
 
-    if (originalRequest?.url?.includes("/auth/refresh")) {
+    if (!originalRequest?.url?.includes("/auth/refresh")) {
       return Promise.reject(normalizeAxiosError(error));
     }
-
-    return Promise.reject(normalizeAxiosError(error));
   },
 );
 
