@@ -17,11 +17,17 @@ const AuthLayout: React.FC = () => {
               display: "block",
             }}
           />
-          <Stack gap={3} sx={{ position: "absolute", bottom: 48, transform: "translateX(-50%)", left: "50%" }}>
+          <Stack
+            gap={3}
+            alignItems="center"
+            sx={{ position: "absolute", width: "100%", bottom: 48, transform: "translateX(-50%)", left: "50%" }}
+          >
             <Typography fontSize={40} fontWeight={600} color="common.white" textAlign="center">
               Turn your ideas into reality
             </Typography>
-            <Typography color="common.white">Start for free and get attractive offers from the community</Typography>
+            <Typography color="common.white" textAlign="center">
+              Start for free and get attractive offers from the community
+            </Typography>
           </Stack>
         </Box>
       </Grid>
