@@ -47,6 +47,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
       });
       queryClient.invalidateQueries({ queryKey: ["productRating", productId] });
       queryClient.invalidateQueries({ queryKey: ["productReviews", productId] });
+      queryClient.invalidateQueries({ queryKey: ["reviews"] });
     } finally {
       reset();
     }
