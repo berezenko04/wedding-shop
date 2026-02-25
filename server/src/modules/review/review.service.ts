@@ -100,6 +100,7 @@ export class ReviewService {
       this.prisma.review.findMany({
         skip: (page - 1) * limit,
         take: limit,
+        orderBy: { createdAt: 'desc' },
         where: { userId },
         select: {
           id: true,
