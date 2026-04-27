@@ -1,30 +1,31 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { Divider, Pagination, Stack, Typography } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Divider, Pagination, Stack, Typography } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 
 // components
-import ReviewsItem from "@/components/features/product/Reviews/Item";
-import EmptyState from "@/components/ui/EmptyState";
+import ReviewsItem from '@/components/features/product/Reviews/Item';
+import ReviewSkeleton from '@/components/ui/loaders/skeletons/Review';
+import EmptyState from '@/components/ui/EmptyState';
 
 // api
-import ReviewsService from "@/api/reviews/reviews.service";
+import ReviewsService from '@/api/reviews/reviews.service';
 
 // redux
-import { authSelector } from "@/redux/auth/auth.selectors";
+import { authSelector } from '@/redux/auth/auth.selectors';
 
 // icons
-import { StarHalf } from "@mui/icons-material";
+import { StarHalf } from '@mui/icons-material';
 
 // constants
-import { REVIEWS_LIMIT } from "@/constants";
+import { REVIEWS_LIMIT } from '@/constants';
 
 const ReviewsPage: React.FC = () => {
   const { isAuth } = useSelector(authSelector);
   const [page, setPage] = useState<number>(1);
 
   const { data: reviews = { reviews: [], total: 0 }, isLoading } = useQuery({
-    queryKey: ["reviews", { page, limit: REVIEWS_LIMIT }],
+    queryKey: ['reviews', { page, limit: REVIEWS_LIMIT }],
     queryFn: () => ReviewsService.getMyReviews({ page, limit: REVIEWS_LIMIT }),
     enabled: isAuth,
   });
@@ -32,10 +33,10 @@ const ReviewsPage: React.FC = () => {
   const pages = Math.ceil(reviews.total / REVIEWS_LIMIT);
 
   return (
-    <Stack gap={4} sx={{ width: "100%" }}>
+    <Stack gap={4} sx={{ width: '100%' }}>
       <Typography variant="h3">Reviews ({reviews.total})</Typography>
-      {isLoading ? (
-        <></>
+      {!isLoading ? (
+        [...Array(3)].map((_, idx) => <ReviewSkeleton key={idx} />)
       ) : reviews.total > 0 ? (
         reviews.reviews.map((review, idx) => (
           <>
