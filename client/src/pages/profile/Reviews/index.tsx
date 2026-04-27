@@ -35,7 +35,7 @@ const ReviewsPage: React.FC = () => {
   return (
     <Stack gap={4} sx={{ width: '100%' }}>
       <Typography variant="h3">Reviews ({reviews.total})</Typography>
-      {!isLoading ? (
+      {isLoading ? (
         [...Array(3)].map((_, idx) => <ReviewSkeleton key={idx} />)
       ) : reviews.total > 0 ? (
         reviews.reviews.map((review, idx) => (

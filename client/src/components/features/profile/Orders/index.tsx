@@ -4,6 +4,7 @@ import { Pagination, Stack, Table, TableBody, TableCell, TableCellProps, TableHe
 // components
 import Order from './Item';
 import EmptyState from '@/components/ui/EmptyState';
+import OrdersSkeleton from '@/components/ui/loaders/skeletons/Orders';
 
 // hooks
 import { useOrders } from '@/hooks/useOrders';
@@ -17,7 +18,7 @@ import { RemoveShoppingCartOutlined } from '@mui/icons-material';
 const Orders: React.FC = () => {
   const [page, setPage] = useState<number>(1);
 
-  const { data: orders } = useOrders(page);
+  const { data: orders, isLoading } = useOrders(page);
 
   const pages = orders?.total ? Math.ceil(orders.total / PAGE_LIMIT) : 0;
 
@@ -33,7 +34,9 @@ const Orders: React.FC = () => {
 
   return (
     <Stack gap={3}>
-      {orders && orders?.total > 0 ? (
+      {isLoading ? (
+        <OrdersSkeleton />
+      ) : orders && orders?.total > 0 ? (
         <>
           <Table>
             <TableHead>
