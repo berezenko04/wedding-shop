@@ -6,6 +6,7 @@ import PaymentMethod from './Item';
 import EmptyState from '../EmptyState';
 import CustomModal from '@/components/ui/layout/CustomModal';
 import PaymentMethodForm from '@/components/forms/profile/PaymentMethod';
+import PaymentMethodSkeleton from '@/components/ui/loaders/skeletons/PaymentMethod';
 
 // hooks
 import { useUserPaymentMethods } from '@/hooks/useUserPaymentMethods';
@@ -16,7 +17,7 @@ import { Add } from '@mui/icons-material';
 const PaymentMethods: React.FC = () => {
   const [isAddModalOpened, setIsAddModalOpened] = useState<boolean>(false);
 
-  const { data: payment = [] } = useUserPaymentMethods();
+  const { data: payment = [], isLoading } = useUserPaymentMethods();
 
   const handleClose = () => {
     setIsAddModalOpened(false);
@@ -28,7 +29,9 @@ const PaymentMethods: React.FC = () => {
 
   return (
     <Stack gap={2}>
-      {payment.length > 0 ? (
+      {isLoading ? (
+        [...Array(3)].map((_, idx) => <PaymentMethodSkeleton key={idx} />)
+      ) : payment.length > 0 ? (
         payment.map((method) => <PaymentMethod {...method} />)
       ) : (
         <EmptyState
