@@ -1,24 +1,24 @@
-import { IconButton, Stack, Typography } from "@mui/material";
-import { useNavigate } from "react-router";
-import { useAppDispatch } from "@/redux/store";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+import { IconButton, Stack, Typography } from '@mui/material';
+import { useNavigate } from 'react-router';
+import { useAppDispatch } from '@/redux/store';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 
 // services
-import AuthService from "@/api/auth/auth.service";
+import AuthService from '@/api/auth/auth.service';
 
 // redux
-import { logout } from "@/redux/auth/auth.actions";
+import { logout } from '@/redux/auth/auth.actions';
 
 // types
-import { UserSession } from "@/api/user/user.types";
-import { BaseResponseData } from "@/types/base.types";
+import { UserSession } from '@/api/user/user.types';
+import { BaseResponseData } from '@/types/base.types';
 
 // icons
-import { DeleteOutline } from "@mui/icons-material";
+import { DeleteOutline } from '@mui/icons-material';
 
 // mapping
-import { sessionIconsMap } from "@/data/mapping";
+import { sessionIconsMap } from '@/data/mapping';
 
 const Session: React.FC<UserSession> = ({ id, deviceType, isCurrent, country, os, createdAt }) => {
   const navigate = useNavigate();
@@ -26,22 +26,22 @@ const Session: React.FC<UserSession> = ({ id, deviceType, isCurrent, country, os
   const queryClient = useQueryClient();
 
   const getIcon = () => {
-    const Icon = sessionIconsMap[deviceType ?? "desktop"] ?? sessionIconsMap.desktop;
-    return <Icon sx={{ width: { xs: 40 }, height: "auto", color: "text.secondary" }} />;
+    const Icon = sessionIconsMap[deviceType ?? 'desktop'] ?? sessionIconsMap.desktop;
+    return <Icon sx={{ width: { xs: 40 }, height: 'auto', color: 'text.secondary' }} />;
   };
 
   const logoutSessionMutation = useMutation({
     mutationFn: (sessionId: string) => AuthService.logoutAnotherSession(sessionId),
     onSuccess: (result: BaseResponseData, sessionId: string) => {
       toast.success(result.message);
-      queryClient.setQueryData(["sessions"], (old: UserSession[] = []) => old.filter((s) => s.id !== sessionId));
+      queryClient.setQueryData(['sessions'], (old: UserSession[] = []) => old.filter((s) => s.id !== sessionId));
     },
   });
 
   const handleLogout = async () => {
     if (isCurrent) {
       dispatch(logout());
-      navigate("/");
+      navigate('/');
     } else {
       logoutSessionMutation.mutate(id);
     }
@@ -63,7 +63,7 @@ const Session: React.FC<UserSession> = ({ id, deviceType, isCurrent, country, os
           <Typography variant="medium" fontSize={16} textTransform="uppercase">
             {os}, {country}
           </Typography>
-          <Typography>Session started on: {new Date(createdAt).toLocaleDateString("en-GB")}</Typography>
+          <Typography>Session started on: {new Date(createdAt).toLocaleDateString('en-GB')}</Typography>
         </Stack>
       </Stack>
       <IconButton color="error" onClick={handleLogout}>

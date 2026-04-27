@@ -1,23 +1,24 @@
-import { Button, Stack, Typography } from "@mui/material";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import toast from "react-hot-toast";
+import { Button, Stack, Typography } from '@mui/material';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 
 // components
-import Session from "./Item";
+import Session from './Item';
+import SessionSkeleton from '@/components/ui/loaders/skeletons/Session';
 
 // api
-import UserService from "@/api/user/user.service";
-import AuthService from "@/api/auth/auth.service";
+import UserService from '@/api/user/user.service';
+import AuthService from '@/api/auth/auth.service';
 
 // types
-import { UserSession } from "@/api/user/user.types";
-import { BaseResponseData } from "@/types/base.types";
+import { UserSession } from '@/api/user/user.types';
+import { BaseResponseData } from '@/types/base.types';
 
 const Sessions: React.FC = () => {
   const queryClient = useQueryClient();
 
-  const { data: sessions = [] } = useQuery({
-    queryKey: ["sessions"],
+  const { data: sessions = [], isLoading } = useQuery({
+    queryKey: ['sessions'],
     queryFn: UserService.getSessions,
   });
 
@@ -25,7 +26,7 @@ const Sessions: React.FC = () => {
     mutationFn: AuthService.logoutAll,
     onSuccess: (result: BaseResponseData) => {
       toast.success(result.message);
-      queryClient.setQueryData(["sessions"], (old: UserSession[] = []) => old.filter((s) => s.isCurrent === true));
+      queryClient.setQueryData(['sessions'], (old: UserSession[] = []) => old.filter((s) => s.isCurrent === true));
     },
   });
 
@@ -35,7 +36,7 @@ const Sessions: React.FC = () => {
         <Typography variant="medium" textTransform="uppercase" fontSize={24}>
           Current Device
         </Typography>
-        <Session {...sessions.find((i) => i.isCurrent)!} />
+        {isLoading ? <SessionSkeleton /> : <Session {...sessions.find((i) => i.isCurrent)!} />}
       </Stack>
       {sessions.length > 1 && (
         <>
@@ -53,7 +54,7 @@ const Sessions: React.FC = () => {
             variant="outlined"
             color="grey"
             size="small"
-            sx={{ width: "max-content" }}
+            sx={{ width: 'max-content' }}
             onClick={() => logoutAllMutation.mutate()}
           >
             Log out all devices without current
