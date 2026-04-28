@@ -88,6 +88,7 @@ export class OrderService {
       this.prisma.order.findMany({
         skip: (page - 1) * limit,
         take: limit,
+        orderBy: { orderNumber: 'desc' },
         where: { userId },
         include: {
           items: {
