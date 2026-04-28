@@ -52,6 +52,7 @@ const CheckoutForm: React.FC = () => {
     try {
       const { orderNumber } = await OrdersService.createOrder(data);
       queryClient.setQueryData(['cart'], []);
+      await queryClient.invalidateQueries({ queryKey: ['orders'] });
       navigate('/checkout/success', { state: { orderNumber } });
     } finally {
       reset();
