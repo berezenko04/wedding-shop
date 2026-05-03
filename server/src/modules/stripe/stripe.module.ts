@@ -6,12 +6,9 @@ import { StripeService } from './stripe.service';
 // controllers
 import { StripeController } from './stripe.controller';
 
-// modules
-import { CartModule } from '../cart/cart.module';
-
 @Module({
-  imports: [CartModule],
   controllers: [StripeController],
   providers: [StripeService],
+  exports: [StripeService],
 })
 export class StripeModule {}

@@ -9,6 +9,7 @@ import { Parser } from 'json2csv';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { PaymentService } from '../payment/payment.service';
 import { AddressService } from '../address/address.service';
+import { StripeService } from '../stripe/stripe.service';
 
 // dto
 import { CreateOrderDto } from './dto/create-order.dto';
@@ -23,6 +24,7 @@ export class OrderService {
     private readonly prisma: PrismaService,
     private readonly paymentService: PaymentService,
     private readonly addressService: AddressService,
+    private readonly stripeService: StripeService,
   ) {}
 
   async create(userId: string, dto: CreateOrderDto) {
@@ -54,7 +56,7 @@ export class OrderService {
       0,
     );
 
-    const order = await this.prisma.order.create({
+    const { orderNumber, id } = await this.prisma.order.create({
       data: {
         userId,
         shippingAddress: address,
@@ -66,7 +68,7 @@ export class OrderService {
     });
 
     const orderItemsData = cart.items.map((item) => ({
-      orderId: order.id,
+      orderId: id,
       productId: item.productId,
       quantity: item.quantity,
       price: item.product.price,
@@ -78,7 +80,12 @@ export class OrderService {
 
     await this.prisma.cart.delete({ where: { userId } });
 
-    return { orderNumber: order.orderNumber };
+    const session = await this.stripeService.createCheckoutSession(
+      orderNumber,
+      subtotal,
+    );
+
+    return { orderNumber, url: session.url };
   }
 
   async all(userId: string, dto: PaginationDto) {

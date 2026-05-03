@@ -239,7 +239,7 @@ model Order {
   shippingMethod  ShippingMethods @map("shipping_method")
   paymentMethod   PaymentMethods  @map("payment_method")
 
-  status ShipmentStatuses @default(DELIVERED)
+  status ShipmentStatuses @default(WAITING_FOR_PAYMENT)
 
   user  User        @relation(fields: [userId], references: [id])
   items OrderItem[]

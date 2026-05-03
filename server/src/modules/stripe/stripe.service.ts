@@ -14,7 +14,7 @@ export class StripeService {
     );
   }
 
-  async createCheckoutSession(orderId: string, amount: number) {
+  async createCheckoutSession(orderNumber: number, amount: number) {
     return this.stripe.checkout.sessions.create({
       mode: 'payment',
       line_items: [
@@ -28,7 +28,7 @@ export class StripeService {
         },
       ],
       metadata: {
-        orderId,
+        orderNumber,
       },
       success_url: `${this.configService.get('FRONTEND_URL')}/checkout/success?id={CHECKOUT_SESSION_ID}`,
       cancel_url: this.configService.get('FRONTEND_URL'),
