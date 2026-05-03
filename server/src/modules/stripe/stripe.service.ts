@@ -38,7 +38,7 @@ export class StripeService {
       metadata: {
         orderNumber,
       },
-      success_url: `${this.configService.get('FRONTEND_URL')}/checkout/success?id={CHECKOUT_SESSION_ID}`,
+      success_url: `${this.configService.get('FRONTEND_URL')}/checkout/success?id={CHECKOUT_SESSION_ID}&orderNumber=${orderNumber}`,
       cancel_url: this.configService.get('FRONTEND_URL'),
     });
   }
