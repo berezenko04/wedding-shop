@@ -15,7 +15,8 @@ enum LogLevel {
 }
 
 enum ShipmentStatuses {
-  DELIVERED @map("Delivered")
+  WAITING_FOR_PAYMENT @map("Waiting for payment")
+  DELIVERED           @map("Delivered")
 }
 
 enum PaymentMethods {
@@ -230,7 +231,7 @@ model Wishlist {
 model Order {
   id              String          @id @default(uuid()) @db.Uuid
   userId          String          @map("user_id") @db.Uuid
-  orderNumber     Int             @default(autoincrement()) @map("order_number")
+  orderNumber     Int             @unique @default(autoincrement()) @map("order_number")
   shippingAddress String          @map("shipping_address")
   trackingNumber  String          @map("tracking_number")
   subtotal        Float
@@ -238,7 +239,7 @@ model Order {
   shippingMethod  ShippingMethods @map("shipping_method")
   paymentMethod   PaymentMethods  @map("payment_method")
 
-  status ShipmentStatuses @default(DELIVERED)
+  status ShipmentStatuses @default(WAITING_FOR_PAYMENT)
 
   user  User        @relation(fields: [userId], references: [id])
   items OrderItem[]

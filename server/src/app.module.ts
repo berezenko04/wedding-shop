@@ -6,12 +6,6 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 // modules
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './modules/auth/auth.module';
-
-// services
-import { LogService } from './common/logging/log.service';
-
-// filters
-import { AllExceptionsFilter } from './common/filters/all-exception.filter';
 import { UserModule } from './modules/user/user.module';
 import { GeoModule } from './modules/geo/geo.module';
 import { ProductModule } from './modules/product/product.module';
@@ -23,7 +17,16 @@ import { AddressModule } from './modules/address/address.module';
 import { PaymentModule } from './modules/payment/payment.module';
 import { R2Module } from './modules/r2/r2.module';
 import { CategoriesModule } from './modules/categories/categories.module';
+
+// services
+import { LogService } from './common/logging/log.service';
+
+// filters
+import { AllExceptionsFilter } from './common/filters/all-exception.filter';
+
+// guards
 import { DevOnlyGuard } from './common/guards/dev-only.guard';
+import { StripeModule } from './modules/stripe/stripe.module';
 
 @Module({
   imports: [
@@ -49,6 +52,7 @@ import { DevOnlyGuard } from './common/guards/dev-only.guard';
     PaymentModule,
     R2Module,
     CategoriesModule,
+    StripeModule,
   ],
   controllers: [],
   providers: [

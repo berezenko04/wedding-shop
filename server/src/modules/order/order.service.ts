@@ -4,11 +4,13 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Parser } from 'json2csv';
+import { ShipmentStatuses } from '@prisma/client';
 
 // services
 import { PrismaService } from 'src/prisma/prisma.service';
 import { PaymentService } from '../payment/payment.service';
 import { AddressService } from '../address/address.service';
+import { StripeService } from '../stripe/stripe.service';
 
 // dto
 import { CreateOrderDto } from './dto/create-order.dto';
@@ -17,12 +19,16 @@ import { PaginationDto } from 'src/common/dto/pagination.dto';
 // utils
 import { generateTrackingNumber } from 'src/utils/generateTrackingNumber';
 
+// constants
+import { DELIVERY_COST } from 'src/constants';
+
 @Injectable()
 export class OrderService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly paymentService: PaymentService,
     private readonly addressService: AddressService,
+    private readonly stripeService: StripeService,
   ) {}
 
   async create(userId: string, dto: CreateOrderDto) {
@@ -54,7 +60,11 @@ export class OrderService {
       0,
     );
 
-    const order = await this.prisma.order.create({
+    const {
+      orderNumber,
+      id,
+      subtotal: orderSubtotal,
+    } = await this.prisma.order.create({
       data: {
         userId,
         shippingAddress: address,
@@ -66,7 +76,7 @@ export class OrderService {
     });
 
     const orderItemsData = cart.items.map((item) => ({
-      orderId: order.id,
+      orderId: id,
       productId: item.productId,
       quantity: item.quantity,
       price: item.product.price,
@@ -78,7 +88,12 @@ export class OrderService {
 
     await this.prisma.cart.delete({ where: { userId } });
 
-    return { orderNumber: order.orderNumber };
+    const session = await this.stripeService.createCheckoutSession(
+      orderNumber,
+      Math.round(orderSubtotal * 100) + DELIVERY_COST,
+    );
+
+    return { orderNumber, url: session.url };
   }
 
   async all(userId: string, dto: PaginationDto) {
@@ -89,7 +104,7 @@ export class OrderService {
         skip: (page - 1) * limit,
         take: limit,
         orderBy: { orderNumber: 'desc' },
-        where: { userId },
+        where: { userId, status: ShipmentStatuses.DELIVERED },
         include: {
           items: {
             select: {
@@ -206,5 +221,12 @@ export class OrderService {
     });
 
     return parser.parse(rows);
+  }
+
+  async markAsPaid(orderId: string) {
+    return this.prisma.order.update({
+      where: { id: orderId },
+      data: { status: ShipmentStatuses.DELIVERED },
+    });
   }
 }

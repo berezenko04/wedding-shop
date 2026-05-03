@@ -1,7 +1,5 @@
 import { Button, Stack } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router';
-import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
 // components
@@ -21,10 +19,7 @@ type CheckoutFormFields = {
 };
 
 const CheckoutForm: React.FC = () => {
-  const queryClient = useQueryClient();
-
   const { data: addresses } = useUserShippingAddresses();
-  const navigate = useNavigate();
 
   const primaryAddress = addresses?.find((address) => address.primary);
 
@@ -50,10 +45,8 @@ const CheckoutForm: React.FC = () => {
 
   const onSubmit = async (data: CheckoutFormFields) => {
     try {
-      const { orderNumber } = await OrdersService.createOrder(data);
-      queryClient.setQueryData(['cart'], []);
-      await queryClient.invalidateQueries({ queryKey: ['orders'] });
-      navigate('/checkout/success', { state: { orderNumber } });
+      const { url } = await OrdersService.createOrder(data);
+      window.location.href = url;
     } finally {
       reset();
     }
