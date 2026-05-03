@@ -57,7 +57,11 @@ export class OrderService {
       0,
     );
 
-    const { orderNumber, id } = await this.prisma.order.create({
+    const {
+      orderNumber,
+      id,
+      subtotal: orderSubtotal,
+    } = await this.prisma.order.create({
       data: {
         userId,
         shippingAddress: address,
@@ -83,7 +87,7 @@ export class OrderService {
 
     const session = await this.stripeService.createCheckoutSession(
       orderNumber,
-      subtotal,
+      Math.round(orderSubtotal * 100),
     );
 
     return { orderNumber, url: session.url };

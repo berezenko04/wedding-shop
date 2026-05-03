@@ -8,6 +8,7 @@ export type CreateOrderBody = {
 
 export type CreateOrderResponse = {
   orderNumber: string;
+  url: string;
 };
 
 export type GetAllOrdersResponse = {
