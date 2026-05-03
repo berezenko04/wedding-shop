@@ -15,7 +15,8 @@ enum LogLevel {
 }
 
 enum ShipmentStatuses {
-  DELIVERED @map("Delivered")
+  WAITING_FOR_PAYMENT @map("Waiting for payment")
+  DELIVERED           @map("Delivered")
 }
 
 enum PaymentMethods {
