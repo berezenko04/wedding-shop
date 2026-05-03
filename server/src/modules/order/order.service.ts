@@ -19,6 +19,9 @@ import { PaginationDto } from 'src/common/dto/pagination.dto';
 // utils
 import { generateTrackingNumber } from 'src/utils/generateTrackingNumber';
 
+// constants
+import { DELIVERY_COST } from 'src/constants';
+
 @Injectable()
 export class OrderService {
   constructor(
@@ -87,7 +90,7 @@ export class OrderService {
 
     const session = await this.stripeService.createCheckoutSession(
       orderNumber,
-      Math.round(orderSubtotal * 100),
+      Math.round(orderSubtotal * 100) + DELIVERY_COST,
     );
 
     return { orderNumber, url: session.url };
