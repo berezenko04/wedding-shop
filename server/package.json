@@ -63,6 +63,7 @@
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.7",
     "@types/request-ip": "^0.0.41",
+    "@types/stripe": "^8.0.417",
     "@types/supertest": "^6.0.2",
     "cross-env": "^10.1.0",
     "eslint": "^9.18.0",
