@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Parser } from 'json2csv';
+import { ShipmentStatuses } from '@prisma/client';
 
 // services
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -213,5 +214,12 @@ export class OrderService {
     });
 
     return parser.parse(rows);
+  }
+
+  async markAsPaid(orderId: string) {
+    return this.prisma.order.update({
+      where: { id: orderId },
+      data: { status: ShipmentStatuses.DELIVERED },
+    });
   }
 }
