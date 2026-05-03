@@ -231,7 +231,7 @@ model Wishlist {
 model Order {
   id              String          @id @default(uuid()) @db.Uuid
   userId          String          @map("user_id") @db.Uuid
-  orderNumber     Int             @default(autoincrement()) @map("order_number")
+  orderNumber     Int             @unique @default(autoincrement()) @map("order_number")
   shippingAddress String          @map("shipping_address")
   trackingNumber  String          @map("tracking_number")
   subtotal        Float

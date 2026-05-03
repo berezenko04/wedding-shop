@@ -14,6 +14,14 @@ export class StripeService {
     );
   }
 
+  constructWebhookEvent(payload: Buffer, signature: string) {
+    return this.stripe.webhooks.constructEvent(
+      payload,
+      signature,
+      this.configService.getOrThrow<string>('STRIPE_WEBHOOK_SECRET'),
+    );
+  }
+
   async createCheckoutSession(orderNumber: number, amount: number) {
     return this.stripe.checkout.sessions.create({
       mode: 'payment',
