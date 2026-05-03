@@ -104,7 +104,7 @@ export class OrderService {
         skip: (page - 1) * limit,
         take: limit,
         orderBy: { orderNumber: 'desc' },
-        where: { userId },
+        where: { userId, status: ShipmentStatuses.DELIVERED },
         include: {
           items: {
             select: {
