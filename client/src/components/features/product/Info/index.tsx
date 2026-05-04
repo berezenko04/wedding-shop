@@ -1,18 +1,18 @@
-import { Button, Stack, Typography } from "@mui/material";
-import { useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
+import { Button, Stack, Typography } from '@mui/material';
+import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
 // components
-import ProductPrice from "../Price";
-import ProductSizes from "../Sizes";
-import ProductDiscount from "../Discount";
-import AddToWishlistButton from "@/components/ui/buttons/AddToWishlist";
+import ProductPrice from '../Price';
+import ProductSizes from '../Sizes';
+import ProductDiscount from '../Discount';
+import AddToWishlistButton from '@/components/ui/buttons/AddToWishlist';
 
 // api
-import CartService from "@/api/cart/cart.service";
+import CartService from '@/api/cart/cart.service';
 
 // types
-import { Sizes } from "@/types/enums.types";
+import { Sizes } from '@/types/enums.types';
 
 type ProductInfoProps = {
   id: string;
@@ -30,7 +30,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ id, title, price, discount, d
 
   const handleAddToBag = async () => {
     const result = await CartService.updateCart({ productId: id, size: selectedSize, change: 1 });
-    queryClient.setQueryData(["cart"], result);
+    queryClient.setQueryData(['cart'], result);
   };
 
   return (
@@ -45,7 +45,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ id, title, price, discount, d
       <Typography>{description}</Typography>
       <ProductSizes sizes={sizes} selectedSize={selectedSize} onSelectSize={setSelectedSize} />
       <Stack flexDirection="row" alignItems="center" gap={2}>
-        <Button variant="outlined" color="primary" fullWidth onClick={handleAddToBag}>
+        <Button disabled={!selectedSize} variant="outlined" color="primary" fullWidth onClick={handleAddToBag}>
           Add to Bag
         </Button>
         <AddToWishlistButton productId={id} variant="productPage" />

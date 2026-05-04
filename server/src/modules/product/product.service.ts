@@ -141,6 +141,9 @@ export class ProductService {
         images: {
           select: { id: true, url: true },
         },
+        category: {
+          select: { name: true },
+        },
       },
     });
 
