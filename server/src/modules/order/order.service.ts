@@ -123,7 +123,9 @@ export class OrderService {
           },
         },
       }),
-      this.prisma.order.count({ where: { userId } }),
+      this.prisma.order.count({
+        where: { userId, status: ShipmentStatuses.DELIVERED },
+      }),
     ]);
 
     return { orders, total };
