@@ -185,7 +185,7 @@ model CartItem {
   cartId    String @map("cart_id") @db.Uuid
   productId String @map("product_id") @db.Uuid
   quantity  Int
-  size      Sizes
+  size      Sizes?
 
   product Product @relation(fields: [productId], references: [id])
   cart    Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
@@ -193,7 +193,7 @@ model CartItem {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@unique([cartId, productId, size])
+  @@index([cartId, productId, size])
   @@map("cart_items")
 }
 
@@ -257,7 +257,7 @@ model OrderItem {
   quantity  Int
   price     Float
   discount  Float?
-  size      Sizes
+  size      Sizes?
 
   product Product @relation(fields: [productId], references: [id])
   order   Order   @relation(fields: [orderId], references: [id])
