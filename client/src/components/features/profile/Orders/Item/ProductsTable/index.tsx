@@ -37,7 +37,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ items }) => {
                 {product.title}
               </Stack>
             </TableCell>
-            <TableCell>{size}</TableCell>
+            <TableCell>{size || 'Accessory'}</TableCell>
             <TableCell>{quantity}</TableCell>
             <TableCell>{price.toFixed(2)} USD</TableCell>
             <TableCell>{discount != null ? `${discount * 100}%` : '—'}</TableCell>

@@ -45,14 +45,18 @@ export class CartService {
   async updateCart(userId: string, dto: UpdateCartDto) {
     const { productId, size, change } = dto;
 
-    await this.productService.get(productId);
+    const product = await this.productService.get(productId);
 
-    const isSizeAvailable = await this.prisma.product.findUnique({
-      where: { id: productId, sizes: { has: size } },
-    });
+    if (product.category.name !== 'Accessories') {
+      const isSizeAvailable = await this.prisma.product.findUnique({
+        where: { id: productId, sizes: { has: size } },
+      });
 
-    if (!isSizeAvailable) {
-      throw new NotFoundException(`Size ${size} is not found for this product`);
+      if (!isSizeAvailable) {
+        throw new NotFoundException(
+          `Size ${size} is not found for this product`,
+        );
+      }
     }
 
     const cart = await this.prisma.cart.upsert({
@@ -61,13 +65,11 @@ export class CartService {
       create: { userId },
     });
 
-    const existingItem = await this.prisma.cartItem.findUnique({
+    const existingItem = await this.prisma.cartItem.findFirst({
       where: {
-        cartId_productId_size: {
-          cartId: cart.id,
-          productId,
-          size,
-        },
+        cartId: cart.id,
+        productId,
+        size: size ?? null,
       },
     });
 
@@ -79,11 +81,7 @@ export class CartService {
 
       await this.prisma.cartItem.update({
         where: {
-          cartId_productId_size: {
-            cartId: cart.id,
-            productId,
-            size,
-          },
+          id: existingItem.id,
         },
         data: {
           quantity: newQuantity,

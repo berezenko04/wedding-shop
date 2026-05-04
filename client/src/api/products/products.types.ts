@@ -1,5 +1,5 @@
 import { Pagination } from '@/types/base.types';
-import { Sizes, SortBy } from '@/types/enums.types';
+import { ProductCategories, Sizes, SortBy } from '@/types/enums.types';
 
 export type Product = {
   id: string;
@@ -13,9 +13,14 @@ export type Product = {
 export interface ProductExtended extends Product {
   description: string;
   sex: string;
+  category: ProductCategory;
   sizes?: Sizes[];
   images: ProductImage[];
 }
+
+export type ProductCategory = {
+  name: ProductCategories;
+};
 
 export type ProductImage = {
   id: string;
