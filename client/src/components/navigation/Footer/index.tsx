@@ -1,25 +1,25 @@
-import { Box, Grid, Link, Stack, Typography } from "@mui/material";
+import { Box, Grid, Link, Stack, Typography } from '@mui/material';
 
 // components
-import CustomContainer from "@/components/ui/layout/CustomContainer";
-import Socials from "./Socials";
-import Logo from "../Logo";
+import CustomContainer from '@/components/ui/layout/CustomContainer';
+import Socials from './Socials';
+import Logo from '../Logo';
 
 // data
-import { footerContacts, footerHelpMenu } from "@/data/menus";
+import { footerContacts, footerHelpMenu } from '@/data/menus';
 
 const Footer: React.FC = () => {
   return (
-    <Box component="footer" sx={{ backgroundColor: "common.black" }} py={4}>
+    <Box component="footer" sx={{ backgroundColor: 'common.black' }} py={4}>
       <CustomContainer>
         <Grid container spacing={4}>
-          <Grid size={{ xs: 3 }}>
+          <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
             <Stack gap={3}>
               <Logo color="light" />
               <Socials />
             </Stack>
           </Grid>
-          <Grid size={{ xs: 6 }}>
+          <Grid size={{ xs: 12, sm: 6 }}>
             <Stack gap={2}>
               <Typography color="common.white" fontSize={20} fontWeight={500} textTransform="uppercase">
                 Get Help
@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
               </Stack>
             </Stack>
           </Grid>
-          <Grid size={{ xs: 3 }}>
+          <Grid size={{ xs: 12, sm: 6, lg: 3 }}>
             <Stack gap={2}>
               <Typography color="common.white" fontSize={20} fontWeight={500} textTransform="uppercase">
                 Contacts
