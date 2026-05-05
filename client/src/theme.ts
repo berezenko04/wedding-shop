@@ -7,6 +7,15 @@ import { LinkBehavior } from './components/providers/LinkBehavior';
 import { KeyboardArrowDown } from '@mui/icons-material';
 
 const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
   palette: {
     primary: { main: '#ED7222', 300: '#F6B87B', 50: '#FEF7EE' },
     success: { main: '#12B76A', 100: '#C2E9D1' },
