@@ -1,10 +1,8 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 
 // components
 import CustomContainer from '../CustomContainer';
-
-// icons
-import { CallMadeOutlined } from '@mui/icons-material';
+import OutlinedWhiteArrowButton from '@/components/ui/buttons/OutlinedWhiteArrow';
 
 const HomepageBanner: React.FC = () => {
   return (
@@ -45,9 +43,7 @@ const HomepageBanner: React.FC = () => {
             >
               Bridal shop with the possibility of individual tailoring
             </Typography>
-            <Button href="/catalog" variant="outlined" color="white" endIcon={<CallMadeOutlined />}>
-              View All
-            </Button>
+            <OutlinedWhiteArrowButton href="/catalog">View All</OutlinedWhiteArrowButton>
           </Stack>
         </CustomContainer>
       </Box>

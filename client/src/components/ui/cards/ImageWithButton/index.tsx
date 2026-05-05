@@ -1,5 +1,7 @@
-import { Box, Button, SxProps } from '@mui/material';
-import { CallMadeOutlined } from '@mui/icons-material';
+import { Box, SxProps } from '@mui/material';
+
+// components
+import OutlinedWhiteArrowButton from '@/components/ui/buttons/OutlinedWhiteArrow';
 
 type ImageWithButtonProps = {
   imgSrc: string;
@@ -32,10 +34,7 @@ const ImageWithButton: React.FC<ImageWithButtonProps> = ({ imgSrc, linkText, lin
         }}
       />
 
-      <Button
-        endIcon={<CallMadeOutlined />}
-        variant="outlined"
-        color="white"
+      <OutlinedWhiteArrowButton
         href={linkHref}
         sx={{
           position: 'absolute',
@@ -45,7 +44,7 @@ const ImageWithButton: React.FC<ImageWithButtonProps> = ({ imgSrc, linkText, lin
         }}
       >
         {linkText}
-      </Button>
+      </OutlinedWhiteArrowButton>
     </Box>
   );
 };

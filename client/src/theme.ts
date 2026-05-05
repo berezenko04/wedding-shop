@@ -270,12 +270,18 @@ const theme = createTheme({
         {
           props: { variant: 'outlined', color: 'white' },
           style: ({ theme }) => ({
-            fontSize: 24,
+            fontSize: 20,
             border: `1px solid ${theme.palette.common.white}`,
+            color: theme.palette.common.white,
             backgroundColor: 'transparent',
 
+            [theme.breakpoints.up('lg')]: {
+              fontSize: 24,
+            },
+
             '&:hover': {
-              backgroundColor: alpha(theme.palette.common.white, 0.4),
+              backgroundColor: alpha(theme.palette.common.white, 0.08),
+              borderColor: theme.palette.common.white,
             },
           }),
         },
@@ -301,12 +307,6 @@ const theme = createTheme({
             },
           }),
         },
-        // {
-        //   props: { variant: "plain" },
-        //   style: ({ theme }) => ({
-        //     color: theme.palette.grey[500],
-        //   }),
-        // },
         {
           props: { variant: 'underlined' },
           style: {
