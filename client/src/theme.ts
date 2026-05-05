@@ -11,7 +11,7 @@ const theme = createTheme({
     values: {
       xs: 0,
       sm: 600,
-      md: 900, 
+      md: 900,
       lg: 1200,
       xl: 1536,
     },
@@ -75,9 +75,18 @@ const theme = createTheme({
               fontWeight: 500,
             },
         }),
-        h1: {
-          fontSize: 64,
-        },
+        h1: ({ theme }) => ({
+          fontSize: 40,
+          [theme.breakpoints.up('sm')]: {
+            fontSize: 48,
+          },
+          [theme.breakpoints.up('md')]: {
+            fontSize: 56,
+          },
+          [theme.breakpoints.up('lg')]: {
+            fontSize: 64,
+          },
+        }),
         h2: {
           fontSize: 56,
         },

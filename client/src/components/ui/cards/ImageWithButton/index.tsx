@@ -1,5 +1,5 @@
-import { Box, Button, SxProps } from "@mui/material";
-import { CallMadeOutlined } from "@mui/icons-material";
+import { Box, Button, SxProps } from '@mui/material';
+import { CallMadeOutlined } from '@mui/icons-material';
 
 type ImageWithButtonProps = {
   imgSrc: string;
@@ -12,10 +12,10 @@ const ImageWithButton: React.FC<ImageWithButtonProps> = ({ imgSrc, linkText, lin
   return (
     <Box
       sx={{
-        position: "relative",
-        width: "100%",
-        height: "100%",
-        overflow: "hidden",
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden',
         ...sx,
       }}
     >
@@ -24,10 +24,11 @@ const ImageWithButton: React.FC<ImageWithButtonProps> = ({ imgSrc, linkText, lin
         src={imgSrc}
         alt={linkText}
         sx={{
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          display: "block",
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'top center',
+          display: 'block',
         }}
       />
 
@@ -37,7 +38,7 @@ const ImageWithButton: React.FC<ImageWithButtonProps> = ({ imgSrc, linkText, lin
         color="white"
         href={linkHref}
         sx={{
-          position: "absolute",
+          position: 'absolute',
           left: 24,
           bottom: 24,
           zIndex: 2,
