@@ -22,7 +22,7 @@ const HomepageSection: React.FC<HomepageSectionProps> = ({ title, children, isSw
 
   return (
     <CustomContainer>
-      <Stack component="section" py={{ xs: 4, md: 6, lg: 8 }} gap={6}>
+      <Stack component="section" py={{ xs: 4, md: 6, lg: 8 }} gap={{ xs: 4, lg: 6 }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Typography variant="h2">{title}</Typography>
 
