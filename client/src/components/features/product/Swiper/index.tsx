@@ -32,8 +32,8 @@ const ProductsSwiper: React.FC<ProductsSwiperProps> = ({ data, isLoading, loop =
       style={{ width: '100%' }}
       breakpoints={{
         [theme.breakpoints.values.xs]: { slidesPerView: 1 },
-        [theme.breakpoints.values.md]: { slidesPerView: 2 },
-        [theme.breakpoints.values.lg]: { slidesPerView: 3 },
+        [theme.breakpoints.values.sm]: { slidesPerView: 2 },
+        [theme.breakpoints.values.md]: { slidesPerView: 3 },
       }}
     >
       {isLoading
