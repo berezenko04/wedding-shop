@@ -1,4 +1,4 @@
-import { Box, Collapse, IconButton, InputAdornment, Stack, TextField } from '@mui/material';
+import { Box, Collapse, IconButton, InputAdornment, Stack, SxProps, TextField } from '@mui/material';
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import debounce from 'lodash.debounce';
 
@@ -17,7 +17,11 @@ import { SearchResult } from '@/api/products/products.types';
 // icons
 import { Close, SearchOutlined } from '@mui/icons-material';
 
-const Searchbar: React.FC = () => {
+type Props = {
+  sx?: SxProps;
+};
+
+const Searchbar: React.FC<Props> = ({ sx }) => {
   const [isListOpened, setIsListOpened] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [options, setOptions] = useState<SearchResult[]>([]);
@@ -86,7 +90,7 @@ const Searchbar: React.FC = () => {
   }, [debouncedSearch]);
 
   return (
-    <Box sx={{ position: 'relative', width: '100%' }}>
+    <Box sx={{ position: 'relative', width: '100%', ...sx }}>
       <TextField
         inputRef={inputRef}
         fullWidth
