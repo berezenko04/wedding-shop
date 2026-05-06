@@ -7,6 +7,15 @@ import { LinkBehavior } from './components/providers/LinkBehavior';
 import { KeyboardArrowDown } from '@mui/icons-material';
 
 const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
   palette: {
     primary: { main: '#ED7222', 300: '#F6B87B', 50: '#FEF7EE' },
     success: { main: '#12B76A', 100: '#C2E9D1' },
@@ -66,12 +75,30 @@ const theme = createTheme({
               fontWeight: 500,
             },
         }),
-        h1: {
-          fontSize: 64,
-        },
-        h2: {
-          fontSize: 56,
-        },
+        h1: ({ theme }) => ({
+          fontSize: 40,
+          [theme.breakpoints.up('sm')]: {
+            fontSize: 48,
+          },
+          [theme.breakpoints.up('md')]: {
+            fontSize: 56,
+          },
+          [theme.breakpoints.up('lg')]: {
+            fontSize: 64,
+          },
+        }),
+        h2: ({ theme }) => ({
+          fontSize: 32,
+          [theme.breakpoints.up('sm')]: {
+            fontSize: 40,
+          },
+          [theme.breakpoints.up('md')]: {
+            fontSize: 48,
+          },
+          [theme.breakpoints.up('lg')]: {
+            fontSize: 56,
+          },
+        }),
         h3: {
           fontSize: 32,
         },
@@ -243,12 +270,18 @@ const theme = createTheme({
         {
           props: { variant: 'outlined', color: 'white' },
           style: ({ theme }) => ({
-            fontSize: 24,
+            fontSize: 20,
             border: `1px solid ${theme.palette.common.white}`,
+            color: theme.palette.common.white,
             backgroundColor: 'transparent',
 
+            [theme.breakpoints.up('lg')]: {
+              fontSize: 24,
+            },
+
             '&:hover': {
-              backgroundColor: alpha(theme.palette.common.white, 0.4),
+              backgroundColor: alpha(theme.palette.common.white, 0.08),
+              borderColor: theme.palette.common.white,
             },
           }),
         },
@@ -274,12 +307,6 @@ const theme = createTheme({
             },
           }),
         },
-        // {
-        //   props: { variant: "plain" },
-        //   style: ({ theme }) => ({
-        //     color: theme.palette.grey[500],
-        //   }),
-        // },
         {
           props: { variant: 'underlined' },
           style: {

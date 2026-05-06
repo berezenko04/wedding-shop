@@ -1,18 +1,27 @@
-import { Box, Link, Stack, Typography } from "@mui/material";
+import { Box, Link, Stack, Typography } from '@mui/material';
 
 // components
-import CustomContainer from "@/components/ui/layout/CustomContainer";
+import CustomContainer from '@/components/ui/layout/CustomContainer';
 
 // data
-import { privacyMenu } from "@/data/menus";
+import { privacyMenu } from '@/data/menus';
 
 const PrivacyRights: React.FC = () => {
   return (
-    <Box sx={{ backgroundColor: "common.black" }} py={2}>
+    <Box sx={{ backgroundColor: 'common.black' }} py={2}>
       <CustomContainer>
-        <Stack flexDirection="row" justifyContent="space-between" alignItems="center" gap={3}>
+        <Stack
+          flexDirection={{ xs: 'column', md: 'row' }}
+          justifyContent="space-between"
+          alignItems={{ xs: 'flex-start', md: 'center' }}
+          gap={{ xs: 1.5, md: 3 }}
+        >
           <Typography color="grey.400">© {new Date().getFullYear()} Sandrela, All Rights Reserved</Typography>
-          <Stack flexDirection="row" alignItems="center" gap={3}>
+          <Stack
+            flexDirection={{ xs: 'column', sm: 'row' }}
+            alignItems={{ xs: 'flex-start', sm: 'center' }}
+            gap={{ xs: 1.5, sm: 3 }}
+          >
             {privacyMenu.map(({ title, href }) => (
               <Link href={href} color="grey">
                 {title}

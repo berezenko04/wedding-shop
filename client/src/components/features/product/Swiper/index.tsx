@@ -1,13 +1,14 @@
-import { Swiper as SwiperInitial, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { Swiper as SwiperInitial, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import { useTheme } from '@mui/material';
 
 // components
-import ProductCard from "@/components/features/product/Card";
-import ProductCardSkeleton from "@/components/ui/loaders/skeletons/ProductCard";
+import ProductCard from '@/components/features/product/Card';
+import ProductCardSkeleton from '@/components/ui/loaders/skeletons/ProductCard';
 
 // types
-import type { Product } from "@/api/products/products.types";
-import type { Swiper as SwiperType } from "swiper/types";
+import type { Product } from '@/api/products/products.types';
+import type { Swiper as SwiperType } from 'swiper/types';
 
 type ProductsSwiperProps = {
   data: Product[];
@@ -17,6 +18,8 @@ type ProductsSwiperProps = {
 };
 
 const ProductsSwiper: React.FC<ProductsSwiperProps> = ({ data, isLoading, loop = true, swiperRef }) => {
+  const theme = useTheme();
+
   return (
     <SwiperInitial
       spaceBetween={24}
@@ -26,11 +29,11 @@ const ProductsSwiper: React.FC<ProductsSwiperProps> = ({ data, isLoading, loop =
       onBeforeInit={(swiper) => {
         swiperRef.current = swiper;
       }}
-      style={{ width: "100%" }}
+      style={{ width: '100%' }}
       breakpoints={{
-        0: { slidesPerView: 1 },
-        480: { slidesPerView: 2 },
-        768: { slidesPerView: 3 },
+        [theme.breakpoints.values.xs]: { slidesPerView: 1 },
+        [theme.breakpoints.values.sm]: { slidesPerView: 2 },
+        [theme.breakpoints.values.md]: { slidesPerView: 3 },
       }}
     >
       {isLoading

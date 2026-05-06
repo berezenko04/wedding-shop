@@ -1,13 +1,13 @@
-import { Stack, Typography, Button } from "@mui/material";
+import { Stack, Typography, Button } from '@mui/material';
 
 // components
-import CustomContainer from "@/components/ui/layout/CustomContainer";
+import CustomContainer from '@/components/ui/layout/CustomContainer';
 
 // types
-import type { Swiper as SwiperType } from "swiper/types";
+import type { Swiper as SwiperType } from 'swiper/types';
 
 // icons
-import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
+import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 
 type HomepageSectionProps = {
   title: string;
@@ -22,7 +22,7 @@ const HomepageSection: React.FC<HomepageSectionProps> = ({ title, children, isSw
 
   return (
     <CustomContainer>
-      <Stack component="section" py={8} gap={6}>
+      <Stack component="section" py={{ xs: 4, md: 6, lg: 8 }} gap={{ xs: 4, lg: 6 }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between">
           <Typography variant="h2">{title}</Typography>
 
