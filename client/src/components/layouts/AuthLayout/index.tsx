@@ -39,7 +39,7 @@ const AuthLayout: React.FC = () => {
         </Box>
       </Grid>
       <Grid size={{ xs: 12, md: 6 }} sx={{ display: 'flex', height: '100%' }}>
-        <Stack sx={{ flex: 1, height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+        <Stack sx={{ flex: 1, height: '100%', alignItems: 'center', justifyContent: 'center', p: 2 }}>
           <Outlet />
         </Stack>
       </Grid>
