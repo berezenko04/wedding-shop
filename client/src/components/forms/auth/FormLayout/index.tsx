@@ -1,7 +1,7 @@
-import { Button, Link, Stack, Typography } from "@mui/material";
+import { Button, Link, Stack, Typography } from '@mui/material';
 
 // icons
-import { KeyboardArrowLeft } from "@mui/icons-material";
+import { KeyboardArrowLeft } from '@mui/icons-material';
 
 type FormLayoutProps = {
   title: string;
@@ -23,12 +23,14 @@ const FormLayout: React.FC<FormLayoutProps> = ({
   isBackToLogin = true,
 }) => {
   return (
-    <Stack gap={4} sx={{ width: "100%", alignItems: "center", maxWidth: 420 }}>
+    <Stack gap={4} sx={{ width: '100%', alignItems: 'center', maxWidth: 420 }}>
       <Stack alignItems="center" gap={1.5}>
-        <Typography variant="h3">{title}</Typography>
+        <Typography variant="h3" textAlign="center">
+          {title}
+        </Typography>
         <Typography textAlign="center">{description}</Typography>
       </Stack>
-      <Stack gap={3} sx={{ width: "100%" }}>
+      <Stack gap={3} sx={{ width: '100%' }}>
         {children}
         {footerText && (
           <Stack flexDirection="row" alignItems="center" justifyContent="center" gap={1}>

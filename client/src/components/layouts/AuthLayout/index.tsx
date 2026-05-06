@@ -3,8 +3,20 @@ import { Outlet } from 'react-router-dom';
 
 const AuthLayout: React.FC = () => {
   return (
-    <Grid container sx={{ height: '100vh', minHeight: '100vh' }}>
-      <Grid size={6} sx={{ display: { xs: 'none', md: 'grid' }, height: '100%' }}>
+    <Grid
+      container
+      sx={{
+        height: '100dvh',
+        overflow: 'hidden',
+      }}
+    >
+      <Grid
+        size={6}
+        sx={{
+          display: { xs: 'none', md: 'block' },
+          height: '100%',
+        }}
+      >
         <Box sx={{ position: 'relative', height: '100%', overflow: 'hidden' }}>
           <Box
             component="img"
@@ -17,6 +29,7 @@ const AuthLayout: React.FC = () => {
               display: 'block',
             }}
           />
+
           <Stack
             gap={{ xs: 1.5, lg: 3 }}
             alignItems="center"
@@ -25,8 +38,8 @@ const AuthLayout: React.FC = () => {
               width: '100%',
               bottom: { xs: 24, lg: 48 },
               p: 2,
-              transform: 'translateX(-50%)',
               left: '50%',
+              transform: 'translateX(-50%)',
             }}
           >
             <Typography fontSize={{ xs: 28, lg: 40 }} fontWeight={600} color="common.white" textAlign="center">
@@ -38,10 +51,40 @@ const AuthLayout: React.FC = () => {
           </Stack>
         </Box>
       </Grid>
-      <Grid size={{ xs: 12, md: 6 }} sx={{ display: 'flex', height: '100%' }}>
-        <Stack sx={{ flex: 1, height: '100%', alignItems: 'center', justifyContent: 'center', p: 2 }}>
-          <Outlet />
-        </Stack>
+
+      <Grid
+        size={{ xs: 12, md: 6 }}
+        sx={{
+          height: '100%',
+          overflow: 'hidden',
+        }}
+      >
+        <Box
+          sx={{
+            height: '100%',
+            overflowY: 'auto',
+            px: 2,
+            py: 4,
+          }}
+        >
+          <Box
+            sx={{
+              minHeight: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Box
+              sx={{
+                width: '100%',
+                maxWidth: 520,
+              }}
+            >
+              <Outlet />
+            </Box>
+          </Box>
+        </Box>
       </Grid>
     </Grid>
   );
