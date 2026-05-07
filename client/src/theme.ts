@@ -380,7 +380,7 @@ const theme = createTheme({
           fontWeight: 500,
           color: theme.palette.grey[700],
           padding: '4px 0',
-        }),
+        }), 
       },
     },
     MuiMenuItem: {
