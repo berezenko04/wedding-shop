@@ -88,20 +88,29 @@ const CatalogPage: React.FC = () => {
 
   return (
     <Stack gap={4}>
-      <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={4}>
+      <Stack
+        flexDirection={{ xs: 'column', md: 'row' }}
+        alignItems={{ xs: 'flex-start', md: 'center' }}
+        justifyContent="space-between"
+        gap={{ xs: 1.5, md: 4 }}
+      >
         <Typography variant="h3">Products ({total})</Typography>
-        <Stack flexDirection="row" alignItems="center" gap={1}>
-          {!isLgUp && (
-            <Button startIcon={<FilterList />} color="grey" size="small" onClick={() => setFiltersOpen(true)}>
-              Filters
-            </Button>
-          )}
+        <Stack flexDirection="row" alignItems="center" gap={{ xs: 0.5, sm: 2 }} flexWrap="wrap">
+          <Button
+            sx={{ display: { xs: 'flex', lg: 'none' }, p: 0 }}
+            startIcon={<FilterList />}
+            color="grey"
+            size="small"
+            onClick={() => setFiltersOpen(true)}
+          >
+            Filters
+          </Button>
           <CatalogSort value={filters.sortBy} onChange={(sortBy) => handleFilterChange('sortBy', sortBy)} />
         </Stack>
       </Stack>
       <Grid container spacing={4}>
         {isLgUp && (
-          <Grid size={{ xs: 2 }}>
+          <Grid size={2}>
             <Filters filters={filters} setFilter={handleFilterChange} clearFilters={handleClearFilters} />
           </Grid>
         )}
