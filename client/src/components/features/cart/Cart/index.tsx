@@ -8,9 +8,11 @@ import CartTotal from '../Total';
 import EmptyCart from '../Empty';
 import CustomScrollContainer from '@/components/ui/layout/CustomScrollContainer';
 
+// hooks
+import { useCart } from '@/hooks/useCart';
+
 // icons
 import { Close } from '@mui/icons-material';
-import { useCart } from '@/hooks/useCart';
 
 type CartProps = {
   isOpened: boolean;
@@ -35,9 +37,12 @@ const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
       slotProps={{
         paper: {
           sx: {
-            width: 580,
+            width: { xs: '100%', sm: 580 },
             height: '100vh',
             maxHeight: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
           },
         },
       }}
