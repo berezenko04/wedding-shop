@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Divider, Pagination, Stack, Typography } from '@mui/material';
+import { Divider, Stack, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 
 // components
 import ReviewsItem from '@/components/features/product/Reviews/Item';
 import ReviewSkeleton from '@/components/ui/loaders/skeletons/Review';
+import CustomPagination from '@/components/ui/layout/CustomPagination';
 import EmptyState from '@/components/ui/EmptyState';
 
 // api
@@ -55,7 +56,7 @@ const ReviewsPage: React.FC = () => {
       {pages > 1 && (
         <>
           <Divider />
-          <Pagination page={page} count={pages} onChange={(_, p) => setPage(p)} />
+          <CustomPagination page={page} count={pages} onChange={(_, p) => setPage(p)} />
         </>
       )}
     </Stack>

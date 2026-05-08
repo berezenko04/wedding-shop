@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Pagination, Stack, Table, TableBody, TableCell, TableCellProps, TableHead, TableRow } from '@mui/material';
+import { Stack, Table, TableBody, TableCell, TableCellProps, TableHead, TableRow } from '@mui/material';
 
 // components
 import Order from './Item';
 import EmptyState from '@/components/ui/EmptyState';
 import OrdersSkeleton from '@/components/ui/loaders/skeletons/Orders';
+import CustomPagination from '@/components/ui/layout/CustomPagination';
 
 // hooks
 import { useOrders } from '@/hooks/useOrders';
@@ -54,7 +55,7 @@ const Orders: React.FC = () => {
               ))}
             </TableBody>
           </Table>
-          {pages > 1 && <Pagination page={page} count={pages} onChange={(_, val) => setPage(val)} />}
+          {pages > 1 && <CustomPagination page={page} count={pages} onChange={(_, val) => setPage(val)} />}
         </>
       ) : (
         <EmptyState

@@ -1,13 +1,14 @@
-import { Divider, Grid, Pagination, Stack, SvgIconTypeMap } from '@mui/material';
+import { Divider, Grid, Stack, SvgIconTypeMap } from '@mui/material';
+import { OverridableComponent } from '@mui/material/OverridableComponent';
 
 // components
 import ProductCard from '@/components/features/product/Card';
+import CustomPagination from '../CustomPagination';
 import ProductCardSkeleton from '@/components/ui/loaders/skeletons/ProductCard';
 import EmptyState from '@/components/ui/EmptyState';
 
 // types
 import { Product } from '@/api/products/products.types';
-import { OverridableComponent } from '@mui/material/OverridableComponent';
 
 type ProductsGridLayoutProps = {
   isLoading: boolean;
@@ -63,7 +64,7 @@ const ProductsGridLayout: React.FC<ProductsGridLayoutProps> = ({
       {pagesTotal > 1 && (
         <>
           <Divider />
-          <Pagination count={pagesTotal} page={page} onChange={onPageChange} />
+          <CustomPagination count={pagesTotal} page={page} onChange={onPageChange} />
         </>
       )}
     </Stack>

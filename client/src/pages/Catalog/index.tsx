@@ -1,14 +1,4 @@
-import {
-  Button,
-  ButtonBase,
-  Drawer,
-  Grid,
-  IconButton,
-  Stack,
-  Typography,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
+import { Button, Grid, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useSearchParams } from 'react-router';
 import { useEffect, useState } from 'react';
 
@@ -16,6 +6,8 @@ import { useEffect, useState } from 'react';
 import CatalogSort from '@/components/features/catalog/Sort';
 import Filters from '@/components/features/catalog/Filters';
 import ProductsGridLayout from '@/components/ui/layout/ProductsLayout';
+import CustomDrawer from '@/components/ui/layout/CustomDrawer';
+import CustomScrollContainer from '@/components/ui/layout/CustomScrollContainer';
 
 // hooks
 import { Filters as FiltersType, useProducts } from '@/hooks/useProducts';
@@ -24,12 +16,10 @@ import { Filters as FiltersType, useProducts } from '@/hooks/useProducts';
 import { Sizes, SortBy } from '@/types/enums.types';
 
 // icons
-import { Close, FilterList, SearchOff } from '@mui/icons-material';
+import { FilterList, SearchOff } from '@mui/icons-material';
 
 // constants
 import { PAGE_LIMIT } from '@/constants';
-import CustomDrawer from '@/components/ui/layout/CustomDrawer';
-import CustomScrollContainer from '@/components/ui/layout/CustomScrollContainer';
 
 const CatalogPage: React.FC = () => {
   const theme = useTheme();
