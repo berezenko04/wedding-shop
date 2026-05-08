@@ -100,28 +100,30 @@ const CatalogPage: React.FC = () => {
 
   return (
     <Stack gap={4}>
-      <Stack
-        flexDirection={{ xs: 'column', sm: 'row' }}
-        alignItems={{ xs: 'flex-start', sm: 'center' }}
-        justifyContent="space-between"
-        gap={{ xs: 1.5, sm: 4 }}
-      >
+      <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={4}>
         <Typography variant="h3">Products ({total})</Typography>
         <Stack flexDirection="row" alignItems="center" gap={2} flexWrap="wrap">
-          <Typography
+          <Stack
+            flexDirection="row"
             sx={{
               display: { xs: 'flex', lg: 'none' },
               alignItems: 'center',
               gap: 0.5,
-              textTransform: 'uppercase',
-              fontWeight: 500,
-              color: 'grey.700',
             }}
             onClick={() => setFiltersOpen(true)}
           >
             <FilterList />
-            Filters
-          </Typography>
+            <Typography
+              sx={{
+                display: { xs: 'none', sm: 'inline' },
+                textTransform: 'uppercase',
+                fontWeight: 500,
+                color: 'grey.700',
+              }}
+            >
+              Filters
+            </Typography>
+          </Stack>
           <CatalogSort
             sx={{ display: { xs: 'none', lg: 'flex' } }}
             value={filters.sortBy}
