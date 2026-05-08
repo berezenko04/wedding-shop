@@ -28,6 +28,8 @@ import { Close, FilterList, SearchOff } from '@mui/icons-material';
 
 // constants
 import { PAGE_LIMIT } from '@/constants';
+import CustomDrawer from '@/components/ui/layout/CustomDrawer';
+import CustomScrollContainer from '@/components/ui/layout/CustomScrollContainer';
 
 const CatalogPage: React.FC = () => {
   const theme = useTheme();
@@ -153,27 +155,22 @@ const CatalogPage: React.FC = () => {
         </Grid>
       </Grid>
       {!isLgUp && (
-        <Drawer
+        <CustomDrawer
           anchor="left"
           open={filtersOpen}
           onClose={() => setFiltersOpen(false)}
+          title="Filters"
           slotProps={{
             paper: {
-              sx: { width: { xs: '100%', sm: 360 }, p: 3 },
+              sx: { width: { xs: '100%', sm: 360 } },
             },
           }}
         >
-          <Stack flexDirection="row" alignItems="center" justifyContent="space-between" mb={3}>
-            <Typography variant="h3">Filters</Typography>
-            <IconButton onClick={() => setFiltersOpen(false)}>
-              <Close />
-            </IconButton>
-          </Stack>
-          <Stack sx={{ gap: 2, overflowY: 'auto' }}>
+          <CustomScrollContainer sx={{ gap: 2, pl: 3, pr: 1, pb: 3 }}>
             <CatalogSort value={filters.sortBy} onChange={(sortBy) => handleFilterChange('sortBy', sortBy)} />
             <Filters filters={filters} setFilter={handleFilterChange} clearFilters={handleClearFilters} />
-          </Stack>
-        </Drawer>
+          </CustomScrollContainer>
+        </CustomDrawer>
       )}
     </Stack>
   );
