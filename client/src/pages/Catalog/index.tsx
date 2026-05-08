@@ -1,4 +1,14 @@
-import { Button, Drawer, Grid, IconButton, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
+import {
+  Button,
+  ButtonBase,
+  Drawer,
+  Grid,
+  IconButton,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import { useSearchParams } from 'react-router';
 import { useEffect, useState } from 'react';
 
@@ -89,23 +99,32 @@ const CatalogPage: React.FC = () => {
   return (
     <Stack gap={4}>
       <Stack
-        flexDirection={{ xs: 'column', md: 'row' }}
-        alignItems={{ xs: 'flex-start', md: 'center' }}
+        flexDirection={{ xs: 'column', sm: 'row' }}
+        alignItems={{ xs: 'flex-start', sm: 'center' }}
         justifyContent="space-between"
-        gap={{ xs: 1.5, md: 4 }}
+        gap={{ xs: 1.5, sm: 4 }}
       >
         <Typography variant="h3">Products ({total})</Typography>
-        <Stack flexDirection="row" alignItems="center" gap={{ xs: 0.5, sm: 2 }} flexWrap="wrap">
-          <Button
-            sx={{ display: { xs: 'flex', lg: 'none' }, p: 0 }}
-            startIcon={<FilterList />}
-            color="grey"
-            size="small"
+        <Stack flexDirection="row" alignItems="center" gap={2} flexWrap="wrap">
+          <Typography
+            sx={{
+              display: { xs: 'flex', lg: 'none' },
+              alignItems: 'center',
+              gap: 0.5,
+              textTransform: 'uppercase',
+              fontWeight: 500,
+              color: 'grey.700',
+            }}
             onClick={() => setFiltersOpen(true)}
           >
+            <FilterList />
             Filters
-          </Button>
-          <CatalogSort value={filters.sortBy} onChange={(sortBy) => handleFilterChange('sortBy', sortBy)} />
+          </Typography>
+          <CatalogSort
+            sx={{ display: { xs: 'none', lg: 'flex' } }}
+            value={filters.sortBy}
+            onChange={(sortBy) => handleFilterChange('sortBy', sortBy)}
+          />
         </Stack>
       </Stack>
       <Grid container spacing={4}>
@@ -150,7 +169,10 @@ const CatalogPage: React.FC = () => {
               <Close />
             </IconButton>
           </Stack>
-          <Filters filters={filters} setFilter={handleFilterChange} clearFilters={handleClearFilters} />
+          <Stack sx={{ gap: 2, overflowY: 'auto' }}>
+            <CatalogSort value={filters.sortBy} onChange={(sortBy) => handleFilterChange('sortBy', sortBy)} />
+            <Filters filters={filters} setFilter={handleFilterChange} clearFilters={handleClearFilters} />
+          </Stack>
         </Drawer>
       )}
     </Stack>

@@ -1,4 +1,4 @@
-import { Button, Divider, Drawer, IconButton, Stack, Typography } from '@mui/material';
+import { Button, Divider, Stack } from '@mui/material';
 import { Fragment } from 'react/jsx-runtime';
 import { useNavigate } from 'react-router';
 
@@ -7,12 +7,10 @@ import CartItem from '../Item';
 import CartTotal from '../Total';
 import EmptyCart from '../Empty';
 import CustomScrollContainer from '@/components/ui/layout/CustomScrollContainer';
+import CustomDrawer from '@/components/ui/layout/CustomDrawer';
 
 // hooks
 import { useCart } from '@/hooks/useCart';
-
-// icons
-import { Close } from '@mui/icons-material';
 
 type CartProps = {
   isOpened: boolean;
@@ -30,31 +28,12 @@ const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
   };
 
   return (
-    <Drawer
+    <CustomDrawer
       anchor="right"
       open={isOpened}
       onClose={handleClose}
-      slotProps={{
-        paper: {
-          sx: {
-            width: { xs: '100%', sm: 580 },
-            height: '100vh',
-            maxHeight: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-            overflow: 'hidden',
-          },
-        },
-      }}
+      title={`Cart${cart.length > 0 ? ` (${cart.reduce((acc, i) => acc + i.quantity, 0)})` : ''}`}
     >
-      <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={4} p={3}>
-        <Typography variant="h3">
-          Cart {cart.length > 0 ? `(${cart.reduce((acc, i) => acc + i.quantity, 0)})` : ''}
-        </Typography>
-        <IconButton onClick={handleClose}>
-          <Close />
-        </IconButton>
-      </Stack>
       {cart.length > 0 ? (
         <>
           <CustomScrollContainer sx={{ px: 3, flex: 1 }}>
@@ -81,7 +60,7 @@ const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
       ) : (
         <EmptyCart handleClose={handleClose} />
       )}
-    </Drawer>
+    </CustomDrawer>
   );
 };
 

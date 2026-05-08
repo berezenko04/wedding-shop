@@ -1,20 +1,21 @@
-import { MenuItem, Select, Stack, Typography } from "@mui/material";
+import { MenuItem, Select, Stack, SxProps, Typography } from '@mui/material';
 
 // data
-import { sortByCatalog } from "@/data/main";
+import { sortByCatalog } from '@/data/main';
 
 // types
-import { SortBy } from "@/types/enums.types";
+import { SortBy } from '@/types/enums.types';
 
 type SortProps = {
-  value: SortBy | "none";
+  sx?: SxProps;
+  value: SortBy | 'none';
   onChange: (value: SortBy) => void;
 };
 
-const Sort: React.FC<SortProps> = ({ value, onChange }) => {
+const Sort: React.FC<SortProps> = ({ value, onChange, sx }) => {
   return (
-    <Stack flexDirection="row" alignItems="center" gap={0.5}>
-      <Typography sx={{ fontWeight: 500, color: "grey.700", textTransform: "uppercase" }}>Sort by</Typography>
+    <Stack flexDirection="row" alignItems="center" gap={0.5} sx={sx}>
+      <Typography sx={{ fontWeight: 500, color: 'grey.700', textTransform: 'uppercase' }}>Sort by</Typography>
       <Select
         variant="standard"
         disableUnderline
