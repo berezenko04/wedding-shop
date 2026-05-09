@@ -53,21 +53,34 @@ const CartItem: React.FC<CartItemProps> = ({ id, size, quantity, product }) => {
     <Stack flexDirection="row" alignItems="flex-start" gap={3} py={2}>
       <Box
         component="img"
-        sx={{ flexShrink: 0, width: 180, height: 240, objectFit: 'cover', objectPosition: 'center' }}
+        sx={{
+          flexShrink: 0,
+          width: { xs: 80, sm: 180 },
+          height: { xs: 100, sm: 240 },
+          objectFit: 'cover',
+          objectPosition: 'center',
+          borderRadius: 1,
+        }}
         src={product.posterUrl}
       />
-      <Stack gap={2} sx={{ width: '100%' }}>
+      <Stack gap={{ xs: 1, sm: 2 }} sx={{ flex: 1, minWidth: 0 }}>
         <Stack gap={0.5}>
-          <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={3}>
-            <Typography variant="medium">{product.title}</Typography>
-            <IconButton size="small" onClick={handleRemove}>
+          <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={1}>
+            <Typography variant="medium" noWrap sx={{ minWidth: 0 }}>
+              {product.title}
+            </Typography>
+            <IconButton size="small" onClick={handleRemove} sx={{ flexShrink: 0 }}>
               <DeleteOutline sx={{ color: 'grey.300' }} />
             </IconButton>
           </Stack>
-          <ProductPrice price={product.price} discount={product.discount} />
+          <ProductPrice
+            price={product.price}
+            discount={product.discount}
+            sx={{ flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'flex-start', sm: 'align-center' } }}
+          />
           <ProductDiscount discount={product.discount} />
         </Stack>
-        <Stack gap={1}>
+        <Stack gap={{ xs: 0.5, sm: 1 }}>
           <Typography variant="medium" fontSize={16} textTransform="uppercase">
             Size: {size || 'Accessory'}
           </Typography>

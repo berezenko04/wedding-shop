@@ -11,6 +11,8 @@ const CustomScrollContainer: React.FC<CustomScrollContainerProps> = ({ children,
       sx={[
         (theme: Theme) => ({
           overflowY: 'auto',
+          overflowX: 'hidden',
+          minWidth: 0,
 
           '&::-webkit-scrollbar': {
             width: 32,

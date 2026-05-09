@@ -99,9 +99,12 @@ const theme = createTheme({
             fontSize: 56,
           },
         }),
-        h3: {
-          fontSize: 32,
-        },
+        h3: ({ theme }) => ({
+          fontSize: 28,
+          [theme.breakpoints.up('md')]: {
+            fontSize: 32,
+          },
+        }),
         h4: {
           fontSize: 24,
         },
@@ -376,7 +379,8 @@ const theme = createTheme({
           textTransform: 'uppercase',
           fontWeight: 500,
           color: theme.palette.grey[700],
-        }),
+          padding: '4px 0',
+        }), 
       },
     },
     MuiMenuItem: {

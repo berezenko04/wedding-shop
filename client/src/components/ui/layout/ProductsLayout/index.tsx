@@ -1,13 +1,14 @@
-import { Divider, Grid, Pagination, Stack, SvgIconTypeMap } from "@mui/material";
+import { Divider, Grid, Stack, SvgIconTypeMap } from '@mui/material';
+import { OverridableComponent } from '@mui/material/OverridableComponent';
 
 // components
-import ProductCard from "@/components/features/product/Card";
-import ProductCardSkeleton from "@/components/ui/loaders/skeletons/ProductCard";
-import EmptyState from "@/components/ui/EmptyState";
+import ProductCard from '@/components/features/product/Card';
+import CustomPagination from '../CustomPagination';
+import ProductCardSkeleton from '@/components/ui/loaders/skeletons/ProductCard';
+import EmptyState from '@/components/ui/EmptyState';
 
 // types
-import { Product } from "@/api/products/products.types";
-import { OverridableComponent } from "@mui/material/OverridableComponent";
+import { Product } from '@/api/products/products.types';
 
 type ProductsGridLayoutProps = {
   isLoading: boolean;
@@ -18,7 +19,7 @@ type ProductsGridLayoutProps = {
   onPageChange: (_: React.ChangeEvent<unknown>, newPage: number) => void;
   emptyStateTitle: string;
   emptyStateDescription: string;
-  emptyStateIcon: OverridableComponent<SvgIconTypeMap<object, "svg">>;
+  emptyStateIcon: OverridableComponent<SvgIconTypeMap<object, 'svg'>>;
   emptyStateAdditional?: React.ReactNode;
 };
 
@@ -37,17 +38,17 @@ const ProductsGridLayout: React.FC<ProductsGridLayoutProps> = ({
   return (
     <Stack gap={4}>
       {isLoading ? (
-        <Grid container spacing={4}>
+        <Grid container spacing={{ xs: 2, md: 4 }}>
           {Array.from({ length: 9 }).map((_, idx) => (
-            <Grid key={idx} size={{ xs: 4 }}>
+            <Grid key={idx} size={{ xs: 12, sm: 6, md: 4 }}>
               <ProductCardSkeleton />
             </Grid>
           ))}
         </Grid>
       ) : total > 0 ? (
-        <Grid container spacing={4}>
+        <Grid container spacing={{ xs: 2, md: 4 }}>
           {items.map((i) => (
-            <Grid key={i.id} size={{ xs: 4 }}>
+            <Grid key={i.id} size={{ xs: 12, sm: 6, md: 4 }}>
               <ProductCard variant="catalog" {...i} />
             </Grid>
           ))}
@@ -63,7 +64,7 @@ const ProductsGridLayout: React.FC<ProductsGridLayoutProps> = ({
       {pagesTotal > 1 && (
         <>
           <Divider />
-          <Pagination count={pagesTotal} page={page} onChange={onPageChange} />
+          <CustomPagination count={pagesTotal} page={page} onChange={onPageChange} />
         </>
       )}
     </Stack>
