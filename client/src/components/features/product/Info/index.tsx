@@ -37,7 +37,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ id, title, price, discount, d
   };
 
   return (
-    <Stack gap={4} px={8}>
+    <Stack gap={4} px={{ xs: 2, md: 4, lg: 8 }}>
       <Stack gap={1}>
         <Typography variant="medium" fontSize={24}>
           {title}
