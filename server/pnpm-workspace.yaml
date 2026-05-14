@@ -1,0 +1,6 @@
+allowBuilds:
+  '@nestjs/core': true
+  '@prisma/client': true
+  '@swc/core': true
+  bcrypt: true
+  sharp: true
