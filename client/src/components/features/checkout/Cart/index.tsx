@@ -1,4 +1,5 @@
 import { Divider, Stack, Typography } from '@mui/material';
+import { Fragment } from 'react/jsx-runtime';
 
 // components
 import OutlinedBlock from '@/components/ui/layout/OutlinedBlock';
@@ -20,20 +21,23 @@ const CheckoutCart: React.FC = () => {
   );
 
   return (
-    <OutlinedBlock flex={1} sx={{ maxHeight: '80vh', overflow: 'hidden' }}>
-      <Stack gap={4} flex={1}>
-        <Typography variant="medium" textTransform="uppercase">
+    <OutlinedBlock flex={1} sx={{ maxHeight: '75vh', display: 'flex', flexDirection: 'column' }}>
+      <Stack gap={4} flex={1} sx={{ overflow: 'hidden' }}>
+        <Typography variant="medium" textTransform="uppercase" sx={{ flexShrink: 0 }}>
           Cart
         </Typography>
-        <CustomScrollContainer sx={{ maxHeight: 600 }}>
+
+        <CustomScrollContainer sx={{ flex: 1, overflowY: 'auto', minHeight: 0 }}>
           {cart.map((c, idx) => (
-            <>
+            <Fragment key={c.id || idx}>
               <CartItem {...c} />
               <Divider sx={{ mt: 3, mb: idx + 1 !== cart.length ? 3 : 0 }} />
-            </>
+            </Fragment>
           ))}
         </CustomScrollContainer>
-        <Stack gap={1}>
+
+        {/* flexShrink: 0 не даст блоку с суммой сжиматься */}
+        <Stack gap={1} sx={{ flexShrink: 0 }}>
           <Stack flexDirection="row" justifyContent="space-between" gap={4}>
             <Typography>Total</Typography>
             <Typography>{total.toFixed(2)} USD</Typography>
