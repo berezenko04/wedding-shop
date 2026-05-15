@@ -36,7 +36,6 @@ const CheckoutCart: React.FC = () => {
           ))}
         </CustomScrollContainer>
 
-        {/* flexShrink: 0 не даст блоку с суммой сжиматься */}
         <Stack gap={1} sx={{ flexShrink: 0 }}>
           <Stack flexDirection="row" justifyContent="space-between" gap={4}>
             <Typography>Total</Typography>
