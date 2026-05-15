@@ -1,4 +1,4 @@
-import { Grid, Stack } from '@mui/material';
+import { Grid, GridBaseProps, Stack } from '@mui/material';
 
 // components
 import PickerItem from './Item';
@@ -13,6 +13,7 @@ type PickerProps<T = string | number> = {
   isFullLengthLast?: boolean;
   showRadio?: boolean;
   size?: 'small' | 'large';
+  gridItemSize?: GridBaseProps['size'];
 };
 
 const Picker = <T extends string | number>({
@@ -23,6 +24,7 @@ const Picker = <T extends string | number>({
   isFullLengthLast = false,
   showRadio = false,
   size = 'small',
+  gridItemSize,
 }: PickerProps<T>) => {
   const handlePick = (itemValue: T) => {
     onChange(itemValue === value ? null : itemValue);
@@ -40,13 +42,12 @@ const Picker = <T extends string | number>({
 
           const isFullWidth = isFullLengthLast && isLast && isNotFullRow;
 
+          const currentGridItemSize = gridItemSize || {
+            xs: isFullWidth ? 12 : Math.floor(12 / columns),
+          };
+
           return (
-            <Grid
-              key={String(itemValue)}
-              size={{
-                xs: isFullWidth ? 12 : 12 / columns,
-              }}
-            >
+            <Grid key={String(itemValue)} size={currentGridItemSize}>
               <PickerItem
                 showRadio={showRadio}
                 value={itemValue}
