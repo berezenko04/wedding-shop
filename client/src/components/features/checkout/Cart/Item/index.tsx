@@ -13,7 +13,7 @@ const CartItem: React.FC<CartItem> = ({ quantity, size, product }) => {
       <Box
         component="img"
         src={product.posterUrl}
-        sx={{ width: 120, height: 160, objectFit: 'cover', objectPosition: 'center' }}
+        sx={{ width: { xs: 80, sm: 180 }, height: { xs: 100, sm: 240 }, objectFit: 'cover', objectPosition: 'center' }}
       />
       <Stack gap={2} sx={{ flex: 1, minWidth: 0 }}>
         <Stack gap={1}>

@@ -59,7 +59,6 @@ const CartItem: React.FC<CartItemProps> = ({ id, size, quantity, product }) => {
           height: { xs: 100, sm: 240 },
           objectFit: 'cover',
           objectPosition: 'center',
-          borderRadius: 1,
         }}
         src={product.posterUrl}
       />

@@ -8,11 +8,11 @@ const Checkout: React.FC = () => {
   return (
     <Stack gap={4}>
       <Typography variant="h3">Checkout</Typography>
-      <Grid container spacing={3}>
-        <Grid size={{ xs: 6, xl: 7 }}>
+      <Grid container spacing={3} direction={{ xs: 'column-reverse', md: 'row' }}>
+        <Grid size={{ xs: 12, md: 6, xl: 7 }}>
           <CheckoutForm />
         </Grid>
-        <Grid size={{ xs: 6, xl: 5 }}>
+        <Grid size={{ xs: 12, md: 6, xl: 5 }}>
           <CheckoutCart />
         </Grid>
       </Grid>
