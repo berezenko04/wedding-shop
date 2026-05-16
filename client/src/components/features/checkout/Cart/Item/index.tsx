@@ -13,17 +13,29 @@ const CartItem: React.FC<CartItem> = ({ quantity, size, product }) => {
       <Box
         component="img"
         src={product.posterUrl}
-        sx={{ width: 120, height: 160, objectFit: 'cover', objectPosition: 'center' }}
+        sx={{ width: { xs: 80, sm: 180 }, height: { xs: 100, sm: 240 }, objectFit: 'cover', objectPosition: 'center' }}
       />
-      <Stack gap={2}>
+      <Stack gap={2} sx={{ flex: 1, minWidth: 0 }}>
         <Stack gap={1}>
-          <Typography variant="medium" textTransform="uppercase">
+          <Typography variant="medium" textTransform="uppercase" noWrap sx={{ minWidth: 0 }}>
             {product.title}
           </Typography>
-          <ProductPrice price={product.price} discount={product.discount} />
+          <ProductPrice
+            price={product.price}
+            discount={product.discount}
+            sx={{
+              flexDirection: { xs: 'column', lg: 'row' },
+              alignItems: { xs: 'flex-start', lg: 'center' },
+              gap: { xs: 0.5, lg: 2 },
+            }}
+          />
           <ProductDiscount discount={product.discount} />
         </Stack>
-        <Stack flexDirection="row" alignItems="center" gap={2}>
+        <Stack
+          flexDirection={{ xs: 'column', lg: 'row' }}
+          alignItems={{ xs: 'flex-start', lg: 'center' }}
+          gap={{ xs: 0.5, lg: 2 }}
+        >
           <Typography variant="medium" fontSize={16} textTransform="uppercase">
             Size: {size || 'Accessory'}
           </Typography>

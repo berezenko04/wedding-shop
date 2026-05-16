@@ -32,6 +32,7 @@ const PaymentMethod: React.FC<PaymentMethodProps> = ({ paymentMethod, onChange }
             items={paymentMethods?.map((i) => ({ value: i.id, label: i.method }))}
             value={paymentMethod}
             onChange={onChange}
+            gridItemSize={{ xs: 12, lg: 4 }}
           />
         </Stack>
       ) : (
