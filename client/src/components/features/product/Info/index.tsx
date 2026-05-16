@@ -37,7 +37,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ id, title, price, discount, d
   };
 
   return (
-    <Stack gap={4} px={{ xs: 2, md: 4, lg: 8 }}>
+    <Stack gap={{ xs: 2, sm: 4 }} px={{ xs: 0, sm: 2, md: 4, lg: 8 }}>
       <Stack gap={1}>
         <Typography variant="medium" fontSize={24}>
           {title}
@@ -46,9 +46,9 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ id, title, price, discount, d
           price={price}
           discount={discount}
           sx={{
-            flexDirection: { xs: 'column', md: 'row' },
-            alignItems: { xs: 'flex-start', md: 'center' },
-            gap: { xs: 1, md: 4 },
+            flexDirection: { xs: 'row', sm: 'column', md: 'row' },
+            alignItems: { xs: 'center', sm: 'flex-start', md: 'center' },
+            gap: { xs: 2, sm: 1, md: 4 },
           }}
         />
         <ProductDiscount discount={discount} />

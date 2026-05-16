@@ -14,7 +14,7 @@ type ProductSizesProps = {
 
 const ProductSizes: React.FC<ProductSizesProps> = ({ sizes, selectedSize, onSelectSize }) => {
   return (
-    <Stack gap={3}>
+    <Stack gap={{ xs: 1.5, sm: 3 }}>
       <Typography variant="medium" fontSize={16} textTransform="uppercase">
         Sizes
       </Typography>
