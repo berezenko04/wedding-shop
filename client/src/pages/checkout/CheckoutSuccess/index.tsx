@@ -20,7 +20,7 @@ const CheckoutSuccessPage: React.FC = () => {
 
   return (
     <CustomContainer>
-      <Grid container spacing={4} sx={{ width: '100%' }}>
+      <Grid container spacing={4}>
         <Grid size={{ xs: 4, lg: 6 }} sx={{ display: { xs: 'none', md: 'flex' } }}>
           <Box
             component="img"
