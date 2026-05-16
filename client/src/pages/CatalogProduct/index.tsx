@@ -39,6 +39,7 @@ const CatalogProduct: React.FC = () => {
           <ProductReviews productId={product?.id} />
         </>
       )}
+    </Stack>
   );
 };
 
