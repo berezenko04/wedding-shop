@@ -42,7 +42,15 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ id, title, price, discount, d
         <Typography variant="medium" fontSize={24}>
           {title}
         </Typography>
-        <ProductPrice price={price} discount={discount} />
+        <ProductPrice
+          price={price}
+          discount={discount}
+          sx={{
+            flexDirection: { xs: 'column', md: 'row' },
+            alignItems: { xs: 'flex-start', md: 'center' },
+            gap: { xs: 1, md: 4 },
+          }}
+        />
         <ProductDiscount discount={discount} />
       </Stack>
       <Typography>{description}</Typography>
