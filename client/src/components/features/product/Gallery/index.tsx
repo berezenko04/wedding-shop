@@ -10,12 +10,27 @@ const ProductGallery: React.FC<ProductGallery> = ({ images }) => {
   const [currentImage, setCurentImage] = useState<string>(images[0]);
 
   return (
-    <Stack flexDirection="row" alignItems="flex-start" gap={4}>
-      <Stack gap={1}>
+    <Stack flexDirection={{ xs: 'column-reverse', md: 'row' }} alignItems="flex-start" gap={{ xs: 1, md: 4 }}>
+      <Stack
+        gap={1}
+        flexDirection={{ xs: 'row', md: 'column' }}
+        sx={{
+          width: { xs: '100%', md: 'auto' },
+          overflowX: { xs: 'auto', md: 'visible' },
+          overflowY: { xs: 'hidden', md: 'visible' },
+          flexWrap: 'nowrap',
+          WebkitOverflowScrolling: 'touch',
+          scrollbarWidth: 'none',
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        }}
+      >
         {images.map((image, idx) => (
           <Box
             key={idx}
             sx={(theme) => ({
+              flexShrink: 0,
               width: { xs: 96, lg: 128 },
               height: { xs: 96, lg: 128 },
               overflow: 'hidden',
@@ -34,7 +49,7 @@ const ProductGallery: React.FC<ProductGallery> = ({ images }) => {
           </Box>
         ))}
       </Stack>
-      <Box sx={{ aspectRatio: '3/4', maxWidth: 600, maxHeight: 800 }}>
+      <Box sx={{ aspectRatio: '3/4', maxWidth: 600, width: '100%', maxHeight: 800 }}>
         <LazyLoadImage
           src={currentImage}
           effect="blur"

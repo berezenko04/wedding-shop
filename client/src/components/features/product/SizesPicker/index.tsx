@@ -22,7 +22,7 @@ const SizesPicker: React.FC<SizesPickerProps> = ({ initialItems, items, selected
     <Stack role="radiogroup" gap={1}>
       <Grid container spacing={1}>
         {initialItems?.map((size) => (
-          <Grid key={size} size={{ xs: 12 / 4, lg: 12 / 5 }}>
+          <Grid key={size} size={{ xs: 12 / 3, md: 12 / 4, lg: 12 / 5 }}>
             <PickerItem
               size="small"
               value={size}
