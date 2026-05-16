@@ -28,10 +28,10 @@ const CatalogProduct: React.FC = () => {
       {product && (
         <>
           <Grid container spacing={4}>
-            <Grid size={{ xs: 6 }}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <ProductGallery images={[product?.posterUrl, ...(product?.images?.map((img) => img.url) || [])]} />
             </Grid>
-            <Grid size={{ xs: 6 }}>
+            <Grid size={{ xs: 12, sm: 6 }}>
               <ProductInfo {...product} />
             </Grid>
           </Grid>
