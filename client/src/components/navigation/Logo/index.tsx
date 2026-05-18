@@ -1,22 +1,22 @@
-import { Link } from "@mui/material";
+import { Link } from '@mui/material';
 
 type LogoProps = {
-  color?: "light" | "dark";
+  color?: 'light' | 'dark';
 };
 
-const Logo: React.FC<LogoProps> = ({ color = "dark" }) => {
+const Logo: React.FC<LogoProps> = ({ color = 'dark' }) => {
   return (
     <Link
       href="/"
       variant="plain"
       sx={{
-        color: color === "dark" ? "grey.500" : "common.white",
-        "&:hover": {
-          color: color === "dark" ? "grey.500" : "common.white",
+        color: color === 'dark' ? 'grey.500' : 'common.white',
+        '&:hover': {
+          color: color === 'dark' ? 'grey.500' : 'common.white',
         },
       }}
       textTransform="uppercase"
-      fontSize={24}
+      fontSize={{ xs: 22, sm: 24 }}
       fontFamily="Placid Armor"
     >
       Sandrela

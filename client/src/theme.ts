@@ -14,7 +14,7 @@ const theme = createTheme({
       md: 900,
       lg: 1200,
       xl: 1536,
-    }, 
+    },
   },
   palette: {
     primary: { main: '#ED7222', 300: '#F6B87B', 50: '#FEF7EE' },
@@ -380,7 +380,7 @@ const theme = createTheme({
           fontWeight: 500,
           color: theme.palette.grey[700],
           padding: '4px 0',
-        }), 
+        }),
       },
     },
     MuiMenuItem: {
@@ -482,6 +482,15 @@ const theme = createTheme({
         root: ({ theme }) => ({
           border: `1px solid ${theme.palette.grey[50]}`,
         }),
+      },
+    },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          lineHeight: 'normal',
+          minHeight: 48,
+          padding: "8px 12px"
+        },
       },
     },
   },
