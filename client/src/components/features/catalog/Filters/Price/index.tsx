@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 // components
 import FilterItem from "../FilterItem";
 
-export type FilterPriceProps = {
+type FilterPriceProps = {
   priceRange: [number, number];
   setPriceRange: (v: [number, number]) => void;
 };

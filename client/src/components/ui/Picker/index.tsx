@@ -3,7 +3,7 @@ import { Grid, GridBaseProps, Stack } from '@mui/material';
 // components
 import PickerItem from './Item';
 
-export type PickerItemType<T = string | number> = T | { label: string; value: T };
+type PickerItemType<T = string | number> = T | { label: string; value: T };
 
 type PickerProps<T = string | number> = {
   items: readonly PickerItemType<T>[];

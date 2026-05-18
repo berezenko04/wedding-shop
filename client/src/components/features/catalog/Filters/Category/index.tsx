@@ -7,7 +7,7 @@ import FilterItem from "../FilterItem";
 // api
 import CategoriesService from "@/api/categories/categories.service";
 
-export type FilterByCategoryProps = {
+type FilterByCategoryProps = {
   category: string | null;
   setCategory: (v: string | null) => void;
 };

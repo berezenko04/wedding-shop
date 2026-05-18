@@ -22,7 +22,7 @@ export type ProductCategory = {
   name: ProductCategories;
 };
 
-export type ProductImage = {
+type ProductImage = {
   id: string;
   url: string;
 };

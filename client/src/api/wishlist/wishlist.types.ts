@@ -2,7 +2,7 @@ export type AddToWishlistBody = {
   productId: string;
 };
 
-export type WishlistItem = {
+type WishlistItem = {
   id: string;
   product: {
     id: string;
