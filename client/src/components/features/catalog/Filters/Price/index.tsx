@@ -1,8 +1,8 @@
-import { Slider, Box, Typography, Stack } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Slider, Box, Typography, Stack } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 // components
-import FilterItem from "../FilterItem";
+import FilterItem from '../FilterItem';
 
 type FilterPriceProps = {
   priceRange: [number, number];
@@ -17,10 +17,12 @@ const FilterPrice: React.FC<FilterPriceProps> = ({ priceRange, setPriceRange }) 
   }, [priceRange]);
 
   const handleChange = (_: Event, newValue: number | number[]) => {
+    if (!Array.isArray(newValue)) return;
     setLocalRange(newValue as [number, number]);
   };
 
   const handleCommit = (_: Event | React.SyntheticEvent, newValue: number | number[]) => {
+    if (!Array.isArray(newValue)) return;
     setPriceRange(newValue as [number, number]);
   };
 
