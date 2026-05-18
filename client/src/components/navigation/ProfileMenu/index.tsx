@@ -1,14 +1,14 @@
-import { Link, Stack } from "@mui/material";
-import { useLocation } from "react-router";
+import { Link, Stack } from '@mui/material';
+import { useLocation } from 'react-router';
 
 // data
-import { profileMenu } from "@/data/menus";
+import { profileMenu } from '@/data/menus';
 
 const ProfileMenu: React.FC = () => {
   const location = useLocation();
 
   return (
-    <Stack gap={0.5}>
+    <Stack gap={0.5} sx={{ width: 230 }}>
       {profileMenu.map(({ title, href, icon: Icon }, idx) => {
         const isActive = location.pathname === `/profile/${href}`;
 
@@ -18,15 +18,16 @@ const ProfileMenu: React.FC = () => {
             href={`/profile/${href}`}
             variant="plain"
             textTransform="uppercase"
-            color={isActive ? "primary.main" : "grey.500"}
+            color={isActive ? 'primary.main' : 'grey.500'}
+            noWrap
             fontWeight={500}
             sx={{
-              display: "flex",
+              display: 'flex',
               gap: 1,
-              alignItems: "center",
+              alignItems: 'center',
               p: 1,
-              transition: "all .15s ease-in-out",
-              "&:hover": { color: !isActive ? "common.black" : null },
+              transition: 'all .15s ease-in-out',
+              '&:hover': { color: !isActive ? 'common.black' : null },
             }}
           >
             <Icon />
