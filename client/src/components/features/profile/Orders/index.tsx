@@ -28,7 +28,7 @@ const Orders: React.FC = () => {
     { sx: { minWidth: 140 }, title: 'Order ID' },
     { sx: { minWidth: 160 }, title: 'Date' },
     { sx: { minWidth: 50 }, title: 'Items' },
-    { sx: { minWidth: 60 }, title: 'Total Amount' },
+    { sx: { minWidth: 160 }, title: 'Total Amount' },
     { sx: { minWidth: 60 }, title: 'Status' },
     { sx: { minWidth: 90 }, title: 'Action', align: 'right' },
   ];
@@ -38,8 +38,13 @@ const Orders: React.FC = () => {
       {isLoading ? (
         <OrdersSkeleton />
       ) : orders && orders?.total > 0 ? (
-        <>
-          <Table>
+        <Stack
+          sx={{
+            width: '100%',
+            overflowX: 'auto',
+          }}
+        >
+          <Table sx={{ minWidth: 600 }}>
             <TableHead>
               <TableRow>
                 {columns.map(({ sx, title, align }) => (
@@ -56,7 +61,7 @@ const Orders: React.FC = () => {
             </TableBody>
           </Table>
           {pages > 1 && <CustomPagination page={page} count={pages} onChange={(_, val) => setPage(val)} />}
-        </>
+        </Stack>
       ) : (
         <EmptyState
           title="Your orders is empty"

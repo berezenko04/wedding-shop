@@ -11,12 +11,12 @@ const ShippingInfoTable: React.FC<ShippingInfoTableProps> = ({ shippingAddress, 
     { sx: { minwidth: 200 }, title: 'Shipping Address' },
     { sx: { minWidth: 200 }, title: 'Billing Address' },
     { sx: { minWidth: 180 }, title: 'Shipping Method' },
-    { sx: { minWidth: 160 }, title: 'Payment Method' },
+    { sx: { minWidth: 200 }, title: 'Payment Method' },
     { sx: { minWidth: 140 }, title: 'Tracking Number' },
   ];
 
   return (
-    <Table>
+    <Table sx={{ minWidth: 1000 }}>
       <TableHead>
         <TableRow>
           {columns.map(({ sx, title }, idx) => (

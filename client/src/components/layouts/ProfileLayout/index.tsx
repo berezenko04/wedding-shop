@@ -10,7 +10,7 @@ const ProfileLayout: React.FC = () => {
     <Stack direction={{ xs: 'column', md: 'row' }} gap={4} flex={1}>
       <MobileProfileMenu />
       <ProfileMenu />
-      <Box sx={{ width: '100%' }}>
+      <Box sx={{ width: '100%', overflow: 'hidden' }}>
         <Outlet />
       </Box>
     </Stack>
