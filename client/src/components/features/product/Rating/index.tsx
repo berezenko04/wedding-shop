@@ -44,7 +44,7 @@ const ProductRating: React.FC<ProductRatingProps> = ({ productId }) => {
           <Stack gap={1}>
             <Stack flexDirection="row" alignItems="center">
               {[...Array(Math.round(ratings.averageRating))].map((_, idx) => (
-                <Star key={idx} sx={{ color: 'yellow.500' }} />
+                <Star key={`star-${idx}`} sx={{ color: 'yellow.500' }} />
               ))}
             </Stack>
             <Typography textTransform="uppercase">{ratings.totalVotes} Ratings</Typography>

@@ -45,9 +45,9 @@ const SearchbarBlock: React.FC<SearchbarBlockProps> = ({
       </Stack>
       <Stack>
         {options.length > 0 ? (
-          options.map((o, idx) => (
+          options.map((o) => (
             <SearchOption
-              key={idx}
+              key={o.slug}
               afterClick={afterClickOption}
               handleClear={onClearHistoryItem}
               variant={variant}

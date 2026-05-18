@@ -21,8 +21,8 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ items }) => {
     <Table>
       <TableHead>
         <TableRow>
-          {columns.map(({ sx, title }, idx) => (
-            <TableCell key={idx} sx={sx}>
+          {columns.map(({ sx, title }) => (
+            <TableCell key={title} sx={sx}>
               {title}
             </TableCell>
           ))}

@@ -47,8 +47,8 @@ const Orders: React.FC = () => {
           <Table sx={{ minWidth: 600 }}>
             <TableHead>
               <TableRow>
-                {columns.map(({ sx, title, align }, idx) => (
-                  <TableCell key={idx} sx={sx} align={(align as TableCellProps['align']) ?? 'left'}>
+                {columns.map(({ sx, title, align }) => (
+                  <TableCell key={title} sx={sx} align={(align as TableCellProps['align']) ?? 'left'}>
                     {title}
                   </TableCell>
                 ))}

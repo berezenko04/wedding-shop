@@ -35,9 +35,9 @@ const MobileProfileMenu: React.FC = () => {
               minWidth: '100%',
             }}
           >
-            {profileMenu.map(({ title, href, icon: Icon }, idx) => (
+            {profileMenu.map(({ title, href, icon: Icon }) => (
               <Tab
-                key={idx}
+                key={href}
                 label={title}
                 value={href}
                 icon={<Icon />}

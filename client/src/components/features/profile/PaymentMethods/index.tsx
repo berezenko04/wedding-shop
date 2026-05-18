@@ -30,7 +30,7 @@ const PaymentMethods: React.FC = () => {
   return (
     <Stack gap={2}>
       {isLoading ? (
-        [...Array(3)].map((_, idx) => <PaymentMethodSkeleton key={idx} />)
+        [...Array(3)].map((_, idx) => <PaymentMethodSkeleton key={`payment-skeleton-${idx}`} />)
       ) : payment.length > 0 ? (
         payment.map((method) => <PaymentMethod key={method.id} {...method} />)
       ) : (

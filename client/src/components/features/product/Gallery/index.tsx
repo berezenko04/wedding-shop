@@ -26,9 +26,9 @@ const ProductGallery: React.FC<ProductGallery> = ({ images }) => {
           },
         }}
       >
-        {images.map((image, idx) => (
+        {images.map((image) => (
           <Box
-            key={idx}
+            key={image}
             sx={(theme) => ({
               flexShrink: 0,
               width: { xs: 96, lg: 128 },
