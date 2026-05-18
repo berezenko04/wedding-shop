@@ -1,4 +1,4 @@
-import { Button, Stack, Typography } from '@mui/material';
+import { Button, Stack, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
@@ -16,6 +16,9 @@ import { BaseResponseData } from '@/types/base.types';
 
 const Sessions: React.FC = () => {
   const queryClient = useQueryClient();
+  const theme = useTheme();
+
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   const { data: sessions = [], isLoading } = useQuery({
     queryKey: ['sessions'],
@@ -57,7 +60,7 @@ const Sessions: React.FC = () => {
             sx={{ width: 'max-content' }}
             onClick={() => logoutAllMutation.mutate()}
           >
-            Log out all devices without current
+            {isSmUp ? 'Log out all devices without current' : 'Log out all devices'}
           </Button>
         </>
       )}

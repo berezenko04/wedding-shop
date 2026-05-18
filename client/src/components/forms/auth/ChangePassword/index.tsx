@@ -1,12 +1,12 @@
-import { Button, Stack, TextField } from "@mui/material";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { Button, Stack, TextField } from '@mui/material';
+import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 // components
-import FormField from "@/components/ui/layout/FormField";
+import FormField from '@/components/ui/layout/FormField';
 
 // api
-import AuthService from "@/api/auth/auth.service";
+import AuthService from '@/api/auth/auth.service';
 
 type ChangePasswordFormFields = {
   oldPassword: string;
@@ -23,7 +23,7 @@ const ChangePasswordForm: React.FC = () => {
     formState: { errors, isSubmitting },
   } = useForm<ChangePasswordFormFields>();
 
-  const password = watch("newPassword");
+  const password = watch('newPassword');
 
   const onSubmit = async (data: ChangePasswordFormFields) => {
     const result = await AuthService.changePassword(data);
@@ -37,8 +37,8 @@ const ChangePasswordForm: React.FC = () => {
         <TextField
           placeholder="****************"
           type="password"
-          {...register("oldPassword", {
-            required: "Password is required",
+          {...register('oldPassword', {
+            required: 'Password is required',
           })}
           error={!!errors.oldPassword}
           helperText={errors.oldPassword?.message}
@@ -49,9 +49,9 @@ const ChangePasswordForm: React.FC = () => {
         <TextField
           placeholder="****************"
           type="password"
-          {...register("newPassword", {
-            required: "New password is required",
-            minLength: { value: 8, message: "Password is too short (minimum 8 characters)" },
+          {...register('newPassword', {
+            required: 'New password is required',
+            minLength: { value: 8, message: 'Password is too short (minimum 8 characters)' },
           })}
           error={!!errors.newPassword}
           helperText={errors.newPassword?.message}
@@ -62,20 +62,20 @@ const ChangePasswordForm: React.FC = () => {
         <TextField
           placeholder="****************"
           type="password"
-          {...register("repeatNewPassword", {
-            required: "Please confirm your password",
-            validate: (value) => value === password || "Passwords do not match",
+          {...register('repeatNewPassword', {
+            required: 'Please confirm your password',
+            validate: (value) => value === password || 'Passwords do not match',
           })}
           error={!!errors.repeatNewPassword}
           helperText={errors.repeatNewPassword?.message}
         />
       </FormField>
 
-      <Stack flexDirection="row" alignItems="center" gap={2}>
-        <Button type="submit" variant="contained" size="small" disabled={isSubmitting}>
+      <Stack flexDirection={{ xs: 'column', sm: 'row' }} alignItems="center" gap={2}>
+        <Button type="submit" variant="contained" size="small" disabled={isSubmitting} fullWidth>
           Change Password
         </Button>
-        <Button href="/forgot-password" type="button" variant="outlined" color="grey" size="small">
+        <Button href="/forgot-password" type="button" variant="outlined" color="grey" size="small" fullWidth>
           Forgot Password
         </Button>
       </Stack>
