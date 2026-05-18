@@ -16,7 +16,7 @@ const FilterPrice: React.FC<FilterPriceProps> = ({ priceRange, setPriceRange }) 
     setLocalRange(priceRange);
   }, [priceRange]);
 
-  const handleChange = (_: Event, newValue: number | number[]) => {
+  const handlePriceRangeChange = (_: Event, newValue: number | number[]) => {
     if (!Array.isArray(newValue)) return;
     setLocalRange(newValue as [number, number]);
   };
@@ -32,7 +32,7 @@ const FilterPrice: React.FC<FilterPriceProps> = ({ priceRange, setPriceRange }) 
         <Box mx={0.75}>
           <Slider
             value={localRange}
-            onChange={handleChange}
+            onChange={handlePriceRangeChange}
             onChangeCommitted={handleCommit}
             valueLabelDisplay="off"
             size="small"

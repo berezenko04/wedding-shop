@@ -11,7 +11,7 @@ const MobileProfileMenu: React.FC = () => {
 
   const [tabIdx, setTabIdx] = useState<string>(location.pathname);
 
-  const handleChange = (_: React.SyntheticEvent, newValue: string) => {
+  const handleChangeMenuTab = (_: React.SyntheticEvent, newValue: string) => {
     setTabIdx(newValue);
   };
 
@@ -29,7 +29,7 @@ const MobileProfileMenu: React.FC = () => {
           }}
         >
           <TabList
-            onChange={handleChange}
+            onChange={handleChangeMenuTab}
             sx={{
               width: 'max-content',
               minWidth: '100%',

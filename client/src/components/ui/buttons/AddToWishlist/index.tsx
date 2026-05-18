@@ -1,27 +1,27 @@
-import { Button } from "@mui/material";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Button } from '@mui/material';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 // api
-import WishlistService from "@/api/wishlist/wishlist.service";
+import WishlistService from '@/api/wishlist/wishlist.service';
 
 // hooks
-import { useCheckInWishlist } from "@/hooks/useCheckInWishlist";
+import { useCheckInWishlist } from '@/hooks/useCheckInWishlist';
 
 // types
-import { GetAllWishlist } from "@/api/wishlist/wishlist.types";
+import { GetAllWishlist } from '@/api/wishlist/wishlist.types';
 
 // icons
-import { Favorite, FavoriteBorderOutlined } from "@mui/icons-material";
+import { Favorite, FavoriteBorderOutlined } from '@mui/icons-material';
 
 // constants
-import { PAGE_LIMIT } from "@/constants";
+import { PAGE_LIMIT } from '@/constants';
 
 type AddToWishlistButtonProps = {
   productId: string;
-  variant?: "card" | "productPage";
+  variant?: 'card' | 'productPage';
 };
 
-const AddToWishlistButton: React.FC<AddToWishlistButtonProps> = ({ productId, variant = "card" }) => {
+const AddToWishlistButton: React.FC<AddToWishlistButtonProps> = ({ productId, variant = 'card' }) => {
   const queryClient = useQueryClient();
 
   const { data: wishlistIds = [] } = useCheckInWishlist();
@@ -38,15 +38,15 @@ const AddToWishlistButton: React.FC<AddToWishlistButtonProps> = ({ productId, va
     },
 
     onSuccess: (data: GetAllWishlist) => {
-      queryClient.setQueryData(["wishlist", { page: 1, limit: PAGE_LIMIT }], data);
-      queryClient.setQueryData<string[]>(["checkInWishlist"], (prev) => {
+      queryClient.setQueryData(['wishlist', { page: 1, limit: PAGE_LIMIT }], data);
+      queryClient.setQueryData<string[]>(['checkInWishlist'], (prev) => {
         if (!prev) return [];
         return isWishlisted ? prev.filter((id) => id !== productId) : [...prev, productId];
       });
     },
   });
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickWishlistButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     e.preventDefault();
     mutation.mutate(isWishlisted);
@@ -54,15 +54,15 @@ const AddToWishlistButton: React.FC<AddToWishlistButtonProps> = ({ productId, va
 
   const buttonConfig = {
     card: {
-      variant: "iconary" as const,
-      color: "white" as const,
-      size: "small" as const,
-      sx: { position: "absolute", zIndex: 1, top: 16, right: 16 },
+      variant: 'iconary' as const,
+      color: 'white' as const,
+      size: 'small' as const,
+      sx: { position: 'absolute', zIndex: 1, top: 16, right: 16 },
     },
     productPage: {
-      variant: "iconaryOutlined" as const,
-      color: "grey" as const,
-      size: "large" as const,
+      variant: 'iconaryOutlined' as const,
+      color: 'grey' as const,
+      size: 'large' as const,
       sx: {},
     },
   } as const;
@@ -71,7 +71,7 @@ const AddToWishlistButton: React.FC<AddToWishlistButtonProps> = ({ productId, va
 
   return (
     <Button
-      onClick={handleClick}
+      onClick={handleClickWishlistButton}
       variant={config.variant}
       color={config.color}
       sx={config.sx}

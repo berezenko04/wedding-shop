@@ -16,7 +16,7 @@ type SearchOptionProps = SearchResult & {
 const SearchOption: React.FC<SearchOptionProps> = ({ title, slug, variant, afterClick, handleClear }) => {
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleSelectSearchOption = () => {
     const history = getHistoryLS();
 
     const updatedHistory = [{ title, slug }, ...history.filter((h) => h.slug !== slug)].slice(0, 5);
@@ -27,14 +27,14 @@ const SearchOption: React.FC<SearchOptionProps> = ({ title, slug, variant, after
     afterClick();
   };
 
-  const handleDelete = (e: React.MouseEvent) => {
+  const handleDeleteHistoryItem = (e: React.MouseEvent) => {
     e.stopPropagation();
     handleClear && handleClear(slug);
   };
 
   return (
     <Stack
-      onClick={handleClick}
+      onClick={handleSelectSearchOption}
       sx={{
         flexDirection: 'row',
         alignItems: 'center',
@@ -50,7 +50,7 @@ const SearchOption: React.FC<SearchOptionProps> = ({ title, slug, variant, after
       <Typography>{title}</Typography>
       {variant === 'history' && (
         <Typography
-          onClick={handleDelete}
+          onClick={handleDeleteHistoryItem}
           sx={{
             color: 'grey.300',
             cursor: 'pointer',

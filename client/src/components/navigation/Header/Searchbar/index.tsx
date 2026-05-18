@@ -43,7 +43,7 @@ const Searchbar: React.FC<Props> = ({ sx }) => {
     [],
   );
 
-  const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSearchInputChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setSearchQuery(val);
     debouncedSearch(val);
@@ -96,7 +96,7 @@ const Searchbar: React.FC<Props> = ({ sx }) => {
         size="small"
         placeholder="Search something..."
         value={searchQuery}
-        onChange={handleChange}
+        onChange={handleSearchInputChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
         slotProps={{
