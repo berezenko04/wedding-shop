@@ -1,12 +1,15 @@
 import { Box, Link, Tab } from '@mui/material';
 import { TabContext, TabList } from '@mui/lab';
+import { useLocation } from 'react-router';
 import { useState } from 'react';
 
 // data
 import { profileMenu } from '@/data/menus';
 
 const MobileProfileMenu: React.FC = () => {
-  const [tabIdx, setTabIdx] = useState<string>(profileMenu[0].title);
+  const location = useLocation();
+
+  const [tabIdx, setTabIdx] = useState<string>(location.pathname);
 
   const handleChange = (_: React.SyntheticEvent, newValue: string) => {
     setTabIdx(newValue);
@@ -36,7 +39,7 @@ const MobileProfileMenu: React.FC = () => {
               <Tab
                 key={idx}
                 label={title}
-                value={title}
+                value={href}
                 icon={<Icon />}
                 iconPosition="start"
                 component={Link as any}

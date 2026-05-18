@@ -10,12 +10,12 @@ const ProfileMenu: React.FC = () => {
   return (
     <Stack gap={0.5} sx={{ width: 230, display: { xs: 'none', md: 'flex' } }}>
       {profileMenu.map(({ title, href, icon: Icon }, idx) => {
-        const isActive = location.pathname === `/profile/${href}`;
+        const isActive = location.pathname === href;
 
         return (
           <Link
             key={idx}
-            href={`/profile/${href}`}
+            href={href}
             variant="plain"
             textTransform="uppercase"
             color={isActive ? 'primary.main' : 'grey.500'}
