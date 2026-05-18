@@ -12,13 +12,15 @@ import CustomModal from '@/components/ui/layout/CustomModal';
 // api
 import ShippingService from '@/api/shipping/shipping.service';
 
+// hooks
+import { useUser } from '@/hooks/useUser';
+
 // types
 import { ShippingAddress } from '@/api/shipping/shipping.types';
 import { BaseResponseData } from '@/types/base.types';
 
 // icons
 import { DeleteOutline, EditOutlined } from '@mui/icons-material';
-import { useUser } from '@/hooks/useUser';
 
 const Address: React.FC<ShippingAddress> = ({ id, address: rawAddress, primary }) => {
   const [isUpdateModalOpened, setIsUpdateModalOpened] = useState<boolean>(false);
@@ -53,7 +55,7 @@ const Address: React.FC<ShippingAddress> = ({ id, address: rawAddress, primary }
           <Typography>{rawAddress}</Typography>
           <Typography>{user?.email}</Typography>
         </Stack>
-        <Stack flexDirection="row" alignItems="center" gap={2}>
+        <Stack flexDirection={{ xs: 'column', sm: 'row' }} alignItems="center" gap={2}>
           {primary && <PrimaryMark />}
           <Stack flexDirection="row" alignItems="center" gap={0.5}>
             <IconButton onClick={() => setIsUpdateModalOpened(true)}>
