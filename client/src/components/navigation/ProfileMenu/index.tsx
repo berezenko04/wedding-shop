@@ -8,7 +8,7 @@ const ProfileMenu: React.FC = () => {
   const location = useLocation();
 
   return (
-    <Stack gap={0.5} sx={{ width: 230 }}>
+    <Stack gap={0.5} sx={{ width: 230, display: { xs: 'none', md: 'flex' } }}>
       {profileMenu.map(({ title, href, icon: Icon }, idx) => {
         const isActive = location.pathname === `/profile/${href}`;
 
