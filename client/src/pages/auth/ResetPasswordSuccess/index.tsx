@@ -1,7 +1,7 @@
-import { Button } from "@mui/material";
+import { Button } from '@mui/material';
 
 // components
-import AuthFormLayout from "@/components/forms/auth/FormLayout";
+import AuthFormLayout from '@/components/forms/auth/FormLayout';
 
 const ResetPasswordSuccess: React.FC = () => {
   return (
@@ -11,7 +11,7 @@ const ResetPasswordSuccess: React.FC = () => {
       isBackToLogin={false}
     >
       <Button href="/login" color="primary" variant="contained" size="small">
-        Continue
+        Log in
       </Button>
     </AuthFormLayout>
   );
