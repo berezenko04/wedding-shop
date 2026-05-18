@@ -11,7 +11,7 @@ type EmptyCartProps = {
 const EmptyCart: React.FC<EmptyCartProps> = ({ handleClose }) => {
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleClickCatalogButton = () => {
     navigate('/catalog');
     handleClose();
   };
@@ -25,7 +25,7 @@ const EmptyCart: React.FC<EmptyCartProps> = ({ handleClose }) => {
         </Typography>
         <Typography textAlign="center">Add an item to your shopping cart and it will appear in this list.</Typography>
       </Stack>
-      <Button onClick={handleClick} variant="contained" color="primary" size="small">
+      <Button onClick={handleClickCatalogButton} variant="contained" color="primary" size="small">
         Go Shopping
       </Button>
     </Stack>

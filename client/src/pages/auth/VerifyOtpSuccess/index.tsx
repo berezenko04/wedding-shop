@@ -1,9 +1,9 @@
-import { Button } from "@mui/material";
-import { useLocation, useNavigate } from "react-router";
-import { useEffect } from "react";
+import { Button } from '@mui/material';
+import { useLocation, useNavigate } from 'react-router';
+import { useEffect } from 'react';
 
 // components
-import AuthFormLayout from "@/components/forms/auth/FormLayout";
+import AuthFormLayout from '@/components/forms/auth/FormLayout';
 
 const VerifyOtpSuccess: React.FC = () => {
   const location = useLocation();
@@ -13,7 +13,7 @@ const VerifyOtpSuccess: React.FC = () => {
 
   useEffect(() => {
     if (!resetToken) {
-      navigate("/login");
+      navigate('/login');
     }
   }, [resetToken, navigate]);
 
@@ -28,7 +28,7 @@ const VerifyOtpSuccess: React.FC = () => {
         variant="contained"
         size="small"
       >
-        Continue
+        Reset password
       </Button>
     </AuthFormLayout>
   );

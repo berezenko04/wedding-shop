@@ -1,10 +1,10 @@
-import { Slider, Box, Typography, Stack } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Slider, Box, Typography, Stack } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 // components
-import FilterItem from "../FilterItem";
+import FilterItem from '../FilterItem';
 
-export type FilterPriceProps = {
+type FilterPriceProps = {
   priceRange: [number, number];
   setPriceRange: (v: [number, number]) => void;
 };
@@ -16,11 +16,13 @@ const FilterPrice: React.FC<FilterPriceProps> = ({ priceRange, setPriceRange }) 
     setLocalRange(priceRange);
   }, [priceRange]);
 
-  const handleChange = (_: Event, newValue: number | number[]) => {
+  const handlePriceRangeChange = (_: Event, newValue: number | number[]) => {
+    if (!Array.isArray(newValue)) return;
     setLocalRange(newValue as [number, number]);
   };
 
   const handleCommit = (_: Event | React.SyntheticEvent, newValue: number | number[]) => {
+    if (!Array.isArray(newValue)) return;
     setPriceRange(newValue as [number, number]);
   };
 
@@ -30,7 +32,7 @@ const FilterPrice: React.FC<FilterPriceProps> = ({ priceRange, setPriceRange }) 
         <Box mx={0.75}>
           <Slider
             value={localRange}
-            onChange={handleChange}
+            onChange={handlePriceRangeChange}
             onChangeCommitted={handleCommit}
             valueLabelDisplay="off"
             size="small"

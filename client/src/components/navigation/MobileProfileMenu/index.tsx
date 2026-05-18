@@ -11,7 +11,7 @@ const MobileProfileMenu: React.FC = () => {
 
   const [tabIdx, setTabIdx] = useState<string>(location.pathname);
 
-  const handleChange = (_: React.SyntheticEvent, newValue: string) => {
+  const handleChangeMenuTab = (_: React.SyntheticEvent, newValue: string) => {
     setTabIdx(newValue);
   };
 
@@ -29,15 +29,15 @@ const MobileProfileMenu: React.FC = () => {
           }}
         >
           <TabList
-            onChange={handleChange}
+            onChange={handleChangeMenuTab}
             sx={{
               width: 'max-content',
               minWidth: '100%',
             }}
           >
-            {profileMenu.map(({ title, href, icon: Icon }, idx) => (
+            {profileMenu.map(({ title, href, icon: Icon }) => (
               <Tab
-                key={idx}
+                key={href}
                 label={title}
                 value={href}
                 icon={<Icon />}

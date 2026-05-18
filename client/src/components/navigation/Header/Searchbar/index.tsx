@@ -43,10 +43,15 @@ const Searchbar: React.FC<Props> = ({ sx }) => {
     [],
   );
 
-  const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleSearchInputChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setSearchQuery(val);
     debouncedSearch(val);
+  };
+
+  const handleFocus = () => {
+    setIsListOpened(true);
+    setHistory(getHistoryLS());
   };
 
   const handleBlur = (e: React.FocusEvent) => {
@@ -78,12 +83,6 @@ const Searchbar: React.FC<Props> = ({ sx }) => {
   };
 
   useEffect(() => {
-    if (isListOpened) {
-      setHistory(getHistoryLS());
-    }
-  }, [isListOpened]);
-
-  useEffect(() => {
     return () => {
       debouncedSearch.cancel();
     };
@@ -97,8 +96,8 @@ const Searchbar: React.FC<Props> = ({ sx }) => {
         size="small"
         placeholder="Search something..."
         value={searchQuery}
-        onChange={handleChange}
-        onFocus={() => setIsListOpened(true)}
+        onChange={handleSearchInputChange}
+        onFocus={handleFocus}
         onBlur={handleBlur}
         slotProps={{
           input: {

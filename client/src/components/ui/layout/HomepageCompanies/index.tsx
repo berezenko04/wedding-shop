@@ -18,8 +18,8 @@ const HomepageCompanies: React.FC = () => {
             justifyContent: 'space-between',
           }}
         >
-          {companies.map(({ src, alt }, idx) => (
-            <Box key={idx} component="img" src={src} alt={alt} />
+          {companies.map(({ src, alt }) => (
+            <Box key={src} component="img" src={src} alt={alt} />
           ))}
         </Stack>
       </CustomContainer>

@@ -30,7 +30,7 @@ const Addresses: React.FC = () => {
   return (
     <Stack gap={2}>
       {isLoading ? (
-        [...Array(3)].map((_, idx) => <ShippingAddressSkeleton key={idx} />)
+        [...Array(3)].map((_, idx) => <ShippingAddressSkeleton key={`shipping-skeleton-${idx}`} />)
       ) : addresses.length > 0 ? (
         addresses.map((address) => <Address key={address.id} {...address} />)
       ) : (

@@ -5,7 +5,7 @@ import Picker from "@/components/ui/Picker";
 // types
 import { Sizes } from "@/types/enums.types";
 
-export type FilterSizeProps = {
+type FilterSizeProps = {
   size: Sizes | null;
   setSize: (v: Sizes | null) => void;
 };

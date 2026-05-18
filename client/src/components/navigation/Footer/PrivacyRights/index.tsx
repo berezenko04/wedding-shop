@@ -23,7 +23,7 @@ const PrivacyRights: React.FC = () => {
             gap={{ xs: 1.5, sm: 3 }}
           >
             {privacyMenu.map(({ title, href }) => (
-              <Link href={href} color="grey">
+              <Link key={href} href={href} color="grey">
                 {title}
               </Link>
             ))}

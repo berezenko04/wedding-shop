@@ -50,7 +50,7 @@ const Sessions: React.FC = () => {
             {sessions
               .filter((i) => !i.isCurrent)
               .map((session) => (
-                <Session {...session} />
+                <Session key={session.id} {...session} />
               ))}
           </Stack>
           <Button

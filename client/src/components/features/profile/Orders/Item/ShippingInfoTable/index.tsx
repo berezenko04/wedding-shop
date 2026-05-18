@@ -19,8 +19,8 @@ const ShippingInfoTable: React.FC<ShippingInfoTableProps> = ({ shippingAddress, 
     <Table sx={{ minWidth: 1000 }}>
       <TableHead>
         <TableRow>
-          {columns.map(({ sx, title }, idx) => (
-            <TableCell key={idx} sx={sx}>
+          {columns.map(({ sx, title }) => (
+            <TableCell key={title} sx={sx}>
               {title}
             </TableCell>
           ))}

@@ -1,12 +1,12 @@
-import axios from "axios";
+import axios from 'axios';
 
 // api
-import AuthService from "@/api/auth/auth.service";
+import AuthService from '@/api/auth/auth.service';
 
 // utils
-import { normalizeAxiosError } from "@/utils/normalizeAxiosError";
+import { normalizeAxiosError } from '@/utils/normalizeAxiosError';
 
-export const instance = axios.create({
+const instance = axios.create({
   baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1`,
   withCredentials: true,
 });
@@ -17,12 +17,12 @@ instance.interceptors.response.use(
     const originalRequest = error.config as any;
 
     const isAuthEndpoint =
-      originalRequest?.url?.includes("/auth/login") || originalRequest?.url?.includes("/auth/register");
+      originalRequest?.url?.includes('/auth/login') || originalRequest?.url?.includes('/auth/register');
 
     if (
       error?.response?.status === 401 &&
       !originalRequest?._isRetry &&
-      !originalRequest?.url?.includes("/auth/refresh") &&
+      !originalRequest?.url?.includes('/auth/refresh') &&
       !isAuthEndpoint
     ) {
       originalRequest._isRetry = true;
@@ -31,12 +31,12 @@ instance.interceptors.response.use(
         return instance.request(originalRequest);
       } catch (err) {
         AuthService.logout();
-        window.location.href = "/login";
+        window.location.href = '/login';
         return Promise.reject(normalizeAxiosError(err));
       }
     }
 
-    if (!originalRequest?.url?.includes("/auth/refresh")) {
+    if (!originalRequest?.url?.includes('/auth/refresh')) {
       return Promise.reject(normalizeAxiosError(error));
     }
   },

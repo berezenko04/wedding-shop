@@ -9,12 +9,12 @@ const ProfileMenu: React.FC = () => {
 
   return (
     <Stack gap={0.5} sx={{ width: 230, display: { xs: 'none', md: 'flex' } }}>
-      {profileMenu.map(({ title, href, icon: Icon }, idx) => {
+      {profileMenu.map(({ title, href, icon: Icon }) => {
         const isActive = location.pathname === href;
 
         return (
           <Link
-            key={idx}
+            key={title}
             href={href}
             variant="plain"
             textTransform="uppercase"
