@@ -20,8 +20,8 @@ const ShippingAndDelivery = () => {
       <Stack spacing={1}>
         <Typography variant="h6">🚚 Shipping Methods</Typography>
         <Typography>
-          • Standard Shipping — 7–14 business days
-          <br />• Express Shipping — 3–7 business days
+          • Standard Shipping: 7–14 business days
+          <br />• Express Shipping: 3–7 business days
         </Typography>
         <Typography>Delivery times are estimates and may vary due to customs or local courier delays.</Typography>
       </Stack>
