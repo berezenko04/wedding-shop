@@ -25,8 +25,8 @@ const Footer: React.FC = () => {
                 Get Help
               </Typography>
               <Stack component="nav" gap={2}>
-                {footerHelpMenu.map(({ title, href }) => (
-                  <Link href={href} color="grey">
+                {footerHelpMenu.map(({ title, href }, idx) => (
+                  <Link key={idx} href={href} color="grey">
                     {title}
                   </Link>
                 ))}
@@ -39,8 +39,8 @@ const Footer: React.FC = () => {
                 Contacts
               </Typography>
               <Stack component="nav" gap={2}>
-                {footerContacts.map(({ title, href }) => (
-                  <Link href={href} color="grey">
+                {footerContacts.map(({ title, href }, idx) => (
+                  <Link key={idx} href={href} color="grey">
                     {title}
                   </Link>
                 ))}

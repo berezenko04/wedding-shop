@@ -47,8 +47,8 @@ const Orders: React.FC = () => {
           <Table sx={{ minWidth: 600 }}>
             <TableHead>
               <TableRow>
-                {columns.map(({ sx, title, align }) => (
-                  <TableCell sx={sx} align={(align as TableCellProps['align']) ?? 'left'}>
+                {columns.map(({ sx, title, align }, idx) => (
+                  <TableCell key={idx} sx={sx} align={(align as TableCellProps['align']) ?? 'left'}>
                     {title}
                   </TableCell>
                 ))}
@@ -56,7 +56,7 @@ const Orders: React.FC = () => {
             </TableHead>
             <TableBody>
               {orders?.orders.map((order) => (
-                <Order {...order} />
+                <Order key={order.id} {...order} />
               ))}
             </TableBody>
           </Table>

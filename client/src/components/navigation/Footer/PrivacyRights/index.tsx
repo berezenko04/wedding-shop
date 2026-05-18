@@ -22,8 +22,8 @@ const PrivacyRights: React.FC = () => {
             alignItems={{ xs: 'flex-start', sm: 'center' }}
             gap={{ xs: 1.5, sm: 3 }}
           >
-            {privacyMenu.map(({ title, href }) => (
-              <Link href={href} color="grey">
+            {privacyMenu.map(({ title, href }, idx) => (
+              <Link key={idx} href={href} color="grey">
                 {title}
               </Link>
             ))}

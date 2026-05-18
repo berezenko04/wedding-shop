@@ -32,7 +32,7 @@ const PaymentMethods: React.FC = () => {
       {isLoading ? (
         [...Array(3)].map((_, idx) => <PaymentMethodSkeleton key={idx} />)
       ) : payment.length > 0 ? (
-        payment.map((method) => <PaymentMethod {...method} />)
+        payment.map((method) => <PaymentMethod key={method.id} {...method} />)
       ) : (
         <EmptyState
           title="No payment method saved"

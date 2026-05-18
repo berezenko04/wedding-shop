@@ -45,8 +45,14 @@ const SearchbarBlock: React.FC<SearchbarBlockProps> = ({
       </Stack>
       <Stack>
         {options.length > 0 ? (
-          options.map((o) => (
-            <SearchOption afterClick={afterClickOption} handleClear={onClearHistoryItem} variant={variant} {...o} />
+          options.map((o, idx) => (
+            <SearchOption
+              key={idx}
+              afterClick={afterClickOption}
+              handleClear={onClearHistoryItem}
+              variant={variant}
+              {...o}
+            />
           ))
         ) : (
           <Typography sx={{ px: 2 }}>History is empty</Typography>
