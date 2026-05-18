@@ -1,7 +1,10 @@
 import { Stack, Typography } from '@mui/material';
 import { useNavigate } from 'react-router';
 
-// api
+// utils
+import { getHistoryLS, setHistoryLS } from '@/utils/searchLS';
+
+// types
 import { SearchResult } from '@/api/products/products.types';
 
 type SearchOptionProps = SearchResult & {
@@ -10,19 +13,15 @@ type SearchOptionProps = SearchResult & {
   variant: 'result' | 'history';
 };
 
-const SearchOption: React.FC<SearchOptionProps> = ({
-  title,
-  slug,
-  variant,
-  afterClick,
-  handleClear,
-}) => {
+const SearchOption: React.FC<SearchOptionProps> = ({ title, slug, variant, afterClick, handleClear }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    const history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
-    const updatedHistory = [{ title, slug }, ...history.filter((h: SearchResult) => h.slug !== slug)].slice(0, 5);
-    localStorage.setItem('searchHistory', JSON.stringify(updatedHistory));
+    const history = getHistoryLS();
+
+    const updatedHistory = [{ title, slug }, ...history.filter((h) => h.slug !== slug)].slice(0, 5);
+
+    setHistoryLS(updatedHistory);
 
     navigate(`/catalog/${slug}`);
     afterClick();
