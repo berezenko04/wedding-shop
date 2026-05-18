@@ -15,7 +15,7 @@ const PrimaryLayout: React.FC = () => {
       <WarAlert />
       <Header />
       <Breadcrumbs />
-      <Stack flexGrow={1} flexDirection="column" py={{ xs: 4, md: 6 }}>
+      <Stack flexGrow={1} flexDirection="column" py={{ xs: 2, sm: 4, md: 6 }}>
         <CustomContainer>
           <Outlet />
         </CustomContainer>

@@ -45,12 +45,22 @@ const PaymentMethod: React.FC<PaymentMethod> = ({ id, method, email, last4, card
 
   return (
     <OutlinedBlock>
-      <Stack flexDirection="row" justifyContent="space-between" gap={4} alignItems="flex-start">
-        <Stack flexDirection="row" alignItems="center" gap={2}>
+      <Stack
+        flexDirection={{ xs: 'column', sm: 'row' }}
+        justifyContent={{ xs: 'normal', sm: 'space-between' }}
+        gap={{ xs: 1, sm: 4 }}
+        alignItems="flex-start"
+      >
+        <Stack
+          flexDirection={{ xs: 'column', sm: 'row' }}
+          alignItems={{ xs: 'flex-start', sm: 'center' }}
+          gap={{ xs: 1, sm: 2 }}
+        >
           <Stack
             alignItems="center"
             justifyContent="center"
             sx={(theme) => ({
+              flexShrink: 0,
               border: `1px solid ${theme.palette.grey[100]}`,
               width: 60,
               height: 40,
@@ -70,7 +80,7 @@ const PaymentMethod: React.FC<PaymentMethod> = ({ id, method, email, last4, card
             </Typography>
           </Stack>
         </Stack>
-        <Stack flexDirection="row" alignItems="center" gap={2}>
+        <Stack flexDirection="row" alignItems="center" gap={2} alignSelf={{ xs: 'flex-end', sm: 'auto' }}>
           {primary && <PrimaryMark />}
           <Stack flexDirection="row" alignItems="center" gap={0.5}>
             <IconButton onClick={() => setIsUpdateModalOpened(true)}>
