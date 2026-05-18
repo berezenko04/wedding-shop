@@ -40,7 +40,17 @@ const Card: React.FC<CardProps> = ({ id, posterUrl, title, price, slug, discount
           )}
         </Stack>
 
-        {variant === 'catalog' && <ProductPrice price={price} discount={discount} />}
+        {variant === 'catalog' && (
+          <ProductPrice
+            price={price}
+            discount={discount}
+            sx={{
+              flexDirection: { xs: 'column', md: 'row' },
+              alignItems: { xs: 'flex-start', md: 'center' },
+              gap: { xs: 1, md: 2 },
+            }}
+          />
+        )}
       </Stack>
     </Stack>
   );
