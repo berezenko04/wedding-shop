@@ -7,6 +7,7 @@ import { useState } from 'react';
 // components
 import ReviewForm from '@/components/forms/Review';
 import CustomPagination from '@/components/ui/layout/CustomPagination';
+import EmptyState from '@/components/ui/EmptyState';
 import ReviewsItem from './Item';
 
 // redux
@@ -17,6 +18,9 @@ import ReviewsService from '@/api/reviews/reviews.service';
 
 // constants
 import { REVIEWS_LIMIT } from '@/constants';
+
+// icons
+import { ChatBubbleOutline } from '@mui/icons-material';
 
 type ProductReviewsProps = {
   productId: string;
@@ -37,23 +41,35 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId }) => {
     enabled: !!productId,
   });
 
-  const pages = data?.total ? Math.ceil(data.total / REVIEWS_LIMIT) : 0;
+  const reviews = data?.reviews ?? [];
+  const total = data?.total ?? 0;
+
+  const pages = Math.ceil(total / REVIEWS_LIMIT);
 
   return (
     <Stack gap={4}>
-      <Typography variant="h4">Comments ({data?.total})</Typography>
+      <Typography variant="h4">Comments ({total})</Typography>
       {isAuth && (
         <>
           <Typography>Review this product?</Typography>
           <ReviewForm productId={productId} />
         </>
       )}
-      {data?.reviews.map((review, idx) => (
-        <Fragment key={review.id}>
-          <ReviewsItem {...review} />
-          {idx !== data.reviews.length - 1 && <Divider />}
-        </Fragment>
-      ))}
+      {reviews.length > 0
+        ? reviews.map((review, idx) => (
+            <Fragment key={review.id}>
+              <ReviewsItem {...review} />
+              {idx !== reviews.length - 1 && <Divider />}
+            </Fragment>
+          ))
+        : !isAuth && (
+            <EmptyState
+              title="No comments yet"
+              description="Be the first to share your thoughts. Please log in to leave a review."
+              icon={ChatBubbleOutline}
+              withoutMarginTop
+            />
+          )}
       {pages > 1 && <CustomPagination page={page} onChange={(_, val) => setPage(val)} count={pages} />}
     </Stack>
   );
