@@ -1,10 +1,10 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from '@mui/material';
 
 // components
-import OutlinedBlock from "@/components/ui/layout/OutlinedBlock";
+import OutlinedBlock from '@/components/ui/layout/OutlinedBlock';
 
 // icons
-import { Add } from "@mui/icons-material";
+import { Add } from '@mui/icons-material';
 
 type EmptyStateProps = {
   title: string;
@@ -16,7 +16,7 @@ type EmptyStateProps = {
 const EmptyState: React.FC<EmptyStateProps> = ({ title, description, buttonText, onClick }) => {
   return (
     <OutlinedBlock>
-      <Stack flexDirection="row" justifyContent="space-between" gap={4}>
+      <Stack flexDirection={{ xs: 'column', md: 'row' }} justifyContent="space-between" gap={{ xs: 2, md: 4 }}>
         <Stack>
           <Typography variant="medium" fontSize={20} textTransform="uppercase">
             {title}
