@@ -379,7 +379,7 @@ const theme = createTheme({
           textTransform: 'uppercase',
           fontWeight: 500,
           color: theme.palette.grey[700],
-          padding: '4px 0',
+          padding: '4px 12px',
         }),
       },
     },
@@ -489,7 +489,7 @@ const theme = createTheme({
         root: {
           lineHeight: 'normal',
           minHeight: 48,
-          padding: "8px 12px"
+          padding: '8px 12px',
         },
       },
     },
