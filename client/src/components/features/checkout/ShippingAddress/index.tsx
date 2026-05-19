@@ -20,14 +20,20 @@ const ShippingAddress: React.FC<ShippingAddressProps> = ({ address }) => {
         <Typography variant="medium" textTransform="uppercase">
           Shipping Address
         </Typography>
-        <EditButton href="/profile/shipping-address" />
+        <EditButton
+          href="/profile/shipping-address"
+          title={!address ? 'Add' : ''}
+          color={!address ? 'primary' : 'grey'}
+        />
       </Stack>
-      <Stack gap={1}>
-        <Typography>
-          {user?.firstName} {user?.lastName}
-        </Typography>
-        <Typography>{address}</Typography>
-      </Stack>
+      {address && (
+        <Stack gap={1}>
+          <Typography>
+            {user?.firstName} {user?.lastName}
+          </Typography>
+          <Typography>{address}</Typography>
+        </Stack>
+      )}
     </OutlinedBlock>
   );
 };

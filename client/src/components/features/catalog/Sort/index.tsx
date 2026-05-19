@@ -22,7 +22,7 @@ const Sort: React.FC<SortProps> = ({ value, onChange, sx }) => {
         defaultValue={sortByCatalog[0].value}
         value={value}
         onChange={(e) => onChange(e.target.value as SortBy)}
-        sx={{ '.MuiSelect-select': { padding: '4px 0' } }}
+        sx={{ '.MuiSelect-select': { padding: '4px 24px 4px 0 !important' } }}
       >
         {sortByCatalog.map(({ value, label }) => (
           <MenuItem key={value} value={value}>
