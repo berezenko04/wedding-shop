@@ -16,15 +16,21 @@ type PaymentMethodProps = {
 const PaymentMethod: React.FC<PaymentMethodProps> = ({ paymentMethod, onChange }) => {
   const { data: paymentMethods } = useUserPaymentMethods();
 
+  const isPaymentMethodsExist = paymentMethods && paymentMethods.length > 0;
+
   return (
     <OutlinedBlock sx={{ gap: 2 }}>
       <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={4}>
         <Typography variant="medium" textTransform="uppercase">
           Payment Method
         </Typography>
-        <EditButton href="/profile/payment" />
+        <EditButton
+          href="/profile/payment"
+          title={!isPaymentMethodsExist ? 'Add' : ''}
+          color={!isPaymentMethodsExist ? 'primary' : 'grey'}
+        />
       </Stack>
-      {paymentMethods ? (
+      {isPaymentMethodsExist && (
         <Stack gap={1}>
           <Picker
             showRadio
@@ -35,8 +41,6 @@ const PaymentMethod: React.FC<PaymentMethodProps> = ({ paymentMethod, onChange }
             gridItemSize={{ xs: 12, lg: 4 }}
           />
         </Stack>
-      ) : (
-        <></>
       )}
     </OutlinedBlock>
   );
