@@ -55,20 +55,21 @@ const ProductReviews: React.FC<ProductReviewsProps> = ({ productId }) => {
           <ReviewForm productId={productId} />
         </>
       )}
-      {reviews.length > 0 ? (
-        reviews.map((review, idx) => (
-          <Fragment key={review.id}>
-            <ReviewsItem {...review} />
-            {idx !== reviews.length - 1 && <Divider />}
-          </Fragment>
-        ))
-      ) : (
-        <EmptyState
-          title="No comments yet"
-          description="Be the first to share your thoughts"
-          icon={ChatBubbleOutline}
-        />
-      )}
+      {reviews.length > 0
+        ? reviews.map((review, idx) => (
+            <Fragment key={review.id}>
+              <ReviewsItem {...review} />
+              {idx !== reviews.length - 1 && <Divider />}
+            </Fragment>
+          ))
+        : !isAuth && (
+            <EmptyState
+              title="No comments yet"
+              description="Be the first to share your thoughts. Please log in to leave a review."
+              icon={ChatBubbleOutline}
+              withoutMarginTop
+            />
+          )}
       {pages > 1 && <CustomPagination page={page} onChange={(_, val) => setPage(val)} count={pages} />}
     </Stack>
   );
