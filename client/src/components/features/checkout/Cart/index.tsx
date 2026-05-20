@@ -34,7 +34,7 @@ const CheckoutCart: React.FC = () => {
           Cart
         </Typography>
 
-        <CustomScrollContainer sx={{ flex: 1, overflowY: 'auto', minHeight: 300 }}>
+        <CustomScrollContainer sx={{ flex: 1, overflowY: 'auto', minHeight: { xs: 124, sm: 240 } }}>
           {cart.map((c, idx) => (
             <Fragment key={c.id || idx}>
               <CartItem {...c} />
