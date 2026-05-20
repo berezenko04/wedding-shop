@@ -12,8 +12,8 @@ type ProductsTableProps = {
 
 const ProductsTable: React.FC<ProductsTableProps> = ({ items }) => {
   const columns = [
-    { sx: { minwidth: 280 }, title: 'Product' },
-    { sx: { minwidth: 60 }, title: 'Size' },
+    { sx: { minWidth: 280 }, title: 'Product' },
+    { sx: { minWidth: 60 }, title: 'Size' },
     { sx: { minWidth: 80 }, title: 'Qty' },
     { sx: { minWidth: 100 }, title: 'Price' },
     { sx: { minWidth: 80 }, title: 'Discount' },
