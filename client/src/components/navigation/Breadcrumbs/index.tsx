@@ -8,7 +8,7 @@ import CustomContainer from '@/components/ui/Layout/CustomContainer';
 import { NavigateNext } from '@mui/icons-material';
 
 // utils
-import { formatBreadcrumb } from '@/utils/formatBreadcrumb';
+import { formatBreadcrumb } from '@/utils/formatBreadcrumbs';
 
 const Breadcrumbs: React.FC = () => {
   const location = useLocation();
