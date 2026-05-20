@@ -1,12 +1,12 @@
-import { httpDelete, httpGet, httpPost } from "@/middlewares/axios.middleware";
+import { httpDelete, httpGet, httpPost } from '@/api/axios.middleware';
 
 // types
-import { AddToWishlistBody, GetAllWishlist } from "./wishlist.types";
-import { Pagination } from "@/types/base.types";
+import { AddToWishlistBody, GetAllWishlist } from './wishlist.types';
+import { Pagination } from '@/types/base.types';
 
 const R = {
-  wishlist: "/wishlist",
-  check: "/wishlist/check",
+  wishlist: '/wishlist',
+  check: '/wishlist/check',
   removeFromWishlist: (id: string) => `${R.wishlist}/${id}`,
 } as const;
 

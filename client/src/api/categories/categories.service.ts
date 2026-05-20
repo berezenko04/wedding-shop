@@ -1,10 +1,10 @@
-import { httpGet } from "@/middlewares/axios.middleware";
+import { httpGet } from '@/api/axios.middleware';
 
 // types
-import { Category } from "./categories.types";
+import { Category } from './categories.types';
 
 const R = {
-  categories: "/categories",
+  categories: '/categories',
 } as const;
 
 const CategoriesService = {

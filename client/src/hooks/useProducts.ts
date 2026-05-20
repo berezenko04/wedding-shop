@@ -1,20 +1,20 @@
-import { useMemo, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useMemo, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 // api
-import ProductsService from "@/api/products/products.service";
+import ProductsService from '@/api/products/products.service';
 
 // types
-import type { GetAllProductParams, GetAllProducts } from "@/api/products/products.types";
-import type { Sizes, SortBy } from "@/types/enums.types";
+import type { GetAllProductParams, GetAllProducts } from '@/api/products/products.types';
+import type { Sizes, SortBy } from '@/types/enums.types';
 
-// constants
-import { PAGE_LIMIT } from "@/constants";
+// data
+import { PAGE_LIMIT } from '@/data/main';
 
 export interface Filters {
   priceRange: [number, number];
   size: Sizes | null;
-  sortBy: SortBy | "none";
+  sortBy: SortBy | 'none';
   category: string | null;
 }
 
@@ -23,7 +23,7 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
   const [filters, setFilters] = useState<Filters>({
     priceRange: [Number(initialParams.minPrice) || 0, Number(initialParams.maxPrice) || 2000],
     size: (initialParams.size as Sizes) ?? null,
-    sortBy: (initialParams.sortBy as SortBy) ?? "none",
+    sortBy: (initialParams.sortBy as SortBy) ?? 'none',
     category: initialParams.category ?? null,
   });
 
@@ -37,7 +37,7 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
       category: filters.category ?? undefined,
     };
 
-    if (filters.sortBy && filters.sortBy !== "none") {
+    if (filters.sortBy && filters.sortBy !== 'none') {
       base.sortBy = filters.sortBy;
     }
 
@@ -45,7 +45,7 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
   }, [page, filters, initialParams.limit]);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["products", params],
+    queryKey: ['products', params],
     queryFn: () => ProductsService.getAll(params),
     placeholderData: (prev: GetAllProducts | undefined) => prev,
   });
@@ -59,7 +59,7 @@ export const useProducts = (initialParams: GetAllProductParams = {}) => {
     setFilters({
       priceRange: [0, 2000],
       size: null,
-      sortBy: "none",
+      sortBy: 'none',
       category: null,
     });
     setPage(1);

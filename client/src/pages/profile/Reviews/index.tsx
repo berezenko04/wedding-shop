@@ -4,9 +4,9 @@ import { Divider, Stack, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 
 // components
-import ReviewsItem from '@/components/features/product/Reviews/Item';
-import ReviewSkeleton from '@/components/ui/loaders/skeletons/Review';
-import CustomPagination from '@/components/ui/layout/CustomPagination';
+import ReviewsItem from '@/components/features/product/components/Reviews/Item';
+import ReviewSkeleton from '@/components/ui/Loaders/Skeletons/Review';
+import CustomPagination from '@/components/ui/Layout/CustomPagination';
 import EmptyState from '@/components/ui/EmptyState';
 
 // api
@@ -18,8 +18,8 @@ import { authSelector } from '@/redux/auth/auth.selectors';
 // icons
 import { StarHalf } from '@mui/icons-material';
 
-// constants
-import { REVIEWS_LIMIT } from '@/constants';
+// data
+import { REVIEWS_LIMIT } from '@/data/main';
 
 const ReviewsPage: React.FC = () => {
   const { isAuth } = useSelector(authSelector);

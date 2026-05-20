@@ -3,11 +3,11 @@ import { useSearchParams } from 'react-router';
 import { useEffect, useState } from 'react';
 
 // components
-import CatalogSort from '@/components/features/catalog/Sort';
-import Filters from '@/components/features/catalog/Filters';
-import ProductsGridLayout from '@/components/ui/layout/ProductsLayout';
-import CustomDrawer from '@/components/ui/layout/CustomDrawer';
-import CustomScrollContainer from '@/components/ui/layout/CustomScrollContainer';
+import CatalogSort from '@/components/features/catalog/components/Sort';
+import Filters from '@/components/features/catalog/components/Filters';
+import ProductsGridLayout from '@/components/features/catalog/components/GridLayout';
+import CustomDrawer from '@/components/ui/Layout/CustomDrawer';
+import CustomScrollContainer from '@/components/ui/Layout/CustomScrollContainer';
 
 // hooks
 import { Filters as FiltersType, useProducts } from '@/hooks/useProducts';
@@ -18,8 +18,8 @@ import { Sizes, SortBy } from '@/types/enums.types';
 // icons
 import { FilterList, SearchOff } from '@mui/icons-material';
 
-// constants
-import { PAGE_LIMIT } from '@/constants';
+// data
+import { PAGE_LIMIT } from '@/data/main';
 
 const CatalogPage: React.FC = () => {
   const theme = useTheme();

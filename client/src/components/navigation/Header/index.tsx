@@ -6,8 +6,8 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 // components
 import Logo from '../Logo';
 import Searchbar from './Searchbar';
-import CustomContainer from '@/components/ui/layout/CustomContainer';
-import Cart from '@/components/features/cart/Cart';
+import CustomContainer from '@/components/ui/Layout/CustomContainer';
+import Cart from '@/components/features/cart/components/Cart';
 
 // hooks
 import { useCart } from '@/hooks/useCart';
@@ -31,8 +31,8 @@ import {
   StorefrontOutlined,
 } from '@mui/icons-material';
 
-// constants
-import { PAGE_LIMIT } from '@/constants';
+// data
+import { PAGE_LIMIT } from '@/data/main';
 import MobileSearchbar from './MobileSearchbar';
 
 const Header: React.FC = () => {

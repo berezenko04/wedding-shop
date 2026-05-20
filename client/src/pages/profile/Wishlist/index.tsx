@@ -1,25 +1,25 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Stack, Typography } from "@mui/material";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { Stack, Typography } from '@mui/material';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 // components
-import ProductsGridLayout from "@/components/ui/layout/ProductsLayout";
+import ProductsGridLayout from '@/components/features/catalog/components/GridLayout';
 
 // redux
-import { authSelector } from "@/redux/auth/auth.selectors";
+import { authSelector } from '@/redux/auth/auth.selectors';
 
 // api
-import WishlistService from "@/api/wishlist/wishlist.service";
+import WishlistService from '@/api/wishlist/wishlist.service';
 
 // types
-import { GetAllWishlist } from "@/api/wishlist/wishlist.types";
+import { GetAllWishlist } from '@/api/wishlist/wishlist.types';
 
 // icons
-import { BookmarkRemoveOutlined } from "@mui/icons-material";
+import { BookmarkRemoveOutlined } from '@mui/icons-material';
 
-// constants
-import { PAGE_LIMIT } from "@/constants";
+// data
+import { PAGE_LIMIT } from '@/data/main';
 
 const WishlistPage: React.FC = () => {
   const queryClient = useQueryClient();
@@ -27,16 +27,16 @@ const WishlistPage: React.FC = () => {
   const [page, setPage] = useState<number>(1);
 
   const { data: wishlist = { wishlist: [], total: 0 }, isLoading } = useQuery({
-    queryKey: ["wishlist", { page, limit: PAGE_LIMIT }],
+    queryKey: ['wishlist', { page, limit: PAGE_LIMIT }],
     queryFn: () => WishlistService.getAll({ page, limit: PAGE_LIMIT }),
     placeholderData: () =>
-      page === 1 ? queryClient.getQueryData<GetAllWishlist>(["wishlist", { page: 1, limit: PAGE_LIMIT }]) : undefined,
+      page === 1 ? queryClient.getQueryData<GetAllWishlist>(['wishlist', { page: 1, limit: PAGE_LIMIT }]) : undefined,
     enabled: isAuth,
     staleTime: 60_000,
   });
 
   return (
-    <Stack gap={4} sx={{ width: "100%" }}>
+    <Stack gap={4} sx={{ width: '100%' }}>
       <Typography variant="h3">Wish list ({wishlist.total})</Typography>
       <ProductsGridLayout
         isLoading={isLoading}

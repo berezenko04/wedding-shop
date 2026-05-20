@@ -2,7 +2,7 @@ import { Stack, Typography } from '@mui/material';
 import { useNavigate } from 'react-router';
 
 // utils
-import { getHistoryLS, setHistoryLS } from '@/utils/searchLS';
+import { getHistoryLS, setHistoryLS } from '@/utils/searchLocaleStorage';
 
 // types
 import { SearchResult } from '@/api/products/products.types';

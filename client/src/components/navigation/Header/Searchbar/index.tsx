@@ -9,7 +9,7 @@ import SearchbarBlock from './Block';
 import ProductsService from '@/api/products/products.service';
 
 // utils
-import { getHistoryLS, setHistoryLS } from '@/utils/searchLS';
+import { getHistoryLS, setHistoryLS } from '@/utils/searchLocaleStorage';
 
 // types
 import { SearchResult } from '@/api/products/products.types';

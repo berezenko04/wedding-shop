@@ -1,12 +1,12 @@
-import { httpDelete, httpGet, httpPost } from "@/middlewares/axios.middleware";
+import { httpDelete, httpGet, httpPost } from '@/api/axios.middleware';
 
 // types
-import { CreateReviewBody, GetAllReviews, ProductRatings } from "./reviews.types";
-import { BaseResponseData, Pagination } from "@/types/base.types";
+import { CreateReviewBody, GetAllReviews, ProductRatings } from './reviews.types';
+import { BaseResponseData, Pagination } from '@/types/base.types';
 
 const R = {
-  reviews: "/reviews",
-  myReviews: "/reviews/my",
+  reviews: '/reviews',
+  myReviews: '/reviews/my',
   byProduct: (id: string) => `${R.reviews}/product/${id}`,
   ratingsByProduct: (id: string) => `${R.reviews}/product/${id}/ratings`,
   deleteReview: (id: string) => `${R.reviews}/${id}`,

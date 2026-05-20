@@ -1,0 +1,23 @@
+import { Grid, Stack, Typography } from '@mui/material';
+
+// components
+import CheckoutCart from '@/components/features/checkout/components/Cart';
+import CheckoutForm from '@/components/features/checkout/forms/Checkout';
+
+const Checkout: React.FC = () => {
+  return (
+    <Stack gap={4}>
+      <Typography variant="h3">Checkout</Typography>
+      <Grid container spacing={3} direction={{ xs: 'column-reverse', md: 'row' }}>
+        <Grid size={{ xs: 12, md: 6, xl: 7 }}>
+          <CheckoutForm />
+        </Grid>
+        <Grid size={{ xs: 12, md: 6, xl: 5 }}>
+          <CheckoutCart />
+        </Grid>
+      </Grid>
+    </Stack>
+  );
+};
+
+export default Checkout;

@@ -19,7 +19,7 @@ import { PaginationDto } from 'src/common/dto/pagination.dto';
 // utils
 import { generateTrackingNumber } from 'src/utils/generateTrackingNumber';
 
-// constants
+// data
 import { DELIVERY_COST } from 'src/constants';
 
 @Injectable()

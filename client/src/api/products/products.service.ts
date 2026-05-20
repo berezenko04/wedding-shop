@@ -1,4 +1,4 @@
-import { httpGet } from '@/middlewares/axios.middleware';
+import { httpGet } from '@/api/axios.middleware';
 
 // types
 import { GetAllProductParams, GetAllProducts, ProductExtended, SearchResult } from './products.types';

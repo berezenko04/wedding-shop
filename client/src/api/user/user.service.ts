@@ -1,11 +1,11 @@
-import { httpGet, httpPatch } from "@/middlewares/axios.middleware";
+import { httpGet, httpPatch } from '@/api/axios.middleware';
 
 // types
-import { UpdateUserBody, User, UserSession } from "./user.types";
+import { UpdateUserBody, User, UserSession } from './user.types';
 
 const R = {
-  users: "/users",
-  sessions: "/users/sessions",
+  users: '/users',
+  sessions: '/users/sessions',
 } as const;
 
 const UserService = {

@@ -2,11 +2,11 @@ import { Box, Grid, Stack } from '@mui/material';
 import { useRef } from 'react';
 
 // components
-import HomepageSection from '@/components/sections/HomepageSection';
-import HomepageBanner from '@/components/ui/layout/HomepageBanner';
-import ImageWithButton from '@/components/ui/cards/ImageWithButton';
-import ProductsSwiper from '@/components/features/product/Swiper';
-import HomepageCompanies from '@/components/ui/layout/HomepageCompanies';
+import HomepageSection from '@/components/features/home/Section';
+import HomepageBanner from '@/components/features/home/Banner';
+import ImageWithButton from '@/components/ui/ImageWithButton';
+import ProductsSwiper from '@/components/features/product/components/Swiper';
+import HomepageCompanies from '@/components/features/home/Companies';
 
 // hooks
 import { useProducts } from '@/hooks/useProducts';

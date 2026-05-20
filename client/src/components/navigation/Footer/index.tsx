@@ -1,7 +1,7 @@
 import { Box, Grid, Link, Stack, Typography } from '@mui/material';
 
 // components
-import CustomContainer from '@/components/ui/layout/CustomContainer';
+import CustomContainer from '@/components/ui/Layout/CustomContainer';
 import Socials from './Socials';
 import Logo from '../Logo';
 
