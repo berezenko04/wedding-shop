@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 
 // components
 import AuthFormLayout from '@/components/features/auth/forms/FormLayout';
-import FormField from '@/components/ui/layout/FormField';
+import FormField from '@/components/ui/Layout/FormField';
 
 // api
 import AuthService from '@/api/auth/auth.service';

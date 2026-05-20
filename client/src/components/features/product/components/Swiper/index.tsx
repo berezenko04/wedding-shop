@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material';
 
 // components
 import ProductCard from '@/components/features/product/components/Card';
-import ProductCardSkeleton from '@/components/ui/loaders/skeletons/ProductCard';
+import ProductCardSkeleton from '@/components/ui/Loaders/Skeletons/ProductCard';
 
 // types
 import type { Product } from '@/api/products/products.types';

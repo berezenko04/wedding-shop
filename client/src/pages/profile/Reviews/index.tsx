@@ -5,8 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 
 // components
 import ReviewsItem from '@/components/features/product/components/Reviews/Item';
-import ReviewSkeleton from '@/components/ui/loaders/skeletons/Review';
-import CustomPagination from '@/components/ui/layout/CustomPagination';
+import ReviewSkeleton from '@/components/ui/Loaders/Skeletons/Review';
+import CustomPagination from '@/components/ui/Layout/CustomPagination';
 import EmptyState from '@/components/ui/EmptyState';
 
 // api

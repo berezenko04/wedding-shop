@@ -1,26 +1,26 @@
-import { Box, IconButton, Link, Typography } from "@mui/material";
-import { useState } from "react";
+import { Box, IconButton, Link, Typography } from '@mui/material';
+import { useState } from 'react';
 
 // components
-import CustomContainer from "@/components/ui/layout/CustomContainer";
+import CustomContainer from '@/components/ui/Layout/CustomContainer';
 
 // icons
-import { Close } from "@mui/icons-material";
+import { Close } from '@mui/icons-material';
 
 const WarAlert: React.FC = () => {
-  const [isClosed, setIsClosed] = useState<boolean>(localStorage.getItem("alertWar") === "true" || false);
+  const [isClosed, setIsClosed] = useState<boolean>(localStorage.getItem('alertWar') === 'true' || false);
 
   const handleClose = () => {
-    localStorage.setItem("alertWar", "true");
+    localStorage.setItem('alertWar', 'true');
     setIsClosed(true);
   };
 
   if (isClosed) return null;
 
   return (
-    <Box sx={{ backgroundColor: "blue.800" }} py={2} px={3}>
+    <Box sx={{ backgroundColor: 'blue.800' }} py={2} px={3}>
       <CustomContainer>
-        <Box display="flex" alignItems="center" justifyContent="center" sx={{ position: "relative" }}>
+        <Box display="flex" alignItems="center" justifyContent="center" sx={{ position: 'relative' }}>
           <Box component="img" src="/ua.webp" width={32} height={24} mr={2} />
 
           <Typography color="common.white" textAlign="center">
@@ -33,11 +33,11 @@ const WarAlert: React.FC = () => {
 
           <IconButton
             sx={{
-              position: "absolute",
+              position: 'absolute',
               right: 0,
-              top: "50%",
-              transform: "translateY(-50%)",
-              color: "white",
+              top: '50%',
+              transform: 'translateY(-50%)',
+              color: 'white',
             }}
             onClick={handleClose}
           >

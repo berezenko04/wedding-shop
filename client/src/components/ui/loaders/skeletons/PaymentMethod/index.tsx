@@ -1,7 +1,7 @@
 import { Skeleton, Stack } from '@mui/material';
 
 // components
-import OutlinedBlock from '@/components/ui/layout/OutlinedBlock';
+import OutlinedBlock from '@/components/ui/Layout/OutlinedBlock';
 
 const PaymentMethodSkeleton: React.FC = () => {
   return (

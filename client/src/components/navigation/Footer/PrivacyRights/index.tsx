@@ -1,7 +1,7 @@
 import { Box, Link, Stack, Typography } from '@mui/material';
 
 // components
-import CustomContainer from '@/components/ui/layout/CustomContainer';
+import CustomContainer from '@/components/ui/Layout/CustomContainer';
 
 // data
 import { privacyMenu } from '@/data/menus';

@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 
 // components
 import Session from './Item';
-import SessionSkeleton from '@/components/ui/loaders/skeletons/Session';
+import SessionSkeleton from '@/components/ui/Loaders/Skeletons/Session';
 
 // api
 import UserService from '@/api/user/user.service';

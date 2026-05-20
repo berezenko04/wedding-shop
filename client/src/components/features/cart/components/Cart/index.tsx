@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router';
 import CartItem from '../Item';
 import CartTotal from '../Total';
 import EmptyCart from '../Empty';
-import CustomScrollContainer from '@/components/ui/layout/CustomScrollContainer';
-import CustomDrawer from '@/components/ui/layout/CustomDrawer';
+import CustomScrollContainer from '@/components/ui/Layout/CustomScrollContainer';
+import CustomDrawer from '@/components/ui/Layout/CustomDrawer';
 
 // hooks
 import { useCart } from '@/hooks/useCart';

@@ -6,7 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import ProductPrice from '../Price';
 import ProductSizes from '../Sizes';
 import ProductDiscount from '../Discount';
-import AddToWishlistButton from '@/components/ui/buttons/AddToWishlist';
+import AddToWishlistButton from '@/components/ui/Buttons/AddToWishlist';
 
 // api
 import CartService from '@/api/cart/cart.service';

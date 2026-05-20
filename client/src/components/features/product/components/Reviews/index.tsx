@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 // components
 import ReviewForm from '@/components/features/product/forms/Review';
-import CustomPagination from '@/components/ui/layout/CustomPagination';
+import CustomPagination from '@/components/ui/Layout/CustomPagination';
 import EmptyState from '@/components/ui/EmptyState';
 import ReviewsItem from './Item';
 

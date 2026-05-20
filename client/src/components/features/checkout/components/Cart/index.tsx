@@ -2,8 +2,8 @@ import { Divider, Stack, Typography } from '@mui/material';
 import { Fragment } from 'react/jsx-runtime';
 
 // components
-import OutlinedBlock from '@/components/ui/layout/OutlinedBlock';
-import CustomScrollContainer from '@/components/ui/layout/CustomScrollContainer';
+import OutlinedBlock from '@/components/ui/Layout/OutlinedBlock';
+import CustomScrollContainer from '@/components/ui/Layout/CustomScrollContainer';
 import CartItem from './Item';
 
 // hooks

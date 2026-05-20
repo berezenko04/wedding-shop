@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 
 // components
 import AuthFormLayout from '@/components/features/auth/forms/FormLayout';
-import FormField from '@/components/ui/layout/FormField';
+import FormField from '@/components/ui/Layout/FormField';
 
 // redux
 import { login } from '@/redux/auth/auth.actions';

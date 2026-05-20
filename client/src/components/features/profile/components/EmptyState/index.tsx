@@ -1,7 +1,7 @@
 import { Button, Stack, Typography } from '@mui/material';
 
 // components
-import OutlinedBlock from '@/components/ui/layout/OutlinedBlock';
+import OutlinedBlock from '@/components/ui/Layout/OutlinedBlock';
 
 // icons
 import { Add } from '@mui/icons-material';

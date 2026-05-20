@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 // components
-import FormField from '@/components/ui/layout/FormField';
+import FormField from '@/components/ui/Layout/FormField';
 
 // api
 import AuthService from '@/api/auth/auth.service';

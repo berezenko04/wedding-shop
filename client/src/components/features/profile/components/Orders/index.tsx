@@ -4,13 +4,13 @@ import { Stack, Table, TableBody, TableCell, TableCellProps, TableHead, TableRow
 // components
 import Order from './Item';
 import EmptyState from '@/components/ui/EmptyState';
-import OrdersSkeleton from '@/components/ui/loaders/skeletons/Orders';
-import CustomPagination from '@/components/ui/layout/CustomPagination';
+import OrdersSkeleton from '@/components/ui/Loaders/Skeletons/Orders';
+import CustomPagination from '@/components/ui/Layout/CustomPagination';
 
 // hooks
 import { useOrders } from '@/hooks/useOrders';
 
-// constants
+// data
 import { PAGE_LIMIT } from '@/data/main';
 
 // icons

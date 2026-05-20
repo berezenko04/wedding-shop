@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import CatalogSort from '@/components/features/catalog/components/Sort';
 import Filters from '@/components/features/catalog/components/Filters';
 import ProductsGridLayout from '@/components/features/catalog/components/GridLayout';
-import CustomDrawer from '@/components/ui/layout/CustomDrawer';
-import CustomScrollContainer from '@/components/ui/layout/CustomScrollContainer';
+import CustomDrawer from '@/components/ui/Layout/CustomDrawer';
+import CustomScrollContainer from '@/components/ui/Layout/CustomScrollContainer';
 
 // hooks
 import { Filters as FiltersType, useProducts } from '@/hooks/useProducts';

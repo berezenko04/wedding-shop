@@ -5,9 +5,9 @@ import toast from 'react-hot-toast';
 
 // components
 import PrimaryMark from '@/components/features/profile/components/PrimaryMark';
-import OutlinedBlock from '@/components/ui/layout/OutlinedBlock';
+import OutlinedBlock from '@/components/ui/Layout/OutlinedBlock';
 import ShippingAddressForm from '@/components/features/profile/forms/ShippingAddress';
-import CustomModal from '@/components/ui/layout/CustomModal';
+import CustomModal from '@/components/ui/Layout/CustomModal';
 
 // api
 import ShippingService from '@/api/shipping/shipping.service';

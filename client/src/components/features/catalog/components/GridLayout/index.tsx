@@ -3,8 +3,8 @@ import { OverridableComponent } from '@mui/material/OverridableComponent';
 
 // components
 import ProductCard from '@/components/features/product/components/Card';
-import CustomPagination from '../../../../ui/layout/CustomPagination';
-import ProductCardSkeleton from '@/components/ui/loaders/skeletons/ProductCard';
+import CustomPagination from '../../../../ui/Layout/CustomPagination';
+import ProductCardSkeleton from '@/components/ui/Loaders/Skeletons/ProductCard';
 import EmptyState from '@/components/ui/EmptyState';
 
 // types

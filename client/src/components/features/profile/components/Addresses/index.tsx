@@ -4,8 +4,8 @@ import { useState } from 'react';
 // components
 import Address from './Item';
 import EmptyState from '../EmptyState';
-import CustomModal from '@/components/ui/layout/CustomModal';
-import ShippingAddressSkeleton from '@/components/ui/loaders/skeletons/ShippingAddress';
+import CustomModal from '@/components/ui/Layout/CustomModal';
+import ShippingAddressSkeleton from '@/components/ui/Loaders/Skeletons/ShippingAddress';
 import ShippingAddressForm from '@/components/features/profile/forms/ShippingAddress';
 
 // hooks

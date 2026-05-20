@@ -5,8 +5,8 @@ import toast from 'react-hot-toast';
 
 // components
 import PrimaryMark from '@/components/features/profile/components/PrimaryMark';
-import OutlinedBlock from '@/components/ui/layout/OutlinedBlock';
-import CustomModal from '@/components/ui/layout/CustomModal';
+import OutlinedBlock from '@/components/ui/Layout/OutlinedBlock';
+import CustomModal from '@/components/ui/Layout/CustomModal';
 import PaymentMethodForm from '@/components/features/profile/forms/PaymentMethod';
 
 // api

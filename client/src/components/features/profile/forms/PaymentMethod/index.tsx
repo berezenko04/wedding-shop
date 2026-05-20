@@ -1,17 +1,17 @@
-import { Button, Checkbox, FormControlLabel, Stack, TextField } from "@mui/material";
-import { useQueryClient } from "@tanstack/react-query";
-import { Controller, useForm } from "react-hook-form";
-import { useHookFormMask } from "use-mask-input";
+import { Button, Checkbox, FormControlLabel, Stack, TextField } from '@mui/material';
+import { useQueryClient } from '@tanstack/react-query';
+import { Controller, useForm } from 'react-hook-form';
+import { useHookFormMask } from 'use-mask-input';
 
 // components
-import FormField from "@/components/ui/layout/FormField";
-import PaymentMethodsList from "@/components/features/profile/components/PaymentMethodsSelect";
+import FormField from '@/components/ui/Layout/FormField';
+import PaymentMethodsList from '@/components/features/profile/components/PaymentMethodsSelect';
 
 // api
-import PaymentService from "@/api/payment/payment.service";
+import PaymentService from '@/api/payment/payment.service';
 
 // types
-import { PaymentMethods } from "@/types/enums.types";
+import { PaymentMethods } from '@/types/enums.types';
 
 type PaymentMethodFormFields = {
   method: PaymentMethods;
@@ -24,7 +24,7 @@ type PaymentMethodFormFields = {
 };
 
 type PaymentMethodFormProps = {
-  mode: "create" | "update";
+  mode: 'create' | 'update';
   defaultValues?: Partial<PaymentMethodFormFields>;
   paymentId?: string;
   afterSubmit: () => void;
@@ -46,47 +46,47 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValu
 
   const registerWithMask = useHookFormMask(register);
 
-  const method = watch("method");
+  const method = watch('method');
 
   const onSubmit = async (data: PaymentMethodFormFields) => {
     let result;
 
-    if (mode === "update" && paymentId) {
+    if (mode === 'update' && paymentId) {
       result = await PaymentService.update({ paymentId, primary: data.primary });
     } else {
       result = await PaymentService.create(data);
     }
 
     reset();
-    queryClient.setQueryData(["payment"], result);
+    queryClient.setQueryData(['payment'], result);
     afterSubmit();
   };
 
   return (
-    <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ gap: 2, width: "100%" }}>
-      <FormField label={mode === "create" ? "Payment Method" : "Payment Method (Preview Only)"} labelFontSize={16}>
+    <Stack component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ gap: 2, width: '100%' }}>
+      <FormField label={mode === 'create' ? 'Payment Method' : 'Payment Method (Preview Only)'} labelFontSize={16}>
         <Controller
           name="method"
           control={control}
-          rules={{ required: "Please select payment method" }}
+          rules={{ required: 'Please select payment method' }}
           render={({ field }) => (
-            <PaymentMethodsList value={field.value} onChange={field.onChange} readOnly={mode === "update"} />
+            <PaymentMethodsList value={field.value} onChange={field.onChange} readOnly={mode === 'update'} />
           )}
         />
       </FormField>
 
       <Stack gap={2}>
-        {mode === "create" &&
+        {mode === 'create' &&
           (method === PaymentMethods.CARD ? (
             <>
               <FormField label="Card Number" labelFontSize={16}>
                 <TextField
                   placeholder="**** **** **** ****"
                   inputMode="numeric"
-                  {...registerWithMask("cardNumber", "9999 9999 9999 9999", {
-                    placeholder: "*",
-                    required: "Card number is required",
-                    validate: (v) => (v.replace(/\s/g, "").match(/^\d{13,19}$/) ? true : "Invalid card number"),
+                  {...registerWithMask('cardNumber', '9999 9999 9999 9999', {
+                    placeholder: '*',
+                    required: 'Card number is required',
+                    validate: (v) => (v.replace(/\s/g, '').match(/^\d{13,19}$/) ? true : 'Invalid card number'),
                   })}
                   error={!!errors.cardNumber}
                   helperText={errors.cardNumber?.message}
@@ -98,11 +98,11 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValu
                   <TextField
                     placeholder="12/28"
                     inputMode="numeric"
-                    {...registerWithMask("cardExp", "99/99", {
-                      required: "Expiration date is required",
+                    {...registerWithMask('cardExp', '99/99', {
+                      required: 'Expiration date is required',
                       pattern: {
                         value: /^(0[1-9]|1[0-2])\/\d{2}$/,
-                        message: "Card expiration must be in MM/YY format",
+                        message: 'Card expiration must be in MM/YY format',
                       },
                     })}
                     error={!!errors.cardExp}
@@ -114,12 +114,12 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValu
                   <TextField
                     placeholder="***"
                     type="password"
-                    slotProps={{ htmlInput: { maxLength: 4, pattern: "[0-9]*" } }}
-                    {...register("cardCvv", {
-                      required: "CVV is required",
+                    slotProps={{ htmlInput: { maxLength: 4, pattern: '[0-9]*' } }}
+                    {...register('cardCvv', {
+                      required: 'CVV is required',
                       pattern: {
                         value: /^\d{3,4}$/,
-                        message: "CVV must be 3 or 4 digits",
+                        message: 'CVV must be 3 or 4 digits',
                       },
                     })}
                     error={!!errors.cardCvv}
@@ -131,11 +131,11 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValu
               <FormField label="Card Holder" labelFontSize={16}>
                 <TextField
                   placeholder="John Johnson"
-                  {...register("cardHolder", {
-                    required: "Card holder name is required",
+                  {...register('cardHolder', {
+                    required: 'Card holder name is required',
                     pattern: {
                       value: /^[A-Za-z]+ [A-Za-z]+$/,
-                      message: "Name must contain first and last name (letters only)",
+                      message: 'Name must contain first and last name (letters only)',
                     },
                   })}
                   error={!!errors.cardHolder}
@@ -147,11 +147,11 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValu
             <FormField label="Email" labelFontSize={16}>
               <TextField
                 placeholder="Enter email"
-                {...register("email", {
-                  required: "Email is required",
+                {...register('email', {
+                  required: 'Email is required',
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Invalid email address",
+                    message: 'Invalid email address',
                   },
                 })}
                 error={!!errors.email}
@@ -172,7 +172,7 @@ const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValu
         />
 
         <Button type="submit" variant="contained" size="small" disabled={isSubmitting}>
-          {mode === "create" ? "Add" : "Edit"} Payment Method
+          {mode === 'create' ? 'Add' : 'Edit'} Payment Method
         </Button>
       </Stack>
     </Stack>

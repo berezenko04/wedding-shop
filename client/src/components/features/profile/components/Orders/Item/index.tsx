@@ -4,9 +4,9 @@ import { useRef, useState } from 'react';
 
 // components
 import ChipShipped from '@/components/ui/ChipShipped';
-import DownloadButton from '@/components/ui/buttons/Download';
-import PrintButton from '@/components/ui/buttons/Print';
-import ExpandButton from '@/components/ui/buttons/Expand';
+import DownloadButton from '@/components/ui/Buttons/Download';
+import PrintButton from '@/components/ui/Buttons/Print';
+import ExpandButton from '@/components/ui/Buttons/Expand';
 import ShippingInfoTable from './ShippingInfoTable';
 import ProductsTable from './ProductsTable';
 import OrderTotal from './Total';

@@ -1,7 +1,7 @@
 import { Box, SxProps } from '@mui/material';
 
 // components
-import OutlinedWhiteArrowButton from '@/components/ui/buttons/OutlinedWhiteArrow';
+import OutlinedWhiteArrowButton from '@/components/ui/Buttons/OutlinedWhiteArrow';
 
 type ImageWithButtonProps = {
   imgSrc: string;

@@ -3,7 +3,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 // components
 import DiscountLabel from '../DiscountLabel';
-import AddToWishlistButton from '@/components/ui/buttons/AddToWishlist';
+import AddToWishlistButton from '@/components/ui/Buttons/AddToWishlist';
 import ProductPrice from '../Price';
 
 // types

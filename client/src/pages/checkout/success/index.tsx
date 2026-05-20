@@ -1,4 +1,4 @@
-import CustomContainer from '@/components/ui/layout/CustomContainer';
+import CustomContainer from '@/components/ui/Layout/CustomContainer';
 import { Box, Button, Grid, Stack, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';

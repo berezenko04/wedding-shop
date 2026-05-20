@@ -4,9 +4,9 @@ import { useState } from 'react';
 // components
 import PaymentMethod from './Item';
 import EmptyState from '../EmptyState';
-import CustomModal from '@/components/ui/layout/CustomModal';
+import CustomModal from '@/components/ui/Layout/CustomModal';
 import PaymentMethodForm from '@/components/features/profile/forms/PaymentMethod';
-import PaymentMethodSkeleton from '@/components/ui/loaders/skeletons/PaymentMethod';
+import PaymentMethodSkeleton from '@/components/ui/Loaders/Skeletons/PaymentMethod';
 
 // hooks
 import { useUserPaymentMethods } from '@/hooks/useUserPaymentMethods';

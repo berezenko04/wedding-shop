@@ -1,7 +1,7 @@
 import { Stack, Typography, Button } from '@mui/material';
 
 // components
-import CustomContainer from '@/components/ui/layout/CustomContainer';
+import CustomContainer from '@/components/ui/Layout/CustomContainer';
 
 // types
 import type { Swiper as SwiperType } from 'swiper/types';

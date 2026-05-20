@@ -1,8 +1,8 @@
 import { Stack, Typography } from '@mui/material';
 
 // components
-import OutlinedBlock from '@/components/ui/layout/OutlinedBlock';
-import EditButton from '@/components/ui/buttons/Edit';
+import OutlinedBlock from '@/components/ui/Layout/OutlinedBlock';
+import EditButton from '@/components/ui/Buttons/Edit';
 import Picker from '@/components/ui/Picker';
 
 // hooks

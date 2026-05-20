@@ -1,6 +1,6 @@
 import { Skeleton, Stack } from '@mui/material';
 
-import OutlinedBlock from '@/components/ui/layout/OutlinedBlock';
+import OutlinedBlock from '@/components/ui/Layout/OutlinedBlock';
 
 const ShippingAddressSkeleton: React.FC = () => {
   return (
