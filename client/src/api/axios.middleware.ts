@@ -1,10 +1,14 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 // api
 import AuthService from '@/api/auth/auth.service';
 
 // utils
 import { normalizeAxiosError } from '@/utils/normalizeAxiosError';
+
+interface RetryableRequestConfig extends AxiosRequestConfig {
+  _isRetry?: boolean;
+}
 
 const instance = axios.create({
   baseURL: `${import.meta.env.VITE_API_BASE_URL}/api/v1`,
@@ -14,7 +18,7 @@ const instance = axios.create({
 instance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const originalRequest = error.config as any;
+    const originalRequest = error.config as RetryableRequestConfig;
 
     const isAuthEndpoint =
       originalRequest?.url?.includes('/auth/login') || originalRequest?.url?.includes('/auth/register');
@@ -42,19 +46,19 @@ instance.interceptors.response.use(
   },
 );
 
-export async function httpGet<T>(url: string, config?: any): Promise<T> {
+export async function httpGet<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
   const { data } = await instance.get<T>(url, config);
   return data;
 }
-export async function httpPost<T>(url: string, body?: any, config?: any): Promise<T> {
+export async function httpPost<T>(url: string, body?: any, config?: AxiosRequestConfig): Promise<T> {
   const { data } = await instance.post<T>(url, body, config);
   return data;
 }
-export async function httpPatch<T>(url: string, body?: any, config?: any): Promise<T> {
+export async function httpPatch<T>(url: string, body?: any, config?: AxiosRequestConfig): Promise<T> {
   const { data } = await instance.patch<T>(url, body, config);
   return data;
 }
-export async function httpDelete<T>(url: string, config?: any): Promise<T> {
+export async function httpDelete<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
   const { data } = await instance.delete<T>(url, config);
   return data;
 }
