@@ -8,14 +8,10 @@ import {
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ProductService } from '../product/product.service';
 
-// decorators
-import { Auth } from '../auth/decorators/auth.decorator';
-
 // dto
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 
 @Injectable()
-@Auth()
 export class WishlistService {
   constructor(
     private readonly prisma: PrismaService,
