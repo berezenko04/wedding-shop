@@ -11,7 +11,7 @@ import CustomPagination from '@/components/ui/layout/CustomPagination';
 import { useOrders } from '@/hooks/useOrders';
 
 // constants
-import { PAGE_LIMIT } from '@/constants';
+import { PAGE_LIMIT } from '@/data/main';
 
 // icons
 import { RemoveShoppingCartOutlined } from '@mui/icons-material';

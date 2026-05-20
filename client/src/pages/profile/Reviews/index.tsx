@@ -18,8 +18,8 @@ import { authSelector } from '@/redux/auth/auth.selectors';
 // icons
 import { StarHalf } from '@mui/icons-material';
 
-// constants
-import { REVIEWS_LIMIT } from '@/constants';
+// data
+import { REVIEWS_LIMIT } from '@/data/main';
 
 const ReviewsPage: React.FC = () => {
   const { isAuth } = useSelector(authSelector);

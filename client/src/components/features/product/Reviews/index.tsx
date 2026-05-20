@@ -16,8 +16,8 @@ import { authSelector } from '@/redux/auth/auth.selectors';
 // api
 import ReviewsService from '@/api/reviews/reviews.service';
 
-// constants
-import { REVIEWS_LIMIT } from '@/constants';
+// data
+import { REVIEWS_LIMIT } from '@/data/main';
 
 // icons
 import { ChatBubbleOutline } from '@mui/icons-material';

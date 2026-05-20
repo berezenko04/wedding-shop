@@ -9,8 +9,8 @@ import CartItem from './Item';
 // hooks
 import { useCart } from '@/hooks/useCart';
 
-// constants
-import { DELIVERY_COST } from '@/constants';
+// data
+import { DELIVERY_COST } from '@/data/main';
 
 const CheckoutCart: React.FC = () => {
   const { data: cart = [] } = useCart();

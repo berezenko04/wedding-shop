@@ -18,8 +18,8 @@ import { Sizes, SortBy } from '@/types/enums.types';
 // icons
 import { FilterList, SearchOff } from '@mui/icons-material';
 
-// constants
-import { PAGE_LIMIT } from '@/constants';
+// data
+import { PAGE_LIMIT } from '@/data/main';
 
 const CatalogPage: React.FC = () => {
   const theme = useTheme();

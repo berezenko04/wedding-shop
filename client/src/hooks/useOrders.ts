@@ -3,8 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 // api
 import OrdersService from '@/api/orders/orders.service';
 
-// constants
-import { PAGE_LIMIT } from '@/constants';
+// data
+import { PAGE_LIMIT } from '@/data/main';
 
 export const useOrders = (page: number = 1) => {
   return useQuery({

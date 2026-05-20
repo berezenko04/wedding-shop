@@ -13,8 +13,8 @@ import { GetAllWishlist } from '@/api/wishlist/wishlist.types';
 // icons
 import { Favorite, FavoriteBorderOutlined } from '@mui/icons-material';
 
-// constants
-import { PAGE_LIMIT } from '@/constants';
+// data
+import { PAGE_LIMIT } from '@/data/main';
 
 type AddToWishlistButtonProps = {
   productId: string;

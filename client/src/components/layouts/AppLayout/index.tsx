@@ -8,8 +8,8 @@ import WishlistService from '@/api/wishlist/wishlist.service';
 // redux
 import { authSelector } from '@/redux/auth/auth.selectors';
 
-// constants
-import { PAGE_LIMIT } from '@/constants';
+// data
+import { PAGE_LIMIT } from '@/data/main';
 
 const AppLayout = () => {
   const { isAuth } = useSelector(authSelector);

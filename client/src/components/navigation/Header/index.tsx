@@ -31,8 +31,8 @@ import {
   StorefrontOutlined,
 } from '@mui/icons-material';
 
-// constants
-import { PAGE_LIMIT } from '@/constants';
+// data
+import { PAGE_LIMIT } from '@/data/main';
 import MobileSearchbar from './MobileSearchbar';
 
 const Header: React.FC = () => {
