@@ -1,12 +1,13 @@
-import { Button, Rating, Stack, TextField } from "@mui/material";
-import { useForm, Controller } from "react-hook-form";
-import { useQueryClient } from "@tanstack/react-query";
+import { Button, Rating, Stack, TextField } from '@mui/material';
+import { useForm, Controller } from 'react-hook-form';
+import { useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 
 // api
-import ReviewsService from "@/api/reviews/reviews.service";
+import ReviewsService from '@/api/reviews/reviews.service';
 
 // mapping
-import { numberToRating } from "@/data/mapping";
+import { numberToRating } from '@/data/mapping';
 
 type ReviewFormProps = {
   productId: string;
@@ -29,12 +30,12 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
   } = useForm<ReviewFormFields>({
     defaultValues: {
       rating: null,
-      comment: "",
+      comment: '',
     },
   });
 
-  const rating = watch("rating");
-  const comment = watch("comment");
+  const rating = watch('rating');
+  const comment = watch('comment');
 
   const isDisabled = isSubmitting || rating === null || comment.trim().length < 4;
 
@@ -45,9 +46,11 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
         comment,
         rating: numberToRating[rating as keyof typeof numberToRating],
       });
-      queryClient.invalidateQueries({ queryKey: ["productRating", productId] });
-      queryClient.invalidateQueries({ queryKey: ["productReviews", productId] });
-      queryClient.invalidateQueries({ queryKey: ["reviews"] });
+      queryClient.invalidateQueries({ queryKey: ['productRating', productId] });
+      queryClient.invalidateQueries({ queryKey: ['productReviews', productId] });
+      queryClient.invalidateQueries({ queryKey: ['reviews'] });
+    } catch {
+      toast.error('Failed to create review. Please try again.');
     } finally {
       reset();
     }
@@ -60,7 +63,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
       onSubmit={handleSubmit(onSubmit)}
       p={2}
       gap={2}
-      sx={{ backgroundColor: "grey.50" }}
+      sx={{ backgroundColor: 'grey.50' }}
     >
       <Controller
         name="rating"
@@ -92,7 +95,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
         size="small"
         type="submit"
         disabled={isDisabled}
-        sx={{ alignSelf: "flex-end" }}
+        sx={{ alignSelf: 'flex-end' }}
       >
         Send
       </Button>

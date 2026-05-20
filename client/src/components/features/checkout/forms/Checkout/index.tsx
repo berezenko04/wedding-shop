@@ -1,6 +1,7 @@
 import { Button, Stack } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 // components
 import ShippingAddress from '@/components/features/checkout/components/ShippingAddress';
@@ -47,6 +48,8 @@ const CheckoutForm: React.FC = () => {
     try {
       const { url } = await OrdersService.createOrder(data);
       window.location.href = url;
+    } catch {
+      toast.error('Failed to place order. Please try again.');
     } finally {
       reset();
     }
