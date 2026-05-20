@@ -1,49 +1,48 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 // api
-import AuthService from "@/api/auth/auth.service";
+import AuthService from '@/api/auth/auth.service';
 
 // types
-import { LoginBody } from "@/api/auth/auth.types";
+import { LoginBody } from '@/api/auth/auth.types';
+
+const getErrorMessage = (err: unknown): string => {
+  if (err instanceof Error) return err.message;
+  return 'Unknown error';
+};
 
 export const login = createAsyncThunk<boolean, LoginBody, { rejectValue: { message: string } }>(
-  "auth/login",
+  'auth/login',
   async (body, { rejectWithValue }) => {
     try {
       await AuthService.login(body);
       return true;
-    } catch (err: any) {
-      return rejectWithValue({
-        message: err.message || "Unknown error",
-      });
+    } catch (err: unknown) {
+      return rejectWithValue({ message: getErrorMessage(err) });
     }
-  }
+  },
 );
 
 export const refresh = createAsyncThunk<boolean, void, { rejectValue: { message: string } }>(
-  "auth/refresh",
+  'auth/refresh',
   async (_, { rejectWithValue }) => {
     try {
       await AuthService.refresh();
       return true;
-    } catch (err: any) {
-      return rejectWithValue({
-        message: err.message || "Unknown error",
-      });
+    } catch (err: unknown) {
+      return rejectWithValue({ message: getErrorMessage(err) });
     }
-  }
+  },
 );
 
 export const logout = createAsyncThunk<boolean, void, { rejectValue: { message: string } }>(
-  "auth/logout",
+  'auth/logout',
   async (_, { rejectWithValue }) => {
     try {
       await AuthService.logout();
       return false;
-    } catch (err: any) {
-      return rejectWithValue({
-        message: err.message || "Unknown error",
-      });
+    } catch (err: unknown) {
+      return rejectWithValue({ message: getErrorMessage(err) });
     }
-  }
+  },
 );
