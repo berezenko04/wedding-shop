@@ -24,13 +24,13 @@ export class GetAllProductsDto extends PaginationDto {
   @IsInt()
   @IsOptional()
   @Type(() => Number)
+  @MinLessThanMax('maxPrice')
   minPrice?: number;
 
   @Max(250000)
   @IsInt()
   @IsOptional()
   @Type(() => Number)
-  @MinLessThanMax('maxPrice')
   maxPrice?: number;
 
   @IsOptional()
