@@ -1,8 +1,8 @@
 import { Grid, Stack, Typography } from '@mui/material';
 
 // components
-import CheckoutCart from '@/components/features/checkout/Cart';
-import CheckoutForm from '@/components/forms/Checkout';
+import CheckoutCart from '@/components/features/checkout/components/Cart';
+import CheckoutForm from '@/components/features/checkout/forms/Checkout';
 
 const Checkout: React.FC = () => {
   return (

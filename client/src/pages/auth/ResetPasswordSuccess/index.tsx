@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 
 // components
-import AuthFormLayout from '@/components/forms/auth/FormLayout';
+import AuthFormLayout from '@/components/features/auth/forms/FormLayout';
 
 const ResetPasswordSuccess: React.FC = () => {
   return (

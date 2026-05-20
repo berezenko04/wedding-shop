@@ -5,7 +5,7 @@ import { useRef } from 'react';
 import HomepageSection from '@/components/sections/HomepageSection';
 import HomepageBanner from '@/components/ui/layout/HomepageBanner';
 import ImageWithButton from '@/components/ui/cards/ImageWithButton';
-import ProductsSwiper from '@/components/features/product/Swiper';
+import ProductsSwiper from '@/components/features/product/components/Swiper';
 import HomepageCompanies from '@/components/ui/layout/HomepageCompanies';
 
 // hooks

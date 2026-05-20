@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router';
 import { useEffect } from 'react';
 
 // components
-import AuthFormLayout from '@/components/forms/auth/FormLayout';
+import AuthFormLayout from '@/components/features/auth/forms/FormLayout';
 
 const VerifyOtpSuccess: React.FC = () => {
   const location = useLocation();

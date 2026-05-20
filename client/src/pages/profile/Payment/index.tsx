@@ -1,11 +1,11 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack, Typography } from '@mui/material';
 
 // components
-import PaymentMethods from "@/components/features/profile/PaymentMethods";
+import PaymentMethods from '@/components/features/profile/components/PaymentMethods';
 
 const PaymentPage: React.FC = () => {
   return (
-    <Stack gap={4} sx={{ width: "100%" }}>
+    <Stack gap={4} sx={{ width: '100%' }}>
       <Typography variant="h3">Payment methods</Typography>
       <PaymentMethods />
     </Stack>

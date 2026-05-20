@@ -7,7 +7,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Logo from '../Logo';
 import Searchbar from './Searchbar';
 import CustomContainer from '@/components/ui/layout/CustomContainer';
-import Cart from '@/components/features/cart/Cart';
+import Cart from '@/components/features/cart/components/Cart';
 
 // hooks
 import { useCart } from '@/hooks/useCart';

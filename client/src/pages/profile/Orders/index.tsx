@@ -1,7 +1,7 @@
 import { Button, Stack, Typography } from '@mui/material';
 
 // components
-import Orders from '@/components/features/profile/Orders';
+import Orders from '@/components/features/profile/components/Orders';
 
 // api
 import OrdersService from '@/api/orders/orders.service';

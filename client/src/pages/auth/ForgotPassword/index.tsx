@@ -1,5 +1,5 @@
 // components
-import ForgotPasswordForm from "@/components/forms/auth/ForgotPassword";
+import ForgotPasswordForm from '@/components/features/auth/forms/ForgotPassword';
 
 const ForgotPassword = () => {
   return <ForgotPasswordForm />;

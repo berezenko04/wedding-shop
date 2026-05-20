@@ -3,8 +3,8 @@ import { useSearchParams } from 'react-router';
 import { useEffect, useState } from 'react';
 
 // components
-import CatalogSort from '@/components/features/catalog/Sort';
-import Filters from '@/components/features/catalog/Filters';
+import CatalogSort from '@/components/features/catalog/components/Sort';
+import Filters from '@/components/features/catalog/components/Filters';
 import ProductsGridLayout from '@/components/ui/layout/ProductsLayout';
 import CustomDrawer from '@/components/ui/layout/CustomDrawer';
 import CustomScrollContainer from '@/components/ui/layout/CustomScrollContainer';

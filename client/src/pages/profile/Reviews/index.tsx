@@ -4,7 +4,7 @@ import { Divider, Stack, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 
 // components
-import ReviewsItem from '@/components/features/product/Reviews/Item';
+import ReviewsItem from '@/components/features/product/components/Reviews/Item';
 import ReviewSkeleton from '@/components/ui/loaders/skeletons/Review';
 import CustomPagination from '@/components/ui/layout/CustomPagination';
 import EmptyState from '@/components/ui/EmptyState';

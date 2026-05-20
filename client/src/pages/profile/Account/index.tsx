@@ -1,7 +1,7 @@
 import { Stack, Typography } from '@mui/material';
 
 // components
-import UpdateUserForm from '@/components/forms/profile/UpdateUser';
+import UpdateUserForm from '@/components/features/profile/forms/UpdateUser';
 
 const AccountPage: React.FC = () => {
   return (

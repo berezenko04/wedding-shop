@@ -1,5 +1,5 @@
 // components
-import ResetPasswordForm from "@/components/forms/auth/ResetPassword";
+import ResetPasswordForm from '@/components/features/auth/forms/ResetPassword';
 
 const ResetPassword: React.FC = () => {
   return <ResetPasswordForm />;

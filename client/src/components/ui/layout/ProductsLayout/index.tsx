@@ -2,7 +2,7 @@ import { Divider, Grid, Stack, SvgIconTypeMap } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 
 // components
-import ProductCard from '@/components/features/product/Card';
+import ProductCard from '@/components/features/product/components/Card';
 import CustomPagination from '../CustomPagination';
 import ProductCardSkeleton from '@/components/ui/loaders/skeletons/ProductCard';
 import EmptyState from '@/components/ui/EmptyState';

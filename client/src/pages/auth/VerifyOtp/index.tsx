@@ -1,5 +1,5 @@
 // components
-import VerifyOtpForm from "@/components/forms/auth/VerifyOtp";
+import VerifyOtpForm from '@/components/features/auth/forms/VerifyOtp';
 
 const VerifyOtp: React.FC = () => {
   return <VerifyOtpForm />;

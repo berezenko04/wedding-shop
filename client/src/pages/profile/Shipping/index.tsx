@@ -1,11 +1,11 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack, Typography } from '@mui/material';
 
 // components
-import Addresses from "@/components/features/profile/Addresses";
+import Addresses from '@/components/features/profile/components/Addresses';
 
 const ShippingPage: React.FC = () => {
   return (
-    <Stack gap={4} sx={{ width: "100%" }}>
+    <Stack gap={4} sx={{ width: '100%' }}>
       <Typography variant="h3">Shipping Address</Typography>
       <Addresses />
     </Stack>
