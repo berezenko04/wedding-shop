@@ -22,7 +22,7 @@ const ShippingAddress: React.FC<ShippingAddressProps> = ({ address }) => {
         </Typography>
         <EditButton
           href="/profile/shipping-address"
-          title={!address ? 'Add' : ''}
+          title={!address ? 'Add' : 'Edit'}
           color={!address ? 'primary' : 'grey'}
         />
       </Stack>
