@@ -2,7 +2,7 @@ import { Box, Grid, Stack } from '@mui/material';
 import { useRef } from 'react';
 
 // components
-import HomepageSection from '@/components/sections/HomepageSection';
+import HomepageSection from '@/components/features/home/components/HomepageSection';
 import HomepageBanner from '@/components/ui/layout/HomepageBanner';
 import ImageWithButton from '@/components/ui/cards/ImageWithButton';
 import ProductsSwiper from '@/components/features/product/components/Swiper';
