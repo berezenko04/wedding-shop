@@ -1,4 +1,4 @@
-import { BaseResponseData } from "@/types/base.types";
+import { BaseResponseData } from '@/types/base.types';
 
 export type RegisterBody = {
   email: string;
@@ -7,7 +7,7 @@ export type RegisterBody = {
   lastName: string;
 };
 
-export type LoginBody = RegisterBody;
+export type LoginBody = Omit<RegisterBody, 'firstName' | 'lastName'>;
 
 export type VerifyOtpBody = {
   email: string;
