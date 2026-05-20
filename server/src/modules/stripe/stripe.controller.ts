@@ -39,6 +39,9 @@ export class StripeController {
 
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
+
+      if (session.payment_status !== 'paid') return { received: true };
+
       const orderNumber = session.metadata?.orderNumber;
 
       if (orderNumber) {
