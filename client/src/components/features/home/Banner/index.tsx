@@ -10,6 +10,7 @@ const HomepageBanner: React.FC = () => {
       <Box
         component="img"
         src="/banner.webp"
+        alt="Banner"
         sx={{
           width: '100%',
           height: '100%',

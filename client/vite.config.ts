@@ -16,9 +16,12 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          if (id.includes('react') || id.includes('react-dom')) {
-            return 'vendor';
+        manualChunks(id: string) {
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+            return 'vendor-react';
+          }
+          if (id.includes('node_modules/@mui/material') || id.includes('node_modules/@mui/icons-material')) {
+            return 'vendor-mui';
           }
         },
       },

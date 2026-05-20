@@ -1,1 +1,1 @@
-export const DELIVERY_COST = 20;
+export const DELIVERY_COST = 2000; // in cents

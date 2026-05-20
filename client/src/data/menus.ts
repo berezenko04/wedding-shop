@@ -1,5 +1,6 @@
 import {
   FavoriteBorder,
+  LocalShippingOutlined,
   PaymentOutlined,
   PersonOutline,
   RateReviewOutlined,
@@ -30,6 +31,6 @@ export const profileMenu = [
   { title: 'Settings', href: '/profile/settings', icon: SettingsOutlined },
   { title: 'My Reviews', href: '/profile/reviews', icon: RateReviewOutlined },
   { title: 'My Orders', href: '/profile/orders', icon: ShoppingCartCheckoutOutlined },
-  { title: 'Shipping Address', href: '/profile/shipping-address', icon: RateReviewOutlined },
+  { title: 'Shipping Address', href: '/profile/shipping-address', icon: LocalShippingOutlined },
   { title: 'Payment', href: '/profile/payment', icon: PaymentOutlined },
 ];

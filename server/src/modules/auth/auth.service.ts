@@ -253,7 +253,7 @@ export class AuthService {
       this.logger.warn(`Invalid or expired reset token: ${otp}...`);
       await this.logService.write({
         level: 'SECURITY',
-        action: 'auth.',
+        action: 'auth.verifyOtp',
         status: 'fail',
         message: 'Invalid or expired reset token',
       });

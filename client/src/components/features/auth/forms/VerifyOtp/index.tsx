@@ -1,6 +1,5 @@
 import { Button, Stack, Typography } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router';
-import { useEffect } from 'react';
+import { Navigate, useLocation, useNavigate } from 'react-router';
 import { useForm, Controller } from 'react-hook-form';
 import { MuiOtpInput } from 'mui-one-time-password-input';
 
@@ -28,16 +27,12 @@ const VerifyOtpForm: React.FC = () => {
     },
   });
 
-  useEffect(() => {
-    if (!email) {
-      navigate('/login');
-    }
-  }, [email, navigate]);
-
   const onSubmit = async ({ otp }: { otp: string }) => {
     const { resetToken } = await AuthService.verifyOtp({ email, otp });
     navigate('/verify-otp-success', { state: { resetToken } });
   };
+
+  if (!email) return <Navigate to="/login" replace />;
 
   return (
     <AuthFormLayout

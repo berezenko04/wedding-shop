@@ -4,17 +4,17 @@ import { Module } from '@nestjs/common';
 import { OrderController } from './order.controller';
 
 // service
-import { PaymentService } from '../payment/payment.service';
 import { OrderService } from './order.service';
-import { AddressService } from '../address/address.service';
 
 // modules
 import { StripeModule } from '../stripe/stripe.module';
+import { PaymentModule } from '../payment/payment.module';
+import { AddressModule } from '../address/address.module';
 
 @Module({
-  imports: [StripeModule],
+  imports: [StripeModule, PaymentModule, AddressModule],
   controllers: [OrderController],
-  providers: [OrderService, PaymentService, AddressService],
+  providers: [OrderService],
   exports: [OrderService],
 })
 export class OrderModule {}
