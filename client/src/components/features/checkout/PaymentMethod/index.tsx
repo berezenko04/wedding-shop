@@ -26,7 +26,7 @@ const PaymentMethod: React.FC<PaymentMethodProps> = ({ paymentMethod, onChange }
         </Typography>
         <EditButton
           href="/profile/payment"
-          title={!isPaymentMethodsExist ? 'Add' : ''}
+          title={!isPaymentMethodsExist ? 'Add' : 'Edit'}
           color={!isPaymentMethodsExist ? 'primary' : 'grey'}
         />
       </Stack>
