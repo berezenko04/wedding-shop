@@ -1,11 +1,11 @@
-import { httpDelete, httpGet, httpPatch, httpPost } from "@/middlewares/axios.middleware";
+import { httpDelete, httpGet, httpPatch, httpPost } from '@/api/axios.middleware';
 
 // types
-import { AddPaymentMethod, PaymentMethod, UpdatePaymentMethod } from "./payment.types";
-import { BaseResponseData } from "@/types/base.types";
+import { AddPaymentMethod, PaymentMethod, UpdatePaymentMethod } from './payment.types';
+import { BaseResponseData } from '@/types/base.types';
 
 const R = {
-  payment: "/payment",
+  payment: '/payment',
   byIdPayment: (id: string) => `${R.payment}/${id}`,
 } as const;
 
@@ -14,7 +14,7 @@ const PaymentService = {
     return httpPost<PaymentMethod[]>(R.payment, body);
   },
 
-  async update(body: UpdatePaymentMethod){
+  async update(body: UpdatePaymentMethod) {
     return httpPatch<PaymentMethod[]>(R.payment, body);
   },
 

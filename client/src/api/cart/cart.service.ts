@@ -1,10 +1,10 @@
-import { httpDelete, httpGet, httpPatch } from "@/middlewares/axios.middleware";
+import { httpDelete, httpGet, httpPatch } from '@/api/axios.middleware';
 
 // types
-import { UpdateCartBody, CartItem } from "./cart.types";
+import { UpdateCartBody, CartItem } from './cart.types';
 
 const R = {
-  cart: "/cart",
+  cart: '/cart',
 } as const;
 
 const CartService = {

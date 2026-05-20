@@ -1,4 +1,4 @@
-import { httpGet, httpPost } from '@/middlewares/axios.middleware';
+import { httpGet, httpPost } from '@/api/axios.middleware';
 
 // types
 import { CreateOrderBody, CreateOrderResponse, GetAllOrdersResponse } from './orders.types';

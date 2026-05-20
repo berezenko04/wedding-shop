@@ -1,4 +1,4 @@
-import { httpPost } from "@/middlewares/axios.middleware";
+import { httpPost } from '@/api/axios.middleware';
 
 // types
 import {
@@ -8,20 +8,20 @@ import {
   ResetPasswordBody,
   VerifyOtpBody,
   VerifyOtpResponse,
-} from "./auth.types";
-import { BaseResponseData } from "@/types/base.types";
+} from './auth.types';
+import { BaseResponseData } from '@/types/base.types';
 
 const R = {
-  register: "/auth/register",
-  login: "/auth/login",
-  refresh: "/auth/refresh",
-  changePasword: "/auth/change-password",
-  forgotPassword: "/auth/forgot-password",
-  verifyOtp: "/auth/verify-otp",
-  resetPassword: "/auth/reset-password",
-  logout: "/auth/logout",
+  register: '/auth/register',
+  login: '/auth/login',
+  refresh: '/auth/refresh',
+  changePasword: '/auth/change-password',
+  forgotPassword: '/auth/forgot-password',
+  verifyOtp: '/auth/verify-otp',
+  resetPassword: '/auth/reset-password',
+  logout: '/auth/logout',
   logoutAnotherSession: (id: string) => `${R.logout}/${id}`,
-  logoutAll: "/auth/logout-all",
+  logoutAll: '/auth/logout-all',
 } as const;
 
 const AuthService = {
