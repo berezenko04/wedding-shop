@@ -1,5 +1,8 @@
 import { Box, Stack, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 
+// utils
+import { calcFinalPrice } from '@/utils/calcFinalPrice';
+
 // types
 import { OrderItem } from '@/api/orders/orders.types';
 
@@ -41,7 +44,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({ items }) => {
             <TableCell>{quantity}</TableCell>
             <TableCell>{price.toFixed(2)} USD</TableCell>
             <TableCell>{discount != null ? `${discount * 100}%` : '—'}</TableCell>
-            <TableCell>{(price * (1 - (discount ?? 0)) * quantity).toFixed(2)} USD</TableCell>
+            <TableCell>{(calcFinalPrice(price, discount) * quantity).toFixed(2)} USD</TableCell>
           </TableRow>
         ))}
       </TableBody>

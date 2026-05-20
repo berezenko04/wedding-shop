@@ -9,6 +9,9 @@ import CartItem from './Item';
 // hooks
 import { useCart } from '@/hooks/useCart';
 
+// utils
+import { calcFinalPrice } from '@/utils/calcFinalPrice';
+
 // data
 import { DELIVERY_COST } from '@/data/main';
 
@@ -16,7 +19,7 @@ const CheckoutCart: React.FC = () => {
   const { data: cart = [] } = useCart();
 
   const total = cart.reduce(
-    (acc, item) => acc + item.product.price * (1 - (item?.product.discount ?? 0)) * item.quantity,
+    (acc, { product, quantity }) => acc + calcFinalPrice(product.price, product.discount) * quantity,
     0,
   );
 
