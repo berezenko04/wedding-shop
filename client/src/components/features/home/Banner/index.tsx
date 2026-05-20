@@ -1,7 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material';
 
 // components
-import CustomContainer from '../CustomContainer';
+import CustomContainer from '../../../ui/layout/CustomContainer';
 import OutlinedWhiteArrowButton from '@/components/ui/buttons/OutlinedWhiteArrow';
 
 const HomepageBanner: React.FC = () => {

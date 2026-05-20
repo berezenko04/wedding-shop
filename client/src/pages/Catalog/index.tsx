@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 // components
 import CatalogSort from '@/components/features/catalog/components/Sort';
 import Filters from '@/components/features/catalog/components/Filters';
-import ProductsGridLayout from '@/components/ui/layout/ProductsLayout';
+import ProductsGridLayout from '@/components/features/catalog/components/GridLayout';
 import CustomDrawer from '@/components/ui/layout/CustomDrawer';
 import CustomScrollContainer from '@/components/ui/layout/CustomScrollContainer';
 

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 // components
-import ProductsGridLayout from '@/components/ui/layout/ProductsLayout';
+import ProductsGridLayout from '@/components/features/catalog/components/GridLayout';
 
 // redux
 import { authSelector } from '@/redux/auth/auth.selectors';

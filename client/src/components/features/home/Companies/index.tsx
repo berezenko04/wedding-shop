@@ -1,7 +1,7 @@
 import { Box, Stack } from '@mui/material';
 
 // components
-import CustomContainer from '../CustomContainer';
+import CustomContainer from '../../../ui/layout/CustomContainer';
 
 // data
 import { companies } from '@/data/main';

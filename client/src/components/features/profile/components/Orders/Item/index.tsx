@@ -3,7 +3,7 @@ import { useReactToPrint } from 'react-to-print';
 import { useRef, useState } from 'react';
 
 // components
-import ChipShipped from '@/components/ui/chips/ChipShipped';
+import ChipShipped from '@/components/ui/ChipShipped';
 import DownloadButton from '@/components/ui/buttons/Download';
 import PrintButton from '@/components/ui/buttons/Print';
 import ExpandButton from '@/components/ui/buttons/Expand';
