@@ -26,7 +26,7 @@ const Session: React.FC<UserSession> = ({ id, deviceType, isCurrent, country, os
   const queryClient = useQueryClient();
 
   const getIcon = () => {
-    const Icon = sessionIconsMap[deviceType ?? 'desktop'] ?? sessionIconsMap.desktop;
+    const Icon = sessionIconsMap[deviceType as keyof typeof sessionIconsMap] ?? sessionIconsMap.desktop;
     return <Icon sx={{ width: { xs: 40 }, height: 'auto', color: 'text.secondary' }} />;
   };
 
