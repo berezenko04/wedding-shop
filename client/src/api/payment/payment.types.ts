@@ -1,6 +1,6 @@
-import { PaymentMethods } from "@/types/enums.types";
+import { PaymentMethods } from '@/types/enums.types';
 
-export type AddPaymentMethod = Omit<PaymentMethod, "id"> & {
+export type AddPaymentMethod = Omit<PaymentMethod, 'id' | 'createdAt' | 'last4'> & {
   method: PaymentMethods;
   primary: boolean;
   email?: string;
