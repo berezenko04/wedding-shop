@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { lazy, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch } from './redux/store';
 
 // components
@@ -16,35 +16,8 @@ import PublicRoute from './components/providers/PublicRoute';
 // redux
 import { refresh } from './redux/auth/auth.actions';
 
-const RegisterPage = lazy(() => import('@/pages/auth/register'));
-const LoginPage = lazy(() => import('@/pages/auth/login'));
-const ForgotPasswordPage = lazy(() => import('@/pages/auth/forgot-password'));
-const VerifyOtpPage = lazy(() => import('@/pages/auth/verify-otp'));
-const VerifyOtpSuccessPage = lazy(() => import('@/pages/auth/verify-otp/success'));
-const ResetPasswordPage = lazy(() => import('@/pages/auth/reset-password'));
-const ResetPasswordSuccessPage = lazy(() => import('@/pages/auth/reset-password/success'));
-
-const HomePage = lazy(() => import('@/pages/home'));
-const CatalogPage = lazy(() => import('@/pages/catalog'));
-const CatalogProductPage = lazy(() => import('@/pages/catalog/product'));
-const CheckoutPage = lazy(() => import('@/pages/checkout'));
-const CheckoutSuccessPage = lazy(() => import('@/pages/checkout/success'));
-const NotFoundPage = lazy(() => import('@/pages/not-found'));
-
-const AccountPage = lazy(() => import('@/pages/profile/account'));
-const WishlistPage = lazy(() => import('@/pages/profile/wishlist'));
-const SettingsPage = lazy(() => import('@/pages/profile/settings'));
-const ReviewsPage = lazy(() => import('@/pages/profile/reviews'));
-const OrdersPage = lazy(() => import('@/pages/profile/orders'));
-const ShippingPage = lazy(() => import('@/pages/profile/shipping'));
-const PaymentPage = lazy(() => import('@/pages/profile/payment'));
-
-const ShippingAndDeliveryPage = lazy(() => import('@/pages/help/shipping-and-delivery'));
-const ReturnsPage = lazy(() => import('@/pages/help/returns'));
-const PaymentOptionsPage = lazy(() => import('@/pages/help/payment-options'));
-const ContactUsPage = lazy(() => import('@/pages/help/contact-us'));
-const TermsOfUsePage = lazy(() => import('@/pages/help/terms-of-use'));
-const PrivacyAndPolicyPage = lazy(() => import('@/pages/help/privacy-and-policy'));
+// routes
+import { pages } from './routes';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -58,45 +31,45 @@ function App() {
       <Routes>
         <Route element={<AuthLayout />}>
           <Route element={<PublicRoute />}>
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<pages.Register />} />
+            <Route path="/login" element={<pages.Login />} />
           </Route>
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
-          <Route path="/verify-otp" element={<VerifyOtpPage />} />
-          <Route path="/verify-otp-success" element={<VerifyOtpSuccessPage />} />
-          <Route path="/reset-password" element={<ResetPasswordPage />} />
-          <Route path="/reset-password-success" element={<ResetPasswordSuccessPage />} />
+          <Route path="/forgot-password" element={<pages.ForgotPassword />} />
+          <Route path="/verify-otp" element={<pages.VerifyOtp />} />
+          <Route path="/verify-otp-success" element={<pages.VerifyOtpSuccess />} />
+          <Route path="/reset-password" element={<pages.ResetPassword />} />
+          <Route path="/reset-password-success" element={<pages.ResetPasswordSuccess />} />
         </Route>
 
         <Route element={<AppLayout />}>
           <Route element={<HomeLayout />}>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<pages.Home />} />
           </Route>
 
           <Route element={<PrimaryLayout />}>
-            <Route path="/catalog" element={<CatalogPage />} />
-            <Route path="/catalog/:slug" element={<CatalogProductPage />} />
-            <Route path="*" element={<NotFoundPage />} />
+            <Route path="/catalog" element={<pages.Catalog />} />
+            <Route path="/catalog/:slug" element={<pages.CatalogProduct />} />
+            <Route path="*" element={<pages.NotFound />} />
 
-            <Route path="/shipping-and-delivery" element={<ShippingAndDeliveryPage />} />
-            <Route path="/returns" element={<ReturnsPage />} />
-            <Route path="/payment-options" element={<PaymentOptionsPage />} />
-            <Route path="/contact-us" element={<ContactUsPage />} />
-            <Route path="/terms-of-use" element={<TermsOfUsePage />} />
-            <Route path="/privacy-and-policy" element={<PrivacyAndPolicyPage />} />
+            <Route path="/shipping-and-delivery" element={<pages.ShippingAndDelivery />} />
+            <Route path="/returns" element={<pages.Returns />} />
+            <Route path="/payment-options" element={<pages.PaymentOptions />} />
+            <Route path="/contact-us" element={<pages.ContactUs />} />
+            <Route path="/terms-of-use" element={<pages.TermsOfUse />} />
+            <Route path="/privacy-and-policy" element={<pages.PrivacyAndPolicy />} />
 
             <Route element={<PrivateRoute />}>
-              <Route path="/checkout" element={<CheckoutPage />} />
-              <Route path="/checkout/success" element={<CheckoutSuccessPage />} />
+              <Route path="/checkout" element={<pages.Checkout />} />
+              <Route path="/checkout/success" element={<pages.CheckoutSuccess />} />
 
               <Route element={<ProfileLayout />} path="/profile">
-                <Route path="" element={<AccountPage />} />
-                <Route path="wishlist" element={<WishlistPage />} />
-                <Route path="settings" element={<SettingsPage />} />
-                <Route path="reviews" element={<ReviewsPage />} />
-                <Route path="orders" element={<OrdersPage />} />
-                <Route path="shipping-address" element={<ShippingPage />} />
-                <Route path="payment" element={<PaymentPage />} />
+                <Route path="" element={<pages.Account />} />
+                <Route path="wishlist" element={<pages.Wishlist />} />
+                <Route path="settings" element={<pages.Settings />} />
+                <Route path="reviews" element={<pages.Reviews />} />
+                <Route path="orders" element={<pages.Orders />} />
+                <Route path="shipping-address" element={<pages.Shipping />} />
+                <Route path="payment" element={<pages.Payment />} />
               </Route>
             </Route>
           </Route>
