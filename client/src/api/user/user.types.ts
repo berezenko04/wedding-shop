@@ -1,11 +1,8 @@
-import { Sex } from "@/types/enums.types";
-
 export type User = {
   id: string;
   email: string;
   firstName: string | null;
   lastName: string | null;
-  sex: Sex;
 };
 
 export type UserSession = {

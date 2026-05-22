@@ -7,7 +7,7 @@ type ProductGallery = {
 };
 
 const ProductGallery: React.FC<ProductGallery> = ({ images }) => {
-  const [currentImage, setCurentImage] = useState<string>(images[0]);
+  const [currentImage, setCurrentImage] = useState<string | undefined>(images[0]);
 
   return (
     <Stack flexDirection={{ xs: 'column-reverse', md: 'row' }} alignItems="flex-start" gap={{ xs: 1, md: 4 }}>
@@ -37,7 +37,7 @@ const ProductGallery: React.FC<ProductGallery> = ({ images }) => {
               cursor: 'pointer',
               border: currentImage === image ? `2px solid ${theme.palette.grey[500]}` : 'none',
             })}
-            onClick={() => setCurentImage(image)}
+            onClick={() => setCurrentImage(image)}
           >
             <LazyLoadImage
               src={image}

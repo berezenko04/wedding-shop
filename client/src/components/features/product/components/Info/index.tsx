@@ -20,18 +20,19 @@ type ProductInfoProps = {
   title: string;
   category: ProductCategory;
   price: number;
-  discount: number;
+  discount: number | null;
   description: string;
-  sizes: Sizes[];
+  sizes?: Sizes[];
 };
 
 const ProductInfo: React.FC<ProductInfoProps> = ({ id, title, price, discount, description, sizes, category }) => {
-  const [selectedSize, setSelectedSize] = useState<Sizes>(sizes[0]);
+  const [selectedSize, setSelectedSize] = useState<Sizes | undefined>(sizes?.[0]);
 
   const notAccessory = category.name !== ProductCategories.ACCESSORIES;
   const queryClient = useQueryClient();
 
   const handleAddToBag = async () => {
+    if (!selectedSize) return;
     const result = await CartService.updateCart({ productId: id, size: selectedSize, change: 1 });
     queryClient.setQueryData(['cart'], result);
   };
@@ -54,7 +55,9 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ id, title, price, discount, d
         <ProductDiscount discount={discount} />
       </Stack>
       <Typography>{description}</Typography>
-      {notAccessory && <ProductSizes sizes={sizes} selectedSize={selectedSize} onSelectSize={setSelectedSize} />}
+      {notAccessory && sizes && (
+        <ProductSizes sizes={sizes} selectedSize={selectedSize} onSelectSize={setSelectedSize} />
+      )}
       <Stack flexDirection="row" alignItems="center" gap={2}>
         <Button
           disabled={!selectedSize && notAccessory}

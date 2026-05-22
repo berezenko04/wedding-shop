@@ -8,7 +8,7 @@ import { Sizes } from '@/types/enums.types';
 
 type ProductSizesProps = {
   sizes: Sizes[];
-  selectedSize: Sizes;
+  selectedSize?: Sizes;
   onSelectSize: (v: Sizes) => void;
 };
 

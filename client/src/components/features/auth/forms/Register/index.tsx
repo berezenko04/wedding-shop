@@ -32,7 +32,15 @@ const RegisterForm: React.FC = () => {
     const { repeatPassword, fullName, ...data } = formData;
     void repeatPassword;
 
-    const [firstName, lastName = ''] = fullName.trim().split(' ');
+    const [firstName, ...rest] = fullName.trim().split(/\s+/);
+    const lastName = rest.join(' ');
+
+    if (!firstName) {
+      return toast.error('First name is required');
+    }
+    if (!lastName) {
+      return toast.error('Last name is required');
+    }
 
     await AuthService.register({ ...data, firstName, lastName });
     toast.success('Registration successful');
