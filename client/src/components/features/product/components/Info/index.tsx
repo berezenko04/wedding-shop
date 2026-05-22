@@ -26,12 +26,13 @@ type ProductInfoProps = {
 };
 
 const ProductInfo: React.FC<ProductInfoProps> = ({ id, title, price, discount, description, sizes, category }) => {
-  const [selectedSize, setSelectedSize] = useState<Sizes>(sizes[0]);
+  const [selectedSize, setSelectedSize] = useState<Sizes | undefined>(sizes[0]);
 
   const notAccessory = category.name !== ProductCategories.ACCESSORIES;
   const queryClient = useQueryClient();
 
   const handleAddToBag = async () => {
+    if (!selectedSize) return;
     const result = await CartService.updateCart({ productId: id, size: selectedSize, change: 1 });
     queryClient.setQueryData(['cart'], result);
   };

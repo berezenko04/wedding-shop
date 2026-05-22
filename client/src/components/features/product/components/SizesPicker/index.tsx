@@ -9,7 +9,7 @@ import { Sizes } from '@/types/enums.types';
 type SizesPickerProps = {
   initialItems: Sizes[];
   items: Sizes[];
-  selectedSize: Sizes;
+  selectedSize?: Sizes;
   onSelectSize: (v: Sizes) => void;
 };
 

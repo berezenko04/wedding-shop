@@ -19,7 +19,7 @@ const Sort: React.FC<SortProps> = ({ value, onChange, sx }) => {
       <Select
         variant="standard"
         disableUnderline
-        defaultValue={sortByCatalog[0].value}
+        defaultValue={sortByCatalog[0]?.value}
         value={value}
         onChange={(e) => onChange(e.target.value as SortBy)}
         sx={{ '.MuiSelect-select': { padding: '4px 24px 4px 0 !important' } }}
