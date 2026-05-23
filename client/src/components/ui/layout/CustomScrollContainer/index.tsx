@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { Stack, SxProps, Theme } from '@mui/material';
 
 type CustomScrollContainerProps = {
@@ -6,13 +7,30 @@ type CustomScrollContainerProps = {
 };
 
 const CustomScrollContainer: React.FC<CustomScrollContainerProps> = ({ children, sx }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [hasScroll, setHasScroll] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const check = () => setHasScroll(el.scrollHeight > el.clientHeight);
+    check();
+
+    const observer = new ResizeObserver(check);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <Stack
+      ref={ref}
       sx={[
         (theme: Theme) => ({
           overflowY: 'auto',
           overflowX: 'hidden',
           minWidth: 0,
+          pr: hasScroll ? '0px !important' : undefined,
 
           '&::-webkit-scrollbar': {
             width: 32,
