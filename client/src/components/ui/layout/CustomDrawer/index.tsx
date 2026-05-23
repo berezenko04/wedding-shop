@@ -12,8 +12,8 @@ const CustomDrawer: React.FC<Props> = ({ title, ...props }) => {
         paper: {
           sx: {
             width: { xs: '100%', sm: 580 },
-            height: '100vh',
-            maxHeight: '100vh',
+            height: '100dvh',
+            maxHeight: '100dvh',
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden',
