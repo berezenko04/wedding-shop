@@ -8,7 +8,7 @@ import PrivacyRights from '@/components/navigation/Footer/PrivacyRights';
 
 const HomeLayout: React.FC = () => {
   return (
-    <Stack minHeight="100svh">
+    <Stack minHeight="100dvh">
       <Header />
       <Stack flexGrow={1} flexDirection="column">
         <Outlet />
