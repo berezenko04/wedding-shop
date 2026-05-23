@@ -10,7 +10,7 @@ import { footerContacts, footerHelpMenu } from '@/data/menus';
 
 const Footer: React.FC = () => {
   return (
-    <Box component="footer" sx={{ backgroundColor: 'common.black' }} py={4}>
+    <Box component="footer" sx={{ backgroundColor: 'common.black', pb: 'env(safe-area-inset-bottom)' }} py={4}>
       <CustomContainer>
         <Grid container spacing={4}>
           <Grid size={{ xs: 12, sm: 6, lg: 3 }}>

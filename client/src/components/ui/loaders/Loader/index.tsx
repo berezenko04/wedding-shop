@@ -16,7 +16,7 @@ const Loader: React.FC = () => {
     <Box
       sx={{
         display: "flex",
-        height: "100svh",
+        height: "100dvh",
         width: "100%",
         position: "fixed",
         alignItems: "center",

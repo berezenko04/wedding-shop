@@ -10,7 +10,7 @@ import CustomContainer from '@/components/ui/Layout/CustomContainer';
 
 const PrimaryLayout: React.FC = () => {
   return (
-    <Stack minHeight="100svh">
+    <Stack minHeight="100dvh">
       <Header />
       <Breadcrumbs />
       <Stack flexGrow={1} flexDirection="column" py={{ xs: 2, sm: 4, md: 6 }}>

@@ -158,7 +158,7 @@ const CatalogPage: React.FC = () => {
             },
           }}
         >
-          <CustomScrollContainer sx={{ gap: 2, pl: 3, pr: 1, pb: 3 }}>
+          <CustomScrollContainer sx={{ gap: 2, px: 3, flex: 1, pb: 3 }}>
             <CatalogSort value={filters.sortBy} onChange={(sortBy) => handleFilterChange('sortBy', sortBy)} />
             <Filters filters={filters} setFilter={handleFilterChange} clearFilters={handleClearFilters} />
           </CustomScrollContainer>
