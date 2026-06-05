@@ -7,11 +7,11 @@ import {
   RawBodyRequest,
   Req,
 } from '@nestjs/common';
+import { ShipmentStatuses } from '@prisma/client';
 
 // services
 import { StripeService } from './stripe.service';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { ShipmentStatuses } from '@prisma/client';
 
 @Controller('stripe')
 export class StripeController {
