@@ -1,8 +1,6 @@
 import helmet from 'helmet';
 import * as cookieParser from 'cookie-parser';
 import * as requestIp from 'request-ip';
-import * as express from 'express';
-import { Request, Response, NextFunction } from 'express';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
@@ -16,7 +14,6 @@ import { ConfigService } from '@nestjs/config';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     rawBody: true,
-    bodyParser: false,
   });
 
   const configService = app.get(ConfigService);
@@ -46,21 +43,8 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use(requestIp.mw());
 
-  app.use((req: Request, res: Response, next: NextFunction) => {
-    if (req.originalUrl === '/api/v1/stripe/webhook') {
-      next();
-    } else {
-      express.json({ limit: '500kb' })(req, res, next);
-    }
-  });
-
-  app.use((req: Request, res: Response, next: NextFunction) => {
-    if (req.originalUrl === '/api/v1/stripe/webhook') {
-      next();
-    } else {
-      express.urlencoded({ limit: '500kb', extended: true })(req, res, next);
-    }
-  });
+  app.useBodyParser('json', { limit: '500kb' });
+  app.useBodyParser('urlencoded', { limit: '500kb', extended: true });
 
   await app.listen(process.env.PORT ?? 3000);
 }
