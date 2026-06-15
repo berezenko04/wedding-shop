@@ -1,43 +1,35 @@
-import { Avatar, Link, Rating, Stack, Typography, IconButton } from "@mui/material";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Avatar, Link, Rating, Stack, Typography, IconButton } from '@mui/material';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 // api
-import ReviewsService from "@/api/reviews/reviews.service";
+import ReviewsService from '@/api/reviews/reviews.service';
 
 // types
-import { GetAllReviews, Review } from "@/api/reviews/reviews.types";
+import { GetAllReviews, Review } from '@/api/reviews/reviews.types';
 
 // mapping
-import { ratingToNumber } from "@/data/mapping";
+import { ratingToNumber } from '@/data/mapping';
 
 // icons
-import { DeleteOutline } from "@mui/icons-material";
+import { DeleteOutline } from '@mui/icons-material';
 
-type ReviewsItemProps = Review & {
-  variant?: "product" | "profile";
+type Props = Review & {
+  variant?: 'product' | 'profile';
 };
 
-const ReviewsItem: React.FC<ReviewsItemProps> = ({
-  id,
-  rating,
-  user,
-  createdAt,
-  product,
-  variant = "product",
-  comment,
-}) => {
+const ReviewsItem: React.FC<Props> = ({ id, rating, user, createdAt, product, variant = 'product', comment }) => {
   const queryClient = useQueryClient();
 
-  const formattedDate = new Date(createdAt).toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
+  const formattedDate = new Date(createdAt).toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
   });
 
   const deleteReviewMutation = useMutation({
     mutationFn: (reviewId: string) => ReviewsService.deleteReview(reviewId),
     onSuccess: (_, reviewId: string) => {
-      queryClient.setQueriesData<GetAllReviews>({ queryKey: ["reviews"] }, (reviewsData) => {
+      queryClient.setQueriesData<GetAllReviews>({ queryKey: ['reviews'] }, (reviewsData) => {
         if (!reviewsData) return reviewsData;
 
         return {
@@ -61,13 +53,13 @@ const ReviewsItem: React.FC<ReviewsItemProps> = ({
             </Typography>
           </Stack>
         </Stack>
-        {variant === "profile" && (
+        {variant === 'profile' && (
           <IconButton color="error" onClick={() => deleteReviewMutation.mutate(id)}>
             <DeleteOutline />
           </IconButton>
         )}
       </Stack>
-      {variant === "profile" && (
+      {variant === 'profile' && (
         <Typography>
           Good:&nbsp;
           <Link href={`/catalog/${product.slug}`} variant="underlined" color="grey.500">

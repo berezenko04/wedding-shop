@@ -1,12 +1,12 @@
 import { Box, Fade, Modal, Stack, Typography, type ModalProps, useTheme, useMediaQuery, Button } from '@mui/material';
 
-type TCustomModalProps = ModalProps & {
+type Props = ModalProps & {
   children: React.ReactNode;
   maxWidth: number;
   title: string;
 };
 
-const CustomModal: React.FC<TCustomModalProps> = ({ title, maxWidth, children, ...props }) => {
+const CustomModal: React.FC<Props> = ({ title, maxWidth, children, ...props }) => {
   const theme = useTheme();
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 

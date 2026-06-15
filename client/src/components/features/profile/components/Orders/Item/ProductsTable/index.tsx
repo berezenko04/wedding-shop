@@ -6,11 +6,11 @@ import { calcFinalPrice } from '@/utils/calcFinalPrice';
 // types
 import { OrderItem } from '@/api/orders/orders.types';
 
-type ProductsTableProps = {
+type Props = {
   items: OrderItem[];
 };
 
-const ProductsTable: React.FC<ProductsTableProps> = ({ items }) => {
+const ProductsTable: React.FC<Props> = ({ items }) => {
   const columns = [
     { sx: { minWidth: 280 }, title: 'Product' },
     { sx: { minWidth: 60 }, title: 'Size' },

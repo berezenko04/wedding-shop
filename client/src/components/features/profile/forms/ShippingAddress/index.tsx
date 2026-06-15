@@ -15,14 +15,14 @@ type ShippingAddressFormFields = {
   primary: boolean;
 };
 
-type ShippingAddressFormProps = {
+type Props = {
   mode: 'create' | 'update';
   defaultValues?: Partial<ShippingAddressFormFields>;
   addressId?: string;
   afterSubmit: () => void;
 };
 
-const ShippingAddressForm: React.FC<ShippingAddressFormProps> = ({ mode, defaultValues, afterSubmit, addressId }) => {
+const ShippingAddressForm: React.FC<Props> = ({ mode, defaultValues, afterSubmit, addressId }) => {
   const queryClient = useQueryClient();
 
   const {

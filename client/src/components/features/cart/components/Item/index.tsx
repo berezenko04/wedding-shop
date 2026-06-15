@@ -10,14 +10,14 @@ import Counter from '@/components/ui/Counter';
 import CartService from '@/api/cart/cart.service';
 
 // types
-import { UpdateCartBody, CartItem } from '@/api/cart/cart.types';
+import type { UpdateCartBody, CartItem } from '@/api/cart/cart.types';
 
 // icons
 import { DeleteOutline } from '@mui/icons-material';
 
-type CartItemProps = CartItem & {};
+type Props = CartItem & {};
 
-const CartItem: React.FC<CartItemProps> = ({ id, size, quantity, product }) => {
+const CartItem: React.FC<Props> = ({ id, size, quantity, product }) => {
   const queryClient = useQueryClient();
 
   const { mutate: updateQuantity, isPending } = useMutation({

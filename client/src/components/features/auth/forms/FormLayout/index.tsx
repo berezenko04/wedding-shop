@@ -3,7 +3,7 @@ import { Button, Link, Stack, Typography } from '@mui/material';
 // icons
 import { KeyboardArrowLeft } from '@mui/icons-material';
 
-type FormLayoutProps = {
+type Props = {
   title: string;
   description: string;
   isBackToLogin?: boolean;
@@ -13,7 +13,7 @@ type FormLayoutProps = {
   children: React.ReactNode;
 };
 
-const FormLayout: React.FC<FormLayoutProps> = ({
+const FormLayout: React.FC<Props> = ({
   title,
   description,
   children,

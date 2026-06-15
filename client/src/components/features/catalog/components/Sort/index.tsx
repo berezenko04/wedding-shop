@@ -6,13 +6,13 @@ import { sortByCatalog } from '@/data/main';
 // types
 import { SortBy } from '@/types/enums.types';
 
-type SortProps = {
+type Props = {
   sx?: SxProps;
   value: SortBy | 'none';
   onChange: (value: SortBy) => void;
 };
 
-const Sort: React.FC<SortProps> = ({ value, onChange, sx }) => {
+const Sort: React.FC<Props> = ({ value, onChange, sx }) => {
   return (
     <Stack flexDirection="row" alignItems="center" gap={0.5} sx={sx}>
       <Typography sx={{ fontWeight: 500, color: 'grey.700', textTransform: 'uppercase' }}>Sort by</Typography>

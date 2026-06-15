@@ -22,11 +22,11 @@ import { REVIEWS_LIMIT } from '@/data/main';
 // icons
 import { ChatBubbleOutline } from '@mui/icons-material';
 
-type ProductReviewsProps = {
+type Props = {
   productId: string;
 };
 
-const ProductReviews: React.FC<ProductReviewsProps> = ({ productId }) => {
+const ProductReviews: React.FC<Props> = ({ productId }) => {
   const { isAuth } = useSelector(authSelector);
 
   const [page, setPage] = useState<number>(1);

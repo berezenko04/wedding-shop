@@ -10,7 +10,7 @@ import EmptyState from '@/components/ui/EmptyState';
 // types
 import { Product } from '@/api/products/products.types';
 
-type ProductsGridLayoutProps = {
+type Props = {
   isLoading: boolean;
   items: Product[];
   total: number;
@@ -23,7 +23,7 @@ type ProductsGridLayoutProps = {
   emptyStateAdditional?: React.ReactNode;
 };
 
-const ProductsGridLayout: React.FC<ProductsGridLayoutProps> = ({
+const ProductsGridLayout: React.FC<Props> = ({
   isLoading,
   items,
   total,

@@ -12,12 +12,12 @@ import CustomDrawer from '@/components/ui/Layout/CustomDrawer';
 // hooks
 import { useCart } from '@/hooks/useCart';
 
-type CartProps = {
+type Props = {
   isOpened: boolean;
   handleClose: () => void;
 };
 
-const Cart: React.FC<CartProps> = ({ isOpened, handleClose }) => {
+const Cart: React.FC<Props> = ({ isOpened, handleClose }) => {
   const navigate = useNavigate();
 
   const { data: cart = [] } = useCart();

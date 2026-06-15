@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { Stack, SxProps, Theme } from '@mui/material';
 
-type CustomScrollContainerProps = {
+type Props = {
   children: React.ReactNode;
   sx?: SxProps<Theme>;
 };
 
-const CustomScrollContainer: React.FC<CustomScrollContainerProps> = ({ children, sx }) => {
+const CustomScrollContainer: React.FC<Props> = ({ children, sx }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [hasScroll, setHasScroll] = useState(false);
 

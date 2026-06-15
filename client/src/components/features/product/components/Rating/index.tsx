@@ -13,11 +13,11 @@ import { Rating } from '@/types/enums.types';
 // icons
 import { Star } from '@mui/icons-material';
 
-type ProductRatingProps = {
+type Props = {
   productId: string | undefined;
 };
 
-const ProductRating: React.FC<ProductRatingProps> = ({ productId }) => {
+const ProductRating: React.FC<Props> = ({ productId }) => {
   const { data: ratings } = useQuery({
     queryKey: ['productRating', productId],
     queryFn: async () => {

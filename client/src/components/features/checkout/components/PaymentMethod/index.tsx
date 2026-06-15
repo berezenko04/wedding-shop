@@ -8,12 +8,12 @@ import Picker from '@/components/ui/Picker';
 // hooks
 import { useUserPaymentMethods } from '@/hooks/useUserPaymentMethods';
 
-type PaymentMethodProps = {
+type Props = {
   paymentMethod: string;
   onChange: (i: string | null) => void;
 };
 
-const PaymentMethod: React.FC<PaymentMethodProps> = ({ paymentMethod, onChange }) => {
+const PaymentMethod: React.FC<Props> = ({ paymentMethod, onChange }) => {
   const { data: paymentMethods } = useUserPaymentMethods();
 
   const isPaymentMethodsExist = paymentMethods && paymentMethods.length > 0;

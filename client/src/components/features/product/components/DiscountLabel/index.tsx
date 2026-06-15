@@ -1,28 +1,28 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography } from '@mui/material';
 
-type DiscountLabelProps = {
+type Props = {
   discount: number;
 };
 
-const DiscountLabel: React.FC<DiscountLabelProps> = ({ discount }) => {
+const DiscountLabel: React.FC<Props> = ({ discount }) => {
   return (
     <Box
       sx={{
         userSelect: 'none',
-        position: "absolute",
+        position: 'absolute',
         bottom: 40,
         right: -40,
         width: 200,
-        display: "flex",
-        justifyContent: "center",
-        transform: "rotate(-45deg)",
+        display: 'flex',
+        justifyContent: 'center',
+        transform: 'rotate(-45deg)',
         zIndex: 2,
-        pointerEvents: "none",
+        pointerEvents: 'none',
       }}
     >
       <Box
         sx={{
-          backgroundColor: "success.main",
+          backgroundColor: 'success.main',
           px: 12,
           py: 1.5,
           boxShadow: 2,

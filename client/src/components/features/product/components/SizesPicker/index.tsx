@@ -6,14 +6,14 @@ import PickerItem from '@/components/ui/Picker/Item';
 // types
 import { Sizes } from '@/types/enums.types';
 
-type SizesPickerProps = {
+type Props = {
   initialItems: Sizes[];
   items: Sizes[];
   selectedSize?: Sizes;
   onSelectSize: (v: Sizes) => void;
 };
 
-const SizesPicker: React.FC<SizesPickerProps> = ({ initialItems, items, selectedSize, onSelectSize }) => {
+const SizesPicker: React.FC<Props> = ({ initialItems, items, selectedSize, onSelectSize }) => {
   const handlePick = (value: Sizes) => {
     if (selectedSize !== value) onSelectSize(value);
   };

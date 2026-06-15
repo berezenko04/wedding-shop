@@ -9,14 +9,14 @@ import type { Swiper as SwiperType } from 'swiper/types';
 // icons
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 
-type HomepageSectionProps = {
+type Props = {
   title: string;
   children: React.ReactNode;
   isSwiper?: boolean;
   swiperRef?: React.RefObject<SwiperType | null>;
 };
 
-const HomepageSection: React.FC<HomepageSectionProps> = ({ title, children, isSwiper, swiperRef }) => {
+const HomepageSection: React.FC<Props> = ({ title, children, isSwiper, swiperRef }) => {
   const handlePrev = () => swiperRef?.current?.slidePrev();
   const handleNext = () => swiperRef?.current?.slideNext();
 

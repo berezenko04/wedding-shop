@@ -7,12 +7,12 @@ import FilterItem from '../FilterItem';
 // api
 import CategoriesService from '@/api/categories/categories.service';
 
-type FilterByCategoryProps = {
+type Props = {
   category: string | null;
   setCategory: (v: string | null) => void;
 };
 
-const FilterByCategory: React.FC<FilterByCategoryProps> = ({ category, setCategory }) => {
+const FilterByCategory: React.FC<Props> = ({ category, setCategory }) => {
   const { data: categories } = useQuery({ queryKey: ['categories'], queryFn: CategoriesService.getAll });
   return (
     <FilterItem title="By category">

@@ -9,13 +9,13 @@ import { Star } from '@mui/icons-material';
 // data
 import { ratingToNumber } from '@/data/mapping';
 
-type ProductRatingItemProps = {
+type Props = {
   ratingMark: Rating;
   ratingCount: number;
   allRatingCount: number;
 };
 
-const ProductRatingItem: React.FC<ProductRatingItemProps> = ({ ratingMark, ratingCount, allRatingCount }) => {
+const ProductRatingItem: React.FC<Props> = ({ ratingMark, ratingCount, allRatingCount }) => {
   const progressValue = allRatingCount ? (ratingCount / allRatingCount) * 100 : 0;
 
   return (
