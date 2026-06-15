@@ -38,7 +38,7 @@ import { StripeModule } from './modules/stripe/stripe.module';
         '.env',
       ],
     }),
-    ThrottlerModule.forRoot({ throttlers: [{ ttl: 60000, limit: 10000 }] }),
+    ThrottlerModule.forRoot({ throttlers: [{ ttl: 60000, limit: 100 }] }),
     PrismaModule,
     AuthModule,
     UserModule,
