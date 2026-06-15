@@ -6,7 +6,7 @@ import SearchOption from './Item';
 // types
 import { SearchResult } from '@/api/products/products.types';
 
-type SearchbarBlockProps = {
+type Props = {
   title: string;
   variant: 'result' | 'history';
   options: SearchResult[];
@@ -15,7 +15,7 @@ type SearchbarBlockProps = {
   afterClickOption: () => void;
 };
 
-const SearchbarBlock: React.FC<SearchbarBlockProps> = ({
+const SearchbarBlock: React.FC<Props> = ({
   title,
   variant,
   options,

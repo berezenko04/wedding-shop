@@ -23,14 +23,14 @@ type PaymentMethodFormFields = {
   cardHolder?: string;
 };
 
-type PaymentMethodFormProps = {
+type Props = {
   mode: 'create' | 'update';
   defaultValues?: Partial<PaymentMethodFormFields>;
   paymentId?: string;
   afterSubmit: () => void;
 };
 
-const PaymentMethodForm: React.FC<PaymentMethodFormProps> = ({ mode, defaultValues, afterSubmit, paymentId }) => {
+const PaymentMethodForm: React.FC<Props> = ({ mode, defaultValues, afterSubmit, paymentId }) => {
   const queryClient = useQueryClient();
 
   const {

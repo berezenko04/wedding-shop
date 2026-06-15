@@ -1,10 +1,10 @@
 import { Link } from '@mui/material';
 
-type LogoProps = {
+type Props = {
   color?: 'light' | 'dark';
 };
 
-const Logo: React.FC<LogoProps> = ({ color = 'dark' }) => {
+const Logo: React.FC<Props> = ({ color = 'dark' }) => {
   return (
     <Link
       href="/"

@@ -1,13 +1,13 @@
 import { Typography } from '@mui/material';
 import { Link } from 'react-router';
 
-type EditButtonProps = {
+type Props = {
   title?: string;
   href: string;
   color?: 'primary' | 'grey';
 };
 
-const EditButton: React.FC<EditButtonProps> = ({ title = 'Edit', color = 'grey', href }) => {
+const EditButton: React.FC<Props> = ({ title = 'Edit', color = 'grey', href }) => {
   return (
     <Typography
       component={Link}

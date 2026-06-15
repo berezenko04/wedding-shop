@@ -1,12 +1,12 @@
 import { Stack, Typography } from '@mui/material';
 
-type OrderTotalProps = {
+type Props = {
   subtotal: number;
   shipmentCost: number;
   grandTotal: number;
 };
 
-const OrderTotal: React.FC<OrderTotalProps> = ({ subtotal, shipmentCost, grandTotal }) => {
+const OrderTotal: React.FC<Props> = ({ subtotal, shipmentCost, grandTotal }) => {
   const rows = [
     { title: 'Subtotal', value: subtotal },
     { title: 'Shipment cost', value: shipmentCost },

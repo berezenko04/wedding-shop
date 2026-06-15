@@ -10,14 +10,14 @@ import ProductCardSkeleton from '@/components/ui/Loaders/Skeletons/ProductCard';
 import type { Product } from '@/api/products/products.types';
 import type { Swiper as SwiperType } from 'swiper/types';
 
-type ProductsSwiperProps = {
+type Props = {
   data: Product[];
   swiperRef: React.RefObject<SwiperType | null>;
   isLoading?: boolean;
   loop?: boolean;
 };
 
-const ProductsSwiper: React.FC<ProductsSwiperProps> = ({ data, isLoading, loop = true, swiperRef }) => {
+const ProductsSwiper: React.FC<Props> = ({ data, isLoading, loop = true, swiperRef }) => {
   const theme = useTheme();
 
   return (

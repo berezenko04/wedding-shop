@@ -1,11 +1,11 @@
 import { calcFinalPrice } from '@/utils/calcFinalPrice';
 import { Stack, Typography } from '@mui/material';
 
-type CartTotalProps = {
+type Props = {
   items: { price: number; quantity: number; discount: number | null }[];
 };
 
-const CartTotal: React.FC<CartTotalProps> = ({ items }) => {
+const CartTotal: React.FC<Props> = ({ items }) => {
   return (
     <Stack flexDirection="row" alignItems="center" justifyContent="space-between" gap={4}>
       <Typography fontSize={24} variant="medium" textTransform="uppercase">

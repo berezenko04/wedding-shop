@@ -7,11 +7,11 @@ import EditButton from '@/components/ui/Buttons/Edit';
 // hooks
 import { useUser } from '@/hooks/useUser';
 
-type ShippingAddressProps = {
+type Props = {
   address?: string;
 };
 
-const ShippingAddress: React.FC<ShippingAddressProps> = ({ address }) => {
+const ShippingAddress: React.FC<Props> = ({ address }) => {
   const { data: user } = useUser();
 
   return (

@@ -1,11 +1,11 @@
 import { Container, type SxProps } from "@mui/material";
 
-type ContainerProps = {
+type Props = {
   sx?: SxProps;
   children: React.ReactNode;
 };
 
-const CustomContainer: React.FC<ContainerProps> = ({ sx, children }) => {
+const CustomContainer: React.FC<Props> = ({ sx, children }) => {
   return (
     <Container
       disableGutters

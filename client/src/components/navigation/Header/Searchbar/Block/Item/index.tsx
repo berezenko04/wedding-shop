@@ -7,13 +7,13 @@ import { getHistoryLS, setHistoryLS } from '@/utils/searchLocaleStorage';
 // types
 import { SearchResult } from '@/api/products/products.types';
 
-type SearchOptionProps = SearchResult & {
+type Props = SearchResult & {
   afterClick: () => void;
   handleClear?: (s: string) => void;
   variant: 'result' | 'history';
 };
 
-const SearchOption: React.FC<SearchOptionProps> = ({ title, slug, variant, afterClick, handleClear }) => {
+const SearchOption: React.FC<Props> = ({ title, slug, variant, afterClick, handleClear }) => {
   const navigate = useNavigate();
 
   const handleSelectSearchOption = () => {

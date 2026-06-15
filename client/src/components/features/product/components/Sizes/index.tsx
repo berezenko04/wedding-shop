@@ -6,13 +6,13 @@ import SizesPicker from '../SizesPicker';
 // types
 import { Sizes } from '@/types/enums.types';
 
-type ProductSizesProps = {
+type Props = {
   sizes: Sizes[];
   selectedSize?: Sizes;
   onSelectSize: (v: Sizes) => void;
 };
 
-const ProductSizes: React.FC<ProductSizesProps> = ({ sizes, selectedSize, onSelectSize }) => {
+const ProductSizes: React.FC<Props> = ({ sizes, selectedSize, onSelectSize }) => {
   return (
     <Stack gap={{ xs: 1.5, sm: 3 }}>
       <Typography variant="medium" fontSize={16} textTransform="uppercase">

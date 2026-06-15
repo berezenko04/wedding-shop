@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 // components
 import FilterItem from '../FilterItem';
 
-type FilterPriceProps = {
+type Props = {
   priceRange: [number, number];
   setPriceRange: (v: [number, number]) => void;
 };
 
-const FilterPrice: React.FC<FilterPriceProps> = ({ priceRange, setPriceRange }) => {
+const FilterPrice: React.FC<Props> = ({ priceRange, setPriceRange }) => {
   const [localRange, setLocalRange] = useState<[number, number]>(priceRange);
 
   useEffect(() => {

@@ -3,7 +3,7 @@ import { ButtonBase, Stack, Typography } from "@mui/material";
 // icons
 import { Add, Remove } from "@mui/icons-material";
 
-type CounterProps = {
+type Props = {
   value: number;
   onChange: (v: -1 | 1) => void;
   min?: number;
@@ -11,7 +11,7 @@ type CounterProps = {
   disabled?: boolean;
 };
 
-const Counter: React.FC<CounterProps> = ({ value, onChange, disabled, min = 1, max = 10 }) => {
+const Counter: React.FC<Props> = ({ value, onChange, disabled, min = 1, max = 10 }) => {
   const handleDecrease = () => {
     if (value > min) onChange(-1);
   };

@@ -1,7 +1,7 @@
 import { Stack, SvgIconTypeMap, Typography } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 
-type EmptyStateProps = {
+type Props = {
   icon: OverridableComponent<SvgIconTypeMap<object, 'svg'>>;
   title: string;
   description: string;
@@ -9,7 +9,7 @@ type EmptyStateProps = {
   withoutMarginTop?: boolean;
 };
 
-const EmptyState: React.FC<EmptyStateProps> = ({ icon: Icon, title, description, additional, withoutMarginTop }) => {
+const EmptyState: React.FC<Props> = ({ icon: Icon, title, description, additional, withoutMarginTop }) => {
   return (
     <Stack alignItems="center" gap={3} mt={withoutMarginTop ? 0 : 8}>
       <Icon sx={{ width: 64, height: 64, color: 'primary.main' }} />

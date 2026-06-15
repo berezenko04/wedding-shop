@@ -3,14 +3,14 @@ import { Box, SxProps } from '@mui/material';
 // components
 import OutlinedWhiteArrowButton from '@/components/ui/Buttons/OutlinedWhiteArrow';
 
-type ImageWithButtonProps = {
+type Props = {
   imgSrc: string;
   sx?: SxProps;
   linkText: string;
   linkHref: string;
 };
 
-const ImageWithButton: React.FC<ImageWithButtonProps> = ({ imgSrc, linkText, linkHref, sx }) => {
+const ImageWithButton: React.FC<Props> = ({ imgSrc, linkText, linkHref, sx }) => {
   return (
     <Box
       sx={{

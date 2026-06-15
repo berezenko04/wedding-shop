@@ -16,12 +16,12 @@ import { Favorite, FavoriteBorderOutlined } from '@mui/icons-material';
 // data
 import { PAGE_LIMIT } from '@/data/main';
 
-type AddToWishlistButtonProps = {
+type Props = {
   productId: string;
   variant?: 'card' | 'productPage';
 };
 
-const AddToWishlistButton: React.FC<AddToWishlistButtonProps> = ({ productId, variant = 'card' }) => {
+const AddToWishlistButton: React.FC<Props> = ({ productId, variant = 'card' }) => {
   const queryClient = useQueryClient();
 
   const { data: wishlistIds = [] } = useCheckInWishlist();

@@ -1,12 +1,12 @@
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 
-type ShippingInfoTableProps = {
+type Props = {
   shippingAddress: string;
   paymentMethod: string;
   trackingNumber: string;
 };
 
-const ShippingInfoTable: React.FC<ShippingInfoTableProps> = ({ shippingAddress, paymentMethod, trackingNumber }) => {
+const ShippingInfoTable: React.FC<Props> = ({ shippingAddress, paymentMethod, trackingNumber }) => {
   const columns = [
     { sx: { minwidth: 200 }, title: 'Shipping Address' },
     { sx: { minWidth: 200 }, title: 'Billing Address' },

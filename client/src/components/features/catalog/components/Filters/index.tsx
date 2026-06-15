@@ -8,18 +8,18 @@ import FilterByCategory from './Category';
 // types
 import { Sizes, SortBy } from '@/types/enums.types';
 
-interface FiltersProps {
+interface Props {
   filters: {
     priceRange: [number, number];
     size: Sizes | null;
     category: string | null;
     sortBy: SortBy | 'none';
   };
-  setFilter: <K extends keyof FiltersProps['filters']>(key: K, value: FiltersProps['filters'][K]) => void;
+  setFilter: <K extends keyof Props['filters']>(key: K, value: Props['filters'][K]) => void;
   clearFilters: () => void;
 }
 
-const Filters: React.FC<FiltersProps> = ({ filters, setFilter, clearFilters }) => {
+const Filters: React.FC<Props> = ({ filters, setFilter, clearFilters }) => {
   return (
     <Stack gap={3}>
       <FilterPrice

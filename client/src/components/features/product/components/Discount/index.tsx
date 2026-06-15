@@ -1,10 +1,10 @@
-import { Typography } from "@mui/material";
+import { Typography } from '@mui/material';
 
-type ProductDiscountProps = {
+type Props = {
   discount: number | null;
 };
 
-const ProductDiscount: React.FC<ProductDiscountProps> = ({ discount }) => {
+const ProductDiscount: React.FC<Props> = ({ discount }) => {
   if (!discount) return null;
 
   return (

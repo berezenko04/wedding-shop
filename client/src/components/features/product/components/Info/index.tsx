@@ -15,7 +15,7 @@ import CartService from '@/api/cart/cart.service';
 import { ProductCategories, Sizes } from '@/types/enums.types';
 import { ProductCategory } from '@/api/products/products.types';
 
-type ProductInfoProps = {
+type Props = {
   id: string;
   title: string;
   category: ProductCategory;
@@ -25,7 +25,7 @@ type ProductInfoProps = {
   sizes?: Sizes[];
 };
 
-const ProductInfo: React.FC<ProductInfoProps> = ({ id, title, price, discount, description, sizes, category }) => {
+const ProductInfo: React.FC<Props> = ({ id, title, price, discount, description, sizes, category }) => {
   const [selectedSize, setSelectedSize] = useState<Sizes | undefined>(sizes?.[0]);
 
   const notAccessory = category.name !== ProductCategories.ACCESSORIES;
