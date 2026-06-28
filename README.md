@@ -1,5 +1,9 @@
 # Sandrela — Wedding Shop 🧡
 
+<a href="https://sandrela.xyz" target="_blank">
+<img src="https://i.ibb.co/W4ymDbYR/f2ce6d183115213-69f3ef524bdf0.webp" alt="Sandrela Banner" width="1400" style="border-radius: 10px"/>
+</a>
+
 > **Live:** [sandrela.xyz](https://sandrela.xyz)
 
 Sandrela is a full-featured wedding fashion e-commerce platform built with **React + NestJS**. It includes a product catalog, shopping cart, order management, Stripe payments, user dashboard, wishlist, reviews, and more.
